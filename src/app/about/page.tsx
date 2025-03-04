@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { useScroll, useTransform, useSpring } from "framer-motion"
-import HeroSection from "~/components/blocks/about/hero-section"
-import MissionStatement from "./mission-statement"
-import KeyStatistics from "./statistics"
-import SchoolValues from "./values"
-import MessageFromPrincipal from "./message-ceo"
+import HeroSection from "~/components/blocks/landing/hero-section"
+import MessageFromPrincipal from "~/components/blocks/landing/message-ceo"
+import MissionStatement from "~/components/blocks/landing/mission-statement"
+import KeyStatistics from "~/components/blocks/landing/statistics"
+import SchoolValues from "~/components/blocks/landing/values"
 
 export default function About() {
   const { scrollYProgress } = useScroll()

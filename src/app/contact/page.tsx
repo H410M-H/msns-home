@@ -1,7 +1,7 @@
 "use client"
 
-import ContactInfo from "~/components/ContactInfo"
-import GeometricBackground from "~/components/GeometricBg"
+import ContactInfo from "~/components/blocks/landing/ContactInfo"
+import GeometricBackground from "~/components/blocks/landing/GeometricBg"
 
 export default function ContactPage() {
   return (

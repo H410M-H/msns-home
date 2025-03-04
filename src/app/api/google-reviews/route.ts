@@ -29,7 +29,7 @@ export async function GET() {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=review&key=${API_KEY}`
     )
-       
+    
     const data = await response.json() as PlaceDetailsResponse
 
     if (data.status !== 'OK' || !data.result?.reviews) {

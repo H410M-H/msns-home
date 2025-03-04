@@ -97,16 +97,16 @@ export const Header = ({ className, ...props }: HeaderProps) => {
                   <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="hover:bg-purple-100 focus:bg-purple-200">
-                  <Link href="/login">Logout</Link>
+                  <Link href="/">Logout</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : isDashboard ? (
-            <Link href="/account">
+            <Link href="/">
               <Button variant="outline">Profile</Button>
             </Link>
           ) : (
-            <Link href="/login">
+            <Link href="/">
               <Button variant="outline">Login</Button>
             </Link>
           )}
