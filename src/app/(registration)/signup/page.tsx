@@ -2,7 +2,7 @@ import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
-import { SignupForm } from '~/components/SignupForm';
+import { SignupForm } from './SignupForm';
 
 export default function SignupPage  () {
   return (

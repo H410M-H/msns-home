@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "./ui/button"
+import { Button } from "~/components/ui/button"
 export const LoginForm = () => {
     return(
         <form className="space-y-6 mt-8">
