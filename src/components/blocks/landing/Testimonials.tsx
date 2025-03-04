@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface GoogleReview {
@@ -17,120 +17,173 @@ interface ApiResponse {
 
 export function TestimonialsSection() {
   const [reviews, setReviews] = useState<GoogleReview[]>([])
-  const [supportsLazyLoading, setSupportsLazyLoading] = useState(true)
-  const [loading, setLoading] = useState(true)
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  const [supportsLazyLoading, setSupportsLazyLoading] = useState(true)
 
   useEffect(() => {
     setSupportsLazyLoading('loading' in HTMLIFrameElement.prototype)
   }, [])
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await fetch('/api/google-reviews')
-        const data = await response.json() as ApiResponse
-        setReviews(data.reviews || [])
-      } catch (error) {
-        console.error('Error fetching reviews:', error)
-        setReviews([])
-      } finally {
-        setLoading(false)
-      }
+  const minSwipeDistance = 50
+  
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0)
+    if (e.targetTouches?.[0]) {
+      setTouchStart(e.targetTouches[0].clientX)
     }
+  }
 
-    void fetchReviews()
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (e.targetTouches?.[0]) {
+      setTouchEnd(e.targetTouches[0].clientX);
+    }
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    if (isLeftSwipe) goNext()
+    if (isRightSwipe) goPrev()
+  }
+
+  const fetchReviews = useCallback(async () => {
+    try {
+      const response = await fetch('/api/google-reviews')
+      const data = await response.json() as ApiResponse;
+      setReviews(data.reviews || [])
+    } catch (error) {
+      console.error('Error fetching reviews:', error)
+      setReviews([])
+    }
   }, [])
 
-  const goNext = () => {
+  useEffect(() => {
+    void fetchReviews()
+  }, [fetchReviews])
+
+  const goNext = useCallback(() => {
     if (reviews.length === 0) return
     setCurrentReviewIndex(prev => (prev + 1) % reviews.length)
-  }
+  }, [reviews.length])
 
-  const goPrev = () => {
+  const goPrev = useCallback(() => {
     if (reviews.length === 0) return
     setCurrentReviewIndex(prev => (prev - 1 + reviews.length) % reviews.length)
-  }
+  }, [reviews.length])
 
   const currentReview = reviews[currentReviewIndex]
 
   return (
-    <section className="py-16 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="rounded-xl overflow-hidden shadow-xl">
+    <section className="py-12 md:py-16 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
           <iframe
             title="School Location Map"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3371.371635373706!2d74.13877557608704!3d32.32873130675971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391f27141ae512e1%3A0x4a728b0cac341ccf!2sM.S.%20NAZ%20HIGH%20SCHOOL%C2%AE%20%7C%20M.S.N.S%E2%84%A2!5e0!3m2!1sen!2s!4v1738881226323!5m2!1sen!2s"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen
+            className="w-full aspect-video rounded-xl"
             {...(supportsLazyLoading ? { loading: "lazy" } : {})}
             referrerPolicy="no-referrer-when-downgrade"
-            className="rounded-xl"
           />
         </div>
 
-        <h2 className="text-3xl font-bold text-center mb-12 mt-16">What People Say</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 mt-12 md:mb-12 md:mt-16 text-slate-800">
+          What Our Community Says
+        </h2>
 
-        <div className="flex items-center justify-center gap-4 md:gap-8 mb-16">
+        <div 
+          className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           <button
             onClick={goPrev}
-            disabled={loading || reviews.length === 0}
-            className="p-2 hover:bg-slate-100 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!reviews.length}
+            className="p-2 hover:bg-slate-100 rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Previous review"
           >
-            <ChevronLeft className="w-8 h-8 text-gray-600" />
+            <ChevronLeft className="w-8 h-8 text-slate-600" />
           </button>
 
-          <div className="flex-1 max-w-2xl min-h-[300px]">
-            {loading ? (
-              <SkeletonCard />
-            ) : reviews.length > 0 && currentReview ? (
-              <AnimatePresence mode='wait'>
+          <div className="flex-1 max-w-2xl min-h-[300px] w-full">
+            <AnimatePresence mode='wait'>
+              {currentReview ? (
                 <motion.div
                   key={currentReviewIndex}
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-white p-6 rounded-xl shadow-md"
+                  transition={{ duration: 0.3 }}
+                  className="bg-white p-6 md:p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab active:cursor-grabbing"
                 >
                   <div className="flex items-center gap-2 mb-4">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <StarIcon
+                      <motion.div
                         key={i}
-                        className={`w-5 h-5 ${
-                          i < currentReview.rating 
-                            ? 'text-yellow-400' 
-                            : 'text-gray-300'
-                        }`}
-                      />
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: i * 0.05 }}
+                      >
+                        <StarIcon
+                          className={`w-6 h-6 ${
+                            i < (currentReview.rating ?? 0) 
+                              ? 'text-amber-400' 
+                              : 'text-slate-200'
+                          }`}
+                        />
+                      </motion.div>
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-4 italic">
-                    &quot;{currentReview.text}&quot;
+                  <p className="text-slate-600 mb-4 italic text-lg md:text-xl leading-relaxed">
+                    &quot;{currentReview.text || 'No review text available'}&quot;
                   </p>
-                  <p className="font-semibold">{currentReview.author_name}</p>
-                  <p className="text-sm text-gray-500">
-                    {currentReview.relative_time_description}
-                  </p>
+                  <div className="border-t border-slate-100 pt-4">
+                    <p className="font-semibold text-slate-800">
+                      {currentReview.author_name || 'Anonymous'}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      {currentReview.relative_time_description || 'Recently'}
+                    </p>
+                  </div>
                 </motion.div>
-              </AnimatePresence>
-            ) : (
-              <p className="text-gray-600 text-center">No reviews available</p>
-            )}
+              ) : (
+                <div className="bg-white p-8 rounded-xl shadow-md">
+                  <p className="text-slate-600 text-center">
+                    {reviews.length === 0 ? 'No reviews available' : 'Loading reviews...'}
+                  </p>
+                </div>
+              )}
+            </AnimatePresence>
           </div>
 
           <button
             onClick={goNext}
-            disabled={loading || reviews.length === 0}
-            className="p-2 hover:bg-slate-100 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!reviews.length}
+            className="p-2 hover:bg-slate-100 rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Next review"
           >
-            <ChevronRight className="w-8 h-8 text-gray-600" />
+            <ChevronRight className="w-8 h-8 text-slate-600" />
           </button>
         </div>
+
+        {reviews.length > 0 && (
+          <div className="flex justify-center gap-2 mb-8">
+            {reviews.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentReviewIndex(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentReviewIndex ? 'bg-amber-500 scale-125' : 'bg-slate-300'
+                }`}
+                aria-label={`Go to review ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
@@ -152,11 +205,3 @@ function StarIcon({ className }: { className?: string }) {
     </svg>
   )
 }
-
-const SkeletonCard = () => (
-  <div className="bg-white p-6 rounded-xl shadow-md animate-pulse">
-    <div className="h-4 bg-gray-200 rounded w-1/3 mb-4" />
-    <div className="h-24 bg-gray-200 rounded mb-4" />
-    <div className="h-4 bg-gray-200 rounded w-1/4" />
-  </div>
-)
