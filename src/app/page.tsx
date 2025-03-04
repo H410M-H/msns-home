@@ -1,14 +1,13 @@
-import { CTASection } from '~/components/blocks/landing/CTASection'
-import { FeaturesSection } from '~/components/blocks/landing/FeaturesSection'
-import { HeroSection } from '~/components/blocks/landing/HeroSection'
-import { QuickLinksSection } from '~/components/blocks/landing/QuickLinksSection'
-import { TestimonialsSection } from '~/components/blocks/landing/Testimonials'
+import { HeroHome } from "~/components/blocks/landing/HeroSection";
+import { QuickLinksSection } from "~/components/blocks/landing/QuickLinksSection";
+import { FeaturesSection } from "~/components/blocks/landing/FeaturesSection";
+import { CTASection } from "~/components/blocks/landing/CTASection";
+import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 font-sans">
-      <HeroSection
-      />
+      <HeroHome />
       {/* <AnnouncementsSection /> */}
       <QuickLinksSection />
       <FeaturesSection />

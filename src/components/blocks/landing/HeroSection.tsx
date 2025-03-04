@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 
-export function HeroSection() {
+export function HeroHome() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0)
 
   const videos = [
