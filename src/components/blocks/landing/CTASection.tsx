@@ -33,7 +33,7 @@ export const CTASection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <Link href="/signup">
+          <Link href="/contact">
           <Button 
   size="lg" 
   className="bg-emerald-500 hover:bg-emerald-600 text-white text-lg px-8 py-6 rounded-full shadow-lg transition-all duration-300 hover:scale-105"

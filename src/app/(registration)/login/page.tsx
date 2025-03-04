@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from 'next/image';
 import { Button } from '~/components/ui/button';
-import { LoginForm } from "~/components/forms/LoginForm";
+import { LoginForm } from "~/components/LoginForm";
 
 export default function LoginPage () {
   return (

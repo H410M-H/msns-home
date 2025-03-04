@@ -85,7 +85,7 @@ export function HeroSection() {
           className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => console.log("Learn more clicked!")}
+          onClick={( ) => console.log("/about")}
         >
           Learn More
         </motion.button>
