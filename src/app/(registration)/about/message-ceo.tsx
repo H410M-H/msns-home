@@ -51,7 +51,7 @@ export default function MessageFromCEO() {
               Thank you for your continued trust and support. We look forward to celebrating the achievements of our students and the growth of our community.
               Sincerely,
               Founder, M. S. Naz High School®            </p>
-            <p className="text-right text-slate-900 font-bold">— Siddique</p>
+            <p className="text-right text-slate-900 font-bold">— Siddique |  LATE</p>
           </div>
         </motion.div>
       </div>
