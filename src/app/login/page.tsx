@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from 'next/image';
 import { Button } from '~/components/ui/button';
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from "~/components/forms/LoginForm";
 
 export default function LoginPage () {
   return (
@@ -31,7 +31,7 @@ export default function LoginPage () {
                 Register
               </Button>
             </Link>
-            <Link href="/dashboard">
+            <Link href="/">
               <Button className="bg-blue-500 w-full py-2 rounded-lg text-white font-semibold hover:bg-blue-600 transition duration-300 transform hover:scale-105">
                 Admin Login
               </Button>
