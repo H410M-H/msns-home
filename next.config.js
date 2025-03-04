@@ -13,11 +13,11 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/dvvbxrs55/image/upload/**",
       },
-      {
-        protocol: "https",
-        hostname: "storage.googleapis.com",
-        pathname: "/**",
-      },
+      // {
+      //   protocol: "https",
+      //   hostname: "storage.googleapis.com",
+      //   pathname: "/**",
+      // },
     ],
   },
 };

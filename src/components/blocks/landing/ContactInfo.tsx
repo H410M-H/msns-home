@@ -5,7 +5,7 @@ import { Phone, Mail, MapPin, Clock, MessageSquare, ArrowRight } from 'lucide-re
 import { Button } from "~/components/ui/button"
 import { QuickLinksSection } from "./QuickLinksSection"
 
-export default function ContactInfo() {
+export const ContactInfo=() => {
   return (
     <div className="space-y-8 md:space-y-12">
       {/* Contact Methods Grid */}

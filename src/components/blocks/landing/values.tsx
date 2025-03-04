@@ -9,7 +9,7 @@ interface SchoolValuesProps {
   setExpandedValue: (value: number | null) => void
 }
 
-export default function SchoolValues({ expandedValue, setExpandedValue }: SchoolValuesProps) {
+export const SchoolValues = ({ expandedValue, setExpandedValue }: SchoolValuesProps) => {
   const values = [
     {
       title: "Excellence",

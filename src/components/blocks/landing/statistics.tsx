@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { BookOpen, Users, Trophy, Lightbulb } from "lucide-react"
 import { Card, CardContent } from "~/components/ui/card"
 
-export default function KeyStatistics() {
+export const KeyStatistics = () => {
   const stats = [
     { icon: BookOpen, label: "AP Courses", value: "15+", color: "text-purple-400" },
     { icon: Users, label: "Student-Teacher Ratio", value: "18:1", color: "text-teal-400" },

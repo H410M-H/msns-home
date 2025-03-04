@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { useScroll, useTransform, useSpring } from "framer-motion"
-import HeroSection from "~/components/blocks/landing/hero-section"
-import MessageFromPrincipal from "~/components/blocks/landing/message-ceo"
-import MissionStatement from "~/components/blocks/landing/mission-statement"
-import KeyStatistics from "~/components/blocks/landing/statistics"
-import SchoolValues from "~/components/blocks/landing/values"
+import { SchoolValues } from "~/components/blocks/landing/values"
+import { MissionStatement } from "~/components/blocks/landing/mission-statement"
+import { KeyStatistics } from "~/components/blocks/landing/statistics"
+import { MessageFromCEO } from "~/components/blocks/landing/message-ceo"
+import { HeroSection } from "~/components/blocks/landing/hero-section"
 
 export default function About() {
   const { scrollYProgress } = useScroll()
@@ -22,7 +22,7 @@ export default function About() {
     <section className="flex flex-col min-h-screen pt-4 bg-gradient-to-br from-green-900 via-yellow-700/50 to-purple-900/30">
       <main className="flex-grow">
         <HeroSection scale={scale} rotateX={rotateX} />
-        <MessageFromPrincipal />
+        <MessageFromCEO />
         <MissionStatement />
         <KeyStatistics />
         <SchoolValues expandedValue={expandedValue} setExpandedValue={setExpandedValue} />

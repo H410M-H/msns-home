@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-export default function MissionStatement() {
+export const MissionStatement = ( ) => {
   return (
     <motion.section
       className="py-24 relative"

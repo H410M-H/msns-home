@@ -4,7 +4,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
 
-export default function MessageFromCEO() {
+export const MessageFromCEO = () => {
   return (
     <section className="py-24 bg-white">
       <div className="container mx-auto px-4">

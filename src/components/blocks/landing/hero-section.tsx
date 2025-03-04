@@ -10,7 +10,7 @@ interface HeroSectionProps {
   rotateX: string | number | CustomValueType | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
 }
 
-export default function HeroSection({ scale, rotateX }: HeroSectionProps) {
+export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <motion.div style={{ scale, rotateX }} className="absolute inset-0 shadow-2xl">

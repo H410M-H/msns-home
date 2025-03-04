@@ -1,16 +1,13 @@
-"use client"
-
-import ContactInfo from "~/components/blocks/landing/ContactInfo"
-import GeometricBackground from "~/components/blocks/landing/GeometricBg"
+import { ContactInfo } from "~/components/blocks/landing/ContactInfo"
+import { GeometricBackground } from "~/components/blocks/landing/GeometricBg"
 
 
 export default function ContactPage() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
-      {/* CSS Geometric Background */}
+      
       <GeometricBackground />
 
-      {/* Content */}
       <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4 py-16">
         <div className="max-w-5xl w-full">
           <div className="text-center mb-12">
