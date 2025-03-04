@@ -102,11 +102,11 @@ export const Header = ({ className, ...props }: HeaderProps) => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : isDashboard ? (
-            <Link href="/">
+            <Link href="">
               <Button variant="outline">Profile</Button>
             </Link>
           ) : (
-            <Link href="/">
+            <Link href="">
               <Button variant="outline">Login</Button>
             </Link>
           )}

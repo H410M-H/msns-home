@@ -3,6 +3,7 @@
 import ContactInfo from "~/components/blocks/landing/ContactInfo"
 import GeometricBackground from "~/components/blocks/landing/GeometricBg"
 
+
 export default function ContactPage() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
