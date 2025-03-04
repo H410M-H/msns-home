@@ -56,7 +56,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
         <nav className="hidden md:block">
           <ul className="flex space-x-4 text-black font-bold">
             <li>
-              <Link href="/dashboard">
+              <Link href="/">
                 <Button variant="ghost">Home</Button>
               </Link>
             </li>

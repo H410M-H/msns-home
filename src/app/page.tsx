@@ -1,4 +1,3 @@
-import { AnnouncementsSection } from '~/components/blocks/landing/Announcements'
 import { CTASection } from '~/components/blocks/landing/CTASection'
 import { FeaturesSection } from '~/components/blocks/landing/FeaturesSection'
 import { HeroSection } from '~/components/blocks/landing/HeroSection'
@@ -10,7 +9,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 font-sans">
       <HeroSection
       />
-      <AnnouncementsSection />
+      {/* <AnnouncementsSection /> */}
       <QuickLinksSection />
       <FeaturesSection />
       <TestimonialsSection />
