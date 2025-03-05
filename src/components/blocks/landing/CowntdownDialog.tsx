@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '~/components/ui/button'
 import {
   Dialog,
@@ -16,29 +16,41 @@ import React from 'react'
 const CountdownDialog = () => {
   const [open, setOpen] = useState(false)
   const [timeLeft, setTimeLeft] = useState({
-    days: 45,
+    days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
   })
+  
+  // Store end time in a ref to persist between renders
+  const endDateRef = useRef<Date>(new Date(new Date().setDate(new Date().getDate() + 45)))
 
   useEffect(() => {
     if (!open) return
 
-    let totalSeconds = 45 * 24 * 60 * 60
-    const interval = setInterval(() => {
-      totalSeconds -= 1
-      
-      const days = Math.floor(totalSeconds / (24 * 3600))
-      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600)
-      const minutes = Math.floor((totalSeconds % 3600) / 60)
-      const seconds = totalSeconds % 60
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime()
+      const difference = endDateRef.current.getTime() - now
 
-      setTimeLeft({ days, hours, minutes, seconds })
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        )
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+        
+        setTimeLeft({ days, hours, minutes, seconds })
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+      }
+    }
 
-      if (totalSeconds <= 0) clearInterval(interval)
-    }, 1000)
-
+    // Calculate immediately on open
+    calculateTimeLeft()
+    
+    // Update every second
+    const interval = setInterval(calculateTimeLeft, 1000)
     return () => clearInterval(interval)
   }, [open])
 
