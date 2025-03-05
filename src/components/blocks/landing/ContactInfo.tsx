@@ -53,11 +53,11 @@ export const ContactInfo=() => {
           <div className="space-y-2 sm:space-y-3 flex-grow">
             <div>
               <p className="text-white/60 text-xs sm:text-sm">General Inquiries</p>
-              <p className="text-white font-medium text-sm sm:text-base">info@msnazhighschool.edu.pk</p>
+              <p className="text-white font-medium text-sm sm:text-base">info@msns.edu.pk</p>
             </div>
             <div>
               <p className="text-white/60 text-xs sm:text-sm">Admissions</p>
-              <p className="text-white font-medium text-sm sm:text-base">admissions@msnazhighschool.edu.pk</p>
+              <p className="text-white font-medium text-sm sm:text-base">admissions@msns.edu.pk</p>
             </div>
           </div>
           <Button asChild variant="ghost" className="mt-3 sm:mt-4 text-white hover:bg-white/20 group px-3 sm:px-4">
