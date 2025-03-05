@@ -22,7 +22,6 @@ const CountdownDialog = () => {
     seconds: 0,
   })
 
-  // Fixed end date (example: December 31st 2024 at midnight)
   const endDateRef = useRef<Date>(new Date("2025-04-30T00:00:00"))
 
   useEffect(() => {
@@ -57,9 +56,9 @@ const CountdownDialog = () => {
         <Button
           variant="outline"
           className={cn(
-            "animate-[pulse_2s_ease-in-out_infinite]",
+            "animate-[pulse_1.5s_ease-in-out_infinite]",
             "ml-4 backdrop-blur-sm bg-white/10 hover:bg-white/20",
-            "border-2 border-white/30 text-white",
+            "border-2 border-green-800/30 text-green-800/80",
             "rounded-2xl px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg font-semibold",
             "shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
           )}
