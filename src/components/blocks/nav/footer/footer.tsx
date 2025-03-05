@@ -114,8 +114,8 @@ export const Footer = ({ className, ...props }: FooterProps) => {
               <div className="flex items-start space-x-2">
                 <MapPin className="h-5 w-5 text-green-600 mt-1" />
                 <div>
-                  <span className="text-green-700 block">123 Education Street</span>
-                  <span className="text-green-700">Karachi, Pakistan</span>
+                  <span className="text-green-700 block"> G.T. Road, Ghakhar Opposite to Model Police station</span>
+                  <span className="text-green-700">Ghakhar, 52200, Pakistan</span>
                 </div>
               </div>
               <div className="flex items-center space-x-2">

@@ -110,12 +110,12 @@ export const ContactInfo=() => {
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Visit Us</h3>
           <div className="space-y-2 sm:space-y-3 flex-grow">
             <div>
-              <p className="text-white/60 text-xs sm:text-sm">Street Address</p>
-              <p className="text-white font-medium text-sm sm:text-base">123 Education Avenue</p>
+              <p className="text-white/60 text-xs sm:text-sm"> G.T. ROAD GHAKHAR MANDI</p>
+              <p className="text-white font-medium text-sm sm:text-base">Opposite to Model Police station</p>
             </div>
             <div>
-              <p className="text-white/60 text-xs sm:text-sm">City/State</p>
-              <p className="text-white font-medium text-sm sm:text-base">Springfield, ST 12345</p>
+              <p className="text-white/60 text-xs sm:text-sm">Ghakhar, Gujranwala</p>
+              <p className="text-white font-medium text-sm sm:text-base">Punjab, Pakistan 52200</p>
             </div>
           </div>
           <Button asChild variant="ghost" className="mt-3 sm:mt-4 text-white hover:bg-white/20 group px-3 sm:px-4">
