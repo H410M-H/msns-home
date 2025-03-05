@@ -21,9 +21,9 @@ const CountdownDialog = () => {
     minutes: 0,
     seconds: 0,
   })
-  
-  // Store end time in a ref to persist between renders
-  const endDateRef = useRef<Date>(new Date(new Date().setDate(new Date().getDate() + 45)))
+
+  // Fixed end date (example: December 31st 2024 at midnight)
+  const endDateRef = useRef<Date>(new Date("2025-04-30T00:00:00"))
 
   useEffect(() => {
     if (!open) return
@@ -39,17 +39,14 @@ const CountdownDialog = () => {
         )
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
         const seconds = Math.floor((difference % (1000 * 60)) / 1000)
-        
+
         setTimeLeft({ days, hours, minutes, seconds })
       } else {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
       }
     }
 
-    // Calculate immediately on open
     calculateTimeLeft()
-    
-    // Update every second
     const interval = setInterval(calculateTimeLeft, 1000)
     return () => clearInterval(interval)
   }, [open])
