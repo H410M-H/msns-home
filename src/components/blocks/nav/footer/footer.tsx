@@ -98,7 +98,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
               {["Home", "About", "Academics", "Contact"].map((item) => (
                 <Link
                   key={item}
-                  href="#"
+                  href="/#"
                   className="block text-green-700 transition-all hover:text-pink-600 hover:pl-2 hover:font-medium"
                 >
                   {item}
@@ -158,8 +158,8 @@ export const Footer = ({ className, ...props }: FooterProps) => {
         {/* Copyright */}
         <div className="flex flex-col items-center justify-between md:flex-row md:space-y-0">
           <p className="text-center text-sm text-green-700 font-medium">
-            © {new Date().getFullYear()} MSNS-DEV | M.S. NAZ HIGH SCHOOL®
-            <br className="md:hidden" /> HH_STUDIOS™ | All rights reserved.
+            © {new Date().getFullYear()} MSNS-DEV™ | M.S. NAZ HIGH SCHOOL®
+            <br className="md:hidden" /> | All rights reserved.
           </p>
           <div className="flex space-x-4">
             <Link href="#" className="text-sm text-green-700 hover:text-pink-600 transition-colors">

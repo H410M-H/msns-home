@@ -12,7 +12,7 @@ import { motion } from "framer-motion"
 import { CalendarIcon, DollarSignIcon, ClipboardCheckIcon, MailIcon, ArrowRight } from "lucide-react"
 import { AdmissionsCriteria } from "~/components/blocks/landing/AdmissionCriteria";
 import { FeeStructure } from "~/components/blocks/landing/FeeStructure";
-import { AdmissionsFaq } from "~/components/blocks/landing/admissionFaq";
+import { AdmissionsFaq } from "~/components/blocks/landing/AdmissionsFaq";
 
 const AnimatedTabsContent = motion.create(TabsContent)
 const tabContentVariants = {
@@ -117,7 +117,7 @@ export default function Admission() {
             </AnimatedTabsContent>
 
             <AnimatedTabsContent
-              value="FAQs"
+              value="faq"
               variants={tabContentVariants}
               initial="initial"
               animate="enter"
