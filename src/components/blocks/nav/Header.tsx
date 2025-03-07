@@ -74,6 +74,11 @@ export const Header = ({ className, ...props }: HeaderProps) => {
               </Link>
             </li>
             <li>
+              <Link href="/admission">
+                <Button variant="ghost">Admissions</Button>
+              </Link>
+            </li>
+            <li>
               <Link href="/contact">
                 <Button variant="ghost">Contact</Button>
               </Link>
