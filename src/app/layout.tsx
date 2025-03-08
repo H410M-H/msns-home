@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-
+import { Analytics } from "@vercel/analytics/react"
 import { TRPCReactProvider } from "~/trpc/react";
 import { Footer } from "~/components/blocks/nav/footer/footer";
 import { Header } from "~/components/blocks/nav/Header";
@@ -9,7 +9,7 @@ import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "MSNS® | LMS",
-  description: "Developed by MSND-DEV™",
+  description: "Developed by MSNS-DEV™",
   icons: [{ rel: "icon", url: "/logo-w.ico" }],
 
 };
@@ -23,6 +23,7 @@ export default function RootLayout({
         <TRPCReactProvider>
             <Header />
               <main className="flex-1">{children}
+              <Analytics />
               </main>
             <Footer />
             <Toaster />
