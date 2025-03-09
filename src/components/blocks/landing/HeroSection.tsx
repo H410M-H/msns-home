@@ -68,7 +68,7 @@ export function HeroHome() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          M.S.NAZ HIGH SCHOOL
+          M.S.NAZ HIGH SCHOOL®
         </motion.h1>
 
         <motion.p

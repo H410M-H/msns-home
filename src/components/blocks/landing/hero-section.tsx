@@ -31,7 +31,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
         transition={{ duration: 0.8 }}
       >
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent">
-          M.S.NAZ HIGH SCHOOL
+          M.S.NAZ HIGH SCHOOL®
         </h1>
         <motion.p
           className="text-xl md:text-3xl font-serif text-white mb-12 font-normal"
