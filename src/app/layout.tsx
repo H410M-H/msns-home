@@ -8,11 +8,11 @@ import { Header } from "~/components/blocks/nav/Header";
 import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "MSNS® | LMS",
+  title: "M. S. NAZ HIGH SCHOOL®",
   description: "Developed by MSNS-DEV™",
   icons: [{ rel: "icon", url: "/logo-w.ico" }],
   other: {
-    keywords: "msns, msnaz, msnazhighschool, lms, top schools, ghakkhar, gakhar, wazirabad, gujranwala, sialkot, lahore, punjab, pakistan, msns-dev",
+    keywords: "msns, m s naz, m s naz high school, msnaz, msnazhighschool, lms, top schools, ghakkhar, gakhar, wazirabad, gujranwala, sialkot, lahore, punjab, pakistan, msns-dev",
   },
 };
 
