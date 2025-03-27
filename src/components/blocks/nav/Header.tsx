@@ -90,7 +90,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="fixed inset-0 z-40 bg-yellow-300/30 md:hidden pt-16"
+              className="fixed inset-0 z-40 bg-green-900/70 md:hidden pt-16"
             >
               <nav className="p-4">
                 <ul className="flex flex-col space-y-2">
