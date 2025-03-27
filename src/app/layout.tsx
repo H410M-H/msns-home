@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   title: "MSNS® | LMS",
   description: "Developed by MSNS-DEV™",
   icons: [{ rel: "icon", url: "/logo-w.ico" }],
-
+  other: {
+    keywords: "msns, msnaz, msnazhighschool, lms, top schools, ghakkhar, gakhar, wazirabad, gujranwala, sialkot, lahore, punjab, pakistan, msns-dev",
+  },
 };
 
 export default function RootLayout({
