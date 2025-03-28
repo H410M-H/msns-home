@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '~/components/ui/button'
+import Link from 'next/link'
 
 export function HeroHome() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0)
@@ -63,12 +64,12 @@ export function HeroHome() {
       {/* Main content overlay */}
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold mb-4 bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent drop-shadow-2xl"
+          className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold mb-4 bg-gradient-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text text-transparent drop-shadow-2xl"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          M.S.NAZ HIGH SCHOOL®
+          M.S.NAZ HIGH SCHOOL
         </motion.h1>
 
         <motion.p
@@ -81,14 +82,10 @@ export function HeroHome() {
         </motion.p>
 
         {/* "Learn More" interactive button */}
-        <motion.button
-          className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={( ) => console.log("/about")}
+        <Link href="/about"          className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none"
         >
           Learn More
-        </motion.button>
+        </Link>
       </div>
 
       {/* Left and right navigation controls */}
@@ -97,7 +94,7 @@ export function HeroHome() {
           onClick={goToPrevVideo}
           className="bg-white/30 hover:bg-white/50 p-2 rounded-full"
         >
-          <ChevronLeft className="w-6 h-6 text-white" />
+          <ChevronLeft className="w-4 h-4 text-white" />
         </Button>
       </div>
       <div className="absolute top-1/2 right-4 transform -translate-y-1/2">

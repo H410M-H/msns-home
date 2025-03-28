@@ -106,8 +106,8 @@ export const Header = ({ className, ...props }: HeaderProps) => {
                         className={cn(
                           "block px-4 py-3 rounded-lg font-medium",
                           pathname === link.path
-                            ? "bg-green-900 text-white"
-                            : "text-green-900 hover:bg-gray-50"
+                            ? "bg-yellow-600/60 text-white"
+                            : "text-white hover:bg-blue-500"
                         )}
                       >
                         {link.name}

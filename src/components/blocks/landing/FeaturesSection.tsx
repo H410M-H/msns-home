@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardTitle } from "~/components/ui/c
 export const FeaturesSection = () => {
   const featureCards = [
     {
-      image: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737373450/designJpg/gnbgxijeskoscsmhet5r.png", // Ensure PNG with transparency
+      image: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737373450/designJpg/gnbgxijeskoscsmhet5r.png",
       title: "Academic Excellence",
       description: "Our rigorous curriculum prepares students for success in higher education and beyond."
     },
@@ -29,10 +29,10 @@ export const FeaturesSection = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-green-50 via-emerald-100 to-green-50 py-16 md:py-24 px-4 md:px-8 relative overflow-hidden">
+    <section className="bg-gradient-to-br from-green-900/20 via-emerald-400/30 to-teal-500/60 py-16 md:py-24 px-4 md:px-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl md:text-5xl font-serif font-bold mb-12 text-center bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-serif font-bold mb-12 text-center bg-gradient-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -84,14 +84,14 @@ function FeatureCard({ image, title, description }: {
   description: string;
 }) {
   return (
-    <Card className="h-full bg-emerald-100/30 backdrop-blur-xl border border-emerald-200/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 group hover:border-emerald-300/70">
-      <CardContent className="p-8 flex flex-col items-center">
+    <Card className="h-full bg-emerald-100/60 backdrop-blur-xl border border-emerald-900/50 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 group hover:border-yellow-900/70">
+      <CardContent className="p-4 flex flex-col items-center">
         <motion.div 
-          className="mb-8 p-6 bg-white/20 rounded-3xl shadow-lg border border-white/30"
+          className="mb-8 p-6 bg-white/70 rounded-3xl shadow-lg border border-white/30"
           whileHover={{ scale: 1.1 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="relative w-28 h-28">
+          <div className="relative w-32 h-28">
             <Image
               src={image}
               alt={title}
@@ -106,7 +106,7 @@ function FeatureCard({ image, title, description }: {
           {title}
         </CardTitle>
         
-        <CardDescription className="text-emerald-800/90 text-center text-lg leading-relaxed">
+        <CardDescription className="font-serif text-emerald-900/90 text-center text-lg leading-relaxed">
           {description}
         </CardDescription>
       </CardContent>

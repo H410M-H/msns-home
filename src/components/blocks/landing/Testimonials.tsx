@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Button } from '~/components/ui/button'
 
 interface GoogleReview {
   author_name: string
@@ -27,7 +28,7 @@ export function TestimonialsSection() {
   }, [])
 
   const minSwipeDistance = 50
-  
+
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(0)
     if (e.targetTouches?.[0]) {
@@ -78,8 +79,8 @@ export function TestimonialsSection() {
   const currentReview = reviews[currentReviewIndex]
 
   return (
-    <section className="py-12 md:py-16 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 md:py-16 bg-gradient-to-br from-green-800/60 to-emerald-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
           <iframe
             title="School Location Map"
@@ -90,24 +91,24 @@ export function TestimonialsSection() {
           />
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 mt-12 md:mb-12 md:mt-16 text-slate-800">
+        <h2 className="text-6xl  pt-12 font-bold my-4 text-center bg-gradient-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent">
           What Our Community Says
         </h2>
 
-        <div 
+        <div
           className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          <button
+          <Button
             onClick={goPrev}
             disabled={!reviews.length}
-            className="p-2 hover:bg-slate-100 rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 hover:bg-slate-500 rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Previous review"
           >
-            <ChevronLeft className="w-8 h-8 text-slate-600" />
-          </button>
+            <ChevronLeft className="w-8 h-8 text-slate-100" />
+          </Button>
 
           <div className="flex-1 max-w-2xl min-h-[300px] w-full">
             <AnimatePresence mode='wait'>
@@ -129,16 +130,15 @@ export function TestimonialsSection() {
                         transition={{ delay: i * 0.05 }}
                       >
                         <StarIcon
-                          className={`w-6 h-6 ${
-                            i < (currentReview.rating ?? 0) 
-                              ? 'text-amber-400' 
+                          className={`w-6 h-6 ${i < (currentReview.rating ?? 0)
+                              ? 'text-amber-400'
                               : 'text-slate-200'
-                          }`}
+                            }`}
                         />
                       </motion.div>
                     ))}
                   </div>
-                  <p className="text-slate-600 mb-4 italic text-lg md:text-xl leading-relaxed">
+                  <p className="text-slate-900 mb-4 italic text-lg md:text-xl leading-relaxed">
                     &quot;{currentReview.text || 'No review text available'}&quot;
                   </p>
                   <div className="border-t border-slate-100 pt-4">
@@ -160,25 +160,24 @@ export function TestimonialsSection() {
             </AnimatePresence>
           </div>
 
-          <button
+          <Button
             onClick={goNext}
             disabled={!reviews.length}
             className="p-2 hover:bg-slate-100 rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Next review"
           >
             <ChevronRight className="w-8 h-8 text-slate-600" />
-          </button>
+          </Button>
         </div>
 
         {reviews.length > 0 && (
-          <div className="flex justify-center gap-2 mb-8">
+          <div className="flex justify-center gap-2 mb-2">
             {reviews.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentReviewIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentReviewIndex ? 'bg-amber-500 scale-125' : 'bg-slate-300'
-                }`}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentReviewIndex ? 'bg-amber-500 scale-125' : 'bg-slate-500'
+                  }`}
                 aria-label={`Go to review ${index + 1}`}
               />
             ))}

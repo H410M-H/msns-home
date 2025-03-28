@@ -6,7 +6,7 @@ import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 font-sans">
+    <main className="min-h-screen bg-gradient-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
       {/* <AnnouncementsSection /> */}
       <QuickLinksSection />
