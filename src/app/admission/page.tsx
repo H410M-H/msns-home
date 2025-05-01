@@ -174,7 +174,7 @@ export default function Admission() {
 }
 
 const admissionDates = [
-  { label: "Application Opens", date: "January 15, 2025" },
+  { label: "Application Opens", date: "February - April (Dates may vary)" },
   { label: "Application Deadline", date: "March 31, 2025" },
   { label: "Assessment Tests", date: "April 10-20, 2025" },
   { label: "Results Announced", date: "May 5, 2025" },
