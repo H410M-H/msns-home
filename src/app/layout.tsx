@@ -10,7 +10,7 @@ import { Toaster } from "~/components/ui/sonner";
 export const metadata: Metadata = {
   title: "M. S. NAZ HIGH SCHOOL®",
   description: "Developed by MSNS-DEV™",
-  icons: [{ rel: "icon", url: "/logo-w.ico" }],
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
   other: {
     keywords: "msns, m s naz, m s naz high school, msnaz, msnazhighschool, lms, top schools, ghakkhar, gakhar, wazirabad, gujranwala, sialkot, lahore, punjab, pakistan, msns-dev",
   },
