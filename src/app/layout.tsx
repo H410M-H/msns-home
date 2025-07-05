@@ -9,12 +9,49 @@ import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "M. S. NAZ HIGH SCHOOL®",
-  description: "Developed by MSNS-DEV™",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
-  other: {
-    keywords: "msns, m s naz, m s naz high school, msnaz, msnazhighschool, lms, top schools, ghakkhar, gakhar, wazirabad, gujranwala, sialkot, lahore, punjab, pakistan, msns-dev",
+  description: "Since - 2004 | Developed by MSNS-DEV™",
+    keywords:["msns", "m s naz", "m s naz high school", "msnaz", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
+    "educational excellence",
+    "academic achievement",
+    "leadership development",
+    "school admissions",
+    "extra-curricular activities",
+    "student-centered learning",
+    "modern education standards",
+    "high school education",
+    "Pakistani education system"].join(", "),
+  openGraph: {
+    title: "M.S. Naz High School®",
+    description: "Explore the premier educational experience at M.S. Naz High School® focused on excellence and student development.",
+    url: "https://www.msnazhighschool.com/",
+    siteName: "M.S. Naz High School®",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+        width: 1200,
+        height: 630,
+        alt: "M.S. Naz High School® Logo"
+      }
+    ]
   },
-};
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1
+    }
+  },
+  category: "Education",
+  alternates: {
+    canonical: "https://www.msns.edu.pk"
+  }
+};  
 
 export default function RootLayout({
   children,
