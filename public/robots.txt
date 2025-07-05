@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Sitemap: https://www.truly-seychelles.com/sitemap.xml
+Sitemap: https://www.msns.edu.pk/sitemap.xml
