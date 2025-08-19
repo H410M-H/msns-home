@@ -22,7 +22,7 @@ const CountdownDialog = () => {
     seconds: 0,
   })
 
-  const endDateRef = useRef<Date>(new Date("2025-08-31T00:00:00"))
+  const endDateRef = useRef<Date>(new Date("2025-07-30T00:00:00"))
 
   useEffect(() => {
     if (!open) return
