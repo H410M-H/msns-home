@@ -154,7 +154,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
           ) : (
             <div className="flex items-center gap-2">
               <CountdownDialog />
-              <Link href="/login">
+              <Link href="https://lms.msns.edu.pk" >
                 <Button
                   variant="default"
                   className="rounded-full bg-gradient-to-r from-primary to-emerald-600 hover:shadow-md"
