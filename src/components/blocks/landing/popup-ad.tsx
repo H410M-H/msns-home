@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { X, Trophy, Medal, Award } from "lucide-react"
 import Image from "next/image"
+import { Button } from "~/components/ui/button"
 
 export default function PopupAd() {
   const [isVisible, setIsVisible] = useState(false)
@@ -36,7 +37,7 @@ export default function PopupAd() {
       onClick={handleBackdropClick}
       style={{
         background:
-          "linear-gradient(135deg, rgba(74, 144, 226, 0.3) 0%, rgba(80, 200, 120, 0.3) 50%, rgba(255, 107, 107, 0.3) 100%)",
+          "linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(80, 200, 120, 0.3) 50%, rgba(255, 107, 107, 0.3) 100%)",
         backdropFilter: "blur(10px)",
         animation: "gradientShift 6s ease-in-out infinite",
       }}
@@ -68,7 +69,7 @@ export default function PopupAd() {
         }}
       >
         {/* Close Button */}
-        <button
+        <Button
           onClick={handleClose}
           className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10"
           style={{
@@ -84,7 +85,7 @@ export default function PopupAd() {
           aria-label="Close popup"
         >
           <X size={18} />
-        </button>
+        </Button>
 
         <div className="p-8 text-center">
           <div
