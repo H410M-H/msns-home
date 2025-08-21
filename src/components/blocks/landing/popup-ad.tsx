@@ -171,7 +171,7 @@ export default function PopupAd() {
                 <div className="text-yellow-500 font-bold text-lg">3rd Position</div>
                 <div className="text-green-900">Momina</div>
                 <div className="text-red-800 text-sm">Roll No: 206676</div>
-                <div className="text-red-600 font-semibold">Marks: 538/545</div>
+                <div className="text-red-600 font-semibold">Marks: 522/545</div>
               </div>
             </div>
           </div>
