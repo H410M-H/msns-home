@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "M.S. Naz High School®",
     description: "Explore the premier educational experience at M.S. Naz High School® focused on excellence and student development.",
-    url: "https://www.msns.edu.pk/",
+    url: "https://msns.edu.pk/",
     siteName: "M.S. Naz High School®",
     type: "website",
     locale: "en_US",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   category: "Education",
   alternates: {
-    canonical: "https://www.msns.edu.pk"
+    canonical: "https://msns.edu.pk"
   }
 };  
 
