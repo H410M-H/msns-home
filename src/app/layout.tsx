@@ -51,6 +51,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://msns.edu.pk",
   },
+  manifest: "/manifest.json",
 };  
 
 export default function RootLayout({
