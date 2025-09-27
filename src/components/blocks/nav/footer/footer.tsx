@@ -164,7 +164,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
   </p>
   <div className="flex space-x-4">
     <Link
-      href="/privacy-policy"
+      href="/terms-of-service"
       className="text-sm text-green-700 hover:text-pink-600 transition-colors"
     >
       Privacy Policy
