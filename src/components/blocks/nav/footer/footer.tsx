@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -114,8 +115,8 @@ export const Footer = ({ className, ...props }: FooterProps) => {
               <div className="flex items-start space-x-2">
                 <MapPin className="h-5 w-5 text-green-600 mt-1" />
                 <div>
-                  <span className="text-green-700 block"> G.T. Road, Ghakhar Opposite to Model Police station</span>
-                  <span className="text-green-700">Ghakhar, 52200, Pakistan</span>
+                  <span className="text-green-700 block"> G.T. Road, Ghakhar Opposite to Model Police Station</span>
+                  <span className="text-green-700">Gakkhar, 52200, Pakistan</span>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
@@ -126,7 +127,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-5 w-5 text-green-600" />
-                <Link href="mailto:info@msnschool.edu.pk" className="text-green-700 hover:text-pink-600">
+                <Link href="mailto:info@msnazhighschool@gmail.com" className="text-green-700 hover:text-pink-600">
                   info@msns.edu.pk
                 </Link>
               </div>
@@ -156,21 +157,27 @@ export const Footer = ({ className, ...props }: FooterProps) => {
         <div className="my-4 border-t border-green-100" />
 
         {/* Copyright */}
-        <div className="flex flex-col items-center justify-between md:flex-row md:space-y-0">
-          <p className="text-center text-sm text-green-700 font-medium">
-            © {new Date().getFullYear()} MSNS-DEV™ | M.S. NAZ HIGH SCHOOL®
-            <br className="md:hidden" /> | All rights reserved.
-          </p>
-          <div className="flex space-x-4">
-            <Link href="#" className="text-sm text-green-700 hover:text-pink-600 transition-colors">
-              Privacy Policy
-            </Link>
-            <span className="text-green-300">|</span>
-            <Link href="#" className="text-sm text-green-700 hover:text-pink-600 transition-colors">
-              Terms of Service
-            </Link>
-          </div>
-        </div>
+<div className="flex flex-col items-center justify-between md:flex-row md:space-y-0">
+  <p className="text-center text-sm text-green-700 font-medium">
+    © {new Date().getFullYear()} MSNS-DEV™ | M.S. NAZ HIGH SCHOOL®
+    <br className="md:hidden" /> | All rights reserved.
+  </p>
+  <div className="flex space-x-4">
+    <Link
+      href="/privacy-policy"
+      className="text-sm text-green-700 hover:text-pink-600 transition-colors"
+    >
+      Privacy Policy
+    </Link>
+    <span className="text-green-300">|</span>
+    <Link
+      href="/terms-of-service"
+      className="text-sm text-green-700 hover:text-pink-600 transition-colors"
+    >
+      Terms of Service
+    </Link>
+  </div>
+</div>
       </div>
     </footer>
   );

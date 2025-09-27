@@ -35,7 +35,7 @@ const announcements: Announcement[] = [
     date: "2024-03-15",
     content: "Updated academic schedule for 2024-25 session now available",
     icon: <Calendar className="w-6 h-6" />,
-    href: "/news/academic-calendar"
+    href: "/"
   },
   {
     title: "Sports Day Announcement",

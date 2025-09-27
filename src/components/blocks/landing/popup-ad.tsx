@@ -65,7 +65,7 @@ export default function PopupAd() {
           e.currentTarget.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.02)"
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1)"
+          e.currentTarget.style.transform = "perspective(1000px) rotateX(2deg) rotateY(-2deg) scale(1)"
         }}
       >
         {/* Close Button */}
@@ -74,7 +74,7 @@ export default function PopupAd() {
           className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10"
           style={{
             background: "rgba(255, 255, 255, 0.2)",
-            backdropFilter: "blur(10px)",
+            backdropFilter: "blur(30px)",
             borderRadius: "50%",
             width: "32px",
             height: "32px",
@@ -119,7 +119,9 @@ export default function PopupAd() {
               <Image
                 src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/MUHAMMAD_JUNAID_ALI_-_104478_m0uqaw.jpg"
                 alt="Junaid Ali"
-                className="w-16 h-16 rounded-full object-cover border-2 border-white/30"
+                className="rounded-full object-cover border-2 border-white/30"
+                width={64}
+                height={64}
               />
               <div className="text-left flex-1">
                 <div className="text-yellow-500 font-bold text-lg">1st Position</div>
@@ -142,7 +144,9 @@ export default function PopupAd() {
               <Image
                 src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/SEHAL_BUTT_-_104613_g1mdxd.jpg"
                 alt="Sehal Butt"
-                className="w-16 h-16 rounded-full object-cover border-2 border-white/30"
+                className="rounded-full object-cover border-2 border-white/30"
+                width={64}
+                height={64}
               />
               <div className="text-left flex-1">
                 <div className="text-yellow-700 font-bold text-lg">2nd Position</div>
@@ -165,7 +169,9 @@ export default function PopupAd() {
               <Image
                 src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702296/MOMINA_MANSHA_ogl2jd.jpg"
                 alt="Momina"
-                className="w-16 h-16 rounded-full object-cover border-2 border-white/30"
+                className="rounded-full object-cover border-2 border-white/30"
+                width={64}
+                height={64}
               />
               <div className="text-left flex-1">
                 <div className="text-yellow-500 font-bold text-lg">3rd Position</div>

@@ -9,7 +9,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { User, Menu, X } from 'lucide-react'
 import { cn } from "~/lib/utils"
 import { motion, AnimatePresence } from 'framer-motion'
-import CountdownDialog from '../landing/CowntdownDialog'
 
 type HeaderProps = React.HTMLAttributes<HTMLElement>
 
@@ -31,6 +30,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     { name: 'About', path: '/about' },
     { name: 'Admissions', path: '/admission' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Terms of Service', path: '/terms-of-service' },
   ]
 
   return (
@@ -46,7 +46,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/" className="relative z-50">
+        <Link href="/https://lms.msns.edu.pk" className="relative z-50">
           <Image
             src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png"
             alt="Logo"
@@ -137,12 +137,12 @@ export const Header = ({ className, ...props }: HeaderProps) => {
                 className="rounded-xl shadow-lg border border-gray-100"
               >
                 <DropdownMenuItem asChild>
-                  <Link href="/account" className="cursor-pointer">
+                  <Link href="https://lms.msns.edu.pk/sign-in" className="cursor-pointer">
                     Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/settings" className="cursor-pointer">
+                  <Link href="/https://lms.msns.edu.pk/sign-in" className="cursor-pointer">
                     Settings
                   </Link>
                 </DropdownMenuItem>
@@ -153,7 +153,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
             </DropdownMenu>
           ) : (
             <div className="flex items-center gap-2">
-              <CountdownDialog />
+              {/* <CountdownDialog /> */}
               <Link href="https://lms.msns.edu.pk" >
                 <Button
                   variant="default"

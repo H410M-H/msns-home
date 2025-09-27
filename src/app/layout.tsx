@@ -49,8 +49,8 @@ export const metadata: Metadata = {
   },
   category: "Education",
   alternates: {
-    canonical: "https://msns.edu.pk"
-  }
+    canonical: "https://msns.edu.pk",
+  },
 };  
 
 export default function RootLayout({
