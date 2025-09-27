@@ -36,6 +36,12 @@ export const metadata: Metadata = {
       }
     ]
   },
+  appLinks: {
+    web: {
+      url: "https://lms.msns.edu.pk",
+      should_fallback: true
+    }
+  },
   robots: {
     index: true,
     follow: true,

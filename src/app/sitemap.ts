@@ -41,19 +41,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         {
       url: `${baseUrl}/terms-of-service`,
       lastModified: new Date("2025-06-27"),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.7,
     },
         {
       url: `${lmsUrl}/sign-in`,
       lastModified: new Date("2025-06-27"),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.8,
     },
     {
       url: `${lmsUrl}/dashboard`,
       lastModified: new Date("2025-06-27"),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.7,
     },
   ];
