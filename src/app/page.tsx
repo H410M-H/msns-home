@@ -23,11 +23,13 @@ export default function Home() {
     { src: 'https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398973/IMG_3254_rf7grp', alt: 'Artwork 11' },
     { src: 'https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398973/IMG_3276_rgkfiv', alt: 'Artwork 11' },
   ];
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
-      <section className="relative py-12">
+      <PopupAd />
+      <Toaster richColors closeButton />
+      <QuickLinksSection />
+            <section className="relative py-12">
         <InfiniteGallery
           images={sampleImages}
           speed={1.2}
@@ -37,11 +39,7 @@ export default function Home() {
           className="h-[70vh] w-full rounded-lg overflow-hidden shadow-lg"
           style={{ background: 'transparent' }}
         />
-
       </section>
-      <PopupAd />
-      <Toaster richColors closeButton />
-      <QuickLinksSection />
       <FeaturesSection />
       <TestimonialsSection />
       <CTASection />
