@@ -4,7 +4,7 @@ import { type MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.msns.edu.pk";
-  const lmsUrl = "https://www.lms.msns.edu.pk";
+  const lmsUrl = "https://www.lms.msns.edu.pk/sign-in";
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

@@ -3,11 +3,11 @@
 import Image from "next/image"
 import { Button } from "~/components/ui/button"
 import { ChevronDown } from "lucide-react"
-import { type CustomValueType, motion, type MotionValue } from "framer-motion"
+import { motion, type MotionValue } from "framer-motion"
 
 interface HeroSectionProps {
-  scale: string | number | CustomValueType | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
-  rotateX: string | number | CustomValueType | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
+  scale: string | number | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
+  rotateX: string | number | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
 }
 
 export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
