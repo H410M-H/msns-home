@@ -21,7 +21,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
           style={{ objectFit: "cover" }}
           className="absolute inset-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-slate-900/90" />
+        <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-slate-900/90" />
       </motion.div>
 
       <motion.div
@@ -30,7 +30,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 bg-linear-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent">
           M.S.NAZ HIGH SCHOOL®
         </h1>
         <motion.p
@@ -44,7 +44,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             size="lg"
-            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-lg rounded-full px-8 py-6 shadow-lg"
+            className="bg-linear-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-lg rounded-full px-8 py-6 shadow-lg"
           >
             Explore Our World
           </Button>

@@ -37,7 +37,7 @@ export const SchoolValues = ({ expandedValue, setExpandedValue }: SchoolValuesPr
   return (
     <section className="py-24 relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold text-center mb-16 bg-linear-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
           Our Core Values
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -53,11 +53,11 @@ export const SchoolValues = ({ expandedValue, setExpandedValue }: SchoolValuesPr
               }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-gradient-to-br from-slate-800 to-slate-900/50 border border-white/10 hover:border-blue-400/30 transition-all group">
+              <Card className="h-full bg-linear-to-br from-slate-800 to-slate-900/50 border border-white/10 hover:border-blue-400/30 transition-all group">
                 <CardContent className="p-8 flex flex-col h-full">
-                  <div className={`w-full h-2 mb-6 rounded-full bg-gradient-to-r ${value.gradient}`} />
+                  <div className={`w-full h-2 mb-6 rounded-full bg-linear-to-r ${value.gradient}`} />
                   <h3 className="text-2xl font-bold mb-4 text-slate-100">{value.title}</h3>
-                  <p className="text-slate-300 mb-6 flex-grow">{value.description}</p>
+                  <p className="text-slate-300 mb-6 grow">{value.description}</p>
 
                   <motion.div
                     initial={false}

@@ -28,7 +28,7 @@ export const FeeStructure = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold bg-linear-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
           Fee Structure & Payment
         </h2>
       </motion.div>
@@ -39,7 +39,7 @@ export const FeeStructure = () => {
             <TabsTrigger 
               key={level} 
               value={level}
-              className="data-[state=active]:bg-background data-[state=active]:shadow-sm py-4 rounded-lg gap-2"
+              className="data-[state=active]:bg-background data-[state=active]:shadow-xs py-4 rounded-lg gap-2"
             >
               <School className="h-5 w-5" />
               {level.charAt(0).toUpperCase() + level.slice(1)} School
@@ -54,9 +54,9 @@ export const FeeStructure = () => {
               animate={{ opacity: 1 }}
               className="space-y-8"
             >
-              <div className="overflow-hidden rounded-xl border shadow-sm">
+              <div className="overflow-hidden rounded-xl border shadow-xs">
                 <table className="w-full">
-                  <thead className="bg-gradient-to-r from-primary/5 to-cyan-500/5">
+                  <thead className="bg-linear-to-r from-primary/5 to-cyan-500/5">
                     <tr>
                       <th className="p-4 text-left font-semibold text-primary"><Book className="h-5 w-5 inline mr-2" />Fee Type</th>
                       <th className="p-4 text-left font-semibold text-primary"><Calculator className="h-5 w-5 inline mr-2" />Amount</th>
@@ -90,7 +90,7 @@ export const FeeStructure = () => {
 
               <div className="grid gap-6 md:grid-cols-2">
                 <motion.div 
-                  className="rounded-xl border bg-gradient-to-b from-blue-50/50 p-6"
+                  className="rounded-xl border bg-linear-to-b from-blue-50/50 p-6"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
@@ -117,7 +117,7 @@ export const FeeStructure = () => {
                 </motion.div>
 
                 <motion.div 
-                  className="rounded-xl border bg-gradient-to-b from-cyan-50/50 p-6"
+                  className="rounded-xl border bg-linear-to-b from-cyan-50/50 p-6"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                 >
@@ -166,7 +166,7 @@ export const FeeStructure = () => {
               </div>
 
               <motion.div
-                className="rounded-xl border bg-gradient-to-b from-purple-50/50 p-6"
+                className="rounded-xl border bg-linear-to-b from-purple-50/50 p-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >

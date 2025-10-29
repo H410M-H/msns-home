@@ -100,7 +100,7 @@ export default function PopupAd() {
           </div>
 
           <h2 className="text-3xl font-bold text-white drop-shadow-lg mb-2">M.S. Naz High School</h2>
-          <p className="text-xl text-white/90 mb-6 drop-shadow-sm">Ranking 2nd in GHAKHAR City 🏆</p>
+          <p className="text-xl text-white/90 mb-6 drop-shadow-xs">Ranking 2nd in GHAKHAR City 🏆</p>
 
           <h3 className="text-xl font-semibold text-white mb-6 drop-shadow-lg">Top 3 Achievers - 9th Grade Results</h3>
 
@@ -115,7 +115,7 @@ export default function PopupAd() {
                 border: "1px solid rgba(255, 215, 0, 0.4)",
               }}
             >
-              <Trophy className="text-yellow-300 flex-shrink-0" size={32} />
+              <Trophy className="text-yellow-300 shrink-0" size={32} />
               <Image
                 src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/MUHAMMAD_JUNAID_ALI_-_104478_m0uqaw.jpg"
                 alt="Junaid Ali"
@@ -140,7 +140,7 @@ export default function PopupAd() {
                 border: "1px solid rgba(192, 192, 192, 0.4)",
               }}
             >
-              <Medal className="text-gray-300 flex-shrink-0" size={32} />
+              <Medal className="text-gray-300 shrink-0" size={32} />
               <Image
                 src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/SEHAL_BUTT_-_104613_g1mdxd.jpg"
                 alt="Sehal Butt"
@@ -165,7 +165,7 @@ export default function PopupAd() {
                 border: "1px solid rgba(205, 127, 50, 0.4)",
               }}
             >
-              <Award className="text-orange-300 flex-shrink-0" size={32} />
+              <Award className="text-orange-300 shrink-0" size={32} />
               <Image
                 src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702296/MOMINA_MANSHA_ogl2jd.jpg"
                 alt="Momina"

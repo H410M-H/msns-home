@@ -40,7 +40,7 @@ export function HeroHome() {
   return (
     <motion.section className="relative h-screen overflow-hidden">
       {/* Gradient overlay for improved contrast */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-slate-900/90" />
+      <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-slate-900/90" />
 
       {/* Video Background with fade transition */}
       <AnimatePresence>
@@ -64,7 +64,7 @@ export function HeroHome() {
       {/* Main content overlay */}
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold mb-4 bg-gradient-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text text-transparent drop-shadow-2xl"
+          className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold mb-4 bg-linear-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text text-transparent drop-shadow-2xl"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -82,7 +82,7 @@ export function HeroHome() {
         </motion.p>
 
         {/* "Learn More" interactive button */}
-        <Link href="/about"          className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none"
+        <Link href="/about"          className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-hidden"
         >
           Learn More
         </Link>

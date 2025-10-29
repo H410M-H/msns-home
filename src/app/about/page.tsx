@@ -19,8 +19,8 @@ export default function About() {
   const [expandedValue, setExpandedValue] = useState<number | null>(null)
 
   return (
-    <section className="flex flex-col min-h-screen pt-4 bg-gradient-to-br from-green-900 via-yellow-700/50 to-purple-900/30">
-      <main className="flex-grow">
+    <section className="flex flex-col min-h-screen pt-4 bg-linear-to-br from-green-900 via-yellow-700/50 to-purple-900/30">
+      <main className="grow">
         <HeroSection scale={scale} rotateX={rotateX} />
         <MessageFromCEO />
         <MissionStatement />

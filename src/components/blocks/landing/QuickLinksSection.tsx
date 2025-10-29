@@ -51,7 +51,7 @@ export function QuickLinksSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-6xl  font-bold mb-4 text-center bg-gradient-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent">
+            <h2 className="text-6xl  font-bold mb-4 text-center bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent">
               Connect With Us
             </h2>
             <p className="text-green-900 text-center mb-8 text-lg">
@@ -66,7 +66,7 @@ export function QuickLinksSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="bg-gray-800/20 border border-gray-700 backdrop-blur-sm rounded-xl hover:shadow-2xl transition-all duration-300 w-full max-w-2xl">
+            <Card className="bg-gray-800/20 border border-gray-700 backdrop-blur-xs rounded-xl hover:shadow-2xl transition-all duration-300 w-full max-w-2xl">
               <CardHeader className="flex flex-col items-center space-y-6 p-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
                   {socialIcons.map((icon, _index) => (
@@ -95,7 +95,7 @@ export function QuickLinksSection() {
                 </div>
 
                 <div className="mt-6 text-center">
-                  <p className="bg-gradient-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty mb-2 ">Direct Contact: 
+                  <p className="bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty mb-2 ">Direct Contact: 
                   <Link
                     href="mailto:msnazhighschool@gmail.com"
                     className="text-green-900 hover:text-blue-500 transition-colors text-lg font-medium pl-6"

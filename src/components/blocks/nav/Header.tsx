@@ -38,7 +38,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
       className={cn(
         `fixed top-0 left-0 right-0 z-50 transition-all duration-300`,
         scrolled 
-          ? 'bg-transparent backdrop-blur-md border-b border-gray-100 shadow-sm' 
+          ? 'bg-transparent backdrop-blur-md border-b border-gray-100 shadow-xs' 
           : 'bg-transparent',
         className
       )}
@@ -157,7 +157,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
               <Link href="https://lms.msns.edu.pk" >
                 <Button
                   variant="default"
-                  className="rounded-full bg-gradient-to-r from-primary to-emerald-600 hover:shadow-md"
+                  className="rounded-full bg-linear-to-r from-primary to-emerald-600 hover:shadow-md"
                 >
                   Login
                 </Button>

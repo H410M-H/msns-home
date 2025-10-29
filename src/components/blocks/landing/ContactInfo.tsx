@@ -17,11 +17,11 @@ export const ContactInfo=() => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="bg-white/10 backdrop-blur-lg rounded-xl p-4 sm:p-6 border border-white/20 flex flex-col h-full"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center mb-3 sm:mb-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-r from-blue-500 to-cyan-400 flex items-center justify-center mb-3 sm:mb-4">
             <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Call Us</h3>
-          <div className="space-y-2 sm:space-y-3 flex-grow">
+          <div className="space-y-2 sm:space-y-3 grow">
             <div>
               <p className="text-white/60 text-xs sm:text-sm">Main Office</p>
               <p className="text-white font-medium text-sm sm:text-base">+92 (318) 7625415</p>
@@ -46,11 +46,11 @@ export const ContactInfo=() => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white/10 backdrop-blur-lg rounded-xl p-4 sm:p-6 border border-white/20 flex flex-col h-full"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-400 flex items-center justify-center mb-3 sm:mb-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-r from-purple-500 to-pink-400 flex items-center justify-center mb-3 sm:mb-4">
             <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Email Us</h3>
-          <div className="space-y-2 sm:space-y-3 flex-grow">
+          <div className="space-y-2 sm:space-y-3 grow">
             <div>
               <p className="text-white/60 text-xs sm:text-sm">General Inquiries</p>
               <p className="text-white font-medium text-sm sm:text-base">info@msns.edu.pk</p>
@@ -75,11 +75,11 @@ export const ContactInfo=() => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="bg-white/10 backdrop-blur-lg rounded-xl p-4 sm:p-6 border border-white/20 flex flex-col h-full"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-green-500 to-emerald-400 flex items-center justify-center mb-3 sm:mb-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-r from-green-500 to-emerald-400 flex items-center justify-center mb-3 sm:mb-4">
             <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">WhatsApp</h3>
-          <div className="space-y-2 sm:space-y-3 flex-grow">
+          <div className="space-y-2 sm:space-y-3 grow">
             <div>
               <p className="text-white/60 text-xs sm:text-sm">Customer Service</p>
               <p className="text-white font-medium text-sm sm:text-base">+92 (318) 7625415</p>
@@ -104,11 +104,11 @@ export const ContactInfo=() => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-white/10 backdrop-blur-lg rounded-xl p-4 sm:p-6 border border-white/20 flex flex-col h-full"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-red-500 to-orange-400 flex items-center justify-center mb-3 sm:mb-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-r from-red-500 to-orange-400 flex items-center justify-center mb-3 sm:mb-4">
             <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Visit Us</h3>
-          <div className="space-y-2 sm:space-y-3 flex-grow">
+          <div className="space-y-2 sm:space-y-3 grow">
             <div>
               <p className="text-white/60 text-xs sm:text-sm"> G.T. ROAD GHAKHAR MANDI</p>
               <p className="text-white font-medium text-sm sm:text-base">Opposite to Model Police station</p>

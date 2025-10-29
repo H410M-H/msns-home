@@ -79,7 +79,7 @@ export function TestimonialsSection() {
   const currentReview = reviews[currentReviewIndex]
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-br from-green-800/60 to-emerald-50">
+    <section className="py-12 md:py-16 bg-linear-to-br from-green-800/60 to-emerald-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
           <iframe
@@ -91,7 +91,7 @@ export function TestimonialsSection() {
           />
         </div>
 
-        <h2 className="text-6xl  pt-12 font-bold my-4 text-center bg-gradient-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent">
+        <h2 className="text-6xl  pt-12 font-bold my-4 text-center bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent">
           What Our Community Says
         </h2>
 

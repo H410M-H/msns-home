@@ -32,7 +32,7 @@ export default function Admission() {
           transition={{ duration: 0.8 }}
         >
           <div className="mb-8 text-center">
-            <h1 className="mb-4 text-3xl font-bold md:text-4xl bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <h1 className="mb-4 text-3xl font-bold md:text-4xl bg-linear-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               Admissions Overview
             </h1>
             <p className="mx-auto max-w-3xl text-muted-foreground">
@@ -105,7 +105,7 @@ export default function Admission() {
                 </p>
                 <Button
                   size="lg"
-                  className="group rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-6 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl"
+                  className="group rounded-full bg-linear-to-r from-blue-600 to-cyan-500 px-8 py-6 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl"
                   asChild
                 >
                   <Link href="/admissions/apply">

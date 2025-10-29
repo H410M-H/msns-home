@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 export default function Terms() {
   return (
     <section className="relative flex flex-col min-h-screen pt-4">
-      <main className="flex-grow">
+      <main className="grow">
         <div className="relative w-full min-h-screen overflow-hidden">
           {/* Background */}
           <GeometricBackground />
@@ -21,7 +21,7 @@ export default function Terms() {
               whileHover={{ scale: 1.03, rotateY: 3 }}
               whileTap={{ scale: 0.98 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-6">
                 Terms of Service
               </h2>
               <div className="max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
@@ -35,7 +35,7 @@ export default function Terms() {
               whileHover={{ scale: 1.03, rotateY: -3 }}
               whileTap={{ scale: 0.98 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-400 via-teal-400 to-blue-400 bg-clip-text text-transparent mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-green-400 via-teal-400 to-blue-400 bg-clip-text text-transparent mb-6">
                 Privacy Policy
               </h2>
               <div className="max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">

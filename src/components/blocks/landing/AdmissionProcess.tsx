@@ -45,11 +45,11 @@ export const AdmissionsProcess = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="mb-8 text-3xl font-bold bg-gradient-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
+        <h2 className="mb-8 text-3xl font-bold bg-linear-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
           Our 6-Step Admission Journey
         </h2>
         
-        <div className="relative space-y-12 pl-8 before:absolute before:left-[35px] before:top-4 before:h-[calc(100%-60px)] before:w-1 before:bg-gradient-to-b before:from-primary before:via-cyan-500 before:to-primary before:opacity-30">
+        <div className="relative space-y-12 pl-8 before:absolute before:left-[35px] before:top-4 before:h-[calc(100%-60px)] before:w-1 before:bg-linear-to-b before:from-primary before:via-cyan-500 before:to-primary before:opacity-30">
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -65,7 +65,7 @@ export const AdmissionsProcess = () => {
                 </div>
               </div>
 
-              <div className="flex-1 rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="flex-1 rounded-xl border bg-card p-6 shadow-xs transition-all hover:shadow-md">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-100 text-sm font-bold text-primary">
                     0{index + 1}
@@ -83,7 +83,7 @@ export const AdmissionsProcess = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="rounded-2xl border bg-gradient-to-br from-cyan-50/50 to-blue-50/50 p-8 shadow-sm"
+        className="rounded-2xl border bg-linear-to-br from-cyan-50/50 to-blue-50/50 p-8 shadow-xs"
       >
         <div className="mb-6 flex items-center gap-3">
           <CheckCircle className="h-8 w-8 text-primary" />
@@ -105,7 +105,7 @@ export const AdmissionsProcess = () => {
               key={i}
               whileHover={{ x: 5 }}
               className={cn(
-                "flex items-center gap-3 rounded-lg bg-white/50 p-4 backdrop-blur-sm",
+                "flex items-center gap-3 rounded-lg bg-white/50 p-4 backdrop-blur-xs",
                 "border transition-colors hover:border-primary/20"
               )}
             >

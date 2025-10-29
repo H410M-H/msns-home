@@ -22,7 +22,7 @@ export const MessageFromCEO = () => {
           viewport={{ once: true }}
         >
           {/* Image section */}
-          <div className="md:w-1/3 w-full flex-shrink-0">
+          <div className="md:w-1/3 w-full shrink-0">
             <motion.div
               className="relative w-full h-80 md:h-96 border-4 border-emerald-500/30 rounded-lg overflow-hidden"
               whileHover={{ scale: 1.02 }}

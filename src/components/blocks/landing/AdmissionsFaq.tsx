@@ -58,7 +58,7 @@ export const AdmissionsFaq = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold bg-linear-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
             Your Admissions Questions Answered
           </h2>
         </motion.div>
@@ -107,7 +107,7 @@ export const AdmissionsFaq = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl border bg-gradient-to-br from-primary/5 to-cyan-500/5 p-8 text-center shadow-sm"
+          className="rounded-2xl border bg-linear-to-br from-primary/5 to-cyan-500/5 p-8 text-center shadow-xs"
         >
           <div className="mx-auto max-w-md">
             <h3 className="mb-4 text-2xl font-semibold">Still have questions?</h3>

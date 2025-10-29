@@ -14,7 +14,7 @@ export const GeometricBackground = () => {
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-slate-900">
       {/* Main background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-purple-900"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-blue-900 via-slate-900 to-purple-900"></div>
       
       {/* Animated geometric shapes */}
       <div className="absolute inset-0">
@@ -45,7 +45,7 @@ export const GeometricBackground = () => {
       </div>
       
       {/* Overlay gradient for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-slate-900/50"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-slate-900/50"></div>
       
       {/* CSS for animations */}
       <style jsx global>{`

@@ -29,10 +29,10 @@ export const FeaturesSection = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-green-900/20 via-emerald-400/30 to-teal-500/60 py-16 md:py-24 px-4 md:px-8 relative overflow-hidden">
+    <section className="bg-linear-to-br from-green-900/20 via-emerald-400/30 to-teal-500/60 py-16 md:py-24 px-4 md:px-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl md:text-5xl font-serif font-bold mb-12 text-center bg-gradient-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-serif font-bold mb-12 text-center bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -102,7 +102,7 @@ function FeatureCard({ image, title, description }: {
           </div>
         </motion.div>
         
-        <CardTitle className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-green-600">
+        <CardTitle className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-linear-to-r from-emerald-700 to-green-600">
           {title}
         </CardTitle>
         

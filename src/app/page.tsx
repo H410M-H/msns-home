@@ -64,7 +64,7 @@ export default function Home() {
     },
   ];
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-800/60 to-emerald-50 font-sans">
+    <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
       <PopupAd />
       <Toaster richColors closeButton />

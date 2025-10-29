@@ -14,7 +14,7 @@ export const AdmissionsBanner = () => {
         transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
       >
         <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-blue-900/35 via-blue-800/30 to-transparent"
+          className="absolute inset-0 bg-linear-to-t from-blue-900/35 via-blue-800/30 to-transparent"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -71,7 +71,7 @@ export const AdmissionsBanner = () => {
             transition={{ duration: 0.6 }}
             className="text-4xl font-bold tracking-tight text-white drop-shadow-2xl md:text-5xl lg:text-6xl"
           >
-            <span className="bg-gradient-to-r from-cyan-400 to-green-300 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-cyan-400 to-green-300 bg-clip-text text-transparent">
             Admissions 2025-26            </span>
             <motion.span
               initial={{ x: -20 }}

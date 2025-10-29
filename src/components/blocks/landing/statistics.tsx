@@ -15,7 +15,7 @@ export const KeyStatistics = () => {
   return (
     <section className="py-24 relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold text-center mb-16 bg-linear-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">
           MSNS by the Numbers
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -31,12 +31,12 @@ export const KeyStatistics = () => {
               }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 backdrop-blur-sm border border-white/10 hover:border-blue-400/30 transition-all">
+              <Card className="h-full bg-slate-800/50 backdrop-blur-xs border border-white/10 hover:border-blue-400/30 transition-all">
                 <CardContent className="flex flex-col items-center justify-center h-full p-8">
                   <motion.div whileHover={{ scale: 1.2, rotate: 360 }} transition={{ type: "spring" }}>
                     <stat.icon className={`w-16 h-16 mb-6 ${stat.color}`} />
                   </motion.div>
-                  <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <h3 className="text-4xl font-bold mb-4 bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                     {stat.value}
                   </h3>
                   <p className="text-slate-300 text-center text-lg">{stat.label}</p>

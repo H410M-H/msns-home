@@ -29,7 +29,7 @@ const contactItems = [
 
 export const ContactAdmissions = () => {
   return (
-    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-50/50 to-cyan-50/50 shadow-lg">
+    <Card className="relative overflow-hidden border-0 bg-linear-to-br from-blue-50/50 to-cyan-50/50 shadow-lg">
       <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-cyan-400/20 blur-3xl" />
       <CardContent className="relative p-8">
         <motion.div
@@ -40,7 +40,7 @@ export const ContactAdmissions = () => {
           <div className="rounded-lg bg-primary p-2.5">
             <CalendarDays className="h-6 w-6 text-white" />
           </div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl font-bold bg-linear-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
             Contact Admissions
           </h2>
         </motion.div>
@@ -53,7 +53,7 @@ export const ContactAdmissions = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               className={cn(
-                "group rounded-xl border bg-white/50 p-6 backdrop-blur-sm",
+                "group rounded-xl border bg-white/50 p-6 backdrop-blur-xs",
                 "transition-all hover:border-primary/20 hover:shadow-md",
                 item.link && "cursor-pointer hover:bg-white"
               )}
@@ -79,7 +79,7 @@ export const ContactAdmissions = () => {
         >
           <Button
             size="lg"
-            className="w-full rounded-xl bg-gradient-to-r from-primary to-cyan-600 py-7 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:brightness-105"
+            className="w-full rounded-xl bg-linear-to-r from-primary to-cyan-600 py-7 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:brightness-105"
           >
             <CalendarDays className="mr-3 h-5 w-5" />
             Schedule a Campus Tour
