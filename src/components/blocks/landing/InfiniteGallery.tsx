@@ -204,7 +204,7 @@ function GalleryScene({
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const textures = useTexture(normalizedImages.map((img) => img.src)) as THREE.Texture[];
+  const textures = useTexture(normalizedImages.map((img) => img.src));
 
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
