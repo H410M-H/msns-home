@@ -1,11 +1,10 @@
 'use client';
 
-import type React from 'react';
 import { useRef, useMemo, useCallback, useState, useEffect } from 'react';
 import { Canvas, useFrame, type RootState } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
-import type * as THREE from 'three';
-import { ShaderMaterial } from 'three';
+
+import  {type Mesh ,type Texture, ShaderMaterial } from 'three';
 import Image from 'next/image';
 
 type ImageItem = string | { src: string; alt?: string };
@@ -45,14 +44,11 @@ const DEFAULT_DEPTH_RANGE = 50;
 const MAX_HORIZONTAL_OFFSET = 8;
 const MAX_VERTICAL_OFFSET = 8;
 
-/**
- * Creates a custom shader material for blur, opacity, and cloth folding effects.
- */
 const createClothMaterial = (): ShaderMaterial => {
   return new ShaderMaterial({
     transparent: true,
     uniforms: {
-      map: { value: null as THREE.Texture | null },
+      map: { value: null as Texture | null },
       opacity: { value: 1.0 },
       blurAmount: { value: 0.0 },
       scrollForce: { value: 0.0 },
@@ -140,12 +136,12 @@ function ImagePlane({
   scale,
   material,
 }: {
-  texture: THREE.Texture;
+  texture: Texture;
   position: [number, number, number];
   scale: [number, number, number];
   material: ShaderMaterial;
 }) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<Mesh>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
