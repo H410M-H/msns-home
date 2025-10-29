@@ -199,7 +199,6 @@ function GalleryScene({
     [images]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const textures = useTexture(normalizedImages.map((img) => img.src));
 
   const materials = useMemo(
