@@ -7,7 +7,7 @@ import PopupAd from "~/components/blocks/landing/popup-ad";
 import { Toaster } from "~/components/ui/sonner";
 import InfiniteGallery from "~/components/blocks/landing/InfiniteGallery";
 
-export const dynamic ='force-dynamic'
+export const dynamic = "force-dynamic";
 export default function Home() {
   const sampleImages = [
     {
@@ -43,11 +43,11 @@ export default function Home() {
       alt: "Artwork 8",
     },
     {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1761399399/POSTER_vb1tvs.jpg",
+      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399399/POSTER_vb1tvs.jpg",
       alt: "Artwork 9",
     },
     {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1761399472/DSC_6774_zymsqa.jpg",
+      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399472/DSC_6774_zymsqa.jpg",
       alt: "Artwork 10",
     },
     {
@@ -68,19 +68,15 @@ export default function Home() {
       <HeroHome />
       <PopupAd />
       <Toaster richColors closeButton />
-      <QuickLinksSection />
-      <section className="relative py-12">
+      <FeaturesSection />
         <InfiniteGallery
           images={sampleImages}
           speed={1.2}
-          zSpacing={3}
           visibleCount={12}
-          falloff={{ near: 0.8, far: 14 }}
           className="h-[70vh] w-full overflow-hidden rounded-lg shadow-lg"
           style={{ background: "transparent" }}
         />
-      </section>
-      <FeaturesSection />
+            <QuickLinksSection />
       <TestimonialsSection />
       <CTASection />
     </main>
