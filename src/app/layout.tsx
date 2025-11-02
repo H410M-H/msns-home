@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { TRPCReactProvider } from "~/trpc/react";
 import { Footer } from "~/components/blocks/nav/footer/footer";
 import { Header } from "~/components/blocks/nav/Header";
@@ -70,6 +71,7 @@ export default function RootLayout({
             <Header />
               <main className="flex-1">{children}
               <Analytics />
+              <SpeedInsights />
               </main>
             <Footer />
             <Toaster />
