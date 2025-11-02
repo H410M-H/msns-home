@@ -14,7 +14,7 @@ export default function PopupAd() {
     // Show popup after 2 seconds delay
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 2000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
