@@ -136,7 +136,7 @@ export default function PopupAd() {
           </h3>
 
           {/* Top 3 Students */}
-          <div className="mb-6 space-y-4">
+          <div className="mb-6 grid grid-cols-3 gap-4">
             {/* 1st Position */}
             <div
               className="flex items-center gap-4 rounded-lg p-4"
