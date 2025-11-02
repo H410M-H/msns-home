@@ -73,7 +73,7 @@ export default function PopupAd() {
       `}</style>
 
       <div
-        className="animate-in fade-in zoom-in relative max-h-[90vh] w-full max-w-2xl transform-gpu overflow-y-auto duration-300"
+        className="animate-in fade-in zoom-in relative max-h-[90vh] w-full max-w-screen transform-gpu overflow-y-auto duration-300"
         style={{
           background: "rgba(255, 255, 255, 0.25)",
           backdropFilter: "blur(20px)",
@@ -134,9 +134,18 @@ export default function PopupAd() {
           <h3 className="mb-6 text-xl font-semibold text-white drop-shadow-lg">
             Top 3 Achievers - 9th Grade Results
           </h3>
+            <div className="mb-6 flex justify-center">
+          <Image
+            src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/MUHAMMAD_JUNAID_ALI_-_104478_m0uqaw.jpg"
+            alt="Junaid Ali"
+            className="rounded-lg border-2 border-white/30 object-cover"
+            width={400}
+            height={300}
+          />
+          </div>
 
           {/* Top 3 Students */}
-          <div className="mb-6 grid grid-cols-3 gap-4">
+          <div className="mb-6 grid grid-cols-3 p-6 gap-4">
             {/* 1st Position */}
             <div
               className="flex items-center gap-4 rounded-lg p-4"
