@@ -149,7 +149,7 @@ export default function PopupAd() {
 
 
           {/* Top 3 Students */}
-          <div className="mb-6 grid grid-cols-3 p-6 gap-4">
+          <div className="mb-6 grid grid-cols-3 p-6 gap-4 sm:grid-cols-1">
             {/* 1st Position */}
             <div
               className="flex items-center gap-4 rounded-lg p-4"
