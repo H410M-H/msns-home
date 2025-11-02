@@ -1,4 +1,3 @@
-'use client';
 
 import { useRef, useMemo, useCallback, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
