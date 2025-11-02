@@ -1,4 +1,3 @@
-"use client";
 
 import { HeroHome } from "~/components/blocks/landing/HeroSection";
 import { QuickLinksSection } from "~/components/blocks/landing/QuickLinksSection";
