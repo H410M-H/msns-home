@@ -112,7 +112,19 @@ export default function PopupAd() {
           <X size={18} />
         </Button>
 
+
+
+
         <div className="p-8 text-center">
+          <div className="flex flex-cols-1 justify-center">
+          <Image
+            src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1762044105/WhatsApp_Image_2025-11-01_at_5.26.28_PM_jg1kbs.jpg"
+            alt="IQBAL DAY"
+            className="rounded-lg border-2 border-white/30 object-cover"
+            width={400}
+            height={900}
+          />
+          </div>
           <div
             className="mb-4 inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
             style={{
@@ -134,15 +146,7 @@ export default function PopupAd() {
           <h3 className="mb-6 text-xl font-semibold text-white drop-shadow-lg">
             Top 3 Achievers - 9th Grade Results
           </h3>
-            <div className="mb-6 flex justify-center">
-          <Image
-            src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/MUHAMMAD_JUNAID_ALI_-_104478_m0uqaw.jpg"
-            alt="Junaid Ali"
-            className="rounded-lg border-2 border-white/30 object-cover"
-            width={400}
-            height={300}
-          />
-          </div>
+
 
           {/* Top 3 Students */}
           <div className="mb-6 grid grid-cols-3 p-6 gap-4">
