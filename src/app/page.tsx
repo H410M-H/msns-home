@@ -133,9 +133,9 @@ export default function Home() {
       <FeaturesSection />
         <InfiniteGallery
           images={sampleImages}
-          speed={1.2}
+          speed={1.0}
           visibleCount={11}
-          className="h-[70vh] w-full overflow-hidden rounded-lg shadow-lg"
+          className="h-[70vh] w-full overflow-hidden rounded-3xl shadow-lg"
           style={{ background: "transparent" }}
         />
             <QuickLinksSection />
