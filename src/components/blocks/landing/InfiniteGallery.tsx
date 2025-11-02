@@ -432,7 +432,7 @@ export default function InfiniteGallery({
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       
       {/* Main canvas */}
-      <div className={`relative w-full h-full ${className}`} style={style}>
+      <div className={`relative w-screen h-full ${className}`} style={style}>
         {webglSupported ? (
           <Canvas
             camera={{ position: [0, 0, 10], fov: 60 }}
@@ -449,7 +449,7 @@ export default function InfiniteGallery({
             />
           </Canvas>
         ) : (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-full rounded-lg">
             <p className="text-white text-lg">WebGL not supported</p>
           </div>
         )}
