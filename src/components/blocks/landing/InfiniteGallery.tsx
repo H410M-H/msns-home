@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import { useRef, useMemo, useCallback, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
@@ -436,7 +435,7 @@ export default function InfiniteGallery({
       <div className={`relative w-full h-full ${className}`} style={style}>
         {webglSupported ? (
           <Canvas
-            camera={{ position: [0, 0, 50], fov: 60 }}
+            camera={{ position: [0, 0, 10], fov: 60 }}
             gl={{ 
               antialias: true, 
               alpha: true,

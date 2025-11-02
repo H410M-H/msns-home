@@ -1,3 +1,4 @@
+"use client";
 
 import { HeroHome } from "~/components/blocks/landing/HeroSection";
 import { QuickLinksSection } from "~/components/blocks/landing/QuickLinksSection";
@@ -76,36 +77,32 @@ export default function Home() {
   alt: "Artwork 16",
 },
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1729267627/FrontView2_wgkxmx.jpg",
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398737/IMG_3037_djwx6t.jpg",
   alt: "Artwork 17",
 },
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398737/IMG_3037_djwx6t.jpg",
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399399/POSTER_vb1tvs.jpg",
   alt: "Artwork 18",
 },
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399399/POSTER_vb1tvs.jpg",
-  alt: "Artwork 19",
-},
-{
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399472/DSC_6774_zymsqa.jpg",
-  alt: "Artwork 20",
+  alt: "Artwork 29",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399181/IMG_3349_ldaqqy.jpg",
-  alt: "Artwork 21",
+  alt: "Artwork 20",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399118/IMG_3151_gsuhua.jpg",
-  alt: "Artwork 22",
+  alt: "Artwork 21",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1737373454/designJpg/j7enn3yegbeql8xvr5pm.png",
-  alt: "Artwork 23",
+  alt: "Artwork 22",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1737373440/designJpg/t8qsbmfqaibg3eyktszk.png",
-  alt: "Artwork 24",
+  alt: "Artwork 23",
 },
    ];
   return (
