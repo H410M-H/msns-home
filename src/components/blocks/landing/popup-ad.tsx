@@ -116,7 +116,7 @@ export default function PopupAd() {
 
 
         <div className="p-8 text-center">
-          <div className="flex flex-cols-1 justify-center">
+      {/*    <div className="flex flex-cols-1 justify-center">
           <Image
             src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1762044105/WhatsApp_Image_2025-11-01_at_5.26.28_PM_jg1kbs.jpg"
             alt="IQBAL DAY"
@@ -124,7 +124,7 @@ export default function PopupAd() {
             width={400}
             height={900}
           />
-          </div>
+          </div> */}
           <div
             className="mb-4 inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
             style={{
