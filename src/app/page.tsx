@@ -124,6 +124,10 @@ export default function Home() {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/DSC_6187_j6ovz3.jpg",
   alt: "Artwork 28",
 },  
+{
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1763051991/w_1600,h_1200,c_fill,q_auto,f_auto/H7H_4932_xjhmck.jpg",
+  alt: "Artwork 29",
+},  
 ];
   return (
     <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
