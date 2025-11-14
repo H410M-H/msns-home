@@ -137,7 +137,7 @@ export default function Home() {
   alt: "Artwork 29",
 },
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
   alt: "Artwork 30",
 }];
   return (
