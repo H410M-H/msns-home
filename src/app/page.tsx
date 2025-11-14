@@ -81,8 +81,12 @@ export default function Home() {
   alt: "Artwork 17",
 },
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1762035328/IMG-20240917-WA0095_mvfjpv.jpg",
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035328/IMG-20240917-WA0095_mvfjpv.jpg",
   alt: "Artwork 18",
+},
+{
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035328/IMG-20240917-WA0095_mvfjpv.jpg",
+  alt: "Artwork 19",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_3330_kneelc.jpg",
