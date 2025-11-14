@@ -125,7 +125,7 @@ export default function Home() {
   alt: "Artwork 28",
 },  
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1763051991/w_1600,h_1200,c_fill,q_auto,f_auto/H7H_4932_xjhmck.jpg",
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1763051991/H7H_4932_xjhmck.jpg",
   alt: "Artwork 29",
 },  
 ];
