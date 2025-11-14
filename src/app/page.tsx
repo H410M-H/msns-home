@@ -149,7 +149,7 @@ export default function Home() {
         <InfiniteGallery
           images={sampleImages}
           speed={1.0}
-          visibleCount={11}
+          visibleCount={10}
           className="h-[70vh] w-full overflow-hidden rounded-3xl shadow-lg sm:h-[60vh] md:h-[65vh] lg:h-[70vh] my-16"
           style={{ background: "transparent" }}
         />
