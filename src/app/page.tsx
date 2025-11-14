@@ -85,7 +85,7 @@ export default function Home() {
   alt: "Artwork 18",
 },
 {
-  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035328/IMG-20240917-WA0095_mvfjpv.jpg",
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035328/DSC_6184_ozj3hr.jpg",
   alt: "Artwork 19",
 },
 {
@@ -107,6 +107,10 @@ export default function Home() {
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1737373440/designJpg/t8qsbmfqaibg3eyktszk.png",
   alt: "Artwork 23",
+},
+{
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035274/DSC_8987_pfrlog.jpg",
+  alt: "Artwork 19",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762033772/DSC_5049_ojzbjj.jpg",
@@ -131,8 +135,11 @@ export default function Home() {
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1763051991/H7H_4932_xjhmck.jpg",
   alt: "Artwork 29",
-},  
-];
+},
+{
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+  alt: "Artwork 30",
+}];
   return (
     <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
