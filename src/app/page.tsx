@@ -13,6 +13,10 @@ export const dynamic = "force-dynamic";
 export default function Home() {
   const sampleImages = [
 {
+  src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+  alt: "Artwork 0",
+},
+{
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399181/IMG_3349_ldaqqy.jpg",
   alt: "Artwork 1",
 },
@@ -90,7 +94,7 @@ export default function Home() {
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_3330_kneelc.jpg",
-  alt: "Artwork 29",
+  alt: "Artwork 31",
 },
 {
   src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_3218_jmv7n8.jpg",
@@ -149,8 +153,8 @@ export default function Home() {
         <InfiniteGallery
           images={sampleImages}
           speed={1.0}
-          visibleCount={10}
-          className="h-[70vh] w-full overflow-hidden rounded-3xl shadow-lg sm:h-[60vh] md:h-[65vh]"
+          visibleCount={12}
+          className="h-[70vh] w-full overflow-hidden rounded-3xl shadow-lg"
           style={{ background: "transparent" }}
         />
             <QuickLinksSection />
