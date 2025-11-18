@@ -10,7 +10,7 @@ const contactItems = [
     title: "Phone",
     content: "+92 (318) 7625415",
     color: "text-blue-600",
-    link: "tel:+12345678900"
+    link: "tel:923016233609"
   },
   {
     icon: <Mail className="h-5 w-5" />,

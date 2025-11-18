@@ -59,7 +59,7 @@ export const AdmissionsProcess = () => {
               className="relative flex gap-6"
             >
               {/* Timeline dot */}
-              <div className="absolute left-[-56px] top-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+              <div className="absolute -left-14 top-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
                   {stepIcons[index as keyof typeof stepIcons]}
                 </div>
