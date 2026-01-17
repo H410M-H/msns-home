@@ -1,115 +1,224 @@
-"use client"
+"use client";
 
-import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Card, CardContent, CardDescription, CardTitle } from "~/components/ui/card"
+import React from "react";
+import { motion } from "framer-motion";
+import { 
+  Award, Users, GraduationCap, BookOpen, Sun, Cpu, 
+  ShieldCheck, Mic, Lightbulb, HeartHandshake, 
+  Library, FlaskConical, Globe, Leaf
+} from "lucide-react";
 
-export const FeaturesSection = () => {
-  const featureCards = [
-    {
-      image: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737373450/designJpg/gnbgxijeskoscsmhet5r.png",
-      title: "Academic Excellence",
-      description: "Our rigorous curriculum prepares students for success in higher education and beyond."
-    },
-    {
-      image: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1741081698/favpng_education-school_xka8ck.png",
-      title: "Dedicated Faculty",
-      description: "Experienced teachers committed to nurturing each student's potential."
-    },
-    {
-      image: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737373454/designJpg/j7enn3yegbeql8xvr5pm.png",
-      title: "Diverse Programs",
-      description: "A wide range of academic and extracurricular activities to foster well-rounded development."
-    },
-    {
-      image: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737373457/designJpg/hcgcdx4imkrowoeu7ehb.png",
-      title: "Modern Facilities",
-      description: "State-of-the-art classrooms, labs, and sports facilities to enhance learning experiences."
-    }
-  ];
+// --- Data Organization ---
+const featuresData = [
+  {
+    category: "Academic Excellence",
+    items: [
+      {
+        icon: Award,
+        title: "Board Affiliated",
+        desc: "Officially Registered & Affiliated with BISE Gujranwala, ensuring recognized certification."
+      },
+      {
+        icon: Users,
+        title: "1:16 Student-Teacher Ratio",
+        desc: "Small class sizes ensure every student gets personalized attention and guidance."
+      },
+      {
+        icon: GraduationCap,
+        title: "Teacher Mentorship",
+        desc: "Junior teachers undergo structured apprenticeships under educators with 15+ years experience."
+      },
+      {
+        icon: BookOpen,
+        title: "Oxford Collaboration",
+        desc: "Academic collaboration with Oxford University Press since 2021 for world-class curriculum."
+      },
+      {
+        icon: FlaskConical,
+        title: "Science & AI Labs",
+        desc: "Fully equipped labs and a 60% practical, activity-based AI curriculum without traditional textbooks."
+      },
+      {
+        icon: Lightbulb,
+        title: "Top Board Results",
+        desc: "Consistent academic excellence reflecting the top Matric Board results in the area."
+      }
+    ]
+  },
+  {
+    category: "Campus & Tech",
+    items: [
+      {
+        icon: Sun,
+        title: "Solar-Powered Campus",
+        desc: "Eco-friendly environment ensuring uninterrupted learning regardless of power cuts."
+      },
+      {
+        icon: Cpu,
+        title: "Advanced IT Infrastructure",
+        desc: "High-performance quad-core systems with 15 TB secure school cloud storage."
+      },
+      {
+        icon: ShieldCheck,
+        title: "24/7 Secure Campus",
+        desc: "Controlled entry/exit monitored by trained staff for complete student safety."
+      },
+      {
+        icon: Leaf,
+        title: "Healthy Environment",
+        desc: "Filtered water, ventilated classrooms for summer, and insulated spaces for winter."
+      },
+      {
+        icon: Library,
+        title: "Well-Stocked Library",
+        desc: "A rich collection of resources to cultivate reading habits and independent learning."
+      }
+    ]
+  },
+  {
+    category: "Student Care & Growth",
+    items: [
+      {
+        icon: HeartHandshake,
+        title: "Holistic Assessment",
+        desc: "Progress measured academically, psychologically, behaviorally, and environmentally."
+      },
+      {
+        icon: Users,
+        title: "Support for Slow Learners",
+        desc: "Individualized care and structured parent-teacher communication for students needing extra help."
+      },
+      {
+        icon: Mic,
+        title: "Public Speaking",
+        desc: "Daily assembly practice to build confidence, communication skills, and leadership."
+      },
+      {
+        icon: Globe,
+        title: "English Environment",
+        desc: "Active promotion of English speaking across campus to prepare global citizens."
+      },
+      {
+        icon: Award,
+        title: "Competitions & Events",
+        desc: "Regular debates, quizzes, and purpose-driven events aligned with the national calendar."
+      }
+    ]
+  }
+];
 
+// --- Animation Variants ---
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // Stagger effect for children
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
+export function FeaturesSection() {
   return (
-    <section className="bg-linear-to-br from-green-900/20 via-emerald-400/30 to-teal-500/60 py-16 md:py-24 px-4 md:px-8 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <motion.h2
-          className="text-4xl md:text-5xl font-serif font-bold mb-12 text-center bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-        >
-          Why Choose M.S.N.S?
-        </motion.h2>
+    <section className="relative w-full py-20 overflow-hidden bg-slate-50/50">
+      {/* Decorative Background Blob */}
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 h-[500px] w-[500px] rounded-full bg-emerald-100/40 blur-3xl" />
+      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl" />
+
+      <div className="container relative mx-auto px-4 md:px-6">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <AnimatePresence>
-            {featureCards.map((card, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -10 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 100,
-                  damping: 20,
-                  delay: index * 0.1 
-                }}
-                className="cursor-pointer"
-              >
-                <FeatureCard
-                  image={card.image}
-                  title={card.title}
-                  description={card.description}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* Header Section */}
+        <div className="mb-16 text-center max-w-3xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold tracking-tight text-slate-900 md:text-5xl"
+          >
+            Why Choose <span className="text-emerald-600">MSNS?</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="mt-4 text-lg text-slate-600 font-medium"
+          >
+            Academic Excellence • Student Care • Future Readiness
+          </motion.p>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-2 text-sm text-slate-500"
+          >
+            Affordable education with the lowest fee structure in Gakkhar.
+          </motion.p>
         </div>
-      </div>
-      
-      {/* Decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-emerald-200/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-green-300/20 blur-3xl" />
+
+        {/* Categories Loop */}
+        <div className="space-y-20">
+          {featuresData.map((category, catIndex) => (
+            <div key={catIndex}>
+              {/* Category Title */}
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="mb-8 flex items-center gap-4"
+              >
+                <div className="h-px flex-1 bg-slate-200" />
+                <h3 className="text-xl font-bold uppercase tracking-wider text-slate-400">
+                  {category.category}
+                </h3>
+                <div className="h-px flex-1 bg-slate-200" />
+              </motion.div>
+
+              {/* Grid for this category */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {category.items.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-shadow hover:shadow-md"
+                  >
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                      <feature.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="mb-2 text-lg font-bold text-slate-900">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {feature.desc}
+                    </p>
+                    
+                    {/* Bottom Gradient Line on Hover */}
+                    <div className="absolute bottom-0 left-0 h-1 w-0 bg-emerald-500 transition-all duration-300 group-hover:w-full" />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
-  )
-}
-
-function FeatureCard({ image, title, description }: {
-  image: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <Card className="h-full bg-emerald-100/60 backdrop-blur-xl border border-emerald-900/50 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 group hover:border-yellow-900/70">
-      <CardContent className="p-4 flex flex-col items-center">
-        <motion.div 
-          className="mb-8 p-6 bg-white/70 rounded-3xl shadow-lg border border-white/30"
-          whileHover={{ scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          <div className="relative w-32 h-28">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-contain object-center"
-              style={{ filter: 'drop-shadow(0 8px 16px rgba(16, 185, 129, 0.2))' }}
-            />
-          </div>
-        </motion.div>
-        
-        <CardTitle className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-linear-to-r from-emerald-700 to-green-600">
-          {title}
-        </CardTitle>
-        
-        <CardDescription className="font-serif text-emerald-900/90 text-center text-lg leading-relaxed">
-          {description}
-        </CardDescription>
-      </CardContent>
-    </Card>
-  )
+  );
 }
