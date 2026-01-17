@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { 
   Award, Users, GraduationCap, BookOpen, Sun, Cpu, 
   ShieldCheck, Mic, Lightbulb, HeartHandshake, 
@@ -107,23 +107,26 @@ const featuresData = [
   }
 ];
 
-// --- Animation Variants ---
-const containerVariants = {
+// --- Animation Variants (Strictly Typed) ---
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // Stagger effect for children
+      staggerChildren: 0.1,
     },
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { 
+      duration: 0.5, 
+      ease: "easeOut" 
+    },
   },
 };
 
@@ -131,8 +134,8 @@ export function FeaturesSection() {
   return (
     <section className="relative w-full py-20 overflow-hidden bg-slate-50/50">
       {/* Decorative Background Blob */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 h-[500px] w-[500px] rounded-full bg-emerald-100/40 blur-3xl" />
-      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl" />
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 h-[500px] w-[500px] rounded-full bg-emerald-100/40 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-[500px] w-[500px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none" />
 
       <div className="container relative mx-auto px-4 md:px-6">
         
@@ -197,7 +200,7 @@ export function FeaturesSection() {
                     key={index}
                     variants={itemVariants}
                     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-shadow hover:shadow-md"
+                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
                   >
                     <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
                       <feature.icon className="h-6 w-6" />
