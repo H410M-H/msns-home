@@ -1,17 +1,34 @@
-import React from "react";
+import { CheckCircle2, ShieldCheck } from "lucide-react";
 
 export default function Affiliations() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed text-slate-200">
-      <p>
-        Our institution operates in strict, verifiable compliance with the directives issued by the Higher Education Commission (HEC) of Pakistan. The HEC has been empowered by Section 10-1(d) of Ordinance No. LIII of 2002 to prescribe conditions under which educational institutions may be opened and operated across the country.[1]
-      </p>
-      <p>
-        {"Furthermore, for secondary and higher secondary education matrices, we are formally affiliated with the Board of Intermediate and Secondary Education (BISE), Gujranwala. We share the Board's foundational mission to contribute towards a progressive education system in line with National Objectives, bringing it at par with international standards.[2]"}
-      </p>
-      <p>
-        Our digital infrastructure programmatically enforces all regulatory directives, including mandatory biometric verification protocols and immutable attendance tracking to guarantee institutional legitimacy.
-      </p>
+    <div className="space-y-6">
+      <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+        <div className="flex items-center gap-2 mb-2 text-blue-400">
+          <ShieldCheck className="w-4 h-4" />
+          <span className="font-bold uppercase tracking-wider text-[10px]">Regulatory Status</span>
+        </div>
+        <p className={"text-slate-300"}>
+          {"Strict compliance with HEC Pakistan directives under Ordinance No. LIII (2002)."}
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        <h4 className="text-white font-semibold flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+          Primary Affiliations
+        </h4>
+        <ul className="grid gap-2">
+          <li className="bg-white/5 p-3 rounded-lg border border-white/10">
+            <span className="block text-white font-medium">BISE Gujranwala</span>
+            <span className="text-xs text-slate-400">Secondary & Higher Secondary Education</span>
+          </li>
+          <li className="bg-white/5 p-3 rounded-lg border border-white/10">
+            <span className="block text-white font-medium">HEC Compliance</span>
+            <span className="text-xs text-slate-400">Institutional Legitimacy Standards</span>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
