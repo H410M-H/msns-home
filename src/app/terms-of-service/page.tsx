@@ -1,106 +1,82 @@
 "use client";
 
-import { GeometricBackground } from "~/components/blocks/landing/GeometricBg";
-import PrivacyPolicy from "~/components/blocks/nav/footer/PrivacyPolicy";
-import TermsOfService from "~/components/blocks/nav/footer/TermsOfService";
-import Affiliations from "~/components/blocks/nav/footer/Affiliations";
-import EducationalSociety from "~/components/blocks/nav/footer/EducationalSociety";
-import LMSKnowledge from "~/components/blocks/nav/footer/LMSKnowledge";
-import LMSMarketing from "~/components/blocks/nav/footer/LMSMarketing";
 import { motion } from "framer-motion";
+import { Scale, ShieldCheck, Handshake, Landmark, BookOpen, Rocket } from "lucide-react";
+import { GeometricBackground } from "~/components/blocks/landing/GeometricBg";
+import PrivacyPolicy from "./PrivacyPolicy";
+import TermsOfService from "./TermsOfService";
+import Affiliations from "./Affiliations";
+import EducationalSociety from "./EducationalSociety";
+import LMSKnowledge from "./LMSKnowledge";
+import LMSMarketing from "./LMSMarketing";
+
+const sections = [
+  { id: "terms", title: "Terms of Service", icon: Scale, component: <TermsOfService />, colors: "from-blue-400 to-indigo-500", shadow: "shadow-blue-500/20" },
+  { id: "privacy", title: "Privacy Policy", icon: ShieldCheck, component: <PrivacyPolicy />, colors: "from-purple-400 to-pink-500", shadow: "shadow-purple-500/20" },
+  { id: "affiliations", title: "Affiliations", icon: Handshake, component: <Affiliations />, colors: "from-emerald-400 to-teal-500", shadow: "shadow-emerald-500/20" },
+  { id: "society", title: "Society", icon: Landmark, component: <EducationalSociety />, colors: "from-orange-400 to-red-500", shadow: "shadow-orange-500/20" },
+  { id: "knowledge", title: "Knowledge Base", icon: BookOpen, component: <LMSKnowledge />, colors: "from-cyan-400 to-sky-500", shadow: "shadow-cyan-500/20" },
+  { id: "marketing", title: "Growth & ROI", icon: Rocket, component: <LMSMarketing />, colors: "from-rose-400 to-pink-600", shadow: "shadow-rose-500/20" },
+];
 
 export default function Terms() {
-  // Scalable array to manage all policy and informational sections
-  const sections = [
-    {
-      id: "terms",
-      title: "Terms of Service",
-      component: <TermsOfService />,
-      colors: "from-blue-400 to-indigo-500",
-      hoverShadow: "hover:shadow-blue-500/20",
-    },
-    {
-      id: "privacy",
-      title: "Privacy Policy",
-      component: <PrivacyPolicy />,
-      colors: "from-purple-400 to-pink-500",
-      hoverShadow: "hover:shadow-purple-500/20",
-    },
-    {
-      id: "affiliations",
-      title: "Our Affiliations",
-      component: <Affiliations />,
-      colors: "from-green-400 to-emerald-500",
-      hoverShadow: "hover:shadow-green-500/20",
-    },
-    {
-      id: "society",
-      title: "Educational Society",
-      component: <EducationalSociety />,
-      colors: "from-orange-400 to-red-500",
-      hoverShadow: "hover:shadow-orange-500/20",
-    },
-    {
-      id: "knowledge",
-      title: "LMS Knowledge Base",
-      component: <LMSKnowledge />,
-      colors: "from-cyan-400 to-blue-500",
-      hoverShadow: "hover:shadow-cyan-500/20",
-    },
-    {
-      id: "marketing",
-      title: "LMS Marketing",
-      component: <LMSMarketing />,
-      colors: "from-yellow-400 to-orange-500",
-      hoverShadow: "hover:shadow-yellow-500/20",
-    },
-  ];
-
   return (
-    <section className="relative flex flex-col min-h-screen pt-4">
-      <main className="grow">
-        <div className="relative w-full min-h-screen overflow-hidden">
-          {/* Background */}
-          <GeometricBackground />
+    <section className="relative min-h-screen w-full bg-[#030712] py-20 px-6">
+      <GeometricBackground />
+      
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <header className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
+            Institutional <span className="text-blue-500">Governance</span>
+          </h1>
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+            Legal frameworks, regulatory compliance, and technical documentation for the MSNS Ecosystem.
+          </p>
+        </header>
 
-          {/* Content */}
-          <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center p-6 md:p-12">
-            {/* Grid Layout for Scalability */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-7xl">
-              {sections.map((section, index) => (
-                <motion.div
-                  key={section.id}
-                  className={`w-full rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20 p-6 md:p-10 text-white transition-all ${section.hoverShadow}`}
-                  whileHover={{
-                    scale: 1.02,
-                    rotateY: index % 2 === 0? 2 : -2, // Alternates rotation direction based on grid position
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <h2
-                    className={`text-3xl md:text-4xl font-bold bg-linear-to-r ${section.colors} bg-clip-text text-transparent mb-6`}
-                  >
-                    {section.title}
-                  </h2>
-                  <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
-                    {section.component}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </main>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+          }}
+        >
+          {sections.map((section) => (
+            <motion.div
+              key={section.id}
+              variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}
+              whileHover={{ y: -5 }}
+              className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-8 transition-all hover:bg-white/10 ${section.shadow} hover:shadow-2xl`}
+            >
+              <div className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${section.colors} mb-6`}>
+                <section.icon className="w-6 h-6 text-white" />
+              </div>
+              
+              <h2 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
+                {section.title}
+              </h2>
+              
+              <div className="max-h-[300px] overflow-y-auto pr-2 text-slate-300 custom-scrollbar text-sm leading-relaxed">
+                {section.component}
+              </div>
+              
+              {/* Decorative Vector Element */}
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform" />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
 
-      {/* Extra Styling for Scrollbar */}
-      <style jsx>{`
-      .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+          background: rgba(255, 255, 255, 0.1); 
+          border-radius: 10px; 
         }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(to bottom, #ec4899, #3b82f6, #22c55e);
-          border-radius: 9999px;
-        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
       `}</style>
     </section>
   );
