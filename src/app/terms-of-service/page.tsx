@@ -6,7 +6,7 @@ import TermsOfService from "~/components/blocks/nav/footer/TermsOfService";
 import Affiliations from "~/components/blocks/nav/footer/Affiliations";
 import EducationalSociety from "~/components/blocks/nav/footer/EducationalSociety";
 import LMSKnowledge from "~/components/blocks/nav/footer/LMSKnowledge";
-import LMSMarketing from "~/components/blocks/nav/footer/LMSKnowledge";
+import LMSMarketing from "~/components/blocks/nav/footer/LMSMarketing";
 import { motion } from "framer-motion";
 
 export default function Terms() {
