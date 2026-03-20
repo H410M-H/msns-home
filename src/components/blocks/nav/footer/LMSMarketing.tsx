@@ -1,8 +1,5 @@
 import React from "react";
 
-
-
-
 export default function LMSMarketing() {
   return (
     <div className="space-y-4 text-sm leading-relaxed text-slate-200">
@@ -11,7 +8,7 @@ export default function LMSMarketing() {
       </p>
       <ul className="list-disc pl-5 space-y-2">
         <li>
-          <strong>Institutional Omniscience:</strong> Advanced executive dashboards aggregate overall fee collection rates, average student attendance, and examination completion percentages into a single, real-time "Institution Health Score".[3]
+          {"Institutional Omniscience: Advanced executive dashboards aggregate overall fee collection rates, average student attendance, and examination completion percentages into a single, real-time \"Institution Health Score\".[3]"}
         </li>
         <li>
           <strong>Financial Immutability:</strong> Our double-entry financial ledger tracks every multi-channel transaction. Automated fee challan generation, dynamic late fee penalties, and strict approval workflows drastically reduce revenue leakage and ensure unassailable fiscal integrity.[3]
@@ -23,4 +20,3 @@ export default function LMSMarketing() {
     </div>
   );
 }
-
