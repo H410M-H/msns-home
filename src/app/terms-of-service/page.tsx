@@ -35,7 +35,7 @@ export default function Terms() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <h2
-                    className={`text-3xl md:text-4xl font-bold bg-gradient-to-r ${section.colors} bg-clip-text text-transparent mb-6`}
+                    className={`text-3xl md:text-4xl font-bold bg-linear-to-r ${section.colors} bg-clip-text text-transparent mb-6`}
                   >
                     {section.title}
                   </h2>
@@ -51,10 +51,10 @@ export default function Terms() {
 
       {/* Extra Styling for Scrollbar */}
       <style jsx>{`
-       .custom-scrollbar::-webkit-scrollbar {
+      .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
-       .custom-scrollbar::-webkit-scrollbar-thumb {
+      .custom-scrollbar::-webkit-scrollbar-thumb {
           background: linear-gradient(to bottom, #ec4899, #3b82f6, #22c55e);
           border-radius: 9999px;
         }
