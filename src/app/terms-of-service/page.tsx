@@ -11,7 +11,50 @@ import { motion } from "framer-motion";
 
 export default function Terms() {
   // Scalable array to manage all policy and informational sections
-  const sections =;
+  const sections = [
+    {
+      id: "terms",
+      title: "Terms of Service",
+      component: <TermsOfService />,
+      colors: "from-blue-400 to-indigo-500",
+      hoverShadow: "hover:shadow-blue-500/20",
+    },
+    {
+      id: "privacy",
+      title: "Privacy Policy",
+      component: <PrivacyPolicy />,
+      colors: "from-purple-400 to-pink-500",
+      hoverShadow: "hover:shadow-purple-500/20",
+    },
+    {
+      id: "affiliations",
+      title: "Our Affiliations",
+      component: <Affiliations />,
+      colors: "from-green-400 to-emerald-500",
+      hoverShadow: "hover:shadow-green-500/20",
+    },
+    {
+      id: "society",
+      title: "Educational Society",
+      component: <EducationalSociety />,
+      colors: "from-orange-400 to-red-500",
+      hoverShadow: "hover:shadow-orange-500/20",
+    },
+    {
+      id: "knowledge",
+      title: "LMS Knowledge Base",
+      component: <LMSKnowledge />,
+      colors: "from-cyan-400 to-blue-500",
+      hoverShadow: "hover:shadow-cyan-500/20",
+    },
+    {
+      id: "marketing",
+      title: "LMS Marketing",
+      component: <LMSMarketing />,
+      colors: "from-yellow-400 to-orange-500",
+      hoverShadow: "hover:shadow-yellow-500/20",
+    },
+  ];
 
   return (
     <section className="relative flex flex-col min-h-screen pt-4">
