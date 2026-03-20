@@ -35,7 +35,7 @@ export default function Terms() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <h2
-                    className={`text-3xl md:text-4xl font-bold bg-linear-to-r ${section.colors} bg-clip-text text-transparent mb-6`}
+                    className={`text-3xl md:text-4xl font-bold bg-gradient-to-r ${section.colors} bg-clip-text text-transparent mb-6`}
                   >
                     {section.title}
                   </h2>
