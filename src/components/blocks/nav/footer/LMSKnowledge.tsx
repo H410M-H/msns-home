@@ -23,8 +23,3 @@ export default function LMSKnowledge() {
     </div>
   );
 }
-
-
-
-
-
