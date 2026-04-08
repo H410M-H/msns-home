@@ -71,6 +71,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.variable}>
       <head>
+      {/* Google Tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17684760807"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17684760807');
+          `}
+        </Script>
+
         <SchoolSchema />
       </head>
       <body className="flex min-h-screen flex-col">
