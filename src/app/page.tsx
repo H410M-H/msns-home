@@ -8,10 +8,6 @@ import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
 import PopupAd from "~/components/blocks/landing/popup-ad";
 import { Toaster } from "~/components/ui/sonner";
 import InfiniteGallery from "~/components/blocks/landing/InfiniteGallery";
-import { MarketingBannerSection } from "~/components/blocks/landing/MarketingBannerSection";
-import { NewsUpdatesSection } from "~/components/blocks/landing/NewsUpdatesSection";
-import { ProgramsHighlightSection } from "~/components/blocks/landing/ProgramsHighlightSection";
-import { SuccessStoriesSection } from "~/components/blocks/landing/SuccessStoriesSection";
 
 export const dynamic = "force-dynamic";
 export default function Home() {
@@ -153,10 +149,6 @@ export default function Home() {
       <HeroHome />
       <PopupAd />
       <Toaster richColors closeButton />
-      <MarketingBannerSection />
-      <NewsUpdatesSection />
-      <ProgramsHighlightSection />
-      <SuccessStoriesSection />
       <FeaturesSection />
         <InfiniteGallery
           images={sampleImages}
