@@ -12,7 +12,6 @@ import { MarketingBannerSection } from "~/components/blocks/landing/MarketingBan
 import { NewsUpdatesSection } from "~/components/blocks/landing/NewsUpdatesSection";
 import { ProgramsHighlightSection } from "~/components/blocks/landing/ProgramsHighlightSection";
 import { SuccessStoriesSection } from "~/components/blocks/landing/SuccessStoriesSection";
-import { EventCalendarSection } from "~/components/blocks/landing/EventCalendarSection";
 
 export const dynamic = "force-dynamic";
 export default function Home() {
@@ -158,7 +157,6 @@ export default function Home() {
       <NewsUpdatesSection />
       <ProgramsHighlightSection />
       <SuccessStoriesSection />
-      <EventCalendarSection />
       <FeaturesSection />
         <InfiniteGallery
           images={sampleImages}
