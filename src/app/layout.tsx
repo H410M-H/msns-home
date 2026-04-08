@@ -10,8 +10,11 @@ import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "M. S. NAZ HIGH SCHOOL®",
+  verification: {
+    google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
+  },
   description: "Since - 2004 | Developed by MSNS-DEV™",
-    keywords:["msns", "m s naz", "m s naz high school", "msnaz", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
+    keywords:["msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford"," oxford",  "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
     "educational excellence",
     "academic achievement",
     "leadership development",
