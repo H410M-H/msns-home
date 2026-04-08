@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import { Scale, ShieldCheck, Handshake, Landmark, BookOpen, Rocket } from "lucide-react";
 import { GeometricBackground } from "~/components/blocks/landing/GeometricBg";
-import PrivacyPolicy from "./PrivacyPolicy";
-import TermsOfService from "./TermsOfService";
-import Affiliations from "./Affiliations";
-import EducationalSociety from "./EducationalSociety";
-import LMSKnowledge from "./LMSKnowledge";
-import LMSMarketing from "./LMSMarketing";
+import PrivacyPolicy from "~/components/blocks/nav/footer/PrivacyPolicy";
+import TermsOfService from "~/components/blocks/nav/footer/TermsOfService";
+import Affiliations from "~/components/blocks/nav/footer/Affiliations";
+import EducationalSociety from "~/components/blocks/nav/footer/EducationalSociety";
+import LMSKnowledge from "~/components/blocks/nav/footer/LMSKnowledge";
+import LMSMarketing from "~/components/blocks/nav/footer/LMSMarketing";
 
 const sections = [
   { id: "terms", title: "Terms of Service", icon: Scale, component: <TermsOfService />, colors: "from-blue-400 to-indigo-500", shadow: "shadow-blue-500/20" },
