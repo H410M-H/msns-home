@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { Footer } from "~/components/blocks/nav/footer/footer";
 import { Header } from "~/components/blocks/nav/Header";
 import { Toaster } from "~/components/ui/sonner";
+import { SchoolSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
   title: "M. S. NAZ HIGH SCHOOL®",
@@ -69,6 +70,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={GeistSans.variable}>
+      <head>
+        <SchoolSchema />
+      </head>
       <body className="flex min-h-screen flex-col">
         <TRPCReactProvider>
             <Header />

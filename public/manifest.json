@@ -1,0 +1,88 @@
+{
+  "name": "M.S. Naz High School®",
+  "short_name": "MSNS",
+  "description": "Premier high school in Pakistan offering educational excellence, leadership development, and modern education standards since 2004.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#059669",
+  "background_color": "#ffffff",
+  "categories": ["education"],
+  "screenshots": [
+    {
+      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/w_540,h_720,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1280,h_720,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "LMS Portal",
+      "short_name": "LMS",
+      "description": "Access the Learning Management System",
+      "url": "/lms",
+      "icons": [
+        {
+          "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Apply Now",
+      "short_name": "Apply",
+      "description": "Submit your application to M.S. Naz High School",
+      "url": "/admission",
+      "icons": [
+        {
+          "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Get in touch with M.S. Naz High School",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

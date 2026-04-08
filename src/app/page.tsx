@@ -157,7 +157,7 @@ export default function Home() {
           className="h-[70vh] w-full overflow-hidden rounded-3xl shadow-lg"
           style={{ background: "transparent" }}
         />
-            <QuickLinksSection />
+      <QuickLinksSection />
       <TestimonialsSection />
       <CTASection />
     </main>
