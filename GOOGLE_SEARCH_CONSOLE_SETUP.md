@@ -47,6 +47,11 @@ This guide will help you set up and optimize your website for Google Search Cons
    - OpenGraph: Social media preview optimization
    - Canonical URLs: Proper duplicate content handling
 
+7. **Microsoft Clarity**
+   - Location: `src/app/layout.tsx`
+   - Project ID: `we8pqjiu3j`
+   - Status: Active
+
 ## Steps to Complete Google Search Console Setup
 
 ### Step 1: Access Google Search Console
