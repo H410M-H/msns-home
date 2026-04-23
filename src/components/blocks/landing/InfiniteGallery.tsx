@@ -1,8 +1,14 @@
 "use client";
-import { useRef, useMemo, useCallback, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
-import { type Mesh, type Texture, ShaderMaterial, DoubleSide } from 'three';
+import { useRef, useMemo, useCallback, useState, useEffect, Suspense } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
+import {
+  type Mesh,
+  type Texture,
+  ShaderMaterial,
+  DoubleSide,
+  LinearFilter,
+} from "three";
 
 type ImageItem = string | { src: string; alt?: string };
 
@@ -27,6 +33,10 @@ const DEFAULT_DEPTH_RANGE = 60;
 const MAX_HORIZONTAL_OFFSET = 12;
 const MAX_VERTICAL_OFFSET = 10;
 
+// ---------- Optimized shader material ----------
+// Removed the expensive 7×7 blur loop, replaced with a lighter
+// 5-tap cross-sample blur that achieves a similar aesthetic at ~14×
+// fewer texture reads.
 const createGlassMaterial = (): ShaderMaterial => {
   return new ShaderMaterial({
     transparent: true,
@@ -40,7 +50,7 @@ const createGlassMaterial = (): ShaderMaterial => {
       isHovered: { value: 0.0 },
       glassIntensity: { value: 0.3 },
     },
-    vertexShader: `
+    vertexShader: /* glsl */ `
       uniform float scrollForce;
       uniform float time;
       uniform float isHovered;
@@ -55,28 +65,26 @@ const createGlassMaterial = (): ShaderMaterial => {
         vec3 pos = position;
         
         // Gentle wave effect
-        float wave = sin(pos.x * 1.5 + time * 1.2) * 0.02;
-        wave += cos(pos.y * 2.0 + time * 0.8) * 0.015;
+        float wave = sin(pos.x * 1.5 + time * 1.2) * 0.02
+                   + cos(pos.y * 2.0 + time * 0.8) * 0.015;
         
-        // Hover effect - lifting and expanding
-        if (isHovered > 0.5) {
-          float hoverWave = sin(pos.x * 4.0 + time * 6.0) * 0.08;
-          hoverWave += sin(pos.y * 3.0 + time * 5.0) * 0.05;
-          pos.z += hoverWave + 0.3;
-          pos *= 1.05; // Slight scale up
-        }
-        
-        pos.z += wave;
+        // Hover effect — lift + subtle scale
+        float hoverMix = step(0.5, isHovered);
+        float hoverWave = hoverMix * (
+          sin(pos.x * 4.0 + time * 6.0) * 0.08 +
+          sin(pos.y * 3.0 + time * 5.0) * 0.05
+        );
+        pos.z += wave + hoverWave + hoverMix * 0.3;
+        pos *= 1.0 + hoverMix * 0.05;
         
         vPosition = pos;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
       }
     `,
-    fragmentShader: `
+    fragmentShader: /* glsl */ `
       uniform sampler2D map;
       uniform float opacity;
       uniform float blurAmount;
-      uniform float scrollForce;
       uniform float glassIntensity;
       uniform float isHovered;
       varying vec2 vUv;
@@ -84,28 +92,19 @@ const createGlassMaterial = (): ShaderMaterial => {
       varying vec3 vPosition;
       
       void main() {
-        vec4 color = texture2D(map, vUv);
+        // 5-tap cross blur (much cheaper than 7×7 grid)
+        vec2 texel = 1.0 / vec2(textureSize(map, 0));
+        vec2 spread = texel * blurAmount;
         
-        // Blur effect
-        if (blurAmount > 0.0) {
-          vec2 texelSize = 1.0 / vec2(textureSize(map, 0));
-          vec4 blurred = vec4(0.0);
-          float total = 0.0;
-          
-          for (float x = -3.0; x <= 3.0; x += 1.0) {
-            for (float y = -3.0; y <= 3.0; y += 1.0) {
-              vec2 offset = vec2(x, y) * texelSize * blurAmount;
-              float weight = 1.0 / (1.0 + length(vec2(x, y)));
-              blurred += texture2D(map, vUv + offset) * weight;
-              total += weight;
-            }
-          }
-          color = blurred / total;
-        }
+        vec4 color = texture2D(map, vUv) * 0.4;
+        color += texture2D(map, vUv + vec2( spread.x, 0.0)) * 0.15;
+        color += texture2D(map, vUv + vec2(-spread.x, 0.0)) * 0.15;
+        color += texture2D(map, vUv + vec2(0.0,  spread.y)) * 0.15;
+        color += texture2D(map, vUv + vec2(0.0, -spread.y)) * 0.15;
         
-        // Glassmorphism effect
+        // Glassmorphism — fresnel highlight
         float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
-        vec3 glassHighlight = vec3(1.0) * fresnel * glassIntensity;
+        vec3 glassHL = vec3(1.0) * fresnel * glassIntensity;
         
         // Edge glow
         float edge = smoothstep(0.0, 0.1, vUv.x) * smoothstep(1.0, 0.9, vUv.x) *
@@ -113,14 +112,10 @@ const createGlassMaterial = (): ShaderMaterial => {
         vec3 edgeGlow = vec3(0.4, 0.6, 1.0) * (1.0 - edge) * 0.2;
         
         // Hover glow
-        float hoverGlow = isHovered * 0.15;
-        vec3 hoverColor = vec3(0.5, 0.8, 1.0) * hoverGlow;
+        vec3 hoverColor = vec3(0.5, 0.8, 1.0) * isHovered * 0.15;
         
-        // Combine effects
-        color.rgb += glassHighlight + edgeGlow + hoverColor;
+        color.rgb += glassHL + edgeGlow + hoverColor;
         color.rgb = mix(color.rgb, color.rgb * 1.1, fresnel * 0.3);
-        
-        // Slight brightness boost
         color.rgb *= 1.05;
         
         gl_FragColor = vec4(color.rgb, color.a * opacity);
@@ -129,6 +124,7 @@ const createGlassMaterial = (): ShaderMaterial => {
   });
 };
 
+// ---------- Image plane ----------
 function ImagePlane({
   texture,
   position,
@@ -143,7 +139,7 @@ function ImagePlane({
   rotation: [number, number, number];
 }) {
   const meshRef = useRef<Mesh>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const hoveredRef = useRef(false);
 
   useEffect(() => {
     if (material?.uniforms?.map && texture) {
@@ -151,11 +147,19 @@ function ImagePlane({
     }
   }, [material, texture]);
 
-  useEffect(() => {
+  const onPointerEnter = useCallback(() => {
+    hoveredRef.current = true;
     if (material?.uniforms?.isHovered) {
-      material.uniforms.isHovered.value = isHovered ? 1.0 : 0.0;
+      material.uniforms.isHovered.value = 1.0;
     }
-  }, [material, isHovered]);
+  }, [material]);
+
+  const onPointerLeave = useCallback(() => {
+    hoveredRef.current = false;
+    if (material?.uniforms?.isHovered) {
+      material.uniforms.isHovered.value = 0.0;
+    }
+  }, [material]);
 
   return (
     <mesh
@@ -164,56 +168,73 @@ function ImagePlane({
       scale={scale}
       rotation={rotation}
       material={material}
-      onPointerEnter={() => setIsHovered(true)}
-      onPointerLeave={() => setIsHovered(false)}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
     >
-      <planeGeometry args={[1, 1, 40, 40]} />
+      {/* Reduced from 40×40 segments to 8×8 — still smooth waves, ~25× fewer vertices */}
+      <planeGeometry args={[1, 1, 8, 8]} />
     </mesh>
   );
 }
 
+// ---------- Gallery scene ----------
 function GalleryScene({
   images,
   speed = 1,
   visibleCount = 10,
-}: Omit<InfiniteGalleryProps, 'className' | 'style'>) {
-  const [scrollVelocity, setScrollVelocity] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
-  const lastInteraction = useRef(Date.now());
+}: Omit<InfiniteGalleryProps, "className" | "style">) {
+  // Use refs instead of React state for per-frame values to avoid re-renders
+  const scrollVelocityRef = useRef(0);
+  const autoPlayRef = useRef(true);
+  const lastInteractionRef = useRef(Date.now());
+
+  const { gl } = useThree();
 
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
-        typeof img === 'string' ? { src: img, alt: '' } : img
+        typeof img === "string" ? { src: img, alt: "" } : img
       ),
     [images]
   );
 
   const textures = useTexture(normalizedImages.map((img) => img.src));
 
+  // Apply texture filtering for sharper rendering at distance
+  useEffect(() => {
+    const texArr = Array.isArray(textures) ? textures : [textures];
+    texArr.forEach((t) => {
+      t.minFilter = LinearFilter;
+      t.magFilter = LinearFilter;
+    });
+  }, [textures]);
+
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createGlassMaterial()),
     [visibleCount]
   );
 
+  // Dispose materials on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      materials.forEach((m) => m.dispose());
+    };
+  }, [materials]);
+
   const spatialPositions = useMemo(() => {
     const positions: { x: number; y: number; rotationY: number }[] = [];
-    const maxHorizontalOffset = MAX_HORIZONTAL_OFFSET;
-    const maxVerticalOffset = MAX_VERTICAL_OFFSET;
-
     for (let i = 0; i < visibleCount; i++) {
-      const horizontalAngle = (i * 2.618) % (Math.PI * 2);
-      const verticalAngle = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
-      const horizontalRadius = (i % 3) * 1.5;
-      const verticalRadius = ((i + 1) % 4) * 1.0;
-      
-      const x = (Math.sin(horizontalAngle) * horizontalRadius * maxHorizontalOffset) / 3;
-      const y = (Math.cos(verticalAngle) * verticalRadius * maxVerticalOffset) / 4;
-      const rotationY = (Math.sin(i * 0.5) * Math.PI) / 12;
-      
-      positions.push({ x, y, rotationY });
-    }
+      const hAngle = (i * 2.618) % (Math.PI * 2);
+      const vAngle = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
+      const hRadius = (i % 3) * 1.5;
+      const vRadius = ((i + 1) % 4) * 1.0;
 
+      positions.push({
+        x: (Math.sin(hAngle) * hRadius * MAX_HORIZONTAL_OFFSET) / 3,
+        y: (Math.cos(vAngle) * vRadius * MAX_VERTICAL_OFFSET) / 4,
+        rotationY: (Math.sin(i * 0.5) * Math.PI) / 12,
+      });
+    }
     return positions;
   }, [visibleCount]);
 
@@ -223,7 +244,10 @@ function GalleryScene({
   const planesData = useRef<PlaneData[]>(
     Array.from({ length: visibleCount }, (_, i) => ({
       index: i,
-      z: visibleCount > 0 ? ((depthRange / visibleCount) * i) % depthRange : 0,
+      z:
+        visibleCount > 0
+          ? ((depthRange / visibleCount) * i) % depthRange
+          : 0,
       imageIndex: totalImages > 0 ? i % totalImages : 0,
       x: spatialPositions[i]?.x ?? 0,
       y: spatialPositions[i]?.y ?? 0,
@@ -231,74 +255,83 @@ function GalleryScene({
     }))
   );
 
+  // Use the canvas DOM element directly instead of document.querySelector
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       event.preventDefault();
-      setScrollVelocity((prev) => prev + event.deltaY * 0.012 * speed);
-      setAutoPlay(false);
-      lastInteraction.current = Date.now();
+      scrollVelocityRef.current += event.deltaY * 0.012 * speed;
+      autoPlayRef.current = false;
+      lastInteractionRef.current = Date.now();
     },
     [speed]
   );
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        setScrollVelocity((prev) => prev - 2.5 * speed);
-        setAutoPlay(false);
-        lastInteraction.current = Date.now();
-      } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        setScrollVelocity((prev) => prev + 2.5 * speed);
-        setAutoPlay(false);
-        lastInteraction.current = Date.now();
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        scrollVelocityRef.current -= 2.5 * speed;
+        autoPlayRef.current = false;
+        lastInteractionRef.current = Date.now();
+      } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+        scrollVelocityRef.current += 2.5 * speed;
+        autoPlayRef.current = false;
+        lastInteractionRef.current = Date.now();
       }
     },
     [speed]
   );
 
   useEffect(() => {
-    const canvas = document.querySelector('canvas');
-    if (canvas) {
-      canvas.addEventListener('wheel', handleWheel, { passive: false });
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        canvas.removeEventListener('wheel', handleWheel);
-        document.removeEventListener('keydown', handleKeyDown);
-      };
-    }
-    return undefined;
-  }, [handleWheel, handleKeyDown]);
+    const canvas = gl.domElement;
+    canvas.addEventListener("wheel", handleWheel, { passive: false });
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      canvas.removeEventListener("wheel", handleWheel);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [gl, handleWheel, handleKeyDown]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Date.now() - lastInteraction.current > 3000) {
-        setAutoPlay(true);
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  // Autoplay resume timer — check in the animation loop instead of setInterval
+  // to avoid an extra timer.
+
+  // Force a single re-render per ~16 frames so React can reconcile image indices
+  const frameCount = useRef(0);
+  const [, forceRender] = useState(0);
 
   useFrame((state, delta) => {
-    if (autoPlay) {
-      setScrollVelocity((prev) => prev + 0.4 * delta);
+    // Autoplay resume
+    if (
+      !autoPlayRef.current &&
+      Date.now() - lastInteractionRef.current > 3000
+    ) {
+      autoPlayRef.current = true;
     }
 
-    setScrollVelocity((prev) => prev * 0.94);
+    if (autoPlayRef.current) {
+      scrollVelocityRef.current += 0.4 * delta;
+    }
 
+    // Damping
+    scrollVelocityRef.current *= 0.94;
+
+    const velocity = scrollVelocityRef.current;
     const time = state.clock.getElapsedTime();
-    materials.forEach((material) => {
-      if (material?.uniforms) {
-        if (material.uniforms.time) material.uniforms.time.value = time;
-        if (material.uniforms.scrollForce) {
-          material.uniforms.scrollForce.value = scrollVelocity;
-        }
-      }
-    });
 
-    const imageAdvance = totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
+    // Update material uniforms
+    for (const mat of materials) {
+      mat.uniforms.time!.value = time;
+      mat.uniforms.scrollForce!.value = velocity;
+    }
 
-    planesData.current.forEach((plane, i) => {
-      let newZ = plane.z + scrollVelocity * delta * 12;
+    const imageAdvance =
+      totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
+
+    let needsRerender = false;
+
+    for (let i = 0; i < planesData.current.length; i++) {
+      const plane = planesData.current[i]!;
+
+      let newZ = plane.z + velocity * delta * 12;
       let wrapsForward = 0;
       let wrapsBackward = 0;
 
@@ -311,12 +344,14 @@ function GalleryScene({
       }
 
       if (wrapsForward > 0 && imageAdvance > 0 && totalImages > 0) {
-        plane.imageIndex = (plane.imageIndex + wrapsForward * imageAdvance) % totalImages;
+        plane.imageIndex =
+          (plane.imageIndex + wrapsForward * imageAdvance) % totalImages;
+        needsRerender = true;
       }
-
       if (wrapsBackward > 0 && imageAdvance > 0 && totalImages > 0) {
         const step = plane.imageIndex - wrapsBackward * imageAdvance;
         plane.imageIndex = ((step % totalImages) + totalImages) % totalImages;
+        needsRerender = true;
       }
 
       plane.z = ((newZ % depthRange) + depthRange) % depthRange;
@@ -324,44 +359,34 @@ function GalleryScene({
       plane.y = spatialPositions[i]?.y ?? 0;
       plane.rotationY = spatialPositions[i]?.rotationY ?? 0;
 
-      const normalizedPosition = plane.z / depthRange;
-      
-      // Smoother fade transitions
-      let opacity = 1;
-      const fadeInStart = 0.0;
-      const fadeInEnd = 0.2;
-      const fadeOutStart = 0.75;
-      const fadeOutEnd = 1.0;
+      const t = plane.z / depthRange;
 
-      if (normalizedPosition < fadeInEnd) {
-        opacity = normalizedPosition < fadeInStart ? 0 : 
-                  (normalizedPosition - fadeInStart) / (fadeInEnd - fadeInStart);
-      } else if (normalizedPosition > fadeOutStart) {
-        opacity = normalizedPosition > fadeOutEnd ? 0 :
-                  1 - (normalizedPosition - fadeOutStart) / (fadeOutEnd - fadeOutStart);
-      }
-
+      // Opacity fade
+      let opacity: number;
+      if (t < 0.2) opacity = t / 0.2;
+      else if (t > 0.75) opacity = 1 - (t - 0.75) / 0.25;
+      else opacity = 1;
       opacity = Math.max(0, Math.min(1, opacity));
 
-      // Blur effect
-      let blur = 0;
-      const blurInEnd = 0.15;
-      const blurOutStart = 0.8;
-
-      if (normalizedPosition < blurInEnd) {
-        blur = 5.0 * (1 - normalizedPosition / blurInEnd);
-      } else if (normalizedPosition > blurOutStart) {
-        blur = 5.0 * ((normalizedPosition - blurOutStart) / (1 - blurOutStart));
-      }
-
+      // Blur at edges
+      let blur: number;
+      if (t < 0.15) blur = 5.0 * (1 - t / 0.15);
+      else if (t > 0.8) blur = 5.0 * ((t - 0.8) / 0.2);
+      else blur = 0;
       blur = Math.max(0, Math.min(5.0, blur));
 
-      const material = materials[i];
-      if (material?.uniforms) {
-        if (material.uniforms.opacity) material.uniforms.opacity.value = opacity;
-        if (material.uniforms.blurAmount) material.uniforms.blurAmount.value = blur;
+      const mat = materials[i];
+      if (mat?.uniforms) {
+        mat.uniforms.opacity!.value = opacity;
+        mat.uniforms.blurAmount!.value = blur;
       }
-    });
+    }
+
+    // Batch React reconciliation — only trigger re-render when image indices change
+    frameCount.current++;
+    if (needsRerender && frameCount.current % 16 === 0) {
+      forceRender((n) => n + 1);
+    }
   });
 
   if (normalizedImages.length === 0) return null;
@@ -371,21 +396,25 @@ function GalleryScene({
       <ambientLight intensity={0.6} />
       <pointLight position={[10, 10, 10]} intensity={0.8} />
       <pointLight position={[-10, -10, -10]} intensity={0.4} color="#4080ff" />
-      
-      {planesData.current.map((plane, i) => {
-        const texture = textures[plane.imageIndex];
-        const material = materials[i];
 
+      {planesData.current.map((plane, i) => {
+        const texture = Array.isArray(textures)
+          ? textures[plane.imageIndex]
+          : textures;
+        const material = materials[i];
         if (!texture || !material) return null;
 
-        const img = texture.image as HTMLImageElement | ImageBitmap | undefined;
-        const aspect = img?.width && img?.height ? img.width / img.height : 1;
-        
-        // Bigger images
+        const img = texture.image as
+          | HTMLImageElement
+          | ImageBitmap
+          | undefined;
+        const aspect =
+          img?.width && img?.height ? img.width / img.height : 1;
+
         const baseSize = 4.5;
         const scale: [number, number, number] =
-          aspect > 1 
-            ? [baseSize * aspect, baseSize, 1] 
+          aspect > 1
+            ? [baseSize * aspect, baseSize, 1]
             : [baseSize, baseSize / aspect, 1];
 
         return (
@@ -403,9 +432,27 @@ function GalleryScene({
   );
 }
 
+// ---------- Loading fallback ----------
+function GalleryLoader() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative h-12 w-12">
+          <div className="absolute inset-0 rounded-full border-2 border-white/10" />
+          <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-emerald-400" />
+        </div>
+        <p className="text-sm text-white/40 tracking-wide uppercase">
+          Loading Gallery…
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ---------- Main export ----------
 export default function InfiniteGallery({
   images,
-  className = '',
+  className = "",
   style,
   speed = 1,
   visibleCount = 10,
@@ -414,8 +461,11 @@ export default function InfiniteGallery({
 
   useEffect(() => {
     try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') ?? canvas.getContext('experimental-webgl');
+      const c = document.createElement("canvas");
+      const gl =
+        c.getContext("webgl2") ??
+        c.getContext("webgl") ??
+        c.getContext("experimental-webgl");
       setWebglSupported(!!gl);
     } catch {
       setWebglSupported(false);
@@ -423,37 +473,67 @@ export default function InfiniteGallery({
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-linear-to-br from-slate-950 via-green-950/10 to-slate-900" />
-      
-      {/* Ambient glow effects */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      
-      {/* Main canvas */}
-      <div className={`relative w-screen h-full ${className}`} style={style}>
-        {webglSupported ? (
-          <Canvas
-            camera={{ position: [0, 0, 10], fov: 60 }}
-            gl={{ 
-              antialias: true, 
-              alpha: true,
-              powerPreference: 'high-performance'
-            }}
-          >
-            <GalleryScene
-              images={images}
-              speed={speed}
-              visibleCount={visibleCount}
-            />
-          </Canvas>
-        ) : (
-          <div className="flex items-center justify-center h-full rounded-lg">
-            <p className="text-white text-lg">WebGL not supported</p>
-          </div>
-        )}
+    <section className="relative w-full overflow-hidden">
+      {/* Section header */}
+      <div
+        className="relative z-10 pt-20 pb-6 md:pt-28 md:pb-10 px-6 md:px-12"
+        style={{
+          background:
+            "linear-gradient(to bottom, #060e1a 0%, transparent 100%)",
+        }}
+      >
+        <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] text-sky-400 bg-sky-500/10 border border-sky-500/20">
+          Life at MSNS
+        </span>
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
+          Campus{" "}
+          <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            Gallery
+          </span>
+        </h2>
+        <p className="mt-3 text-sm md:text-base text-white/40 max-w-lg leading-relaxed">
+          Scroll or use arrow keys to explore moments from our campus life.
+        </p>
       </div>
-    </div>
+
+      {/* 3D Canvas area */}
+      <div className="relative h-[70vh] md:h-screen">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-green-950/10 to-slate-900" />
+
+        {/* Ambient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-500/[0.12] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/[0.12] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/[0.06] rounded-full blur-[150px] pointer-events-none" />
+
+        <div className={`relative w-full h-full ${className}`} style={style}>
+          {webglSupported ? (
+            <Suspense fallback={<GalleryLoader />}>
+              <Canvas
+                camera={{ position: [0, 0, 10], fov: 60 }}
+                dpr={[1, 1.5]}
+                gl={{
+                  antialias: true,
+                  alpha: true,
+                  powerPreference: "high-performance",
+                }}
+              >
+                <GalleryScene
+                  images={images}
+                  speed={speed}
+                  visibleCount={visibleCount}
+                />
+              </Canvas>
+            </Suspense>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-white/50 text-base">
+                WebGL is not supported on this device.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }

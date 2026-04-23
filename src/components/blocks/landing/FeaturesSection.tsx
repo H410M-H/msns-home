@@ -1,12 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-} from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Award,
   Users,
@@ -25,7 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-// --- Flat feature list with category tags ---
+// --- Feature data ---
 interface Feature {
   icon: LucideIcon;
   title: string;
@@ -157,36 +152,20 @@ const categoryColors: Record<string, { bg: string; text: string; accent: string;
   },
 };
 
-// --- Animated Feature Card ---
-function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
+// --- Feature Card ---
+function FeatureCard({ feature }: { feature: Feature }) {
   const colors = categoryColors[feature.category] ?? categoryColors["Academic Excellence"]!;
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.85, y: 30 }}
-      animate={
-        isInView
-          ? { opacity: 1, scale: 1, y: 0 }
-          : { opacity: 0, scale: 0.85, y: 30 }
-      }
-      transition={{
-        duration: 0.6,
-        delay: index * 0.04,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      className="group relative flex-shrink-0 w-[300px] sm:w-[340px] snap-center"
-    >
+    <div className="group relative flex-shrink-0 w-[280px] sm:w-[310px]">
       <div
         className={`
-          relative h-full overflow-hidden rounded-3xl border border-white/10
-          bg-white/[0.06] backdrop-blur-xl
-          p-7 transition-all duration-500
-          hover:bg-white/[0.1] hover:border-white/20
-          hover:shadow-2xl ${colors.glow}
-          hover:-translate-y-2
+          relative h-full overflow-hidden rounded-2xl border border-white/[0.08]
+          bg-white/[0.04] backdrop-blur-xl
+          p-6 transition-all duration-500
+          hover:bg-white/[0.09] hover:border-white/15
+          hover:shadow-xl ${colors.glow}
+          hover:-translate-y-1
         `}
       >
         {/* Gradient accent strip */}
@@ -197,7 +176,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
         {/* Category badge */}
         <span
           className={`
-            inline-block mb-5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest
+            inline-block mb-4 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em]
             ${colors.bg} ${colors.text} border border-white/5
           `}
         >
@@ -207,52 +186,80 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
         {/* Icon */}
         <div
           className={`
-            mb-5 flex h-14 w-14 items-center justify-center rounded-2xl
+            mb-4 flex h-12 w-12 items-center justify-center rounded-xl
             bg-gradient-to-br ${colors.accent} shadow-lg ${colors.glow}
-            transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3
+            transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2
           `}
         >
-          <feature.icon className="h-7 w-7 text-white" strokeWidth={1.8} />
+          <feature.icon className="h-6 w-6 text-white" strokeWidth={1.8} />
         </div>
 
         {/* Content */}
-        <h3 className="mb-3 text-lg font-bold text-white leading-tight">
+        <h3 className="mb-2 text-base font-bold text-white leading-snug">
           {feature.title}
         </h3>
-        <p className="text-sm leading-relaxed text-white/60 group-hover:text-white/75 transition-colors duration-300">
+        <p className="text-[13px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-300">
           {feature.desc}
         </p>
 
         {/* Hover glow effect */}
         <div
           className={`
-            absolute -bottom-20 -right-20 h-40 w-40 rounded-full
+            absolute -bottom-16 -right-16 h-32 w-32 rounded-full
             bg-gradient-to-br ${colors.accent} opacity-0 blur-3xl
-            group-hover:opacity-[0.08] transition-opacity duration-700
+            group-hover:opacity-[0.06] transition-opacity duration-700
           `}
         />
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+// --- Marquee Row ---
+function MarqueeRow({
+  features,
+  direction = "left",
+  speed = 35,
+}: {
+  features: Feature[];
+  direction?: "left" | "right";
+  speed?: number;
+}) {
+  // Duplicate the array to create a seamless loop
+  const duplicated = [...features, ...features];
+
+  return (
+    <div
+      className="relative overflow-hidden group/marquee"
+      style={{
+        maskImage: "linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)",
+      }}
+    >
+      <div
+        className="flex gap-5 w-max group-hover/marquee:[animation-play-state:paused]"
+        style={{
+          animation: `marquee-${direction} ${speed}s linear infinite`,
+        }}
+      >
+        {duplicated.map((feature, i) => (
+          <FeatureCard key={`${direction}-${i}`} feature={feature} />
+        ))}
+      </div>
+
+
+    </div>
   );
 }
 
 // --- Main Section ---
 export function FeaturesSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollRowRef = useRef<HTMLDivElement>(null);
-
-  // Scroll-driven horizontal translation
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Translate the row left as the user scrolls through the section
-  const x = useTransform(scrollYProgress, [0, 1], ["8%", "-45%"]);
+  // Split features into two rows for visual variety
+  const row1 = allFeatures.slice(0, 8);
+  const row2 = allFeatures.slice(8);
 
   return (
     <section
-      ref={sectionRef}
       className="relative w-full overflow-hidden"
       style={{
         background:
@@ -275,70 +282,36 @@ export function FeaturesSection() {
       <div className="absolute bottom-20 right-[15%] h-[350px] w-[350px] rounded-full bg-sky-500/[0.05] blur-[120px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-amber-500/[0.03] blur-[150px] pointer-events-none" />
 
-      <div className="relative py-24 md:py-32">
+      <div className="relative py-20 md:py-28">
         {/* Header */}
-        <div className="container mx-auto px-4 md:px-6 mb-16">
+        <div className="container mx-auto px-4 md:px-6 mb-14">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-2xl"
           >
             <span className="inline-block mb-4 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
               Why Choose MSNS
             </span>
-            <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.1] tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
               Built for{" "}
               <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 bg-clip-text text-transparent">
                 Excellence
               </span>
             </h2>
-            <p className="mt-5 text-lg text-white/50 max-w-xl leading-relaxed">
+            <p className="mt-4 text-base md:text-lg text-white/45 max-w-xl leading-relaxed">
               Academic rigor, modern infrastructure, and personalized care —
               at the lowest fee structure in Gakkhar.
             </p>
           </motion.div>
-
-          {/* Scroll hint */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 flex items-center gap-3 text-white/30"
-          >
-            <div className="flex items-center gap-1">
-              <motion.div
-                animate={{ x: [0, 8, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="h-[2px] w-8 bg-gradient-to-r from-emerald-400 to-transparent rounded-full"
-              />
-            </div>
-            <span className="text-xs uppercase tracking-widest font-medium">
-              Scroll to explore
-            </span>
-          </motion.div>
         </div>
 
-        {/* Horizontally scrolling cards — scroll-driven parallax */}
-        <motion.div
-          ref={scrollRowRef}
-          style={{ x }}
-          className="flex gap-5 px-4 md:px-8 pb-4 will-change-transform"
-        >
-          {allFeatures.map((feature, i) => (
-            <FeatureCard key={i} feature={feature} index={i} />
-          ))}
-        </motion.div>
-
-        {/* Also allow manual swipe on mobile — overlay scrollable row */}
-        <div className="md:hidden mt-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-4">
-          <div className="flex gap-4 pb-4" style={{ width: "max-content" }}>
-            {allFeatures.map((feature, i) => (
-              <FeatureCard key={`mobile-${i}`} feature={feature} index={i} />
-            ))}
-          </div>
+        {/* Marquee rows — continuous right-to-left motion */}
+        <div className="space-y-5">
+          <MarqueeRow features={row1} direction="left" speed={40} />
+          <MarqueeRow features={row2} direction="right" speed={45} />
         </div>
 
         {/* Stats bar */}
