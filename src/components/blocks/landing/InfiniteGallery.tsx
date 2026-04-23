@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useMemo, useCallback, useState, useEffect, Suspense } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import {
   type Mesh,
@@ -183,12 +183,8 @@ function GalleryScene({
   speed = 1,
   visibleCount = 10,
 }: Omit<InfiniteGalleryProps, "className" | "style">) {
-  // Use refs instead of React state for per-frame values to avoid re-renders
-  const scrollVelocityRef = useRef(0);
-  const autoPlayRef = useRef(true);
-  const lastInteractionRef = useRef(Date.now());
-
-  const { gl } = useThree();
+  // Constant auto-play speed
+  const AUTO_SPEED = 0.4;
 
   const normalizedImages = useMemo(
     () =>
@@ -255,66 +251,15 @@ function GalleryScene({
     }))
   );
 
-  // Use the canvas DOM element directly instead of document.querySelector
-  const handleWheel = useCallback(
-    (event: WheelEvent) => {
-      event.preventDefault();
-      scrollVelocityRef.current += event.deltaY * 0.012 * speed;
-      autoPlayRef.current = false;
-      lastInteractionRef.current = Date.now();
-    },
-    [speed]
-  );
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-        scrollVelocityRef.current -= 2.5 * speed;
-        autoPlayRef.current = false;
-        lastInteractionRef.current = Date.now();
-      } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-        scrollVelocityRef.current += 2.5 * speed;
-        autoPlayRef.current = false;
-        lastInteractionRef.current = Date.now();
-      }
-    },
-    [speed]
-  );
-
-  useEffect(() => {
-    const canvas = gl.domElement;
-    canvas.addEventListener("wheel", handleWheel, { passive: false });
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      canvas.removeEventListener("wheel", handleWheel);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [gl, handleWheel, handleKeyDown]);
-
-  // Autoplay resume timer — check in the animation loop instead of setInterval
-  // to avoid an extra timer.
 
   // Force a single re-render per ~16 frames so React can reconcile image indices
   const frameCount = useRef(0);
   const [, forceRender] = useState(0);
 
   useFrame((state, delta) => {
-    // Autoplay resume
-    if (
-      !autoPlayRef.current &&
-      Date.now() - lastInteractionRef.current > 3000
-    ) {
-      autoPlayRef.current = true;
-    }
-
-    if (autoPlayRef.current) {
-      scrollVelocityRef.current += 0.4 * delta;
-    }
-
-    // Damping
-    scrollVelocityRef.current *= 0.94;
-
-    const velocity = scrollVelocityRef.current;
+    // Constant automatic velocity — no scroll interaction
+    const velocity = AUTO_SPEED * delta * speed;
     const time = state.clock.getElapsedTime();
 
     // Update material uniforms
@@ -492,7 +437,7 @@ export default function InfiniteGallery({
           </span>
         </h2>
         <p className="mt-3 text-sm md:text-base text-white/40 max-w-lg leading-relaxed">
-          Scroll or use arrow keys to explore moments from our campus life.
+          Explore moments from our campus life.
         </p>
       </div>
 
