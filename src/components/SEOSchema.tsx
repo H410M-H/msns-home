@@ -8,8 +8,8 @@ export function SchoolSchema() {
     url: 'https://msns.edu.pk',
     logo: 'https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png',
     description: 'Premier high school in Pakistan offering educational excellence, leadership development, and modern education standards since 2004.',
-    telephone: '+92-300-XXXXXXX',
-    email: 'info@msns.edu.pk',
+    telephone: '+92-3016233609',
+    email: 'msnazhighschool@gmail.com',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'M.S. Naz High School',
@@ -24,7 +24,7 @@ export function SchoolSchema() {
       'https://twitter.com/msnazhighschool',
     ],
     foundingDate: '2004',
-    areaServed: ['Wazirabad', 'Gujranwala', 'Sialkot', 'Lahore', 'Punjab', 'Pakistan'],
+    areaServed: ['Wazirabad', 'Gujranwala', 'Sialkot', 'Lahore', 'Punjab', 'Pakistan', 'Ghakhar Mandi', 'Eimanabad', 'Eimanabad Road', 'Eimanabad Road Wazirabad', 'Eimanabad Road Gujranwala', 'Eimanabad Road Sialkot', 'Eimanabad Road Lahore', 'Eimanabad Road Punjab', 'Eimanabad Road Pakistan', 'Eimanabad Road Ghakhar Mandi'],
     educationalLevel: 'Secondary Education',
     curricula: [
       {

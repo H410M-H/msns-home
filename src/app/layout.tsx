@@ -1,10 +1,10 @@
 // src/app/layout.tsx
 
 
-import "~/styles/globals.css"; 
+import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import Script from "next/script"; 
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { TRPCReactProvider } from "~/trpc/react";
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
   },
   description: "Since - 2004 | Developed by MSNS-DEV™",
-    keywords:["msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford"," oxford",  "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
+  keywords: ["msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford", " oxford", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
     "educational excellence",
     "academic achievement",
     "leadership development",
@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     "student-centered learning",
     "modern education standards",
     "high school education",
+    "oxford school",
+    "oxford contact",
+    "msnz",
     "Pakistani education system"].join(", "),
   openGraph: {
     title: "M.S. Naz High School®",
@@ -67,7 +70,7 @@ export const metadata: Metadata = {
     canonical: "https://msns.edu.pk",
   },
   manifest: "/manifest.json",
-};  
+};
 
 export default function RootLayout({
   children,
@@ -104,14 +107,14 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col">
         <TRPCReactProvider>
-            <Header />
-              <main className="flex-1">
-                {children}
-                <Analytics />
-                <SpeedInsights />
-              </main>
-            <Footer />
-            <Toaster />
+          <Header />
+          <main className="flex-1">
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </main>
+          <Footer />
+          <Toaster />
         </TRPCReactProvider>
       </body>
     </html>
