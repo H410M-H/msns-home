@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
   },
+  other: {
+    "google-adsense-account": "ca-pub-1351871288722699",
+  },
   description: "Since - 2004 | Developed by MSNS-DEV™",
   keywords: ["msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford", " oxford", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
     "educational excellence",
@@ -103,6 +106,12 @@ export default function RootLayout({
           `}
         </Script>
 
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1351871288722699"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <SchoolSchema />
       </head>
       <body className="flex min-h-screen flex-col">
