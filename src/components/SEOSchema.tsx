@@ -3,7 +3,7 @@
 export function SchoolSchema() {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'HighSchool',
+    '@type': ['High School', 'EducationalInstitution', 'Montessori', 'Secondary School', 'School', 'Nursery'],
     name: 'M.S. Naz High School®',
     url: 'https://msns.edu.pk',
     logo: 'https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png',
@@ -13,7 +13,7 @@ export function SchoolSchema() {
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'M.S. Naz High School',
-      addressLocality: 'Wazirabad',
+      addressLocality: 'Ghakhar Mandi',
       addressRegion: 'Punjab',
       postalCode: '51700',
       addressCountry: 'PK',
@@ -24,7 +24,7 @@ export function SchoolSchema() {
       'https://twitter.com/msnazhighschool',
     ],
     foundingDate: '2004',
-    areaServed: ['Wazirabad', 'Gujranwala', 'Sialkot', 'Lahore', 'Punjab', 'Pakistan', 'Ghakhar Mandi', 'Eimanabad', 'Eimanabad Road', 'Eimanabad Road Wazirabad', 'Eimanabad Road Gujranwala', 'Eimanabad Road Sialkot', 'Eimanabad Road Lahore', 'Eimanabad Road Punjab', 'Eimanabad Road Pakistan', 'Eimanabad Road Ghakhar Mandi'],
+    areaServed: ['Wazirabad', 'Aujla Kalan', 'Kotli Kalan', 'Bhagat Pura', 'Kotli Khoja', 'Gujranwala', 'Sialkot', 'Lahore', 'Punjab', 'Pakistan', 'Ghakhar Mandi', 'Eimanabad', 'Eimanabad Road', 'Eimanabad Road Wazirabad', 'Eimanabad Road Gujranwala', 'Eimanabad Road Sialkot', 'Eimanabad Road Lahore', 'Eimanabad Road Punjab', 'Eimanabad Road Pakistan', 'Eimanabad Road Ghakhar Mandi'],
     educationalLevel: 'Secondary Education',
     curricula: [
       {

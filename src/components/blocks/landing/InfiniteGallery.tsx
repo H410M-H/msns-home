@@ -45,7 +45,7 @@ const createGlassMaterial = (): ShaderMaterial => {
       map: { value: null as Texture | null },
       opacity: { value: 1.0 },
       blurAmount: { value: 0.0 },
-      scrollForce: { value: 0.0 },
+      scrollForce: { value: 5.0 },
       time: { value: 0.0 },
       isHovered: { value: 0.0 },
       glassIntensity: { value: 0.3 },
@@ -183,13 +183,13 @@ function GalleryScene({
   speed = 1,
   visibleCount = 10,
 }: Omit<InfiniteGalleryProps, "className" | "style">) {
-  // Constant auto-play speed
-  const AUTO_SPEED = 0.4;
+  // Constant auto-play speed (units per second along the z-axis)
+  const AUTO_SPEED = 4.5;
 
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
-        typeof img === "string" ? { src: img, alt: "" } : img
+        typeof img === "string" ? { src: img, alt: "MSNS" } : img
       ),
     [images]
   );
@@ -258,14 +258,15 @@ function GalleryScene({
   const [, forceRender] = useState(0);
 
   useFrame((state, delta) => {
-    // Constant automatic velocity — no scroll interaction
-    const velocity = AUTO_SPEED * delta * speed;
+    // Per-frame displacement: AUTO_SPEED * speed * delta gives consistent
+    // movement regardless of frame rate (delta is already in seconds).
+    const displacement = AUTO_SPEED * speed * delta;
     const time = state.clock.getElapsedTime();
 
     // Update material uniforms
     for (const mat of materials) {
       mat.uniforms.time!.value = time;
-      mat.uniforms.scrollForce!.value = velocity;
+      mat.uniforms.scrollForce!.value = AUTO_SPEED * speed;
     }
 
     const imageAdvance =
@@ -276,7 +277,7 @@ function GalleryScene({
     for (let i = 0; i < planesData.current.length; i++) {
       const plane = planesData.current[i]!;
 
-      let newZ = plane.z + velocity * delta * 12;
+      let newZ = plane.z + displacement;
       let wrapsForward = 0;
       let wrapsBackward = 0;
 
