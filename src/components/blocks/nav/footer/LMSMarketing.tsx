@@ -2,7 +2,7 @@ import React from "react";
 
 export default function LMSMarketing() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed text-slate-200">
+    <div className="space-y-4 text-sm leading-relaxed text-slate-700">
       <p>
         The MSNS LMS transcends traditional administrative software by acting as an <strong>Institutional Intelligence Hub</strong>. It resolves the most critical pain points in modern educational administration through three core pillars.[3]
       </p>

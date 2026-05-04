@@ -53,11 +53,11 @@ export const SchoolValues = ({ expandedValue, setExpandedValue }: SchoolValuesPr
               }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-linear-to-br from-slate-800 to-slate-900/50 border border-white/10 hover:border-blue-400/30 transition-all group">
+              <Card className="h-full bg-white/40 backdrop-blur-md border border-white/40 hover:border-blue-400/30 transition-all group shadow-lg hover:shadow-xl">
                 <CardContent className="p-8 flex flex-col h-full">
                   <div className={`w-full h-2 mb-6 rounded-full bg-linear-to-r ${value.gradient}`} />
-                  <h3 className="text-2xl font-bold mb-4 text-slate-100">{value.title}</h3>
-                  <p className="text-slate-300 mb-6 grow">{value.description}</p>
+                  <h3 className="text-2xl font-bold mb-4 text-slate-800">{value.title}</h3>
+                  <p className="text-slate-700 mb-6 grow">{value.description}</p>
 
                   <motion.div
                     initial={false}
@@ -67,7 +67,7 @@ export const SchoolValues = ({ expandedValue, setExpandedValue }: SchoolValuesPr
                     }}
                     className="overflow-hidden"
                   >
-                    <p className="text-slate-400 text-sm pb-4">{value.details}</p>
+                    <p className="text-slate-600 text-sm pb-4">{value.details}</p>
                   </motion.div>
 
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="self-end">

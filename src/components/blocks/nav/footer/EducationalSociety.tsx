@@ -2,11 +2,11 @@ import React from "react";
 
 export default function EducationalSociety() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed text-slate-200">
+    <div className="space-y-4 text-sm leading-relaxed text-slate-700">
       <p>
         The <strong>Naz Educational Welfare Society (NEWS)</strong> serves as the philanthropic arm of our academic ecosystem. Founded on the principle that exceptional academic aptitude should never be stifled by socioeconomic disenfranchisement, the Society operates as a registered non-profit welfare entity.
       </p>
-      <h3 className="text-lg font-semibold text-white mt-4 mb-2">Core Pillars & Objectives</h3>
+      <h3 className="text-lg font-semibold text-slate-800 mt-4 mb-2">Core Pillars & Objectives</h3>
       <ul className="list-disc pl-5 space-y-2">
         <li>
           <strong>Merit & Need-Based Subsidies:</strong> Administering full and partial tuition waivers for high-potential students originating from marginalized communities.

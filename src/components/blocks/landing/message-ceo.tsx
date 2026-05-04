@@ -6,7 +6,7 @@ import { Quote } from "lucide-react"
 
 export const MessageFromCEO = () => {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-transparent">
       <div className="container mx-auto px-4">
         {/* Top heading */}
         <h2 className="text-4xl font-bold text-center text-slate-900 mb-16">

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Scale, ShieldCheck, Handshake, Landmark, BookOpen, Rocket } from "lucide-react";
-import { GeometricBackground } from "~/components/blocks/landing/GeometricBg";
 import PrivacyPolicy from "~/components/blocks/nav/footer/PrivacyPolicy";
 import TermsOfService from "~/components/blocks/nav/footer/TermsOfService";
 import Affiliations from "~/components/blocks/nav/footer/Affiliations";
@@ -21,15 +20,14 @@ const sections = [
 
 export default function Terms() {
   return (
-    <section className="relative min-h-screen w-full bg-[#030712] py-20 px-6">
-      <GeometricBackground />
+    <section className="relative min-h-screen w-full bg-linear-to-br from-green-800/60 to-emerald-50 font-sans py-20 px-6">
       
       <div className="relative z-10 max-w-7xl mx-auto">
         <header className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
-            Institutional <span className="text-blue-500">Governance</span>
+          <h1 className="text-5xl md:text-6xl font-extrabold text-green-950 tracking-tight mb-4">
+            Institutional <span className="text-green-700">Governance</span>
           </h1>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+          <p className="text-green-900/80 max-w-2xl mx-auto text-lg">
             Legal frameworks, regulatory compliance, and technical documentation for the MSNS Ecosystem.
           </p>
         </header>
@@ -48,22 +46,22 @@ export default function Terms() {
               key={section.id}
               variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}
               whileHover={{ y: -5 }}
-              className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-8 transition-all hover:bg-white/10 ${section.shadow} hover:shadow-2xl`}
+              className={`group relative overflow-hidden rounded-3xl border border-white/40 bg-white/40 backdrop-blur-md p-8 transition-all hover:bg-white/50 ${section.shadow} hover:shadow-2xl`}
             >
               <div className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${section.colors} mb-6`}>
                 <section.icon className="w-6 h-6 text-white" />
               </div>
               
-              <h2 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
+              <h2 className="text-2xl font-bold text-green-950 mb-4 group-hover:text-green-700 transition-colors">
                 {section.title}
               </h2>
               
-              <div className="max-h-[300px] overflow-y-auto pr-2 text-slate-300 custom-scrollbar text-sm leading-relaxed">
+              <div className="max-h-[300px] overflow-y-auto pr-2 text-slate-800 custom-scrollbar text-sm leading-relaxed">
                 {section.component}
               </div>
               
               {/* Decorative Vector Element */}
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform" />
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-white/40 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform" />
             </motion.div>
           ))}
         </motion.div>
@@ -73,10 +71,10 @@ export default function Terms() {
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { 
-          background: rgba(255, 255, 255, 0.1); 
+          background: rgba(0, 0, 0, 0.2); 
           border-radius: 10px; 
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.4); }
       `}</style>
     </section>
   );

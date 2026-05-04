@@ -2,7 +2,7 @@ import React from "react";
 
 export default function LMSKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed text-slate-200">
+    <div className="space-y-4 text-sm leading-relaxed text-slate-700">
       <p>
         The MSNS Learning Management System (LMS) is engineered to replace fragmented manual record-keeping methodologies with a highly secure, centralized digital platform.[3]
       </p>

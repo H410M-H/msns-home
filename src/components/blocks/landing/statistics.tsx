@@ -31,7 +31,7 @@ export const KeyStatistics = () => {
               }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 backdrop-blur-xs border border-white/10 hover:border-blue-400/30 transition-all">
+              <Card className="h-full bg-white/40 backdrop-blur-md border border-white/40 hover:border-blue-400/30 transition-all shadow-lg hover:shadow-xl">
                 <CardContent className="flex flex-col items-center justify-center h-full p-8">
                   <motion.div whileHover={{ scale: 1.2, rotate: 360 }} transition={{ type: "spring" }}>
                     <stat.icon className={`w-16 h-16 mb-6 ${stat.color}`} />
@@ -39,7 +39,7 @@ export const KeyStatistics = () => {
                   <h3 className="text-4xl font-bold mb-4 bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                     {stat.value}
                   </h3>
-                  <p className="text-slate-300 text-center text-lg">{stat.label}</p>
+                  <p className="text-slate-700 text-center text-lg">{stat.label}</p>
                 </CardContent>
               </Card>
             </motion.div>
