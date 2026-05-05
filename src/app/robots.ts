@@ -22,7 +22,6 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: [
       'https://msns.edu.pk/sitemap.xml',
-      'https://www.msns.edu.pk/sitemap.xml',
     ],
   }
 }
