@@ -3,11 +3,11 @@ import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { env } from "~/env.js";
 
 const s3Client = new S3Client({
-  region: env.S3_REGION,
-  endpoint: env.S3_ENDPOINT_URL,
+  region: env.AWS_DEFAULT_REGION,
+  endpoint: env.AWS_ENDPOINT_URL,
   credentials: {
-    accessKeyId: env.S3_ACCESS_KEY_ID,
-    secretAccessKey: env.S3_SECRET_ACCESS_KEY,
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
   },
   forcePathStyle: true,
 });
@@ -26,7 +26,7 @@ export async function GET(
     }
 
     const command = new GetObjectCommand({
-      Bucket: env.S3_BUCKET_NAME,
+      Bucket: env.AWS_S3_BUCKET_NAME,
       Key: key,
     });
 
