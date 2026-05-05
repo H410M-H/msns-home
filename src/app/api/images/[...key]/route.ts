@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { env } from "~/env.js";
 
@@ -45,13 +45,14 @@ export async function GET(
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
     return new NextResponse(stream, { headers });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching image from S3:", error);
     
-    if (error.name === "NoSuchKey") {
+    if (error instanceof Error && error.name === "NoSuchKey") {
       return new NextResponse("Image not found", { status: 404 });
     }
 
     return new NextResponse("Internal server error", { status: 500 });
   }
 }
+
