@@ -1,21 +1,32 @@
 "use client";
+
+import type React from "react";
 import { useRef, useMemo, useCallback, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
-import {
-  type Mesh,
-  type Texture,
-  ShaderMaterial,
-  DoubleSide,
-  LinearFilter,
-} from "three";
+import * as THREE from "three";
 
 type ImageItem = string | { src: string; alt?: string };
+
+interface FadeSettings {
+  fadeIn: { start: number; end: number };
+  fadeOut: { start: number; end: number };
+}
+
+interface BlurSettings {
+  blurIn: { start: number; end: number };
+  blurOut: { start: number; end: number };
+  maxBlur: number;
+}
 
 interface InfiniteGalleryProps {
   images: ImageItem[];
   speed?: number;
+  zSpacing?: number;
   visibleCount?: number;
+  falloff?: { near: number; far: number };
+  fadeSettings?: FadeSettings;
+  blurSettings?: BlurSettings;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -26,97 +37,102 @@ interface PlaneData {
   imageIndex: number;
   x: number;
   y: number;
-  rotationY: number;
 }
 
-const DEFAULT_DEPTH_RANGE = 60;
+const DEFAULT_DEPTH_RANGE = 50;
 const MAX_HORIZONTAL_OFFSET = 12;
 const MAX_VERTICAL_OFFSET = 10;
 
-// ---------- Optimized shader material ----------
-// Removed the expensive 7×7 blur loop, replaced with a lighter
-// 5-tap cross-sample blur that achieves a similar aesthetic at ~14×
-// fewer texture reads.
-const createGlassMaterial = (): ShaderMaterial => {
-  return new ShaderMaterial({
+// Custom shader material for blur, opacity, and cloth folding effects
+const createClothMaterial = () => {
+  return new THREE.ShaderMaterial({
     transparent: true,
-    side: DoubleSide,
+    side: THREE.DoubleSide,
     uniforms: {
-      map: { value: null as Texture | null },
+      map: { value: null },
       opacity: { value: 1.0 },
       blurAmount: { value: 0.0 },
-      scrollForce: { value: 5.0 },
+      scrollForce: { value: 0.0 },
       time: { value: 0.0 },
       isHovered: { value: 0.0 },
-      glassIntensity: { value: 0.3 },
     },
-    vertexShader: /* glsl */ `
+    vertexShader: `
       uniform float scrollForce;
       uniform float time;
       uniform float isHovered;
       varying vec2 vUv;
       varying vec3 vNormal;
-      varying vec3 vPosition;
       
       void main() {
         vUv = uv;
-        vNormal = normalize(normalMatrix * normal);
+        vNormal = normal;
         
         vec3 pos = position;
         
-        // Gentle wave effect
-        float wave = sin(pos.x * 1.5 + time * 1.2) * 0.02
-                   + cos(pos.y * 2.0 + time * 0.8) * 0.015;
+        // Create smooth curving based on scroll force
+        float curveIntensity = scrollForce * 0.3;
         
-        // Hover effect — lift + subtle scale
-        float hoverMix = step(0.5, isHovered);
-        float hoverWave = hoverMix * (
-          sin(pos.x * 4.0 + time * 6.0) * 0.08 +
-          sin(pos.y * 3.0 + time * 5.0) * 0.05
-        );
-        pos.z += wave + hoverWave + hoverMix * 0.3;
-        pos *= 1.0 + hoverMix * 0.05;
+        // Base curve across the plane based on distance from center
+        float distanceFromCenter = length(pos.xy);
+        float curve = distanceFromCenter * distanceFromCenter * curveIntensity;
         
-        vPosition = pos;
+        // Add gentle cloth-like ripples
+        float ripple1 = sin(pos.x * 2.0 + scrollForce * 3.0) * 0.02;
+        float ripple2 = sin(pos.y * 2.5 + scrollForce * 2.0) * 0.015;
+        float clothEffect = (ripple1 + ripple2) * abs(curveIntensity) * 2.0;
+        
+        // Flag waving effect when hovered
+        float flagWave = 0.0;
+        if (isHovered > 0.5) {
+          // Create flag-like wave from left to right
+          float wavePhase = pos.x * 3.0 + time * 8.0;
+          float waveAmplitude = sin(wavePhase) * 0.1;
+          // Damping effect - stronger wave on the right side (free edge)
+          float dampening = smoothstep(-0.5, 0.5, pos.x);
+          flagWave = waveAmplitude * dampening;
+          
+          // Add secondary smaller waves for more realistic flag motion
+          float secondaryWave = sin(pos.x * 5.0 + time * 12.0) * 0.03 * dampening;
+          flagWave += secondaryWave;
+        }
+        
+        // Apply Z displacement for curving effect (inverted) with cloth ripples and flag wave
+        pos.z -= (curve + clothEffect + flagWave);
+        
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
       }
     `,
-    fragmentShader: /* glsl */ `
+    fragmentShader: `
       uniform sampler2D map;
       uniform float opacity;
       uniform float blurAmount;
-      uniform float glassIntensity;
-      uniform float isHovered;
+      uniform float scrollForce;
       varying vec2 vUv;
       varying vec3 vNormal;
-      varying vec3 vPosition;
       
       void main() {
-        // 5-tap cross blur (much cheaper than 7×7 grid)
-        vec2 texel = 1.0 / vec2(textureSize(map, 0));
-        vec2 spread = texel * blurAmount;
+        vec4 color = texture2D(map, vUv);
         
-        vec4 color = texture2D(map, vUv) * 0.4;
-        color += texture2D(map, vUv + vec2( spread.x, 0.0)) * 0.15;
-        color += texture2D(map, vUv + vec2(-spread.x, 0.0)) * 0.15;
-        color += texture2D(map, vUv + vec2(0.0,  spread.y)) * 0.15;
-        color += texture2D(map, vUv + vec2(0.0, -spread.y)) * 0.15;
+        // Simple blur approximation
+        if (blurAmount > 0.0) {
+          vec2 texelSize = 1.0 / vec2(textureSize(map, 0));
+          vec4 blurred = vec4(0.0);
+          float total = 0.0;
+          
+          for (float x = -2.0; x <= 2.0; x += 1.0) {
+            for (float y = -2.0; y <= 2.0; y += 1.0) {
+              vec2 offset = vec2(x, y) * texelSize * blurAmount;
+              float weight = 1.0 / (1.0 + length(vec2(x, y)));
+              blurred += texture2D(map, vUv + offset) * weight;
+              total += weight;
+            }
+          }
+          color = blurred / total;
+        }
         
-        // Glassmorphism — fresnel highlight
-        float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
-        vec3 glassHL = vec3(1.0) * fresnel * glassIntensity;
-        
-        // Edge glow
-        float edge = smoothstep(0.0, 0.1, vUv.x) * smoothstep(1.0, 0.9, vUv.x) *
-                     smoothstep(0.0, 0.1, vUv.y) * smoothstep(1.0, 0.9, vUv.y);
-        vec3 edgeGlow = vec3(0.4, 0.6, 1.0) * (1.0 - edge) * 0.2;
-        
-        // Hover glow
-        vec3 hoverColor = vec3(0.5, 0.8, 1.0) * isHovered * 0.15;
-        
-        color.rgb += glassHL + edgeGlow + hoverColor;
-        color.rgb = mix(color.rgb, color.rgb * 1.1, fresnel * 0.3);
-        color.rgb *= 1.05;
+        // Add subtle lighting effect based on curving
+        float curveHighlight = abs(scrollForce) * 0.05;
+        color.rgb += vec3(curveHighlight * 0.1);
         
         gl_FragColor = vec4(color.rgb, color.a * opacity);
       }
@@ -124,93 +140,87 @@ const createGlassMaterial = (): ShaderMaterial => {
   });
 };
 
-// ---------- Image plane ----------
 function ImagePlane({
   texture,
   position,
   scale,
   material,
-  rotation,
 }: {
-  texture: Texture;
+  texture: THREE.Texture;
   position: [number, number, number];
   scale: [number, number, number];
-  material: ShaderMaterial;
-  rotation: [number, number, number];
+  material: THREE.ShaderMaterial;
 }) {
-  const meshRef = useRef<Mesh>(null);
-  const hoveredRef = useRef(false);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (material?.uniforms?.map && texture) {
-      material.uniforms.map.value = texture;
+    if (material && texture) {
+      material.uniforms.map!.value = texture;
     }
   }, [material, texture]);
 
-  const onPointerEnter = useCallback(() => {
-    hoveredRef.current = true;
-    if (material?.uniforms?.isHovered) {
-      material.uniforms.isHovered.value = 1.0;
+  useEffect(() => {
+    if (material && material.uniforms) {
+      material.uniforms.isHovered!.value = isHovered ? 1.0 : 0.0;
     }
-  }, [material]);
-
-  const onPointerLeave = useCallback(() => {
-    hoveredRef.current = false;
-    if (material?.uniforms?.isHovered) {
-      material.uniforms.isHovered.value = 0.0;
-    }
-  }, [material]);
+  }, [material, isHovered]);
 
   return (
     <mesh
       ref={meshRef}
       position={position}
       scale={scale}
-      rotation={rotation}
       material={material}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
     >
-      {/* Reduced from 40×40 segments to 8×8 — still smooth waves, ~25× fewer vertices */}
-      <planeGeometry args={[1, 1, 8, 8]} />
+      <planeGeometry args={[1, 1, 32, 32]} />
     </mesh>
   );
 }
 
-// ---------- Gallery scene ----------
 function GalleryScene({
   images,
   speed = 1,
-  visibleCount = 10,
+  visibleCount = 8,
+  fadeSettings = {
+    fadeIn: { start: 0.05, end: 0.15 },
+    fadeOut: { start: 0.85, end: 0.95 },
+  },
+  blurSettings = {
+    blurIn: { start: 0.0, end: 0.1 },
+    blurOut: { start: 0.9, end: 1.0 },
+    maxBlur: 3.0,
+  },
 }: Omit<InfiniteGalleryProps, "className" | "style">) {
-  // Constant auto-play speed (units per second along the z-axis)
-  const AUTO_SPEED = 4.5;
+  const [scrollVelocity, setScrollVelocity] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const lastInteraction = useRef(Date.now());
 
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
-        typeof img === "string" ? { src: img, alt: "MSNS" } : img
+        typeof img === "string" ? { src: img, alt: "" } : img
       ),
     [images]
   );
 
   const textures = useTexture(normalizedImages.map((img) => img.src));
 
-  // Apply texture filtering for sharper rendering at distance
   useEffect(() => {
     const texArr = Array.isArray(textures) ? textures : [textures];
     texArr.forEach((t) => {
-      t.minFilter = LinearFilter;
-      t.magFilter = LinearFilter;
+      t.minFilter = THREE.LinearFilter;
+      t.magFilter = THREE.LinearFilter;
     });
   }, [textures]);
 
   const materials = useMemo(
-    () => Array.from({ length: visibleCount }, () => createGlassMaterial()),
+    () => Array.from({ length: visibleCount }, () => createClothMaterial()),
     [visibleCount]
   );
 
-  // Dispose materials on unmount to prevent memory leaks
   useEffect(() => {
     return () => {
       materials.forEach((m) => m.dispose());
@@ -218,19 +228,26 @@ function GalleryScene({
   }, [materials]);
 
   const spatialPositions = useMemo(() => {
-    const positions: { x: number; y: number; rotationY: number }[] = [];
-    for (let i = 0; i < visibleCount; i++) {
-      const hAngle = (i * 2.618) % (Math.PI * 2);
-      const vAngle = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
-      const hRadius = (i % 3) * 1.5;
-      const vRadius = ((i + 1) % 4) * 1.0;
+    const positions: { x: number; y: number }[] = [];
+    const maxHorizontalOffset = MAX_HORIZONTAL_OFFSET;
+    const maxVerticalOffset = MAX_VERTICAL_OFFSET;
 
-      positions.push({
-        x: (Math.sin(hAngle) * hRadius * MAX_HORIZONTAL_OFFSET) / 3,
-        y: (Math.cos(vAngle) * vRadius * MAX_VERTICAL_OFFSET) / 4,
-        rotationY: (Math.sin(i * 0.5) * Math.PI) / 12,
-      });
+    for (let i = 0; i < visibleCount; i++) {
+      const horizontalAngle = (i * 2.618) % (Math.PI * 2);
+      const verticalAngle = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
+
+      const horizontalRadius = (i % 3) * 1.2;
+      const verticalRadius = ((i + 1) % 4) * 0.8;
+
+      const x =
+        (Math.sin(horizontalAngle) * horizontalRadius * maxHorizontalOffset) /
+        3;
+      const y =
+        (Math.cos(verticalAngle) * verticalRadius * maxVerticalOffset) / 4;
+
+      positions.push({ x, y });
     }
+
     return positions;
   }, [visibleCount]);
 
@@ -240,99 +257,181 @@ function GalleryScene({
   const planesData = useRef<PlaneData[]>(
     Array.from({ length: visibleCount }, (_, i) => ({
       index: i,
+      z: visibleCount > 0 ? ((depthRange / visibleCount) * i) % depthRange : 0,
+      imageIndex: totalImages > 0 ? i % totalImages : 0,
+      x: spatialPositions[i]?.x ?? 0,
+      y: spatialPositions[i]?.y ?? 0,
+    }))
+  );
+
+  useEffect(() => {
+    planesData.current = Array.from({ length: visibleCount }, (_, i) => ({
+      index: i,
       z:
         visibleCount > 0
-          ? ((depthRange / visibleCount) * i) % depthRange
+          ? ((depthRange / Math.max(visibleCount, 1)) * i) % depthRange
           : 0,
       imageIndex: totalImages > 0 ? i % totalImages : 0,
       x: spatialPositions[i]?.x ?? 0,
       y: spatialPositions[i]?.y ?? 0,
-      rotationY: spatialPositions[i]?.rotationY ?? 0,
-    }))
+    }));
+  }, [depthRange, spatialPositions, totalImages, visibleCount]);
+
+  const handleWheel = useCallback(
+    (event: WheelEvent) => {
+      event.preventDefault();
+      setScrollVelocity((prev) => prev + event.deltaY * 0.01 * speed);
+      setAutoPlay(false);
+      lastInteraction.current = Date.now();
+    },
+    [speed]
   );
 
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        setScrollVelocity((prev) => prev - 2 * speed);
+        setAutoPlay(false);
+        lastInteraction.current = Date.now();
+      } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+        setScrollVelocity((prev) => prev + 2 * speed);
+        setAutoPlay(false);
+        lastInteraction.current = Date.now();
+      }
+    },
+    [speed]
+  );
 
+  useEffect(() => {
+    const canvas = document.querySelector("canvas");
+    if (canvas) {
+      canvas.addEventListener("wheel", handleWheel, { passive: false });
+      document.addEventListener("keydown", handleKeyDown);
 
-  // Force a single re-render per ~16 frames so React can reconcile image indices
-  const frameCount = useRef(0);
-  const [, forceRender] = useState(0);
+      return () => {
+        canvas.removeEventListener("wheel", handleWheel);
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [handleWheel, handleKeyDown]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Date.now() - lastInteraction.current > 3000) {
+        setAutoPlay(true);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useFrame((state, delta) => {
-    // Per-frame displacement: AUTO_SPEED * speed * delta gives consistent
-    // movement regardless of frame rate (delta is already in seconds).
-    const displacement = AUTO_SPEED * speed * delta;
-    const time = state.clock.getElapsedTime();
-
-    // Update material uniforms
-    for (const mat of materials) {
-      mat.uniforms.time!.value = time;
-      mat.uniforms.scrollForce!.value = AUTO_SPEED * speed;
+    // Apply auto-play: smoothly accelerate to a constant zoom-in velocity
+    if (autoPlay) {
+      setScrollVelocity((prev) => prev + (0.8 * speed - prev) * 0.05);
+    } else {
+      // Damping when interacting
+      setScrollVelocity((prev) => prev * 0.95);
     }
+
+    const time = state.clock.getElapsedTime();
+    materials.forEach((material) => {
+      if (material && material.uniforms) {
+        material.uniforms.time!.value = time;
+        material.uniforms.scrollForce!.value = scrollVelocity;
+      }
+    });
 
     const imageAdvance =
       totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
+    const totalRange = depthRange;
+    const halfRange = totalRange / 2;
 
-    let needsRerender = false;
-
-    for (let i = 0; i < planesData.current.length; i++) {
-      const plane = planesData.current[i]!;
-
-      let newZ = plane.z + displacement;
+    planesData.current.forEach((plane, i) => {
+      let newZ = plane.z + scrollVelocity * delta * 10;
       let wrapsForward = 0;
       let wrapsBackward = 0;
 
-      if (newZ >= depthRange) {
-        wrapsForward = Math.floor(newZ / depthRange);
-        newZ -= depthRange * wrapsForward;
+      if (newZ >= totalRange) {
+        wrapsForward = Math.floor(newZ / totalRange);
+        newZ -= totalRange * wrapsForward;
       } else if (newZ < 0) {
-        wrapsBackward = Math.ceil(-newZ / depthRange);
-        newZ += depthRange * wrapsBackward;
+        wrapsBackward = Math.ceil(-newZ / totalRange);
+        newZ += totalRange * wrapsBackward;
       }
 
       if (wrapsForward > 0 && imageAdvance > 0 && totalImages > 0) {
         plane.imageIndex =
           (plane.imageIndex + wrapsForward * imageAdvance) % totalImages;
-        needsRerender = true;
       }
+
       if (wrapsBackward > 0 && imageAdvance > 0 && totalImages > 0) {
         const step = plane.imageIndex - wrapsBackward * imageAdvance;
         plane.imageIndex = ((step % totalImages) + totalImages) % totalImages;
-        needsRerender = true;
       }
 
-      plane.z = ((newZ % depthRange) + depthRange) % depthRange;
+      plane.z = ((newZ % totalRange) + totalRange) % totalRange;
       plane.x = spatialPositions[i]?.x ?? 0;
       plane.y = spatialPositions[i]?.y ?? 0;
-      plane.rotationY = spatialPositions[i]?.rotationY ?? 0;
 
-      const t = plane.z / depthRange;
+      const normalizedPosition = plane.z / totalRange;
+      let opacity = 1;
 
-      // Opacity fade
-      let opacity: number;
-      if (t < 0.2) opacity = t / 0.2;
-      else if (t > 0.75) opacity = 1 - (t - 0.75) / 0.25;
-      else opacity = 1;
+      if (
+        normalizedPosition >= fadeSettings.fadeIn.start &&
+        normalizedPosition <= fadeSettings.fadeIn.end
+      ) {
+        const fadeInProgress =
+          (normalizedPosition - fadeSettings.fadeIn.start) /
+          (fadeSettings.fadeIn.end - fadeSettings.fadeIn.start);
+        opacity = fadeInProgress;
+      } else if (normalizedPosition < fadeSettings.fadeIn.start) {
+        opacity = 0;
+      } else if (
+        normalizedPosition >= fadeSettings.fadeOut.start &&
+        normalizedPosition <= fadeSettings.fadeOut.end
+      ) {
+        const fadeOutProgress =
+          (normalizedPosition - fadeSettings.fadeOut.start) /
+          (fadeSettings.fadeOut.end - fadeSettings.fadeOut.start);
+        opacity = 1 - fadeOutProgress;
+      } else if (normalizedPosition > fadeSettings.fadeOut.end) {
+        opacity = 0;
+      }
+
       opacity = Math.max(0, Math.min(1, opacity));
 
-      // Blur at edges
-      let blur: number;
-      if (t < 0.15) blur = 5.0 * (1 - t / 0.15);
-      else if (t > 0.8) blur = 5.0 * ((t - 0.8) / 0.2);
-      else blur = 0;
-      blur = Math.max(0, Math.min(5.0, blur));
+      let blur = 0;
 
-      const mat = materials[i];
-      if (mat?.uniforms) {
-        mat.uniforms.opacity!.value = opacity;
-        mat.uniforms.blurAmount!.value = blur;
+      if (
+        normalizedPosition >= blurSettings.blurIn.start &&
+        normalizedPosition <= blurSettings.blurIn.end
+      ) {
+        const blurInProgress =
+          (normalizedPosition - blurSettings.blurIn.start) /
+          (blurSettings.blurIn.end - blurSettings.blurIn.start);
+        blur = blurSettings.maxBlur * (1 - blurInProgress);
+      } else if (normalizedPosition < blurSettings.blurIn.start) {
+        blur = blurSettings.maxBlur;
+      } else if (
+        normalizedPosition >= blurSettings.blurOut.start &&
+        normalizedPosition <= blurSettings.blurOut.end
+      ) {
+        const blurOutProgress =
+          (normalizedPosition - blurSettings.blurOut.start) /
+          (blurSettings.blurOut.end - blurSettings.blurOut.start);
+        blur = blurSettings.maxBlur * blurOutProgress;
+      } else if (normalizedPosition > blurSettings.blurOut.end) {
+        blur = blurSettings.maxBlur;
       }
-    }
 
-    // Batch React reconciliation — only trigger re-render when image indices change
-    frameCount.current++;
-    if (needsRerender && frameCount.current % 16 === 0) {
-      forceRender((n) => n + 1);
-    }
+      blur = Math.max(0, Math.min(blurSettings.maxBlur, blur));
+
+      const material = materials[i];
+      if (material && material.uniforms) {
+        material.uniforms.opacity!.value = opacity;
+        material.uniforms.blurAmount!.value = blur;
+      }
+    });
   });
 
   if (normalizedImages.length === 0) return null;
@@ -348,15 +447,14 @@ function GalleryScene({
           ? textures[plane.imageIndex]
           : textures;
         const material = materials[i];
+
         if (!texture || !material) return null;
 
-        const img = texture.image as
-          | HTMLImageElement
-          | ImageBitmap
-          | undefined;
-        const aspect =
-          img?.width && img?.height ? img.width / img.height : 1;
+        const worldZ = plane.z - depthRange / 2;
 
+        const aspect = texture.image
+          ? texture.image.width / texture.image.height
+          : 1;
         const baseSize = 4.5;
         const scale: [number, number, number] =
           aspect > 1
@@ -367,9 +465,8 @@ function GalleryScene({
           <ImagePlane
             key={plane.index}
             texture={texture}
-            position={[plane.x, plane.y, plane.z - depthRange / 2]}
+            position={[plane.x, plane.y, worldZ]}
             scale={scale}
-            rotation={[0, plane.rotationY, 0]}
             material={material}
           />
         );
@@ -378,7 +475,6 @@ function GalleryScene({
   );
 }
 
-// ---------- Loading fallback ----------
 function GalleryLoader() {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
@@ -395,25 +491,35 @@ function GalleryLoader() {
   );
 }
 
-// ---------- Main export ----------
 export default function InfiniteGallery({
   images,
   className = "",
   style,
   speed = 1,
   visibleCount = 10,
+  fadeSettings = {
+    fadeIn: { start: 0.05, end: 0.25 },
+    fadeOut: { start: 0.6, end: 0.7 },
+  },
+  blurSettings = {
+    blurIn: { start: 0.0, end: 0.1 },
+    blurOut: { start: 0.6, end: 0.7 },
+    maxBlur: 8.0,
+  },
 }: InfiniteGalleryProps) {
   const [webglSupported, setWebglSupported] = useState(true);
 
   useEffect(() => {
     try {
-      const c = document.createElement("canvas");
+      const canvas = document.createElement("canvas");
       const gl =
-        c.getContext("webgl2") ??
-        c.getContext("webgl") ??
-        c.getContext("experimental-webgl");
-      setWebglSupported(!!gl);
-    } catch {
+        canvas.getContext("webgl2") ||
+        canvas.getContext("webgl") ||
+        canvas.getContext("experimental-webgl");
+      if (!gl) {
+        setWebglSupported(false);
+      }
+    } catch (e) {
       setWebglSupported(false);
     }
   }, []);
@@ -468,6 +574,8 @@ export default function InfiniteGallery({
                   images={images}
                   speed={speed}
                   visibleCount={visibleCount}
+                  fadeSettings={fadeSettings}
+                  blurSettings={blurSettings}
                 />
               </Canvas>
             </Suspense>
