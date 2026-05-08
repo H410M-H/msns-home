@@ -38,14 +38,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-        {
+    {
       url: `${baseUrl}/terms-of-service`,
       lastModified: new Date("2025-06-27"),
       changeFrequency: "daily",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/programs`,
+      url: `${lmsUrl}/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
