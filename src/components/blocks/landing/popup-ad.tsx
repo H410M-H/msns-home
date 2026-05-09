@@ -94,9 +94,8 @@ export default function PopupAd() {
       `}</style>
 
       <div
-        className={`relative w-full max-w-[700px] md:max-w-[800px] overflow-hidden rounded-2xl border border-white/30 shadow-2xl backdrop-blur-xl transition-all duration-500 ${
-          isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
-        }`}
+        className={`relative w-full max-w-[700px] md:max-w-[800px] overflow-hidden rounded-2xl border border-white/30 shadow-2xl backdrop-blur-xl transition-all duration-500 ${isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
+          }`}
         style={{
           background: "rgba(255, 255, 255, 0.25)",
           boxShadow:
@@ -133,31 +132,13 @@ export default function PopupAd() {
           </p>
 
           <h3 className="mt-6 text-lg md:text-2xl font-semibold text-white drop-shadow-md">
-            Top 3 Achievers - 9th Grade Results
+            Top Achiever - 9th Grade Results
           </h3>
 
           {/* Top 3 Students Grid */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             <StudentCard
               position="1st Position"
-              icon={<Trophy className="text-yellow-300" size={30} />}
-              name="Junaid Ali"
-              roll="104478"
-              marks="538/545"
-              img="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/MUHAMMAD_JUNAID_ALI_-_104478_m0uqaw.jpg"
-              color="rgba(255,215,0,0.3)"
-            />
-            <StudentCard
-              position="2nd Position"
-              icon={<Medal className="text-gray-300" size={30} />}
-              name="Sehal Butt"
-              roll="104613"
-              marks="532/545"
-              img="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/SEHAL_BUTT_-_104613_g1mdxd.jpg"
-              color="rgba(192,192,192,0.3)"
-            />
-            <StudentCard
-              position="3rd Position"
               icon={<Award className="text-orange-300" size={30} />}
               name="Momina"
               roll="206676"

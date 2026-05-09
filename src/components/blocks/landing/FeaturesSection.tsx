@@ -40,9 +40,10 @@ const allFeatures: Feature[] = [
 interface Achiever { name: string; year: number; rollNo: string; marks: number; }
 
 const allAchievers: Achiever[] = [
-  { name: "Saqib Zafar", year: 2010, rollNo: "—", marks: 899 },
-  { name: "Faizan Shafique", year: 2010, rollNo: "—", marks: 834 },
-  { name: "Hafiz Faizan Azam", year: 2010, rollNo: "—", marks: 822 },
+  // --- Original Data ---
+  { name: "Saqib Zafar", year: 2010, rollNo: "-", marks: 899 },
+  { name: "Faizan Shafique", year: 2010, rollNo: "-", marks: 834 },
+  { name: "Hafiz Faizan Azam", year: 2010, rollNo: "-", marks: 822 },
   { name: "Gul-e-Saman", year: 2012, rollNo: "405130", marks: 842 },
   { name: "Rehan Asif", year: 2012, rollNo: "431818", marks: 804 },
   { name: "Friha Kanwal", year: 2012, rollNo: "405128", marks: 798 },
@@ -60,7 +61,7 @@ const allAchievers: Achiever[] = [
   { name: "Ali Hassan Hussain", year: 2017, rollNo: "416278", marks: 1001 },
   { name: "Hassaan Azam", year: 2017, rollNo: "433765", marks: 938 },
   { name: "Nihad Ahmad Bajwa", year: 2018, rollNo: "406207", marks: 1012 },
-  { name: "Haram Khald", year: 2018, rollNo: "118468", marks: 909 },
+  { name: "Haram Khalid", year: 2018, rollNo: "118468", marks: 909 },
   { name: "Ali Suleman Butt", year: 2019, rollNo: "413467", marks: 950 },
   { name: "Ali Haider", year: 2019, rollNo: "413219", marks: 950 },
   { name: "Arbab Mushtaq", year: 2020, rollNo: "489996", marks: 970 },
@@ -69,6 +70,37 @@ const allAchievers: Achiever[] = [
   { name: "Hassan Butt", year: 2021, rollNo: "404726", marks: 938 },
   { name: "Ibrar Hussain Butt", year: 2022, rollNo: "403416", marks: 1005 },
   { name: "Hajra Asif", year: 2022, rollNo: "483997", marks: 958 },
+
+  // --- 10th Class Distinctions (2023–2024) ---
+  { name: "Faiqa Irfan", year: 2023, rollNo: "500490", marks: 1042 },
+  { name: "Dawood Ali", year: 2024, rollNo: "402849", marks: 1017 },
+  { name: "Syeda Hadia Kazmi", year: 2024, rollNo: "484558", marks: 1014 },
+  { name: "Talha Akram", year: 2024, rollNo: "403068", marks: 1014 },
+  { name: "Mehak", year: 2024, rollNo: "472410", marks: 992 },
+
+  // --- 9th Class Distinctions ---
+  { name: "Mukarram Fayaz Cheema (9th)", year: 2024, rollNo: "104562", marks: 524 },
+  { name: "Ayesha Mehmood (9th)", year: 2024, rollNo: "263207", marks: 521 },
+  { name: "Zaryab Faisal (9th)", year: 2024, rollNo: "104441", marks: 513 },
+  { name: "Abdul Hadi Warraich (9th)", year: 2024, rollNo: "104472", marks: 506 },
+  { name: "Muhammad Hassam (9th)", year: 2024, rollNo: "104414", marks: 506 },
+  { name: "Muhammad Zaid (9th)", year: 2024, rollNo: "104066", marks: 501 },
+  { name: "Syeda Hadia Kazmi (9th)", year: 2023, rollNo: "203552", marks: 483 },
+  { name: "Sibgha Farooq Cheema (9th)", year: 2024, rollNo: "201070", marks: 466 },
+  { name: "Abdul Rehman Mansha (9th)", year: 2024, rollNo: "104664", marks: 457 },
+  { name: "Abdullah Zubair (9th)", year: 2024, rollNo: "104335", marks: 438 },
+  { name: "Aneeba Fatima (9th)", year: 2024, rollNo: "200810", marks: 412 },
+  { name: "Um e Kulsoom (9th)", year: 2024, rollNo: "201184", marks: 407 },
+
+  // --- Result 2025 ---
+  { name: "M. Zaid Bin Haroon", year: 2025, rollNo: "403348", marks: 1134 },
+  { name: "M. Ali Rafay", year: 2025, rollNo: "403438", marks: 1121 },
+  { name: "Mukarram Fayaz Cheema", year: 2025, rollNo: "403773", marks: 1120 },
+  { name: "M. Ibraheem", year: 2025, rollNo: "403354", marks: 1047 },
+  { name: "Abdul Hadi Warraich", year: 2025, rollNo: "403623", marks: 1045 },
+  { name: "Umer Saleem", year: 2025, rollNo: "403497", marks: 1044 },
+  { name: "Sibgha Farooq Cheema", year: 2025, rollNo: "482362", marks: 1016 },
+  { name: "Aneeba Fatima", year: 2025, rollNo: "482254", marks: 922 },
 ];
 
 const topAchievers = allAchievers.filter((a) => a.marks >= 1000).sort((a, b) => b.marks - a.marks);
@@ -291,7 +323,7 @@ export function FeaturesSection() {
         <div className="mt-2">
           <div className="container mx-auto px-4 md:px-6 mb-4">
             <p className="text-xl uppercase tracking-[0.2em] text-white/80 font-semibold">
-              All Distinction Holders · 2010 – 2022
+              All Distinction Holders · 2010 – 2025
             </p>
           </div>
           <div
@@ -316,10 +348,10 @@ export function FeaturesSection() {
         <div className="container mx-auto px-4 md:px-6 mt-14">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex flex-wrap justify-center gap-8 md:gap-16 py-8 border-t border-white/[0.06]">
             {[
-              { value: "29+", label: "Distinction Holders" },
-              { value: "1090", label: "Highest Score" },
+              { value: "50+", label: "Distinction Holders" },
+              { value: "1134", label: "Highest Score" },
               { value: `${topAchievers.length}`, label: "Scored 1000+" },
-              { value: "2010–2022", label: "Legacy of Excellence" },
+              { value: "2010–2025", label: "Legacy of Excellence" },
             ].map((stat, i) => (
               <motion.div key={`ach-stat-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1 }} className="text-center">
                 <div className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">{stat.value}</div>
