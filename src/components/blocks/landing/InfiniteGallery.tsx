@@ -161,7 +161,7 @@ function ImagePlane({
   }, [material, texture]);
 
   useEffect(() => {
-    if (material && material.uniforms) {
+    if (material?.uniforms) {
       material.uniforms.isHovered!.value = isHovered ? 1.0 : 0.0;
     }
   }, [material, isHovered]);
@@ -335,7 +335,7 @@ function GalleryScene({
 
     const time = state.clock.getElapsedTime();
     materials.forEach((material) => {
-      if (material && material.uniforms) {
+      if (material?.uniforms) {
         material.uniforms.time!.value = time;
         material.uniforms.scrollForce!.value = scrollVelocity;
       }
@@ -344,7 +344,6 @@ function GalleryScene({
     const imageAdvance =
       totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
     const totalRange = depthRange;
-    const halfRange = totalRange / 2;
 
     planesData.current.forEach((plane, i) => {
       let newZ = plane.z + scrollVelocity * delta * 10;
@@ -427,7 +426,7 @@ function GalleryScene({
       blur = Math.max(0, Math.min(blurSettings.maxBlur, blur));
 
       const material = materials[i];
-      if (material && material.uniforms) {
+      if (material?.uniforms) {
         material.uniforms.opacity!.value = opacity;
         material.uniforms.blurAmount!.value = blur;
       }
@@ -452,9 +451,9 @@ function GalleryScene({
 
         const worldZ = plane.z - depthRange / 2;
 
-        const aspect = texture.image
-          ? texture.image.width / texture.image.height
-          : 1;
+        const img = texture.image as { width?: number; height?: number } | null | undefined;
+        const aspect =
+          img?.width && img.height ? img.width / img.height : 1;
         const baseSize = 4.5;
         const scale: [number, number, number] =
           aspect > 1
@@ -513,13 +512,13 @@ export default function InfiniteGallery({
     try {
       const canvas = document.createElement("canvas");
       const gl =
-        canvas.getContext("webgl2") ||
-        canvas.getContext("webgl") ||
+        canvas.getContext("webgl2") ??
+        canvas.getContext("webgl") ??
         canvas.getContext("experimental-webgl");
       if (!gl) {
         setWebglSupported(false);
       }
-    } catch (e) {
+    } catch {
       setWebglSupported(false);
     }
   }, []);

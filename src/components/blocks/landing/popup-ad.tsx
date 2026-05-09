@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Trophy, Medal, Award } from "lucide-react";
+import { X, Award } from "lucide-react";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 
