@@ -52,7 +52,7 @@ export const AdmissionsBanner = () => {
           {/* Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
             <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-sky-300 bg-clip-text text-transparent">
-              Admissions 2025–26
+              Admissions 2026-28
             </span>
           </h1>
 
