@@ -5,9 +5,9 @@ import { Banknote, Book, Building, Calculator, Calendar, CreditCard, School, Tic
 import { motion, AnimatePresence } from "framer-motion"
 
 const feeData = {
-  primary: { registration: 500, tuition: 3000, examination: 3000 },
-  middle: { registration: 600, tuition: 3500, examination: 4000 },
-  high: { registration: 700, tuition: 4000, examination: 5000 },
+  primary: { registration: 5000, tuition: 3000, examination: 3000 },
+  middle: { registration: 5000, tuition: 3500, examination: 4000 },
+  high: { registration: 5000, tuition: 4000, examination: 5000 },
 } as const
 
 type Level = keyof typeof feeData
