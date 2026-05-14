@@ -5,9 +5,9 @@ import { Banknote, Book, Building, Calculator, Calendar, CreditCard, School, Tic
 import { motion, AnimatePresence } from "framer-motion"
 
 const feeData = {
-  primary: { registration: 500, tuition: 3000, examination: 100 },
-  middle: { registration: 600, tuition: 3500, examination: 150 },
-  high: { registration: 700, tuition: 4000, examination: 200 },
+  primary: { registration: 5000, tuition: 3000, examination: 3000 },
+  middle: { registration: 5000, tuition: 3500, examination: 4000 },
+  high: { registration: 5000, tuition: 4000, examination: 5000 },
 } as const
 
 type Level = keyof typeof feeData
@@ -19,8 +19,8 @@ const levels: { id: Level; label: string }[] = [
 ]
 
 const additionalCosts = [
-  "Uniform: PKR 150 – 200 (varies by grade)",
-  "Books / stationery: PKR 200 – 400 / year",
+  "Uniform: PKR 2500 – 3000 (varies by grade)",
+  "Books / stationery: PKR 3000 – 7000 / year",
   "School trips: Varies by destination",
   "Extracurricular fees: Activity dependent",
 ]
@@ -36,10 +36,10 @@ function getFeeRows(fees: (typeof feeData)[Level]) {
   return [
     { type: "Application Fee", amount: "PKR 5,000", frequency: "One-time (non-refundable)" },
     { type: "Registration Fee", amount: `PKR ${fees.registration.toLocaleString()}`, frequency: "One-time (non-refundable)" },
-    { type: "Tuition Fee", amount: `PKR ${fees.tuition.toLocaleString()}`, frequency: "Per term (3 terms / year)" },
+    { type: "Tuition Fee", amount: `PKR ${fees.tuition.toLocaleString()}`, frequency: "Monthly (12 months / year)" },
     { type: "Development Fund", amount: "PKR 300", frequency: "Annual" },
-    { type: "Technology Fee", amount: "PKR 200", frequency: "Annual" },
-    { type: "Examination Fee", amount: `PKR ${fees.examination.toLocaleString()}`, frequency: "Per term" },
+    { type: "Technology Fee", amount: "PKR 500", frequency: "Annual" },
+    { type: "Examination Fee", amount: `PKR ${fees.examination.toLocaleString()}`, frequency: "Annual" },
   ]
 }
 
