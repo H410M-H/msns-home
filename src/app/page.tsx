@@ -8,142 +8,80 @@ import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
 import PopupAd from "~/components/blocks/landing/popup-ad";
 import { Toaster } from "~/components/ui/sonner";
 import InfiniteGallery from "~/components/blocks/landing/InfiniteGallery";
+import { useEffect, useState } from "react";
 
 export const dynamic = "force-dynamic";
+
+interface GalleryImage {
+  key: string;
+  url: string;
+  lastModified?: string;
+  size?: number;
+}
+
+// Fallback static images served from S3 proxy (used when API fails or during SSR)
+const FALLBACK_IMAGES = [
+  { src: "/api/images/logos/mono_MS_Naz_School_ue6upl.png", alt: "M.S. Naz School" },
+  { src: "/api/images/gallery/IMG_3349_ldaqqy.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3360_h9xvsz.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/DSC_6774_zymsqa.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/POSTER_vb1tvs.jpg", alt: "School Poster" },
+  { src: "/api/images/gallery/IMG_3135_dzhkaf.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3045_rrwon6.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3015_ocmbrn.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/H7H_1547_scojlx.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3033_fdu53k.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3101_tib63s.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_2930_kfkrzt.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3136_nufwsu.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3276_rgkfiv.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_2873_ecywt5.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/DSC_6199_elv8zj.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/20240211_154156_ptbmlx.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3037_djwx6t.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG-20240917-WA0095_mvfjpv.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/DSC_6184_ozj3hr.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3330_kneelc.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3218_jmv7n8.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3151_gsuhua.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/designJpg/j7enn3yegbeql8xvr5pm.png", alt: "Design" },
+  { src: "/api/images/gallery/designJpg/t8qsbmfqaibg3eyktszk.png", alt: "Design" },
+  { src: "/api/images/gallery/DSC_8987_pfrlog.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/DSC_5049_ojzbjj.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_3095_y27vai.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/DSC_6082_ogohxu.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/IMG_E2799_g5fgq7.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/DSC_6187_j6ovz3.jpg", alt: "School Event" },
+  { src: "/api/images/gallery/H7H_4932_xjhmck.jpg", alt: "School Event" },
+  { src: "/api/images/logos/mono_MS_Naz_School_ue6upl.png", alt: "M.S. Naz School" },
+];
+
 export default function Home() {
-  const sampleImages = [
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
-      alt: "Artwork 0",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399181/IMG_3349_ldaqqy.jpg",
-      alt: "Artwork 1",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399166/IMG_3360_h9xvsz.jpg",
-      alt: "Artwork 2",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399472/DSC_6774_zymsqa.jpg",
-      alt: "Artwork 3",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399399/POSTER_vb1tvs.jpg",
-      alt: "Artwork 4",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399141/IMG_3135_dzhkaf.jpg",
-      alt: "Artwork 5",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398991/IMG_3045_rrwon6.jpg",
-      alt: "Artwork 6",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398989/IMG_3015_ocmbrn.jpg",
-      alt: "Artwork 7",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398835/H7H_1547_scojlx.jpg",
-      alt: "Artwork 8",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398748/IMG_3033_fdu53k.jpg",
-      alt: "Artwork 9",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398687/IMG_3101_tib63s.jpg",
-      alt: "Artwork 10",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398670/IMG_2930_kfkrzt.jpg",
-      alt: "Artwork 11",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398555/IMG_3136_nufwsu.jpg",
-      alt: "Artwork 12",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398973/IMG_3276_rgkfiv.jpg",
-      alt: "Artwork 13",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398501/IMG_2873_ecywt5.jpg",
-      alt: "Artwork 14",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398304/DSC_6199_elv8zj.jpg",
-      alt: "Artwork 15",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1729267664/20240211_154156_ptbmlx.jpg",
-      alt: "Artwork 16",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761398737/IMG_3037_djwx6t.jpg",
-      alt: "Artwork 17",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035328/IMG-20240917-WA0095_mvfjpv.jpg",
-      alt: "Artwork 18",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035328/DSC_6184_ozj3hr.jpg",
-      alt: "Artwork 19",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_3330_kneelc.jpg",
-      alt: "Artwork 31",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_3218_jmv7n8.jpg",
-      alt: "Artwork 20",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1761399118/IMG_3151_gsuhua.jpg",
-      alt: "Artwork 21",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1737373454/designJpg/j7enn3yegbeql8xvr5pm.png",
-      alt: "Artwork 22",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1737373440/designJpg/t8qsbmfqaibg3eyktszk.png",
-      alt: "Artwork 23",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762035274/DSC_8987_pfrlog.jpg",
-      alt: "Artwork 19",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1762033772/DSC_5049_ojzbjj.jpg",
-      alt: "Artwork 24",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_3095_y27vai.jpg",
-      alt: "Artwork 25",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/DSC_6082_ogohxu.jpg",
-      alt: "Artwork 26",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/IMG_E2799_g5fgq7.jpg",
-      alt: "Artwork 27",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/DSC_6187_j6ovz3.jpg",
-      alt: "Artwork 28",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fill,q_auto,f_auto/v1763051991/H7H_4932_xjhmck.jpg",
-      alt: "Artwork 29",
-    },
-    {
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1600,h_1200,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
-      alt: "Artwork 30",
-    }];
+  const [galleryImages, setGalleryImages] = useState(FALLBACK_IMAGES);
+
+  useEffect(() => {
+    async function fetchGallery() {
+      try {
+        const res = await fetch("/api/gallery");
+        if (!res.ok) throw new Error("Failed to fetch gallery");
+        const data = (await res.json()) as { images: GalleryImage[] };
+
+        if (data.images && data.images.length > 0) {
+          setGalleryImages(
+            data.images.map((img) => ({
+              src: img.url,
+              alt: img.key.split("/").pop()?.replace(/[-_]/g, " ") ?? "Gallery Image",
+            }))
+          );
+        }
+      } catch {
+        // Keep fallback images on error
+      }
+    }
+
+    void fetchGallery();
+  }, []);
+
   return (
     <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
@@ -151,7 +89,7 @@ export default function Home() {
       <Toaster richColors closeButton />
       <FeaturesSection />
       <InfiniteGallery
-        images={sampleImages}
+        images={galleryImages}
         speed={1.0}
         visibleCount={12}
       />

@@ -29,7 +29,7 @@ export const MessageFromCEO = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <Image
-                src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741086948/haji_muhammad_siddique_naz_d5ct3l.jpg"
+                src="/api/images/gallery/haji_muhammad_siddique_naz_d5ct3l.jpg"
                 alt="CEO"
                 fill
                 className="object-contain"

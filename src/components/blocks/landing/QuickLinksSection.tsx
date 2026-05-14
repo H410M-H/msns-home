@@ -17,22 +17,22 @@ export function QuickLinksSection() {
   const socialIcons = [
     {
       name: "whatsapp",
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737823588/whatsapp-one_cmzkaf.png",
+      src: "/api/images/social/whatsapp-one_cmzkaf.png",
       link: socialLinks.whatsapp,
     },
     {
       name: "instagram",
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737823587/insta_rgb_xtkjny.png",
+      src: "/api/images/social/insta_rgb_xtkjny.png",
       link: socialLinks.instagram,
     },
     {
       name: "facebook",
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737823587/facebook3d_flb7sm.png",
+      src: "/api/images/social/facebook3d_flb7sm.png",
       link: socialLinks.facebook,
     },
     {
       name: "email",
-      src: "https://res.cloudinary.com/dvvbxrs55/image/upload/v1737823739/mail-3d_ese59y.png",
+      src: "/api/images/social/mail-3d_ese59y.png",
       link: socialLinks.email,
     },
   ]

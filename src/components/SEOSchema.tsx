@@ -7,7 +7,7 @@ export function SchoolSchema() {
     name: 'M.S. Naz High School®',
     url: 'https://msns.edu.pk',
     alternate: 'https://lms.msns.edu.pk',
-    logo: 'https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png',
+    logo: '/api/images/logos/Official_LOGO_grn_ic9ldd.png',
     description: 'Premier high school in Pakistan offering educational excellence, leadership development, and modern education standards since 2004.',
     telephone: ['+92-3016233609', '+92-3187625415'],
     email: 'msnazhighschool@gmail.com',

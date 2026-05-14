@@ -72,7 +72,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
                 <div className="absolute -inset-2 bg-gradient-to-r from-green-400 to-pink-400 rounded-xl opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-500" />
                 <div className="relative bg-white/80 p-3 rounded-2xl shadow-sm border border-white transition-transform duration-500 group-hover:scale-105 backdrop-blur-sm">
                   <Image
-                    src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png"
+                    src="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
                     alt="School Logo"
                     width={110}
                     height={110}
