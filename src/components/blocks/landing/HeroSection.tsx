@@ -82,7 +82,7 @@ export function HeroHome() {
         </motion.p>
 
         {/* "Learn More" interactive button */}
-        <Link href="/about"          className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-hidden"
+        <Link href="/about" className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-hidden"
         >
           Learn More
         </Link>

@@ -95,13 +95,13 @@ export function QuickLinksSection() {
                 </div>
 
                 <div className="mt-6 text-center">
-                  <p className="bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty mb-2 ">Direct Contact: 
-                  <Link
-                    href="mailto:msnazhighschool@gmail.com"
-                    className="text-green-900 hover:text-blue-500 transition-colors text-lg font-medium pl-6"
-                  >
-                    msnazhighschool@gmail.com
-                  </Link>
+                  <p className="bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty mb-2 ">Direct Contact:
+                    <Link
+                      href="mailto:msnazhighschool@gmail.com"
+                      className="text-green-900 hover:text-blue-500 transition-colors text-lg font-medium pl-6"
+                    >
+                      msnazhighschool@gmail.com
+                    </Link>
                   </p>
 
                 </div>
