@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Trophy, Medal, Award } from "lucide-react";
+import { X, Award } from "lucide-react";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 
@@ -94,9 +94,8 @@ export default function PopupAd() {
       `}</style>
 
       <div
-        className={`relative w-full max-w-[700px] md:max-w-[800px] overflow-hidden rounded-2xl border border-white/30 shadow-2xl backdrop-blur-xl transition-all duration-500 ${
-          isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
-        }`}
+        className={`relative w-full max-w-[700px] md:max-w-[800px] overflow-hidden rounded-2xl border border-white/30 shadow-2xl backdrop-blur-xl transition-all duration-500 ${isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
+          }`}
         style={{
           background: "rgba(255, 255, 255, 0.25)",
           boxShadow:
@@ -133,36 +132,18 @@ export default function PopupAd() {
           </p>
 
           <h3 className="mt-6 text-lg md:text-2xl font-semibold text-white drop-shadow-md">
-            Top 3 Achievers - 9th Grade Results
+            Top Achiever - 9th Grade Results
           </h3>
 
           {/* Top 3 Students Grid */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             <StudentCard
               position="1st Position"
-              icon={<Trophy className="text-yellow-300" size={30} />}
-              name="Junaid Ali"
-              roll="104478"
-              marks="538/545"
-              img="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/MUHAMMAD_JUNAID_ALI_-_104478_m0uqaw.jpg"
-              color="rgba(255,215,0,0.3)"
-            />
-            <StudentCard
-              position="2nd Position"
-              icon={<Medal className="text-gray-300" size={30} />}
-              name="Sehal Butt"
-              roll="104613"
-              marks="532/545"
-              img="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702038/SEHAL_BUTT_-_104613_g1mdxd.jpg"
-              color="rgba(192,192,192,0.3)"
-            />
-            <StudentCard
-              position="3rd Position"
               icon={<Award className="text-orange-300" size={30} />}
               name="Momina"
               roll="206676"
               marks="522/545"
-              img="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702296/MOMINA_MANSHA_ogl2jd.jpg"
+              img="/api/images/gallery/MOMINA_MANSHA_ogl2jd.jpg"
               color="rgba(205,127,50,0.3)"
             />
           </div>
@@ -170,7 +151,7 @@ export default function PopupAd() {
           {/* Buttons */}
           <div className="mt-8 flex flex-col items-center gap-3">
             <a
-              href="https://res.cloudinary.com/dvvbxrs55/image/upload/v1755702576/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
+              href="/api/images/gallery/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full rounded-lg bg-blue-500/70 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-blue-500/90"

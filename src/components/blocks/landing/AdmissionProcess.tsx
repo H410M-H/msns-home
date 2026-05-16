@@ -1,122 +1,140 @@
+"use client"
+
 import { CheckCircle, ClipboardList, SearchCheck, ClipboardCheck, CalendarCheck, BadgeDollarSign, MailCheck } from "lucide-react"
 import { motion } from "framer-motion"
-import { cn } from "~/lib/utils"
 
-const stepIcons = {
-  0: <ClipboardList className="h-6 w-6" />,
-  1: <SearchCheck className="h-6 w-6" />,
-  2: <ClipboardCheck className="h-6 w-6" />,
-  3: <CalendarCheck className="h-6 w-6" />,
-  4: <MailCheck className="h-6 w-6" />,
-  5: <BadgeDollarSign className="h-6 w-6" />,
-}
+const steps = [
+  {
+    icon: ClipboardList,
+    title: "Submit Application",
+    description: "Complete the online application form with all required information and documentation.",
+  },
+  {
+    icon: SearchCheck,
+    title: "Application Review",
+    description: "Our admissions team will review your application and contact you for the next steps.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Assessment Test",
+    description: "Students will be invited to take an assessment test appropriate for their grade level.",
+  },
+  {
+    icon: CalendarCheck,
+    title: "Interview",
+    description: "Selected candidates and their parents will be invited for an interview with school administrators.",
+  },
+  {
+    icon: MailCheck,
+    title: "Admission Decision",
+    description: "Admission decisions will be communicated to parents within two weeks of the interview.",
+  },
+  {
+    icon: BadgeDollarSign,
+    title: "Fee Payment",
+    description: "Upon acceptance, secure your child's place by paying the registration fee and first term fees.",
+  },
+]
+
+const requiredDocs = [
+  "Completed application form",
+  "Birth certificate",
+  "Previous school records / report cards",
+  "Passport-sized photographs",
+  "Immunization records",
+  "Parent / guardian ID proof",
+  "Proof of address",
+  "Transfer certificate (if applicable)",
+]
 
 export const AdmissionsProcess = () => {
-  const steps = [
-    {
-      title: "Submit Application",
-      description: "Complete the online application form with all required information and documentation.",
-    },
-    {
-      title: "Application Review",
-      description: "Our admissions team will review your application and contact you for the next steps.",
-    },
-    {
-      title: "Assessment Test",
-      description: "Students will be invited to take an assessment test appropriate for their grade level.",
-    },
-    {
-      title: "Interview",
-      description: "Selected candidates and their parents will be invited for an interview with school administrators.",
-    },
-    {
-      title: "Admission Decision",
-      description: "Admission decisions will be communicated to parents within two weeks of the interview.",
-    },
-    {
-      title: "Fee Payment",
-      description: "Upon acceptance, secure your child's place by paying the registration fee and first term fees.",
-    },
-  ]
   return (
     <div className="space-y-12">
+      {/* Section heading */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="mb-8 text-3xl font-bold bg-linear-to-r from-primary to-cyan-600 bg-clip-text text-transparent">
-          Our 6-Step Admission Journey
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+          Our 6-Step{" "}
+          <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+            Admission Journey
+          </span>
         </h2>
-        
-        <div className="relative space-y-12 pl-8 before:absolute before:left-[35px] before:top-4 before:h-[calc(100%-60px)] before:w-1 before:bg-linear-to-b before:from-primary before:via-cyan-500 before:to-primary before:opacity-30">
-          {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="relative flex gap-6"
-            >
-              {/* Timeline dot */}
-              <div className="absolute -left-14 top-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
-                  {stepIcons[index as keyof typeof stepIcons]}
-                </div>
-              </div>
-
-              <div className="flex-1 rounded-xl border bg-card p-6 shadow-xs transition-all hover:shadow-md">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-100 text-sm font-bold text-primary">
-                    0{index + 1}
-                  </span>
-                  <h3 className="text-xl font-semibold">{step.title}</h3>
-                </div>
-                <p className="text-muted-foreground">{step.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-xl">
+          A clear, step-by-step process designed to make admissions easy for every family.
+        </p>
       </motion.div>
 
+      {/* Steps Grid */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {steps.map((step, index) => {
+          const Icon = step.icon
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.07 }}
+              className="group relative rounded-2xl border border-slate-200/60 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] p-6 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/5 hover:border-emerald-500/20"
+            >
+              {/* Step number */}
+              <span className="absolute top-4 right-4 text-xs font-bold text-slate-300 dark:text-white/10 tabular-nums">
+                0{index + 1}
+              </span>
+
+              {/* Icon */}
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-md shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
+                <Icon className="h-5 w-5 text-white" strokeWidth={1.8} />
+              </div>
+
+              <h3 className="mb-2 text-base font-semibold text-slate-900 dark:text-white">
+                {step.title}
+              </h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                {step.description}
+              </p>
+            </motion.div>
+          )
+        })}
+      </div>
+
+      {/* Required Documents */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="rounded-2xl border bg-linear-to-br from-cyan-50/50 to-blue-50/50 p-8 shadow-xs"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="rounded-2xl border border-slate-200/60 dark:border-white/[0.08] bg-gradient-to-br from-emerald-50/50 to-sky-50/30 dark:from-emerald-500/[0.05] dark:to-sky-500/[0.03] p-6 md:p-8"
       >
-        <div className="mb-6 flex items-center gap-3">
-          <CheckCircle className="h-8 w-8 text-primary" />
-          <h3 className="text-2xl font-semibold">Required Documentation</h3>
+        <div className="mb-5 flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
+            <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+            Required Documentation
+          </h3>
         </div>
-        
-        <ul className="grid gap-4 md:grid-cols-2">
-          {[
-            "Completed application form",
-            "Birth certificate",
-            "Previous school records/report cards",
-            "Passport-sized photographs",
-            "Immunization records",
-            "Parent/guardian ID proof",
-            "Proof of address",
-            "Transfer certificate (if applicable)",
-          ].map((item, i) => (
+
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {requiredDocs.map((item, i) => (
             <motion.li
               key={i}
-              whileHover={{ x: 5 }}
-              className={cn(
-                "flex items-center gap-3 rounded-lg bg-white/50 p-4 backdrop-blur-xs",
-                "border transition-colors hover:border-primary/20"
-              )}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.35 + i * 0.04 }}
+              className="flex items-center gap-3 rounded-xl bg-white/70 dark:bg-white/[0.04] p-3.5 border border-transparent hover:border-emerald-500/15 transition-colors"
             >
-              <CheckCircle className="h-5 w-5 text-primary" />
-              <span className="text-muted-foreground">{item}</span>
+              <CheckCircle className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+              <span className="text-sm text-slate-600 dark:text-slate-300">
+                {item}
+              </span>
             </motion.li>
           ))}
         </ul>
-        
-        <p className="mt-6 text-sm text-muted-foreground">
-          *All documents must be certified copies. International students require additional documentation.
+
+        <p className="mt-5 text-xs text-slate-400 dark:text-slate-500">
+          * All documents must be certified copies. International students may require additional documentation.
         </p>
       </motion.div>
     </div>

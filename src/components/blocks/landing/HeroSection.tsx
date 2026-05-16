@@ -10,10 +10,10 @@ export function HeroHome() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0)
 
   const videos = [
-    "https://res.cloudinary.com/dvvbxrs55/video/upload/f_auto,q_auto,w_auto/v1729269611/clip1_awtegx",
-    "https://res.cloudinary.com/dvvbxrs55/video/upload/f_auto,q_auto,w_auto/v1729269805/clip4_stlpus",
-    "https://res.cloudinary.com/dvvbxrs55/video/upload/f_auto,q_auto,w_auto/v1729269611/clip1_awtegx",
-    "https://res.cloudinary.com/dvvbxrs55/video/upload/f_auto,q_auto,w_auto/v1729267740/clip5_szbx9z",
+    "/api/images/videos/clip1_awtegx.mp4",
+    "/api/images/videos/clip4_stlpus.mp4",
+    "/api/images/videos/clip1_awtegx.mp4",
+    "/api/images/videos/clip5_szbx9z.mp4",
   ]
 
   // Automatically change video every 8 seconds
@@ -82,7 +82,7 @@ export function HeroHome() {
         </motion.p>
 
         {/* "Learn More" interactive button */}
-        <Link href="/about"          className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-hidden"
+        <Link href="/about" className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-hidden"
         >
           Learn More
         </Link>

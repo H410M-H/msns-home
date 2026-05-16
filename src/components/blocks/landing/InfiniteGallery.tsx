@@ -1,15 +1,32 @@
 "use client";
-import { useRef, useMemo, useCallback, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
-import { type Mesh, type Texture, ShaderMaterial, DoubleSide } from 'three';
+
+import type React from "react";
+import { useRef, useMemo, useCallback, useState, useEffect, Suspense } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
+import * as THREE from "three";
 
 type ImageItem = string | { src: string; alt?: string };
+
+interface FadeSettings {
+  fadeIn: { start: number; end: number };
+  fadeOut: { start: number; end: number };
+}
+
+interface BlurSettings {
+  blurIn: { start: number; end: number };
+  blurOut: { start: number; end: number };
+  maxBlur: number;
+}
 
 interface InfiniteGalleryProps {
   images: ImageItem[];
   speed?: number;
+  zSpacing?: number;
   visibleCount?: number;
+  falloff?: { near: number; far: number };
+  fadeSettings?: FadeSettings;
+  blurSettings?: BlurSettings;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -20,25 +37,24 @@ interface PlaneData {
   imageIndex: number;
   x: number;
   y: number;
-  rotationY: number;
 }
 
-const DEFAULT_DEPTH_RANGE = 60;
+const DEFAULT_DEPTH_RANGE = 50;
 const MAX_HORIZONTAL_OFFSET = 12;
 const MAX_VERTICAL_OFFSET = 10;
 
-const createGlassMaterial = (): ShaderMaterial => {
-  return new ShaderMaterial({
+// Custom shader material for blur, opacity, and cloth folding effects
+const createClothMaterial = () => {
+  return new THREE.ShaderMaterial({
     transparent: true,
-    side: DoubleSide,
+    side: THREE.DoubleSide,
     uniforms: {
-      map: { value: null as Texture | null },
+      map: { value: null },
       opacity: { value: 1.0 },
       blurAmount: { value: 0.0 },
       scrollForce: { value: 0.0 },
       time: { value: 0.0 },
       isHovered: { value: 0.0 },
-      glassIntensity: { value: 0.3 },
     },
     vertexShader: `
       uniform float scrollForce;
@@ -46,29 +62,43 @@ const createGlassMaterial = (): ShaderMaterial => {
       uniform float isHovered;
       varying vec2 vUv;
       varying vec3 vNormal;
-      varying vec3 vPosition;
       
       void main() {
         vUv = uv;
-        vNormal = normalize(normalMatrix * normal);
+        vNormal = normal;
         
         vec3 pos = position;
         
-        // Gentle wave effect
-        float wave = sin(pos.x * 1.5 + time * 1.2) * 0.02;
-        wave += cos(pos.y * 2.0 + time * 0.8) * 0.015;
+        // Create smooth curving based on scroll force
+        float curveIntensity = scrollForce * 0.3;
         
-        // Hover effect - lifting and expanding
+        // Base curve across the plane based on distance from center
+        float distanceFromCenter = length(pos.xy);
+        float curve = distanceFromCenter * distanceFromCenter * curveIntensity;
+        
+        // Add gentle cloth-like ripples
+        float ripple1 = sin(pos.x * 2.0 + scrollForce * 3.0) * 0.02;
+        float ripple2 = sin(pos.y * 2.5 + scrollForce * 2.0) * 0.015;
+        float clothEffect = (ripple1 + ripple2) * abs(curveIntensity) * 2.0;
+        
+        // Flag waving effect when hovered
+        float flagWave = 0.0;
         if (isHovered > 0.5) {
-          float hoverWave = sin(pos.x * 4.0 + time * 6.0) * 0.08;
-          hoverWave += sin(pos.y * 3.0 + time * 5.0) * 0.05;
-          pos.z += hoverWave + 0.3;
-          pos *= 1.05; // Slight scale up
+          // Create flag-like wave from left to right
+          float wavePhase = pos.x * 3.0 + time * 8.0;
+          float waveAmplitude = sin(wavePhase) * 0.1;
+          // Damping effect - stronger wave on the right side (free edge)
+          float dampening = smoothstep(-0.5, 0.5, pos.x);
+          flagWave = waveAmplitude * dampening;
+          
+          // Add secondary smaller waves for more realistic flag motion
+          float secondaryWave = sin(pos.x * 5.0 + time * 12.0) * 0.03 * dampening;
+          flagWave += secondaryWave;
         }
         
-        pos.z += wave;
+        // Apply Z displacement for curving effect (inverted) with cloth ripples and flag wave
+        pos.z -= (curve + clothEffect + flagWave);
         
-        vPosition = pos;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
       }
     `,
@@ -77,23 +107,20 @@ const createGlassMaterial = (): ShaderMaterial => {
       uniform float opacity;
       uniform float blurAmount;
       uniform float scrollForce;
-      uniform float glassIntensity;
-      uniform float isHovered;
       varying vec2 vUv;
       varying vec3 vNormal;
-      varying vec3 vPosition;
       
       void main() {
         vec4 color = texture2D(map, vUv);
         
-        // Blur effect
+        // Simple blur approximation
         if (blurAmount > 0.0) {
           vec2 texelSize = 1.0 / vec2(textureSize(map, 0));
           vec4 blurred = vec4(0.0);
           float total = 0.0;
           
-          for (float x = -3.0; x <= 3.0; x += 1.0) {
-            for (float y = -3.0; y <= 3.0; y += 1.0) {
+          for (float x = -2.0; x <= 2.0; x += 1.0) {
+            for (float y = -2.0; y <= 2.0; y += 1.0) {
               vec2 offset = vec2(x, y) * texelSize * blurAmount;
               float weight = 1.0 / (1.0 + length(vec2(x, y)));
               blurred += texture2D(map, vUv + offset) * weight;
@@ -103,25 +130,9 @@ const createGlassMaterial = (): ShaderMaterial => {
           color = blurred / total;
         }
         
-        // Glassmorphism effect
-        float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
-        vec3 glassHighlight = vec3(1.0) * fresnel * glassIntensity;
-        
-        // Edge glow
-        float edge = smoothstep(0.0, 0.1, vUv.x) * smoothstep(1.0, 0.9, vUv.x) *
-                     smoothstep(0.0, 0.1, vUv.y) * smoothstep(1.0, 0.9, vUv.y);
-        vec3 edgeGlow = vec3(0.4, 0.6, 1.0) * (1.0 - edge) * 0.2;
-        
-        // Hover glow
-        float hoverGlow = isHovered * 0.15;
-        vec3 hoverColor = vec3(0.5, 0.8, 1.0) * hoverGlow;
-        
-        // Combine effects
-        color.rgb += glassHighlight + edgeGlow + hoverColor;
-        color.rgb = mix(color.rgb, color.rgb * 1.1, fresnel * 0.3);
-        
-        // Slight brightness boost
-        color.rgb *= 1.05;
+        // Add subtle lighting effect based on curving
+        float curveHighlight = abs(scrollForce) * 0.05;
+        color.rgb += vec3(curveHighlight * 0.1);
         
         gl_FragColor = vec4(color.rgb, color.a * opacity);
       }
@@ -134,26 +145,24 @@ function ImagePlane({
   position,
   scale,
   material,
-  rotation,
 }: {
-  texture: Texture;
+  texture: THREE.Texture;
   position: [number, number, number];
   scale: [number, number, number];
-  material: ShaderMaterial;
-  rotation: [number, number, number];
+  material: THREE.ShaderMaterial;
 }) {
-  const meshRef = useRef<Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (material?.uniforms?.map && texture) {
-      material.uniforms.map.value = texture;
+    if (material && texture) {
+      material.uniforms.map!.value = texture;
     }
   }, [material, texture]);
 
   useEffect(() => {
-    if (material?.uniforms?.isHovered) {
-      material.uniforms.isHovered.value = isHovered ? 1.0 : 0.0;
+    if (material?.uniforms) {
+      material.uniforms.isHovered!.value = isHovered ? 1.0 : 0.0;
     }
   }, [material, isHovered]);
 
@@ -162,12 +171,11 @@ function ImagePlane({
       ref={meshRef}
       position={position}
       scale={scale}
-      rotation={rotation}
       material={material}
       onPointerEnter={() => setIsHovered(true)}
       onPointerLeave={() => setIsHovered(false)}
     >
-      <planeGeometry args={[1, 1, 40, 40]} />
+      <planeGeometry args={[1, 1, 32, 32]} />
     </mesh>
   );
 }
@@ -175,8 +183,17 @@ function ImagePlane({
 function GalleryScene({
   images,
   speed = 1,
-  visibleCount = 10,
-}: Omit<InfiniteGalleryProps, 'className' | 'style'>) {
+  visibleCount = 8,
+  fadeSettings = {
+    fadeIn: { start: 0.05, end: 0.15 },
+    fadeOut: { start: 0.85, end: 0.95 },
+  },
+  blurSettings = {
+    blurIn: { start: 0.0, end: 0.1 },
+    blurOut: { start: 0.9, end: 1.0 },
+    maxBlur: 3.0,
+  },
+}: Omit<InfiniteGalleryProps, "className" | "style">) {
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
   const lastInteraction = useRef(Date.now());
@@ -184,34 +201,51 @@ function GalleryScene({
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
-        typeof img === 'string' ? { src: img, alt: '' } : img
+        typeof img === "string" ? { src: img, alt: "" } : img
       ),
     [images]
   );
 
   const textures = useTexture(normalizedImages.map((img) => img.src));
 
+  useEffect(() => {
+    const texArr = Array.isArray(textures) ? textures : [textures];
+    texArr.forEach((t) => {
+      t.minFilter = THREE.LinearFilter;
+      t.magFilter = THREE.LinearFilter;
+    });
+  }, [textures]);
+
   const materials = useMemo(
-    () => Array.from({ length: visibleCount }, () => createGlassMaterial()),
+    () => Array.from({ length: visibleCount }, () => createClothMaterial()),
     [visibleCount]
   );
 
+  useEffect(() => {
+    return () => {
+      materials.forEach((m) => m.dispose());
+    };
+  }, [materials]);
+
   const spatialPositions = useMemo(() => {
-    const positions: { x: number; y: number; rotationY: number }[] = [];
+    const positions: { x: number; y: number }[] = [];
     const maxHorizontalOffset = MAX_HORIZONTAL_OFFSET;
     const maxVerticalOffset = MAX_VERTICAL_OFFSET;
 
     for (let i = 0; i < visibleCount; i++) {
       const horizontalAngle = (i * 2.618) % (Math.PI * 2);
       const verticalAngle = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
-      const horizontalRadius = (i % 3) * 1.5;
-      const verticalRadius = ((i + 1) % 4) * 1.0;
-      
-      const x = (Math.sin(horizontalAngle) * horizontalRadius * maxHorizontalOffset) / 3;
-      const y = (Math.cos(verticalAngle) * verticalRadius * maxVerticalOffset) / 4;
-      const rotationY = (Math.sin(i * 0.5) * Math.PI) / 12;
-      
-      positions.push({ x, y, rotationY });
+
+      const horizontalRadius = (i % 3) * 1.2;
+      const verticalRadius = ((i + 1) % 4) * 0.8;
+
+      const x =
+        (Math.sin(horizontalAngle) * horizontalRadius * maxHorizontalOffset) /
+        3;
+      const y =
+        (Math.cos(verticalAngle) * verticalRadius * maxVerticalOffset) / 4;
+
+      positions.push({ x, y });
     }
 
     return positions;
@@ -227,14 +261,26 @@ function GalleryScene({
       imageIndex: totalImages > 0 ? i % totalImages : 0,
       x: spatialPositions[i]?.x ?? 0,
       y: spatialPositions[i]?.y ?? 0,
-      rotationY: spatialPositions[i]?.rotationY ?? 0,
     }))
   );
+
+  useEffect(() => {
+    planesData.current = Array.from({ length: visibleCount }, (_, i) => ({
+      index: i,
+      z:
+        visibleCount > 0
+          ? ((depthRange / Math.max(visibleCount, 1)) * i) % depthRange
+          : 0,
+      imageIndex: totalImages > 0 ? i % totalImages : 0,
+      x: spatialPositions[i]?.x ?? 0,
+      y: spatialPositions[i]?.y ?? 0,
+    }));
+  }, [depthRange, spatialPositions, totalImages, visibleCount]);
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       event.preventDefault();
-      setScrollVelocity((prev) => prev + event.deltaY * 0.012 * speed);
+      setScrollVelocity((prev) => prev + event.deltaY * 0.01 * speed);
       setAutoPlay(false);
       lastInteraction.current = Date.now();
     },
@@ -243,12 +289,12 @@ function GalleryScene({
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        setScrollVelocity((prev) => prev - 2.5 * speed);
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        setScrollVelocity((prev) => prev - 2 * speed);
         setAutoPlay(false);
         lastInteraction.current = Date.now();
-      } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        setScrollVelocity((prev) => prev + 2.5 * speed);
+      } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+        setScrollVelocity((prev) => prev + 2 * speed);
         setAutoPlay(false);
         lastInteraction.current = Date.now();
       }
@@ -257,16 +303,16 @@ function GalleryScene({
   );
 
   useEffect(() => {
-    const canvas = document.querySelector('canvas');
+    const canvas = document.querySelector("canvas");
     if (canvas) {
-      canvas.addEventListener('wheel', handleWheel, { passive: false });
-      document.addEventListener('keydown', handleKeyDown);
+      canvas.addEventListener("wheel", handleWheel, { passive: false });
+      document.addEventListener("keydown", handleKeyDown);
+
       return () => {
-        canvas.removeEventListener('wheel', handleWheel);
-        document.removeEventListener('keydown', handleKeyDown);
+        canvas.removeEventListener("wheel", handleWheel);
+        document.removeEventListener("keydown", handleKeyDown);
       };
     }
-    return undefined;
   }, [handleWheel, handleKeyDown]);
 
   useEffect(() => {
@@ -279,39 +325,42 @@ function GalleryScene({
   }, []);
 
   useFrame((state, delta) => {
+    // Apply auto-play: smoothly accelerate to a constant zoom-in velocity
     if (autoPlay) {
-      setScrollVelocity((prev) => prev + 0.4 * delta);
+      setScrollVelocity((prev) => prev + (0.8 * speed - prev) * 0.05);
+    } else {
+      // Damping when interacting
+      setScrollVelocity((prev) => prev * 0.95);
     }
-
-    setScrollVelocity((prev) => prev * 0.94);
 
     const time = state.clock.getElapsedTime();
     materials.forEach((material) => {
       if (material?.uniforms) {
-        if (material.uniforms.time) material.uniforms.time.value = time;
-        if (material.uniforms.scrollForce) {
-          material.uniforms.scrollForce.value = scrollVelocity;
-        }
+        material.uniforms.time!.value = time;
+        material.uniforms.scrollForce!.value = scrollVelocity;
       }
     });
 
-    const imageAdvance = totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
+    const imageAdvance =
+      totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
+    const totalRange = depthRange;
 
     planesData.current.forEach((plane, i) => {
-      let newZ = plane.z + scrollVelocity * delta * 12;
+      let newZ = plane.z + scrollVelocity * delta * 10;
       let wrapsForward = 0;
       let wrapsBackward = 0;
 
-      if (newZ >= depthRange) {
-        wrapsForward = Math.floor(newZ / depthRange);
-        newZ -= depthRange * wrapsForward;
+      if (newZ >= totalRange) {
+        wrapsForward = Math.floor(newZ / totalRange);
+        newZ -= totalRange * wrapsForward;
       } else if (newZ < 0) {
-        wrapsBackward = Math.ceil(-newZ / depthRange);
-        newZ += depthRange * wrapsBackward;
+        wrapsBackward = Math.ceil(-newZ / totalRange);
+        newZ += totalRange * wrapsBackward;
       }
 
       if (wrapsForward > 0 && imageAdvance > 0 && totalImages > 0) {
-        plane.imageIndex = (plane.imageIndex + wrapsForward * imageAdvance) % totalImages;
+        plane.imageIndex =
+          (plane.imageIndex + wrapsForward * imageAdvance) % totalImages;
       }
 
       if (wrapsBackward > 0 && imageAdvance > 0 && totalImages > 0) {
@@ -319,47 +368,67 @@ function GalleryScene({
         plane.imageIndex = ((step % totalImages) + totalImages) % totalImages;
       }
 
-      plane.z = ((newZ % depthRange) + depthRange) % depthRange;
+      plane.z = ((newZ % totalRange) + totalRange) % totalRange;
       plane.x = spatialPositions[i]?.x ?? 0;
       plane.y = spatialPositions[i]?.y ?? 0;
-      plane.rotationY = spatialPositions[i]?.rotationY ?? 0;
 
-      const normalizedPosition = plane.z / depthRange;
-      
-      // Smoother fade transitions
+      const normalizedPosition = plane.z / totalRange;
       let opacity = 1;
-      const fadeInStart = 0.0;
-      const fadeInEnd = 0.2;
-      const fadeOutStart = 0.75;
-      const fadeOutEnd = 1.0;
 
-      if (normalizedPosition < fadeInEnd) {
-        opacity = normalizedPosition < fadeInStart ? 0 : 
-                  (normalizedPosition - fadeInStart) / (fadeInEnd - fadeInStart);
-      } else if (normalizedPosition > fadeOutStart) {
-        opacity = normalizedPosition > fadeOutEnd ? 0 :
-                  1 - (normalizedPosition - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+      if (
+        normalizedPosition >= fadeSettings.fadeIn.start &&
+        normalizedPosition <= fadeSettings.fadeIn.end
+      ) {
+        const fadeInProgress =
+          (normalizedPosition - fadeSettings.fadeIn.start) /
+          (fadeSettings.fadeIn.end - fadeSettings.fadeIn.start);
+        opacity = fadeInProgress;
+      } else if (normalizedPosition < fadeSettings.fadeIn.start) {
+        opacity = 0;
+      } else if (
+        normalizedPosition >= fadeSettings.fadeOut.start &&
+        normalizedPosition <= fadeSettings.fadeOut.end
+      ) {
+        const fadeOutProgress =
+          (normalizedPosition - fadeSettings.fadeOut.start) /
+          (fadeSettings.fadeOut.end - fadeSettings.fadeOut.start);
+        opacity = 1 - fadeOutProgress;
+      } else if (normalizedPosition > fadeSettings.fadeOut.end) {
+        opacity = 0;
       }
 
       opacity = Math.max(0, Math.min(1, opacity));
 
-      // Blur effect
       let blur = 0;
-      const blurInEnd = 0.15;
-      const blurOutStart = 0.8;
 
-      if (normalizedPosition < blurInEnd) {
-        blur = 5.0 * (1 - normalizedPosition / blurInEnd);
-      } else if (normalizedPosition > blurOutStart) {
-        blur = 5.0 * ((normalizedPosition - blurOutStart) / (1 - blurOutStart));
+      if (
+        normalizedPosition >= blurSettings.blurIn.start &&
+        normalizedPosition <= blurSettings.blurIn.end
+      ) {
+        const blurInProgress =
+          (normalizedPosition - blurSettings.blurIn.start) /
+          (blurSettings.blurIn.end - blurSettings.blurIn.start);
+        blur = blurSettings.maxBlur * (1 - blurInProgress);
+      } else if (normalizedPosition < blurSettings.blurIn.start) {
+        blur = blurSettings.maxBlur;
+      } else if (
+        normalizedPosition >= blurSettings.blurOut.start &&
+        normalizedPosition <= blurSettings.blurOut.end
+      ) {
+        const blurOutProgress =
+          (normalizedPosition - blurSettings.blurOut.start) /
+          (blurSettings.blurOut.end - blurSettings.blurOut.start);
+        blur = blurSettings.maxBlur * blurOutProgress;
+      } else if (normalizedPosition > blurSettings.blurOut.end) {
+        blur = blurSettings.maxBlur;
       }
 
-      blur = Math.max(0, Math.min(5.0, blur));
+      blur = Math.max(0, Math.min(blurSettings.maxBlur, blur));
 
       const material = materials[i];
       if (material?.uniforms) {
-        if (material.uniforms.opacity) material.uniforms.opacity.value = opacity;
-        if (material.uniforms.blurAmount) material.uniforms.blurAmount.value = blur;
+        material.uniforms.opacity!.value = opacity;
+        material.uniforms.blurAmount!.value = blur;
       }
     });
   });
@@ -371,30 +440,32 @@ function GalleryScene({
       <ambientLight intensity={0.6} />
       <pointLight position={[10, 10, 10]} intensity={0.8} />
       <pointLight position={[-10, -10, -10]} intensity={0.4} color="#4080ff" />
-      
+
       {planesData.current.map((plane, i) => {
-        const texture = textures[plane.imageIndex];
+        const texture = Array.isArray(textures)
+          ? textures[plane.imageIndex]
+          : textures;
         const material = materials[i];
 
         if (!texture || !material) return null;
 
-        const img = texture.image as HTMLImageElement | ImageBitmap | undefined;
-        const aspect = img?.width && img?.height ? img.width / img.height : 1;
-        
-        // Bigger images
+        const worldZ = plane.z - depthRange / 2;
+
+        const img = texture.image as { width?: number; height?: number } | null | undefined;
+        const aspect =
+          img?.width && img.height ? img.width / img.height : 1;
         const baseSize = 4.5;
         const scale: [number, number, number] =
-          aspect > 1 
-            ? [baseSize * aspect, baseSize, 1] 
+          aspect > 1
+            ? [baseSize * aspect, baseSize, 1]
             : [baseSize, baseSize / aspect, 1];
 
         return (
           <ImagePlane
             key={plane.index}
             texture={texture}
-            position={[plane.x, plane.y, plane.z - depthRange / 2]}
+            position={[plane.x, plane.y, worldZ]}
             scale={scale}
-            rotation={[0, plane.rotationY, 0]}
             material={material}
           />
         );
@@ -403,57 +474,119 @@ function GalleryScene({
   );
 }
 
+function GalleryLoader() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative h-12 w-12">
+          <div className="absolute inset-0 rounded-full border-2 border-white/10" />
+          <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-emerald-400" />
+        </div>
+        <p className="text-sm text-white/40 tracking-wide uppercase">
+          Loading Gallery…
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function InfiniteGallery({
   images,
-  className = '',
+  className = "",
   style,
   speed = 1,
   visibleCount = 10,
+  fadeSettings = {
+    fadeIn: { start: 0.05, end: 0.25 },
+    fadeOut: { start: 0.6, end: 0.7 },
+  },
+  blurSettings = {
+    blurIn: { start: 0.0, end: 0.1 },
+    blurOut: { start: 0.6, end: 0.7 },
+    maxBlur: 8.0,
+  },
 }: InfiniteGalleryProps) {
   const [webglSupported, setWebglSupported] = useState(true);
 
   useEffect(() => {
     try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') ?? canvas.getContext('experimental-webgl');
-      setWebglSupported(!!gl);
+      const canvas = document.createElement("canvas");
+      const gl =
+        canvas.getContext("webgl2") ??
+        canvas.getContext("webgl") ??
+        canvas.getContext("experimental-webgl");
+      if (!gl) {
+        setWebglSupported(false);
+      }
     } catch {
       setWebglSupported(false);
     }
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-linear-to-br from-slate-950 via-green-950/10 to-slate-900" />
-      
-      {/* Ambient glow effects */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      
-      {/* Main canvas */}
-      <div className={`relative w-screen h-full ${className}`} style={style}>
-        {webglSupported ? (
-          <Canvas
-            camera={{ position: [0, 0, 10], fov: 60 }}
-            gl={{ 
-              antialias: true, 
-              alpha: true,
-              powerPreference: 'high-performance'
-            }}
-          >
-            <GalleryScene
-              images={images}
-              speed={speed}
-              visibleCount={visibleCount}
-            />
-          </Canvas>
-        ) : (
-          <div className="flex items-center justify-center h-full rounded-lg">
-            <p className="text-white text-lg">WebGL not supported</p>
-          </div>
-        )}
+    <section className="relative w-full overflow-hidden">
+      {/* Section header */}
+      <div
+        className="relative z-10 pt-20 pb-6 md:pt-28 md:pb-10 px-6 md:px-12"
+        style={{
+          background:
+            "linear-gradient(to bottom, #060e1a 0%, transparent 100%)",
+        }}
+      >
+        <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] text-sky-400 bg-sky-500/10 border border-sky-500/20">
+          Life at MSNS
+        </span>
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
+          Campus{" "}
+          <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            Gallery
+          </span>
+        </h2>
+        <p className="mt-3 text-sm md:text-base text-white/40 max-w-lg leading-relaxed">
+          Explore moments from our campus life.
+        </p>
       </div>
-    </div>
+
+      {/* 3D Canvas area */}
+      <div className="relative h-[70vh] md:h-screen">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-green-950/10 to-slate-900" />
+
+        {/* Ambient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-500/[0.12] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/[0.12] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/[0.06] rounded-full blur-[150px] pointer-events-none" />
+
+        <div className={`relative w-full h-full ${className}`} style={style}>
+          {webglSupported ? (
+            <Suspense fallback={<GalleryLoader />}>
+              <Canvas
+                camera={{ position: [0, 0, 10], fov: 60 }}
+                dpr={[1, 1.5]}
+                gl={{
+                  antialias: true,
+                  alpha: true,
+                  powerPreference: "high-performance",
+                }}
+              >
+                <GalleryScene
+                  images={images}
+                  speed={speed}
+                  visibleCount={visibleCount}
+                  fadeSettings={fadeSettings}
+                  blurSettings={blurSettings}
+                />
+              </Canvas>
+            </Suspense>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-white/50 text-base">
+                WebGL is not supported on this device.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }

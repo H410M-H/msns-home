@@ -37,8 +37,8 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     <header
       className={cn(
         `fixed top-0 left-0 right-0 z-50 transition-all duration-300`,
-        scrolled 
-          ? 'bg-transparent backdrop-blur-md border-b border-gray-100 shadow-xs' 
+        scrolled
+          ? 'bg-transparent backdrop-blur-md border-b border-gray-100 shadow-xs'
           : 'bg-transparent',
         className
       )}
@@ -48,7 +48,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
         {/* Logo */}
         <Link href="/https://lms.msns.edu.pk" className="relative z-50">
           <Image
-            src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png"
+            src="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
             alt="Logo"
             width={50}
             height={50}
@@ -64,8 +64,8 @@ export const Header = ({ className, ...props }: HeaderProps) => {
               href={link.path}
               className={cn(
                 "px-4 py-2 rounded-lg font-medium transition-colors",
-                pathname === link.path 
-                  ? "text-green-100 bg-primary/10" 
+                pathname === link.path
+                  ? "text-green-100 bg-primary/10"
                   : "text-white hover:bg-green-500 hover:text-green-800"
               )}
             >

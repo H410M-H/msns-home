@@ -15,7 +15,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <motion.div style={{ scale, rotateX }} className="absolute inset-0 shadow-2xl">
         <Image
-          src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267627/FrontView1_alaabu.jpg"
+          src="/api/images/gallery/FrontView1_alaabu.jpg"
           alt="School building"
           fill
           style={{ objectFit: "cover" }}

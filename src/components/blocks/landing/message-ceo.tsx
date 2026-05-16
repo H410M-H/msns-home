@@ -6,7 +6,7 @@ import { Quote } from "lucide-react"
 
 export const MessageFromCEO = () => {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-transparent">
       <div className="container mx-auto px-4">
         {/* Top heading */}
         <h2 className="text-4xl font-bold text-center text-slate-900 mb-16">
@@ -29,7 +29,7 @@ export const MessageFromCEO = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <Image
-                src="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741086948/haji_muhammad_siddique_naz_d5ct3l.jpg"
+                src="/api/images/gallery/haji_muhammad_siddique_naz_d5ct3l.jpg"
                 alt="CEO"
                 fill
                 className="object-contain"

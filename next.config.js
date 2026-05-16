@@ -8,25 +8,8 @@ await import("./src/env.js");
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/dvvbxrs55/image/upload/**",
-      },
-      // {
-      //   protocol: "https",
-      //   hostname: "storage.googleapis.com",
-      //   pathname: "/**",
-      // },
+      // No external image domains needed - all images served via /api/images proxy
     ],
-  },
-};
-
-export const cloudinaryConfig = {
-  cloudName: "dvvbxrs55",
-  uploadPreset: {
-    profilePic: "msnsPDP",
-    cv: "msnsCV",
   },
 };
 
