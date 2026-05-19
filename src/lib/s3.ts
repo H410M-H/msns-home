@@ -46,6 +46,64 @@ export async function listGalleryImages(): Promise<GalleryImage[]> {
     });
 }
 
+/**
+ * Finds an image by its filename (basename) across all gallery folders.
+ * Returns the full S3 key if found, or null if not.
+ * This allows msns-home components to reference images by filename only,
+ * so moving images between folders in the admin gallery won't break references.
+ */
+export async function findImageByFilename(filename: string): Promise<string | null> {
+  const command = new ListObjectsV2Command({
+    Bucket: BUCKET,
+    Prefix: "gallery/",
+  });
+
+  const response = await s3Client.send(command);
+  const contents = response.Contents ?? [];
+
+  for (const obj of contents) {
+    if (!obj.Key || obj.Key.endsWith("/")) continue;
+    const basename = obj.Key.split("/").pop();
+    if (basename === filename) {
+      return obj.Key;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Resolves multiple filenames to their full S3 keys in a single listing call.
+ * Returns a map of filename -> full key (or null if not found).
+ */
+export async function resolveImageFilenames(filenames: string[]): Promise<Record<string, string | null>> {
+  const command = new ListObjectsV2Command({
+    Bucket: BUCKET,
+    Prefix: "gallery/",
+  });
+
+  const response = await s3Client.send(command);
+  const contents = response.Contents ?? [];
+
+  // Build a lookup map: basename -> full key
+  const basenameMap = new Map<string, string>();
+  for (const obj of contents) {
+    if (!obj.Key || obj.Key.endsWith("/")) continue;
+    const basename = obj.Key.split("/").pop();
+    if (basename) {
+      basenameMap.set(basename, obj.Key);
+    }
+  }
+
+  // Resolve each requested filename
+  const result: Record<string, string | null> = {};
+  for (const filename of filenames) {
+    result[filename] = basenameMap.get(filename) ?? null;
+  }
+
+  return result;
+}
+
 export async function uploadToS3(
   key: string,
   body: Buffer | Uint8Array,

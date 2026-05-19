@@ -143,7 +143,7 @@ export default function PopupAd() {
               name="Momina"
               roll="206676"
               marks="522/545"
-              img="/api/images/gallery/MOMINA_MANSHA_ogl2jd.jpg"
+              img="/api/images/resolve/MOMINA_MANSHA_ogl2jd.jpg"
               color="rgba(205,127,50,0.3)"
             />
           </div>
@@ -151,19 +151,19 @@ export default function PopupAd() {
           {/* Buttons */}
           <div className="mt-8 flex flex-col items-center gap-3">
             <a
-              href="/api/images/gallery/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
+              href="/api/images/resolve/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full rounded-lg bg-blue-500/70 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-blue-500/90"
             >
               View All Remaining Results
             </a>
-            <button
+            <Button
               onClick={handleClose}
               className="text-sm text-white/70 hover:text-white transition"
             >
               Close
-            </button>
+            </Button>
           </div>
 
           {/* Footer */}

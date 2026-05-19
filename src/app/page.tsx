@@ -19,39 +19,8 @@ interface GalleryImage {
   size?: number;
 }
 
-// Fallback static images served from S3 proxy (used when API fails or during SSR)
-const FALLBACK_IMAGES = [
-  { src: "/api/images/gallery/IMG_3349_ldaqqy.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3360_h9xvsz.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6774_zymsqa.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/POSTER_vb1tvs.jpg", alt: "School Poster" },
-  { src: "/api/images/gallery/IMG_3135_dzhkaf.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3045_rrwon6.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3015_ocmbrn.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/H7H_1547_scojlx.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3033_fdu53k.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3101_tib63s.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_2930_kfkrzt.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3136_nufwsu.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3276_rgkfiv.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_2873_ecywt5.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6199_elv8zj.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3037_djwx6t.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6184_ozj3hr.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3330_kneelc.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3218_jmv7n8.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3151_gsuhua.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_8987_pfrlog.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_5049_ojzbjj.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3095_y27vai.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6082_ogohxu.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_E2799_g5fgq7.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6187_j6ovz3.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/H7H_4932_xjhmck.jpg", alt: "School Event" },
-];
-
 export default function Home() {
-  const [galleryImages, setGalleryImages] = useState(FALLBACK_IMAGES);
+  const [galleryImages, setGalleryImages] = useState<{ src: string, alt: string }[]>([]);
 
   useEffect(() => {
     async function fetchGallery() {
@@ -68,8 +37,8 @@ export default function Home() {
             }))
           );
         }
-      } catch {
-        // Keep fallback images on error
+      } catch (err) {
+        console.error("Error fetching gallery images:", err);
       }
     }
 

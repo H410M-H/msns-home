@@ -10,12 +10,12 @@ interface HeroSectionProps {
   rotateX: string | number | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
 }
 
-export const HeroSection = ({ scale, rotateX }: HeroSectionProps)  => {
+export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <motion.div style={{ scale, rotateX }} className="absolute inset-0 shadow-2xl">
         <Image
-          src="/api/images/gallery/FrontView1_alaabu.jpg"
+          src="/api/images/resolve/FrontView1_alaabu.jpg"
           alt="School building"
           fill
           style={{ objectFit: "cover" }}
