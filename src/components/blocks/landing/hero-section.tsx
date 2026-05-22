@@ -22,8 +22,8 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
           style={{ objectFit: "cover" }}
           className="absolute inset-0"
         />
-        {/* Rich dark gradient overlay to blend the image into the page background */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/90" />
+        {/* Soft light-green gradient overlay to blend the image into the page background */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#f3fbf7] via-[#f3fbf7]/40 to-[#f3fbf7]/80" />
       </motion.div>
 
       <motion.div
@@ -32,11 +32,11 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 bg-gradient-to-r from-yellow-100 via-emerald-300 to-teal-100 bg-clip-text text-transparent drop-shadow-2xl">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 bg-gradient-to-r from-emerald-950 via-emerald-800 to-teal-950 bg-clip-text text-transparent drop-shadow-sm">
           M.S.NAZ HIGH SCHOOL®
         </h1>
         <motion.p
-          className="text-xl md:text-3xl font-serif text-slate-200 mb-12 font-light tracking-wide"
+          className="text-xl md:text-3xl font-serif text-emerald-900/80 mb-12 font-light tracking-wide"
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -46,7 +46,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
           <Button
             size="lg"
-            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-semibold text-lg rounded-full px-8 py-6 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all duration-300 border border-emerald-400/20"
+            className="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-semibold text-lg rounded-full px-8 py-6 shadow-[0_4px_20px_rgba(16,185,129,0.2)] hover:shadow-[0_6px_25px_rgba(16,185,129,0.3)] transition-all duration-300 border border-emerald-400/20"
           >
             Explore Our World
           </Button>
@@ -58,7 +58,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
         animate={{ y: [0, 20, 0] }}
         transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
       >
-        <ChevronDown className="w-10 h-10 text-emerald-400 animate-pulse" />
+        <ChevronDown className="w-10 h-10 text-emerald-600 animate-pulse" />
       </motion.div>
     </section>
   )

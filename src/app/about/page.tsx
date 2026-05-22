@@ -19,11 +19,11 @@ export default function About() {
   const [expandedValue, setExpandedValue] = useState<number | null>(null)
 
   return (
-    <section className="relative flex flex-col min-h-screen pt-4 bg-slate-950 text-slate-100 font-sans overflow-hidden">
-      {/* Premium ambient backdrop glowing orbs */}
-      <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-emerald-500/[0.08] rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-teal-500/[0.08] rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute top-2/3 left-1/3 -translate-x-1/2 w-80 h-80 bg-green-500/[0.05] rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative flex flex-col min-h-screen pt-4 bg-gradient-to-b from-[#f3fbf7] via-[#f8fdfa] to-[#ffffff] text-slate-800 font-sans overflow-hidden">
+      {/* Premium ambient backdrop glowing orbs - light green theme adapted */}
+      <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-emerald-200/40 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-teal-200/30 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-2/3 left-1/3 -translate-x-1/2 w-80 h-80 bg-green-200/30 rounded-full blur-[100px] pointer-events-none" />
 
       <main className="grow relative z-10">
         <HeroSection scale={scale} rotateX={rotateX} />
