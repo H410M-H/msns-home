@@ -33,7 +33,7 @@ export default function Home() {
           const imagesOnly = data.images.filter((img) => {
             const filename = img.key.split("/").pop() ?? "";
             const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(filename) || img.key.startsWith("videos/");
-            return !isVideo;
+            return !isVideo && img.key.toLowerCase().startsWith("gallery/landing/");
           });
 
           setGalleryImages(
