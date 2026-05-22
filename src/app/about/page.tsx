@@ -19,8 +19,13 @@ export default function About() {
   const [expandedValue, setExpandedValue] = useState<number | null>(null)
 
   return (
-    <section className="flex flex-col min-h-screen pt-4 bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
-      <main className="grow">
+    <section className="relative flex flex-col min-h-screen pt-4 bg-slate-950 text-slate-100 font-sans overflow-hidden">
+      {/* Premium ambient backdrop glowing orbs */}
+      <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-emerald-500/[0.08] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-teal-500/[0.08] rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-2/3 left-1/3 -translate-x-1/2 w-80 h-80 bg-green-500/[0.05] rounded-full blur-[120px] pointer-events-none" />
+
+      <main className="grow relative z-10">
         <HeroSection scale={scale} rotateX={rotateX} />
         <MessageFromCEO />
         <MissionStatement />

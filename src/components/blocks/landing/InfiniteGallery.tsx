@@ -141,24 +141,24 @@ const createClothMaterial = () => {
 };
 
 function ImagePlane({
-  texture,
-  position,
-  scale,
+  planeIndex,
+  textures,
+  textureAspects,
+  planesDataRef,
+  depthRange,
   material,
+  baseSize,
 }: {
-  texture: THREE.Texture;
-  position: [number, number, number];
-  scale: [number, number, number];
+  planeIndex: number;
+  textures: THREE.Texture[];
+  textureAspects: number[];
+  planesDataRef: React.MutableRefObject<PlaneData[]>;
+  depthRange: number;
   material: THREE.ShaderMaterial;
+  baseSize: number;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    if (material && texture) {
-      material.uniforms.map!.value = texture;
-    }
-  }, [material, texture]);
 
   useEffect(() => {
     if (material?.uniforms) {
@@ -166,11 +166,31 @@ function ImagePlane({
     }
   }, [material, isHovered]);
 
+  useFrame(() => {
+    if (!meshRef.current) return;
+    const plane = planesDataRef.current[planeIndex];
+    if (!plane) return;
+
+    // Dynamically assign correct texture
+    const currentTexture = textures[plane.imageIndex];
+    if (currentTexture && material.uniforms.map && material.uniforms.map.value !== currentTexture) {
+      material.uniforms.map.value = currentTexture;
+    }
+
+    // Update position directly
+    const worldZ = plane.z - depthRange / 2;
+    meshRef.current.position.set(plane.x, plane.y, worldZ);
+
+    // Update scale directly based on aspect ratio
+    const aspect = textureAspects[plane.imageIndex] ?? 1;
+    const scaleX = aspect > 1 ? baseSize * aspect : baseSize;
+    const scaleY = aspect > 1 ? baseSize : baseSize / aspect;
+    meshRef.current.scale.set(scaleX, scaleY, 1);
+  });
+
   return (
     <mesh
       ref={meshRef}
-      position={position}
-      scale={scale}
       material={material}
       onPointerEnter={() => setIsHovered(true)}
       onPointerLeave={() => setIsHovered(false)}
@@ -194,9 +214,7 @@ function GalleryScene({
     maxBlur: 3.0,
   },
 }: Omit<InfiniteGalleryProps, "className" | "style">) {
-  const [scrollVelocity, setScrollVelocity] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
-  const lastInteraction = useRef(Date.now());
+  const scrollVelocityRef = useRef(0.8 * speed);
 
   const normalizedImages = useMemo(
     () =>
@@ -207,14 +225,21 @@ function GalleryScene({
   );
 
   const textures = useTexture(normalizedImages.map((img) => img.src));
+  const textureArray = useMemo(() => (Array.isArray(textures) ? textures : [textures]), [textures]);
 
   useEffect(() => {
-    const texArr = Array.isArray(textures) ? textures : [textures];
-    texArr.forEach((t) => {
+    textureArray.forEach((t) => {
       t.minFilter = THREE.LinearFilter;
       t.magFilter = THREE.LinearFilter;
     });
-  }, [textures]);
+  }, [textureArray]);
+
+  const textureAspects = useMemo(() => {
+    return textureArray.map((t) => {
+      const img = t?.image as { width?: number; height?: number } | null | undefined;
+      return img?.width && img?.height ? img.width / img.height : 1;
+    });
+  }, [textureArray]);
 
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
@@ -279,10 +304,9 @@ function GalleryScene({
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {
-      event.preventDefault();
-      setScrollVelocity((prev) => prev + event.deltaY * 0.01 * speed);
-      setAutoPlay(false);
-      lastInteraction.current = Date.now();
+      // Do NOT preventDefault, so the page can scroll normally.
+      // Increase scroll velocity (mutating ref directly to prevent React re-renders)
+      scrollVelocityRef.current += event.deltaY * 0.005 * speed;
     },
     [speed]
   );
@@ -290,13 +314,9 @@ function GalleryScene({
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-        setScrollVelocity((prev) => prev - 2 * speed);
-        setAutoPlay(false);
-        lastInteraction.current = Date.now();
+        scrollVelocityRef.current -= 1 * speed;
       } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-        setScrollVelocity((prev) => prev + 2 * speed);
-        setAutoPlay(false);
-        lastInteraction.current = Date.now();
+        scrollVelocityRef.current += 1 * speed;
       }
     },
     [speed]
@@ -305,7 +325,9 @@ function GalleryScene({
   useEffect(() => {
     const canvas = document.querySelector("canvas");
     if (canvas) {
-      canvas.addEventListener("wheel", handleWheel, { passive: false });
+      // Note: passive must be true since we don't call preventDefault,
+      // which is also better for scroll performance!
+      canvas.addEventListener("wheel", handleWheel, { passive: true });
       document.addEventListener("keydown", handleKeyDown);
 
       return () => {
@@ -315,29 +337,22 @@ function GalleryScene({
     }
   }, [handleWheel, handleKeyDown]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Date.now() - lastInteraction.current > 3000) {
-        setAutoPlay(true);
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   useFrame((state, delta) => {
-    // Apply auto-play: smoothly accelerate to a constant zoom-in velocity
-    if (autoPlay) {
-      setScrollVelocity((prev) => prev + (0.8 * speed - prev) * 0.05);
-    } else {
-      // Damping when interacting
-      setScrollVelocity((prev) => prev * 0.95);
+    // Smoothly decay/interpolate back to baseline speed
+    const baseTargetSpeed = 0.8 * speed;
+    scrollVelocityRef.current += (baseTargetSpeed - scrollVelocityRef.current) * 0.05;
+
+    // Clamping: ensure it always zooms in at a minimum speed
+    const minZoomSpeed = 0.3 * speed;
+    if (scrollVelocityRef.current < minZoomSpeed) {
+      scrollVelocityRef.current += (minZoomSpeed - scrollVelocityRef.current) * 0.1;
     }
 
     const time = state.clock.getElapsedTime();
     materials.forEach((material) => {
       if (material?.uniforms) {
         material.uniforms.time!.value = time;
-        material.uniforms.scrollForce!.value = scrollVelocity;
+        material.uniforms.scrollForce!.value = scrollVelocityRef.current;
       }
     });
 
@@ -346,7 +361,7 @@ function GalleryScene({
     const totalRange = depthRange;
 
     planesData.current.forEach((plane, i) => {
-      let newZ = plane.z + scrollVelocity * delta * 10;
+      let newZ = plane.z + scrollVelocityRef.current * delta * 10;
       let wrapsForward = 0;
       let wrapsBackward = 0;
 
@@ -442,31 +457,19 @@ function GalleryScene({
       <pointLight position={[-10, -10, -10]} intensity={0.4} color="#4080ff" />
 
       {planesData.current.map((plane, i) => {
-        const texture = Array.isArray(textures)
-          ? textures[plane.imageIndex]
-          : textures;
         const material = materials[i];
-
-        if (!texture || !material) return null;
-
-        const worldZ = plane.z - depthRange / 2;
-
-        const img = texture.image as { width?: number; height?: number } | null | undefined;
-        const aspect =
-          img?.width && img.height ? img.width / img.height : 1;
-        const baseSize = 4.5;
-        const scale: [number, number, number] =
-          aspect > 1
-            ? [baseSize * aspect, baseSize, 1]
-            : [baseSize, baseSize / aspect, 1];
+        if (!material) return null;
 
         return (
           <ImagePlane
             key={plane.index}
-            texture={texture}
-            position={[plane.x, plane.y, worldZ]}
-            scale={scale}
+            planeIndex={i}
+            textures={textureArray}
+            textureAspects={textureAspects}
+            planesDataRef={planesData}
+            depthRange={depthRange}
             material={material}
+            baseSize={4.5}
           />
         );
       })}
