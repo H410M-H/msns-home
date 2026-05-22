@@ -21,13 +21,14 @@ export interface GalleryImage {
 }
 
 export async function listGalleryImages(): Promise<GalleryImage[]> {
-  const command = new ListObjectsV2Command({
-    Bucket: BUCKET,
-    Prefix: "gallery/",
-  });
-
-  const response = await s3Client.send(command);
-  const contents = response.Contents ?? [];
+  const [galleryResponse, videosResponse] = await Promise.all([
+    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
+    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
+  ]);
+  const contents = [
+    ...(galleryResponse.Contents ?? []),
+    ...(videosResponse.Contents ?? [])
+  ];
 
   return contents
     .filter((obj) => obj.Key && !obj.Key.endsWith("/"))
@@ -47,19 +48,20 @@ export async function listGalleryImages(): Promise<GalleryImage[]> {
 }
 
 /**
- * Finds an image by its filename (basename) across all gallery folders.
+ * Finds an image by its filename (basename) across all gallery folders and videos folder.
  * Returns the full S3 key if found, or null if not.
  * This allows msns-home components to reference images by filename only,
  * so moving images between folders in the admin gallery won't break references.
  */
 export async function findImageByFilename(filename: string): Promise<string | null> {
-  const command = new ListObjectsV2Command({
-    Bucket: BUCKET,
-    Prefix: "gallery/",
-  });
-
-  const response = await s3Client.send(command);
-  const contents = response.Contents ?? [];
+  const [galleryResponse, videosResponse] = await Promise.all([
+    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
+    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
+  ]);
+  const contents = [
+    ...(galleryResponse.Contents ?? []),
+    ...(videosResponse.Contents ?? [])
+  ];
 
   for (const obj of contents) {
     if (!obj.Key || obj.Key.endsWith("/")) continue;
@@ -77,13 +79,14 @@ export async function findImageByFilename(filename: string): Promise<string | nu
  * Returns a map of filename -> full key (or null if not found).
  */
 export async function resolveImageFilenames(filenames: string[]): Promise<Record<string, string | null>> {
-  const command = new ListObjectsV2Command({
-    Bucket: BUCKET,
-    Prefix: "gallery/",
-  });
-
-  const response = await s3Client.send(command);
-  const contents = response.Contents ?? [];
+  const [galleryResponse, videosResponse] = await Promise.all([
+    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
+    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
+  ]);
+  const contents = [
+    ...(galleryResponse.Contents ?? []),
+    ...(videosResponse.Contents ?? [])
+  ];
 
   // Build a lookup map: basename -> full key
   const basenameMap = new Map<string, string>();

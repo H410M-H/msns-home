@@ -30,8 +30,14 @@ export default function Home() {
         const data = (await res.json()) as { images: GalleryImage[] };
 
         if (data.images && data.images.length > 0) {
+          const imagesOnly = data.images.filter((img) => {
+            const filename = img.key.split("/").pop() ?? "";
+            const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(filename) || img.key.startsWith("videos/");
+            return !isVideo;
+          });
+
           setGalleryImages(
-            data.images.map((img) => ({
+            imagesOnly.map((img) => ({
               src: img.url,
               alt: img.key.split("/").pop()?.replace(/[-_]/g, " ") ?? "Gallery Image",
             }))
