@@ -1,9 +1,75 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Award } from "lucide-react";
+import { X, Award, Megaphone, ExternalLink, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { Button } from "~/components/ui/button";
+import Link from "next/link";
+
+interface NewsItemProps {
+  title: string;
+  description: string;
+  date: string;
+  badge?: string;
+  href: string;
+  isExternal?: boolean;
+}
+
+function NewsItem({ title, description, date, badge, href, isExternal }: NewsItemProps) {
+  const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
+  if (isExternal) {
+    return (
+      <a
+        href={href}
+        {...linkProps}
+        className="group flex flex-col gap-1 rounded-2xl p-4 bg-white/5 hover:bg-white/[0.08] border border-white/5 hover:border-emerald-500/30 transition-all duration-300 text-left hover:-translate-y-0.5 shadow-sm cursor-pointer"
+      >
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            {badge && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">
+                {badge}
+              </span>
+            )}
+            <span className="text-[11px] text-white/50">{date}</span>
+          </div>
+          <ExternalLink size={12} className="text-white/40 group-hover:text-emerald-400 transition-colors" />
+        </div>
+        <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors leading-tight">
+          {title}
+        </h4>
+        <p className="text-xs text-white/70 line-clamp-2 leading-relaxed">
+          {description}
+        </p>
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className="group flex flex-col gap-1 rounded-2xl p-4 bg-white/5 hover:bg-white/[0.08] border border-white/5 hover:border-emerald-500/30 transition-all duration-300 text-left hover:-translate-y-0.5 shadow-sm cursor-pointer"
+    >
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          {badge && (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">
+              {badge}
+            </span>
+          )}
+          <span className="text-[11px] text-white/50">{date}</span>
+        </div>
+        <ArrowRight size={12} className="text-white/40 group-hover:text-emerald-400 transition-transform group-hover:translate-x-0.5" />
+      </div>
+      <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors leading-tight">
+        {title}
+      </h4>
+      <p className="text-xs text-white/70 line-clamp-2 leading-relaxed">
+        {description}
+      </p>
+    </Link>
+  );
+}
 
 export default function PopupAd() {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,7 +77,7 @@ export default function PopupAd() {
 
   useEffect(() => {
     const showTimer = setTimeout(() => setIsVisible(true), 4000); // appear after 4s
-    const autoCloseTimer = setTimeout(() => handleClose(), 14000); // auto close after 10s visible
+    const autoCloseTimer = setTimeout(() => handleClose(), 20000); // auto close after 20s visible
 
     return () => {
       clearTimeout(showTimer);
@@ -36,9 +102,9 @@ export default function PopupAd() {
       onClick={handleBackdropClick}
       style={{
         background:
-          "linear-gradient(135deg, rgba(74,144,226,0.2) 0%, rgba(80,200,120,0.3) 50%, rgba(255,107,107,0.3) 100%)",
-        backdropFilter: "blur(10px)",
-        animation: "gradientShift 6s ease-in-out infinite",
+          "linear-gradient(135deg, rgba(6,78,59,0.2) 0%, rgba(4,120,87,0.3) 50%, rgba(8,47,73,0.3) 100%)",
+        backdropFilter: "blur(12px)",
+        animation: "gradientShift 8s ease-in-out infinite",
       }}
     >
       <style jsx>{`
@@ -47,25 +113,17 @@ export default function PopupAd() {
           100% {
             background: linear-gradient(
               135deg,
-              rgba(74, 144, 226, 0.3),
-              rgba(80, 200, 120, 0.3),
-              rgba(255, 107, 107, 0.3)
+              rgba(6, 78, 59, 0.25),
+              rgba(4, 120, 87, 0.3),
+              rgba(8, 47, 73, 0.3)
             );
           }
-          33% {
+          50% {
             background: linear-gradient(
               135deg,
-              rgba(255, 107, 107, 0.3),
-              rgba(74, 144, 226, 0.3),
-              rgba(80, 200, 120, 0.3)
-            );
-          }
-          66% {
-            background: linear-gradient(
-              135deg,
-              rgba(80, 200, 120, 0.3),
-              rgba(255, 107, 107, 0.3),
-              rgba(74, 144, 226, 0.3)
+              rgba(8, 47, 73, 0.3),
+              rgba(6, 78, 59, 0.25),
+              rgba(4, 120, 87, 0.3)
             );
           }
         }
@@ -87,135 +145,159 @@ export default function PopupAd() {
             opacity: 1;
           }
           100% {
-            transform: translateY(30px) scale(0.9);
+            transform: translateY(30px) scale(0.95);
             opacity: 0;
           }
         }
       `}</style>
 
       <div
-        className={`relative w-full max-w-[700px] md:max-w-[800px] overflow-hidden rounded-2xl border border-white/30 shadow-2xl backdrop-blur-xl transition-all duration-500 ${isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
-          }`}
+        className={`relative w-full max-w-[850px] overflow-hidden rounded-3xl border border-white/20 shadow-2xl backdrop-blur-2xl transition-all duration-500 ${
+          isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
+        }`}
         style={{
-          background: "rgba(255, 255, 255, 0.25)",
+          background: "linear-gradient(135deg, rgba(6, 40, 25, 0.45) 0%, rgba(13, 72, 53, 0.5) 50%, rgba(6, 36, 48, 0.55) 100%)",
           boxShadow:
-            "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1) inset",
+            "0 30px 60px -15px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset",
         }}
       >
-        {/* Close Button */}
-        <Button
+        {/* Close Button Ring */}
+        <button
           onClick={handleClose}
-          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white/80 transition hover:bg-white/30"
+          className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 transition-all border border-white/10 hover:scale-105"
           aria-label="Close popup"
         >
           <X size={18} />
-        </Button>
+        </button>
 
-        <div className="p-6 md:p-10 text-center text-white">
-          {/* Header */}
-          <div
-            className="mb-5 inline-block rounded-full px-5 py-2 text-sm font-semibold uppercase tracking-wide shadow-sm"
-            style={{
-              background: "rgba(34,197,94,0.6)",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-          >
-            🎉 Results Announced
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 p-6 md:p-9">
+          
+          {/* Left Column - Achiever & School Info */}
+          <div className="md:col-span-2 flex flex-col justify-between text-center md:text-left h-full">
+            <div>
+              {/* Badge */}
+              <div
+                className="mb-4 inline-block rounded-full px-4.5 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-300"
+                style={{
+                  background: "rgba(16, 185, 129, 0.25)",
+                  border: "1px solid rgba(16, 185, 129, 0.4)",
+                }}
+              >
+                🎉 Results Announced
+              </div>
+
+              <h2 className="text-2xl md:text-3xl font-extrabold text-white drop-shadow-md">
+                M.S. Naz High School
+              </h2>
+              <p className="mt-1.5 text-sm md:text-base text-emerald-200">
+                Ranking <span className="font-bold text-yellow-300 drop-shadow-sm">2nd</span> in Ghakhar City 🏆
+              </p>
+              
+              <div className="mt-6 border-t border-white/10 pt-5">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-white/50 mb-3">
+                  Top Achiever - 9th Grade
+                </h3>
+                
+                {/* Gold Achiever Card */}
+                <div
+                  className="mx-auto md:mx-0 flex flex-col items-center md:items-start gap-4 rounded-2xl p-5 backdrop-blur-xl transition-all duration-300"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(202, 138, 4, 0.2) 100%)",
+                    border: "1px solid rgba(234, 179, 8, 0.35)",
+                    boxShadow: "0 10px 25px -5px rgba(234, 179, 8, 0.08)",
+                  }}
+                >
+                  <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                    <div className="relative">
+                      <Image
+                        src="/api/images/resolve/MOMINA_MANSHA_ogl2jd.jpg"
+                        alt="Momina - 1st Position"
+                        className="rounded-2xl border-2 border-yellow-400/50 object-cover shadow-md"
+                        width={75}
+                        height={75}
+                      />
+                      <div className="absolute -top-2 -left-2 bg-yellow-400 text-yellow-950 p-1.5 rounded-full shadow-lg border border-yellow-200">
+                        <Award size={14} className="stroke-[2.5]" />
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-yellow-400">
+                        1st Position
+                      </span>
+                      <span className="text-lg font-extrabold text-white">Momina</span>
+                      <span className="text-xs text-white/70">Roll No: 206676</span>
+                      <span className="text-sm font-bold text-yellow-200 mt-1">Marks: 522/545</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Congratulations footer text */}
+            <div className="mt-6 hidden md:block text-xs text-white/40 italic">
+              Congratulations to all our outstanding students! 🎓
+            </div>
           </div>
 
-          <h2 className="text-2xl md:text-4xl font-extrabold drop-shadow-lg">
-            M.S. Naz High School
-          </h2>
-          <p className="mt-2 text-lg md:text-xl text-white/90">
-            Ranking <span className="font-bold text-yellow-300">2nd</span> in
-            GHAKHAR City 🏆
-          </p>
+          {/* Right Column - Latest News & Updates */}
+          <div className="md:col-span-3 flex flex-col justify-between border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 pl-0 md:pl-6 text-left">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Megaphone size={18} className="text-emerald-400 animate-pulse" />
+                <h3 className="text-base md:text-lg font-bold text-white tracking-tight">
+                  Latest News & Updates
+                </h3>
+              </div>
 
-          <h3 className="mt-6 text-lg md:text-2xl font-semibold text-white drop-shadow-md">
-            Top Achiever - 9th Grade Results
-          </h3>
+              {/* News Feed */}
+              <div className="space-y-3">
+                <NewsItem
+                  title="School Admissions Open 2025-2026"
+                  description="Admissions are officially active for the upcoming session. Review structures, requirements, and apply online."
+                  date="June 2026"
+                  badge="Admission"
+                  href="/admission"
+                />
+                
+                <NewsItem
+                  title="Next-Gen LMS Portal Launched"
+                  description="Our secure Portal is live for teachers, students, and employees to view schedules, marks, and fees."
+                  date="June 2026"
+                  badge="Portal"
+                  href="https://lms.msns.edu.pk"
+                  isExternal
+                />
 
-          {/* Top 3 Students Grid */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-            <StudentCard
-              position="1st Position"
-              icon={<Award className="text-orange-300" size={30} />}
-              name="Momina"
-              roll="206676"
-              marks="522/545"
-              img="/api/images/resolve/MOMINA_MANSHA_ogl2jd.jpg"
-              color="rgba(205,127,50,0.3)"
-            />
+                <NewsItem
+                  title="Oxford Academic Standards Integrated"
+                  description="Partnering with Oxford University Press to deliver international study books and leadership frameworks."
+                  date="May 2026"
+                  badge="Academic"
+                  href="/about"
+                />
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <a
+                href="/api/images/resolve/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] duration-300 text-center"
+              >
+                View Remaining Results
+              </a>
+              <button
+                onClick={handleClose}
+                className="rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 px-5 py-3 text-sm font-bold text-white transition-all hover:scale-[1.02] duration-300 text-center cursor-pointer"
+              >
+                Close Window
+              </button>
+            </div>
           </div>
-
-          {/* Buttons */}
-          <div className="mt-8 flex flex-col items-center gap-3">
-            <a
-              href="/api/images/resolve/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full rounded-lg bg-blue-500/70 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-blue-500/90"
-            >
-              View All Remaining Results
-            </a>
-            <Button
-              onClick={handleClose}
-              className="text-sm text-white/70 hover:text-white transition"
-            >
-              Close
-            </Button>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-8 border-t border-white/20 pt-4 text-xs text-white/70">
-            Congratulations to all our students! 🎓
-          </div>
+          
         </div>
-      </div>
-    </div>
-  );
-}
-
-function StudentCard({
-  position,
-  icon,
-  name,
-  roll,
-  marks,
-  img,
-  color,
-}: {
-  position: string;
-  icon: React.ReactNode;
-  name: string;
-  roll: string;
-  marks: string;
-  img: string;
-  color: string;
-}) {
-  return (
-    <div
-      className="flex items-center gap-3 rounded-xl p-4 backdrop-blur-lg"
-      style={{
-        background: color,
-        border: "1px solid rgba(255,255,255,0.3)",
-      }}
-    >
-      {icon}
-      <Image
-        src={img}
-        alt={name}
-        className="rounded-full border-2 border-white/40 object-cover"
-        width={64}
-        height={64}
-      />
-      <div className="flex flex-col text-left leading-snug">
-        <span className="text-base font-bold text-white drop-shadow-sm">
-          {position}
-        </span>
-        <span className="text-sm text-white/90">{name}</span>
-        <span className="text-xs text-white/80">Roll No: {roll}</span>
-        <span className="font-semibold text-yellow-200">Marks: {marks}</span>
       </div>
     </div>
   );
