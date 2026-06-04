@@ -4,7 +4,6 @@ import { type MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.msns.edu.pk";
-  const lmsUrl = "https://www.lms.msns.edu.pk/sign-in";
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -12,73 +11,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: lmsUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date("2025-06-27"),
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/admission`,
-      lastModified: new Date("2025-06-27"),
+      lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date("2025-06-27"),
+      lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/terms-of-service`,
-      lastModified: new Date("2025-06-27"),
-      changeFrequency: "daily",
-      priority: 0.7,
-    },
-    {
-      url: `${lmsUrl}/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/news`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/achievements`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${lmsUrl}/sign-in`,
-      lastModified: new Date("2025-06-27"),
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${lmsUrl}/dashboard`,
-      lastModified: new Date("2025-06-27"),
-      changeFrequency: "daily",
-      priority: 0.7,
+      priority: 0.5,
     },
   ];
 

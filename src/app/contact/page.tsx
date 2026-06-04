@@ -1,6 +1,14 @@
-import { ContactInfo } from "~/components/blocks/landing/ContactInfo"
-import { GeometricBackground } from "~/components/blocks/landing/GeometricBg"
+import { type Metadata } from "next";
+import { ContactInfo } from "~/components/blocks/landing/ContactInfo";
+import { GeometricBackground } from "~/components/blocks/landing/GeometricBg";
 
+export const metadata: Metadata = {
+  title: "Contact Us | M. S. Naz High School® | Wazirabad Campus",
+  description: "Get in touch with M. S. Naz High School. Find our physical campus address in Wazirabad, telephone numbers, emails, and contact details for admissions and queries.",
+  alternates: {
+    canonical: "https://www.msns.edu.pk/contact",
+  },
+};
 
 export default function ContactPage() {
   return (
@@ -24,6 +32,5 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

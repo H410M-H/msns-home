@@ -12,14 +12,14 @@ import { Toaster } from "~/components/ui/sonner";
 import { SchoolSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
-  title: "M. S. NAZ HIGH SCHOOL®",
+  title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
   },
   other: {
     "google-adsense-account": "ca-pub-1351871288722699",
   },
-  description: "Since - 2004 | Developed by MSNS-DEV™",
+  description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
   keywords: ["msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford", " oxford", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
     "educational excellence",
     "academic achievement",
