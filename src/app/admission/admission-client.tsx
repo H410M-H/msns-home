@@ -60,7 +60,7 @@ export default function AdmissionClient() {
             className="mb-10 text-center"
           >
             <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
-              Admissions 2025–26
+              Admissions 2026–28
             </span>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
               Your Journey{" "}

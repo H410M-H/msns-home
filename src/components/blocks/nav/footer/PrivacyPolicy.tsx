@@ -67,7 +67,7 @@ export const PrivacyPolicy = () => {
       </p>
 
       <p className="text-slate-700 mt-8">
-        This Privacy Policy is effective as of the academic session 2025–26 and
+        This Privacy Policy is effective as of the academic session 2026–28 and
         may be updated periodically.
       </p>
     </div>

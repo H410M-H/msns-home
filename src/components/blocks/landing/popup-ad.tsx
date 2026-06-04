@@ -252,7 +252,7 @@ export default function PopupAd() {
               {/* News Feed */}
               <div className="space-y-3">
                 <NewsItem
-                  title="School Admissions Open 2025-2026"
+                  title="School Admissions Open 2026-2028"
                   description="Admissions are officially active for the upcoming session. Review structures, requirements, and apply online."
                   date="June 2026"
                   badge="Admission"
