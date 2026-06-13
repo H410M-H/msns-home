@@ -12,6 +12,7 @@ import { Toaster } from "~/components/ui/sonner";
 import { SchoolSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://msns.edu.pk"),
   title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
