@@ -8,9 +8,10 @@ import { motion, type MotionValue } from "framer-motion"
 interface HeroSectionProps {
   scale: string | number | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
   rotateX: string | number | MotionValue<number> | MotionValue<string> | MotionValue<unknown> | undefined
+  yText?: MotionValue<number>
 }
 
-export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
+export const HeroSection = ({ scale, rotateX, yText }: HeroSectionProps) => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <motion.div style={{ scale, rotateX }} className="absolute inset-0 shadow-2xl">
@@ -28,6 +29,7 @@ export const HeroSection = ({ scale, rotateX }: HeroSectionProps) => {
 
       <motion.div
         className="relative z-10 text-center px-4"
+        style={{ y: yText }}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
