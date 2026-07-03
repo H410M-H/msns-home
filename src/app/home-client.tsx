@@ -6,9 +6,29 @@ import { QuickLinksSection } from "~/components/blocks/landing/QuickLinksSection
 import { FeaturesSection } from "~/components/blocks/landing/FeaturesSection";
 import { CTASection } from "~/components/blocks/landing/CTASection";
 import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
+import dynamic from "next/dynamic";
 import PopupAd from "~/components/blocks/landing/popup-ad";
 import { Toaster } from "~/components/ui/sonner";
-import InfiniteGallery from "~/components/blocks/landing/InfiniteGallery";
+
+const InfiniteGallery = dynamic(
+  () => import("~/components/blocks/landing/InfiniteGallery"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="relative h-[70vh] md:h-screen w-full bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative h-12 w-12">
+            <div className="absolute inset-0 rounded-full border-2 border-white/10" />
+            <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-emerald-400" />
+          </div>
+          <p className="text-sm text-white/40 tracking-wide uppercase">
+            Loading Gallery…
+          </p>
+        </div>
+      </div>
+    ),
+  }
+);
 
 interface GalleryImage {
   key: string;
