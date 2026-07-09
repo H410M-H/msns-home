@@ -8,6 +8,27 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk/contact",
   },
+  openGraph: {
+    title: "Contact Us | M. S. Naz High School® | Wazirabad Campus",
+    description: "Get in touch with M. S. Naz High School. Find our physical campus address in Wazirabad, telephone numbers, emails, and contact details for admissions and queries.",
+    url: "https://www.msns.edu.pk/contact",
+    siteName: "M.S. Naz High School®",
+    type: "website",
+    images: [
+      {
+        url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+        width: 1200,
+        height: 630,
+        alt: "M.S. Naz High School® Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us | M. S. Naz High School® | Wazirabad Campus",
+    description: "Get in touch with M. S. Naz High School. Find our physical campus address in Wazirabad, telephone numbers, emails, and contact details for admissions and queries.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
+  },
 };
 
 export default function ContactPage() {

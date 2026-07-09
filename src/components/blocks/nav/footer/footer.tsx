@@ -93,12 +93,11 @@ export const Footer = ({ className, ...props }: FooterProps) => {
                 Empowering minds and shaping the future through quality education, 
                 fostering creativity, and instilling strong moral values.
               </p>
-
               <div className="flex space-x-4 pt-2">
                 {[
-                  { icon: Facebook, label: "Facebook", href: "#", color: "hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50" },
-                  { icon: Twitter, label: "Twitter", href: "#", color: "hover:text-sky-500 hover:border-sky-300 hover:bg-sky-50" },
-                  { icon: Instagram, label: "Instagram", href: "#", color: "hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50" },
+                  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/msnazhighschool", color: "hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50" },
+                  { icon: Twitter, label: "Twitter", href: "https://twitter.com/msnazhighschool", color: "hover:text-sky-500 hover:border-sky-300 hover:bg-sky-50" },
+                  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/msnazhighschool", color: "hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50" },
                   { icon: Linkedin, label: "LinkedIn", href: "#", color: "hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50" },
                 ].map(({ icon: Icon, label, href, color }) => (
                   <Link

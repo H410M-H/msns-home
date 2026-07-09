@@ -9,7 +9,7 @@ export function QuickLinksSection() {
   const socialLinks = {
     whatsapp: "https://wa.me/923187625415",
     instagram: "https://www.instagram.com/msnazhighschool/",
-    facebook: "https://www.facebook.com/msnazhighschool.msns",
+    facebook: "https://www.facebook.com/msnazhighschool",
     youtube: "https://www.youtube.com/@msns-edu-pk",
     email: "mailto:msnazhighschool@gmail.com",
   }

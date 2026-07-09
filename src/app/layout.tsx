@@ -12,6 +12,7 @@ import { Toaster } from "~/components/ui/sonner";
 import { SchoolSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.msns.edu.pk"),
   title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
@@ -34,9 +35,9 @@ export const metadata: Metadata = {
     "msnz",
     "Pakistani education system"].join(", "),
   openGraph: {
-    title: "M.S. Naz High School®",
-    description: "Explore the premier educational experience at M.S. Naz High School® focused on excellence and student development.",
-    url: "https://msns.edu.pk/",
+    title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
+    description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
+    url: "https://www.msns.edu.pk/",
     siteName: "M.S. Naz High School®",
     type: "website",
     locale: "en_US",
@@ -48,6 +49,12 @@ export const metadata: Metadata = {
         alt: "M.S. Naz High School® Logo"
       }
     ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
+    description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
   appLinks: {
     web: {
@@ -68,7 +75,7 @@ export const metadata: Metadata = {
   },
   category: "Education",
   alternates: {
-    canonical: "https://msns.edu.pk",
+    canonical: "https://www.msns.edu.pk",
   },
   manifest: "/manifest.json",
 };
