@@ -1,75 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Award, Megaphone, ExternalLink, ArrowRight } from "lucide-react";
+import { X, Award, ExternalLink, ArrowRight, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-interface NewsItemProps {
-  title: string;
-  description: string;
-  date: string;
-  badge?: string;
-  href: string;
-  isExternal?: boolean;
-}
-
-function NewsItem({ title, description, date, badge, href, isExternal }: NewsItemProps) {
-  const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
-
-  if (isExternal) {
-    return (
-      <a
-        href={href}
-        {...linkProps}
-        className="group flex flex-col gap-1 rounded-2xl p-4 bg-white/5 hover:bg-white/[0.08] border border-white/5 hover:border-emerald-500/30 transition-all duration-300 text-left hover:-translate-y-0.5 shadow-sm cursor-pointer"
-      >
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            {badge && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">
-                {badge}
-              </span>
-            )}
-            <span className="text-[11px] text-white/50">{date}</span>
-          </div>
-          <ExternalLink size={12} className="text-white/40 group-hover:text-emerald-400 transition-colors" />
-        </div>
-        <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors leading-tight">
-          {title}
-        </h4>
-        <p className="text-xs text-white/70 line-clamp-2 leading-relaxed">
-          {description}
-        </p>
-      </a>
-    );
-  }
-
-  return (
-    <Link
-      href={href}
-      className="group flex flex-col gap-1 rounded-2xl p-4 bg-white/5 hover:bg-white/[0.08] border border-white/5 hover:border-emerald-500/30 transition-all duration-300 text-left hover:-translate-y-0.5 shadow-sm cursor-pointer"
-    >
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          {badge && (
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">
-              {badge}
-            </span>
-          )}
-          <span className="text-[11px] text-white/50">{date}</span>
-        </div>
-        <ArrowRight size={12} className="text-white/40 group-hover:text-emerald-400 transition-transform group-hover:translate-x-0.5" />
-      </div>
-      <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors leading-tight">
-        {title}
-      </h4>
-      <p className="text-xs text-white/70 line-clamp-2 leading-relaxed">
-        {description}
-      </p>
-    </Link>
-  );
-}
 
 export default function PopupAd() {
   const [isVisible, setIsVisible] = useState(false);
@@ -194,7 +128,7 @@ export default function PopupAd() {
               </p>
               
               <div className="mt-6 border-t border-white/10 pt-5">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-white/50 mb-3">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-3">
                   Top Achiever - 9th Grade
                 </h3>
                 
@@ -202,9 +136,9 @@ export default function PopupAd() {
                 <div
                   className="mx-auto md:mx-0 flex flex-col items-center md:items-start gap-4 rounded-2xl p-5 backdrop-blur-xl transition-all duration-300"
                   style={{
-                    background: "linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(202, 138, 4, 0.2) 100%)",
-                    border: "1px solid rgba(234, 179, 8, 0.35)",
-                    boxShadow: "0 10px 25px -5px rgba(234, 179, 8, 0.08)",
+                    background: "linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(202, 138, 4, 0.25) 100%)",
+                    border: "2px solid rgba(234, 179, 8, 0.6)",
+                    boxShadow: "0 0 25px rgba(234, 179, 8, 0.25)",
                   }}
                 >
                   <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
@@ -239,61 +173,126 @@ export default function PopupAd() {
             </div>
           </div>
 
-          {/* Right Column - Latest News & Updates */}
+          {/* Right Column - Updates & Actions */}
           <div className="md:col-span-3 flex flex-col justify-between border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 pl-0 md:pl-6 text-left">
             <div>
+              {/* Red Section: Social Media Posts */}
               <div className="flex items-center gap-2 mb-4">
-                <Megaphone size={18} className="text-emerald-400 animate-pulse" />
+                <Share2 size={18} className="text-red-400 animate-pulse" />
                 <h3 className="text-base md:text-lg font-bold text-white tracking-tight">
-                  Latest News & Updates
+                  Recent Announcements & Posts
                 </h3>
               </div>
 
-              {/* News Feed */}
-              <div className="space-y-3">
-                <NewsItem
-                  title="School Admissions Open 2026-2028"
-                  description="Admissions are officially active for the upcoming session. Review structures, requirements, and apply online."
-                  date="June 2026"
-                  badge="Admission"
-                  href="/admission"
-                />
-                
-                <NewsItem
-                  title="Next-Gen LMS Portal Launched"
-                  description="Our secure Portal is live for teachers, students, and employees to view schedules, marks, and fees."
-                  date="June 2026"
-                  badge="Portal"
-                  href="https://lms.msns.edu.pk"
-                  isExternal
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <a
+                  href="/api/images/gallery/Notifications/Social_posts/1781030111849_167300.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-red-500/40 bg-white/5 p-1 transition-all duration-300 hover:-translate-y-0.5 shadow-md shadow-black/10"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-xl">
+                    <Image
+                      src="/api/images/gallery/Notifications/Social_posts/1781030111849_167300.jpg"
+                      alt="Parents Meeting Announcement"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
+                        View Image <ExternalLink size={10} />
+                      </span>
+                    </div>
+                  </div>
+                </a>
 
-                <NewsItem
-                  title="Oxford Academic Standards Integrated"
-                  description="Partnering with Oxford University Press to deliver international study books and leadership frameworks."
-                  date="May 2026"
-                  badge="Academic"
-                  href="/about"
-                />
+                <a
+                  href="/api/images/gallery/Notifications/Social_posts/1781030111865_167302.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-red-500/40 bg-white/5 p-1 transition-all duration-300 hover:-translate-y-0.5 shadow-md shadow-black/10"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-xl">
+                    <Image
+                      src="/api/images/gallery/Notifications/Social_posts/1781030111865_167302.jpg"
+                      alt="Parent-Teacher Conference Announcement"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
+                        View Image <ExternalLink size={10} />
+                      </span>
+                    </div>
+                  </div>
+                </a>
               </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <a
-                href="/api/images/resolve/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] duration-300 text-center"
+              {/* Blue Section: Links & Buttons */}
+              <div 
+                className="mt-5 rounded-2xl p-4 transition-all duration-300 text-left"
+                style={{
+                  background: "rgba(59, 130, 246, 0.08)",
+                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                  boxShadow: "0 4px 20px -2px rgba(59, 130, 246, 0.1)",
+                }}
               >
-                View Remaining Results
-              </a>
-              <button
-                onClick={handleClose}
-                className="rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 px-5 py-3 text-sm font-bold text-white transition-all hover:scale-[1.02] duration-300 text-center cursor-pointer"
-              >
-                Close Window
-              </button>
+                <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-300 mb-3 flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-ping" />
+                  Quick Actions & Links
+                </h4>
+                
+                <div className="flex flex-col gap-2.5">
+                  {/* Primary Link: View Remaining Results */}
+                  <a
+                    href="/api/images/resolve/WhatsApp_Image_2025-08-20_at_6.26.30_PM_szf5ts.jpg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-xs font-extrabold text-white transition-all duration-300 hover:scale-[1.01]"
+                    style={{
+                      background: "linear-gradient(135deg, #1e40af 0%, #0369a1 100%)",
+                      border: "1px solid rgba(59, 130, 246, 0.4)",
+                      boxShadow: "0 4px 15px -3px rgba(30, 64, 175, 0.3)",
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      🏆 View Remaining Results
+                    </span>
+                    <ArrowRight size={13} className="text-blue-200 group-hover:translate-x-0.5 transition-transform" />
+                  </a>
+
+                  {/* Secondary Links Grid */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link
+                      href="/admission"
+                      className="group flex items-center justify-center gap-1.5 rounded-xl border border-blue-500/30 hover:border-blue-400 bg-blue-950/40 hover:bg-blue-900/40 py-2.5 text-center text-xs font-bold text-blue-200 hover:text-white transition-all"
+                    >
+                      Admission Open
+                      <ExternalLink size={11} className="text-blue-400/70 group-hover:text-blue-300 transition-colors" />
+                    </Link>
+
+                    <a
+                      href="https://lms.msns.edu.pk"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center gap-1.5 rounded-xl border border-blue-500/30 hover:border-blue-400 bg-blue-950/40 hover:bg-blue-900/40 py-2.5 text-center text-xs font-bold text-blue-200 hover:text-white transition-all"
+                    >
+                      LMS Portal
+                      <ExternalLink size={11} className="text-blue-400/70 group-hover:text-blue-300 transition-colors" />
+                    </a>
+                  </div>
+
+                  {/* Close Window Action */}
+                  <button
+                    onClick={handleClose}
+                    className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 py-2.5 text-center text-xs font-bold text-white/80 hover:text-white transition-all cursor-pointer"
+                  >
+                    Close Window
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           

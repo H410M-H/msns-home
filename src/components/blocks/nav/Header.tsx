@@ -46,12 +46,13 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/https://lms.msns.edu.pk" className="relative z-50">
+        <Link href="https://lms.msns.edu.pk" className="relative z-50">
           <Image
             src="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
             alt="Logo"
             width={50}
             height={50}
+            priority
             className="hover:scale-105 transition-transform duration-300"
           />
         </Link>
@@ -142,7 +143,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/https://lms.msns.edu.pk/sign-in" className="cursor-pointer">
+                <Link href="https://lms.msns.edu.pk/sign-in" className="cursor-pointer">
                     Settings
                   </Link>
                 </DropdownMenuItem>
