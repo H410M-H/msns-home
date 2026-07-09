@@ -7,7 +7,6 @@ import { FeaturesSection } from "~/components/blocks/landing/FeaturesSection";
 import { CTASection } from "~/components/blocks/landing/CTASection";
 import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
 import dynamic from "next/dynamic";
-import PopupAd from "~/components/blocks/landing/popup-ad";
 import { Toaster } from "~/components/ui/sonner";
 
 const InfiniteGallery = dynamic(
@@ -30,6 +29,12 @@ const InfiniteGallery = dynamic(
   }
 );
 
+// Lazy-load PopupAd — it shows after 4s anyway, no need to block initial paint
+const PopupAd = dynamic(
+  () => import("~/components/blocks/landing/popup-ad"),
+  { ssr: false }
+);
+
 interface GalleryImage {
   key: string;
   url: string;
@@ -41,6 +46,14 @@ export default function HomeClient() {
   const [galleryImages, setGalleryImages] = useState<{ src: string, alt: string }[]>([]);
 
   useEffect(() => {
+    // Defer gallery fetch until after initial paint to avoid blocking LCP
+    const raf = requestAnimationFrame(() => {
+      const timer = setTimeout(() => {
+        void fetchGallery();
+      }, 1500);
+      return () => clearTimeout(timer);
+    });
+
     async function fetchGallery() {
       try {
         const res = await fetch("/api/gallery");
@@ -66,7 +79,7 @@ export default function HomeClient() {
       }
     }
 
-    void fetchGallery();
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (
