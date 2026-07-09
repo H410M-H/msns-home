@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const videos = [
   "/api/images/videos/clip1_awtegx.mp4",
@@ -15,15 +16,29 @@ const videos = [
 export function HeroHome() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0)
   const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Automatically change video every 8 seconds
+  // Detect mobile screen size on client mount and resize
   useEffect(() => {
+    setMounted(true)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Automatically change video every 8 seconds (only on desktop to save resources)
+  useEffect(() => {
+    if (isMobile || !mounted) return
     const interval = setInterval(() => {
       setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length)
     }, 8000)
     return () => clearInterval(interval)
-  }, [])
+  }, [isMobile, mounted])
 
   // Navigation functions for manual video control
   const goToNextVideo = useCallback(() => {
@@ -40,7 +55,7 @@ export function HeroHome() {
 
   return (
     <section className="relative h-screen overflow-hidden">
-      {/* Static gradient background — immediate LCP paint, visible before video loads */}
+      {/* Static gradient background — immediate FCP paint */}
       <div
         className="absolute inset-0"
         style={{
@@ -51,27 +66,42 @@ export function HeroHome() {
       {/* Gradient overlay for improved contrast — always visible */}
       <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-slate-900/90 z-[1]" />
 
-      {/* Video Background with fade transition */}
-      <AnimatePresence>
-        <motion.video
-          ref={videoRef}
-          key={currentVideoIndex}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          onLoadedData={() => setIsVideoLoaded(true)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isVideoLoaded ? 1 : 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <source src={videos[currentVideoIndex]} type="video/mp4" />
-          Your browser does not support the video tag.
-        </motion.video>
-      </AnimatePresence>
+      {/* Static Fallback Image - Rendered on SSR and mobile for instant LCP */}
+      {(!mounted || isMobile) && (
+        <Image
+          src="/api/images/resolve/FrontView1_alaabu.jpg"
+          alt="M.S. Naz High School Building"
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
+          className="absolute inset-0"
+        />
+      )}
+
+      {/* Video Background with fade transition - Desktop Only, loaded post-mount */}
+      {mounted && !isMobile && (
+        <AnimatePresence>
+          <motion.video
+            ref={videoRef}
+            key={currentVideoIndex}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            onLoadedData={() => setIsVideoLoaded(true)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isVideoLoaded ? 1 : 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <source src={videos[currentVideoIndex]} type="video/mp4" />
+            Your browser does not support the video tag.
+          </motion.video>
+        </AnimatePresence>
+      )}
 
       {/* Main content overlay — rendered immediately for fast FCP/LCP */}
       <div className="relative z-[2] h-full flex flex-col items-center justify-center text-center px-4">
@@ -94,34 +124,40 @@ export function HeroHome() {
         </Link>
       </div>
 
-      {/* Left and right navigation controls */}
-      <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-[3]">
-        <Button
-          onClick={goToPrevVideo}
-          className="bg-white/30 hover:bg-white/50 p-2 rounded-full"
-        >
-          <ChevronLeft className="w-4 h-4 text-white" />
-        </Button>
-      </div>
-      <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-[3]">
-        <Button
-          onClick={goToNextVideo}
-          className="bg-white/30 hover:bg-white/50 p-2 rounded-full"
-        >
-          <ChevronRight className="w-6 h-6 text-white" />
-        </Button>
-      </div>
+      {/* Left and right navigation controls - Desktop Only */}
+      {mounted && !isMobile && (
+        <>
+          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-[3]">
+            <Button
+              onClick={goToPrevVideo}
+              className="bg-white/30 hover:bg-white/50 p-2 rounded-full"
+            >
+              <ChevronLeft className="w-4 h-4 text-white" />
+            </Button>
+          </div>
+          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-[3]">
+            <Button
+              onClick={goToNextVideo}
+              className="bg-white/30 hover:bg-white/50 p-2 rounded-full"
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </Button>
+          </div>
+        </>
+      )}
 
-      {/* Carousel indicators for manual video selection */}
-      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2 z-[3]">
-        {videos.map((_, index) => (
-          <Button
-            key={index}
-            className={`w-3 h-3 rounded-full ${index === currentVideoIndex ? 'bg-white' : 'bg-white/50'}`}
-            onClick={() => selectVideo(index)}
-          />
-        ))}
-      </div>
+      {/* Carousel indicators - Desktop Only */}
+      {mounted && !isMobile && (
+        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2 z-[3]">
+          {videos.map((_, index) => (
+            <Button
+              key={index}
+              className={`w-3 h-3 rounded-full ${index === currentVideoIndex ? 'bg-white' : 'bg-white/50'}`}
+              onClick={() => selectVideo(index)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Animated down chevron indicator */}
       <motion.div

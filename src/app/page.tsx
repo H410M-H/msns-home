@@ -37,12 +37,12 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Preload the first hero video for faster LCP */}
+      {/* Preload the static fallback LCP image for instant paint */}
       <link
         rel="preload"
-        href="/api/images/videos/clip1_awtegx.mp4"
-        as="video"
-        type="video/mp4"
+        href="/api/images/resolve/FrontView1_alaabu.jpg"
+        as="image"
+        type="image/jpeg"
       />
       {/* Preload logo for header */}
       <link

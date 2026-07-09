@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HeroHome } from "~/components/blocks/landing/HeroSection";
-import { QuickLinksSection } from "~/components/blocks/landing/QuickLinksSection";
-import { FeaturesSection } from "~/components/blocks/landing/FeaturesSection";
-import { CTASection } from "~/components/blocks/landing/CTASection";
-import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
 import dynamic from "next/dynamic";
+import { Loader2 } from "lucide-react";
+import { HeroHome } from "~/components/blocks/landing/HeroSection";
 import { Toaster } from "~/components/ui/sonner";
+
+const FeaturesSection = dynamic(
+  () => import("~/components/blocks/landing/FeaturesSection").then((m) => m.FeaturesSection),
+  { ssr: false }
+);
 
 const InfiniteGallery = dynamic(
   () => import("~/components/blocks/landing/InfiniteGallery"),
@@ -32,6 +34,28 @@ const InfiniteGallery = dynamic(
 // Lazy-load PopupAd — it shows after 4s anyway, no need to block initial paint
 const PopupAd = dynamic(
   () => import("~/components/blocks/landing/popup-ad"),
+  { ssr: false }
+);
+
+const QuickLinksSection = dynamic(
+  () => import("~/components/blocks/landing/QuickLinksSection").then((m) => m.QuickLinksSection),
+  { ssr: false }
+);
+
+const TestimonialsSection = dynamic(
+  () => import("~/components/blocks/landing/Testimonials").then((m) => m.TestimonialsSection),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[400px] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
+      </div>
+    ),
+  }
+);
+
+const CTASection = dynamic(
+  () => import("~/components/blocks/landing/CTASection").then((m) => m.CTASection),
   { ssr: false }
 );
 
