@@ -198,6 +198,7 @@ export default function PopupAd() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 768px) 50vw, 33vw"
+                      unoptimized
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
@@ -220,6 +221,7 @@ export default function PopupAd() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 768px) 50vw, 33vw"
+                      unoptimized
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
