@@ -61,7 +61,7 @@ export const ContactInfo=() => {
             </div>
           </div>
           <Button asChild variant="ghost" className="mt-3 sm:mt-4 text-white hover:bg-white/20 group px-3 sm:px-4">
-            <a href="mailto:info@msnazhighschool.edu.pk" target="_blank" rel="noopener noreferrer">
+            <a href="mailto:info@msns.edu.pk" target="_blank" rel="noopener noreferrer">
               <span className="text-sm">Send Email</span>
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>

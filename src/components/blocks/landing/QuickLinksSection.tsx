@@ -11,7 +11,7 @@ export function QuickLinksSection() {
     instagram: "https://www.instagram.com/msnazhighschool/",
     facebook: "https://www.facebook.com/msnazhighschool",
     youtube: "https://www.youtube.com/@msns-edu-pk",
-    email: "mailto:msnazhighschool@gmail.com",
+    email: "mailto:info@msns.edu.pk",
   }
 
   const socialIcons = [
@@ -97,10 +97,10 @@ export function QuickLinksSection() {
                 <div className="mt-6 text-center">
                   <p className="bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty mb-2 ">Direct Contact:
                     <Link
-                      href="mailto:msnazhighschool@gmail.com"
+                      href="mailto:info@msns.edu.pk"
                       className="text-green-900 hover:text-blue-500 transition-colors text-lg font-medium pl-6"
                     >
-                      msnazhighschool@gmail.com
+                      info@msns.edu.pk
                     </Link>
                   </p>
 

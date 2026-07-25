@@ -10,7 +10,7 @@ export function SchoolSchema() {
     logo: 'https://www.msns.edu.pk/api/images/logos/Official_LOGO_grn_ic9ldd.png',
     description: 'Premier high school in Pakistan offering educational excellence, leadership development, and modern education standards since 2004.',
     telephone: ['+92-3016233609', '+92-3187625415'],
-    email: 'msnazhighschool@gmail.com',
+    email: 'info@msns.edu.pk',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'M.S. Naz High School',
