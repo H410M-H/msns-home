@@ -122,6 +122,30 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="lazyOnload"
         />
+
+        {/* Google Customer Reviews Badge */}
+        <Script
+          id="merchantWidgetScript"
+          src="https://www.gstatic.com/shopping/merchant/merchantwidget.js"
+          strategy="lazyOnload"
+        />
+        <Script id="merchantWidgetInit" strategy="lazyOnload">
+          {`
+            (function() {
+              var script = document.getElementById('merchantWidgetScript');
+              if (script) {
+                script.addEventListener('load', function() {
+                  if (window.merchantwidget) {
+                    window.merchantwidget.start({
+                      merchant_id: 5676917738,
+                      position: "BOTTOM_RIGHT"
+                    });
+                  }
+                });
+              }
+            })();
+          `}
+        </Script>
         <SchoolSchema />
       </head>
       <body className="flex min-h-screen flex-col">
