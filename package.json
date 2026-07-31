@@ -13,7 +13,8 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ping:crawlers": "node scripts/ping-crawlers.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1042.0",

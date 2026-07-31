@@ -6,7 +6,8 @@ export function SchoolSchema() {
     '@type': ['High School', 'EducationalInstitution', 'Montessori', 'Secondary School', 'School', 'Nursery'],
     name: 'M.S. Naz High School®',
     url: 'https://www.msns.edu.pk',
-    alternate: 'https://lms.msns.edu.pk',
+    alternateName: ['MSNS', 'M.S. Naz High School', 'M.S. Naz High School®'],
+    alternate: ['https://msns.edu.pk', 'https://lms.msns.edu.pk'],
     logo: 'https://www.msns.edu.pk/api/images/logos/Official_LOGO_grn_ic9ldd.png',
     description: 'Premier high school in Pakistan offering educational excellence, leadership development, and modern education standards since 2004.',
     telephone: ['+92-3016233609', '+92-3187625415'],
@@ -20,6 +21,8 @@ export function SchoolSchema() {
       addressCountry: 'PK',
     },
     sameAs: [
+      'https://msns.edu.pk',
+      'https://www.msns.edu.pk',
       'https://www.facebook.com/msnazhighschool',
       'https://www.instagram.com/msnazhighschool',
       'https://twitter.com/msnazhighschool',

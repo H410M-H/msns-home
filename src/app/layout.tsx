@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "google-adsense-account": "ca-pub-1351871288722699",
   },
   description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
-  keywords: ["msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford", " oxford", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
+  keywords: ["www.msns.edu.pk", "msns.edu.pk", "https://www.msns.edu.pk", "msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford", "oxford", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
     "educational excellence",
     "academic achievement",
     "leadership development",
@@ -81,6 +81,9 @@ export const metadata: Metadata = {
   category: "Education",
   alternates: {
     canonical: "https://www.msns.edu.pk",
+    types: {
+      "application/rss+xml": "https://www.msns.edu.pk/sitemap.xml",
+    },
   },
   manifest: "/manifest.json",
 };
