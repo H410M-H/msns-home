@@ -37,11 +37,17 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Preload logo for header */}
+      {/* Preload logo for header and initial hero video */}
       <link
         rel="preload"
         href="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
         as="image"
+      />
+      <link
+        rel="preload"
+        href="/api/images/videos/clip1_awtegx.mp4"
+        as="video"
+        type="video/mp4"
       />
       <HomeClient />
     </>

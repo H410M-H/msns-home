@@ -25,9 +25,12 @@ export async function GET(
       return new NextResponse("Image key is required", { status: 400 });
     }
 
+    const rangeHeader = request.headers.get("range");
+
     const command = new GetObjectCommand({
       Bucket: env.AWS_S3_BUCKET_NAME,
       Key: key,
+      Range: rangeHeader ?? undefined,
     });
 
     const response = await s3Client.send(command);
@@ -40,11 +43,15 @@ export async function GET(
     const stream = response.Body.transformToWebStream();
     
     const headers = new Headers();
+    headers.set("Accept-Ranges", "bytes");
     if (response.ContentType) headers.set("Content-Type", response.ContentType);
-    if (response.ContentLength) headers.set("Content-Length", response.ContentLength.toString());
+    if (response.ContentLength !== undefined) headers.set("Content-Length", response.ContentLength.toString());
+    if (response.ContentRange) headers.set("Content-Range", response.ContentRange);
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
-    return new NextResponse(stream, { headers });
+    const status = response.ContentRange ? 206 : 200;
+
+    return new NextResponse(stream, { status, headers });
   } catch (error: unknown) {
     console.error("Error fetching image from S3:", error);
     

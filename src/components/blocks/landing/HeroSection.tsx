@@ -15,7 +15,6 @@ const DEFAULT_VIDEOS = [
   "/api/images/videos/1780771562319_IMG_3596_-_Trim.mp4",
   "/api/images/videos/1780771761292_IMG_3682_-_Trim.mp4",
   "/api/images/videos/1780771784615_IMG_4121_-_Trim.mp4",
-  "/api/images/videos/1780771846566_IMG_4339.mov",
   "/api/images/videos/1785951372907_gemini_generated_video_62b1fbe4.mp4",
 ]
 
@@ -34,9 +33,9 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export function HeroHome() {
-  const [videoList, setVideoList] = useState<string[]>(() => shuffleArray(DEFAULT_VIDEOS))
+  const [videoList, setVideoList] = useState<string[]>(DEFAULT_VIDEOS)
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0)
-  const [activeVideoSrc, setActiveVideoSrc] = useState<string>(() => DEFAULT_VIDEOS[0] ?? "/api/images/videos/clip1_awtegx.mp4")
+  const [activeVideoSrc, setActiveVideoSrc] = useState<string>(DEFAULT_VIDEOS[0]!)
   const [previousVideoSrc, setPreviousVideoSrc] = useState<string | null>(null)
   const [incomingLoaded, setIncomingLoaded] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -57,7 +56,7 @@ export function HeroHome() {
               const filename = img.key.split("/").pop() ?? ""
               return (
                 img.key.startsWith("videos/") ||
-                /\.(mp4|webm|ogg|mov)$/i.test(filename)
+                /\.(mp4|webm|ogg)$/i.test(filename)
               )
             })
             .map((img) => img.url)
@@ -65,8 +64,9 @@ export function HeroHome() {
           if (videoUrls.length > 0) {
             const shuffled = shuffleArray(videoUrls)
             setVideoList(shuffled)
-            if (shuffled[0]) {
-              setActiveVideoSrc(shuffled[0])
+            const activeIdx = shuffled.indexOf(activeVideoSrc)
+            if (activeIdx !== -1) {
+              setCurrentVideoIndex(activeIdx)
             }
           }
         }
@@ -76,7 +76,7 @@ export function HeroHome() {
     }
 
     void fetchVideos()
-  }, [])
+  }, [activeVideoSrc])
 
   // Change video slide seamlessly
   const changeVideo = useCallback((newIndex: number) => {
