@@ -8,6 +8,7 @@ import Script from "next/script";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Footer } from "~/components/blocks/nav/footer/footer";
 import { Header } from "~/components/blocks/nav/Header";
+import { FloatingWhatsApp } from "~/components/blocks/FloatingWhatsApp";
 import { Toaster } from "~/components/ui/sonner";
 import { SchoolSchema } from "~/components/SEOSchema";
 
@@ -158,6 +159,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <FloatingWhatsApp />
           <Toaster />
         </TRPCReactProvider>
       </body>

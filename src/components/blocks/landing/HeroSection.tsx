@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import Link from 'next/link'
 
@@ -194,11 +194,22 @@ export function HeroHome() {
           Pursuit of Excellence | Know Thyself
         </p>
 
-        {/* "Learn More" interactive button */}
-        <Link href="/about" className="px-6 py-3 bg-emerald-500 text-white rounded-full shadow-lg hover:bg-emerald-600 focus:outline-hidden transition-colors"
-        >
-          Learn More
-        </Link>
+        {/* Action Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link
+            href="/admission/apply"
+            className="group px-7 py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-base rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300 border border-emerald-400/30 inline-flex items-center gap-2"
+          >
+            Apply Now
+            <Sparkles className="w-4 h-4 text-amber-200 transition-transform group-hover:rotate-12" />
+          </Link>
+          <Link
+            href="/about"
+            className="px-7 py-3.5 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium text-base rounded-full shadow-md transition-all duration-300 border border-white/30 hover:border-white/50"
+          >
+            Learn More
+          </Link>
+        </div>
       </div>
 
       {/* Left and right navigation controls - Rendered after mount */}
