@@ -5,13 +5,77 @@ import { X, Award, ExternalLink, ArrowRight, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+interface SocialPost {
+  src: string;
+  alt: string;
+}
+
+const DEFAULT_POSTS: SocialPost[] = [
+  {
+    src: "/api/images/gallery/Notifications/Social_posts/1781030111849_167300.jpg",
+    alt: "Parents Meeting Announcement",
+  },
+  {
+    src: "/api/images/gallery/Notifications/Social_posts/1781030111865_167302.jpg",
+    alt: "Parent-Teacher Conference Announcement",
+  },
+];
+
 export default function PopupAd() {
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [socialPosts, setSocialPosts] = useState<SocialPost[]>(DEFAULT_POSTS);
 
   useEffect(() => {
     const showTimer = setTimeout(() => setIsVisible(true), 4000); // appear after 4s
     const autoCloseTimer = setTimeout(() => handleClose(), 20000); // auto close after 20s visible
+
+    async function fetchSocialPosts() {
+      try {
+        const res = await fetch("/api/gallery");
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          images: { key: string; url: string; lastModified?: string }[];
+        };
+        if (data.images && Array.isArray(data.images)) {
+          const postsInFolder = data.images.filter((img) => {
+            const lower = img.key.toLowerCase();
+            return (
+              lower.includes("social_posts") ||
+              lower.includes("notifications/social_posts")
+            );
+          });
+
+          // Sort newest first
+          postsInFolder.sort((a, b) => {
+            if (a.lastModified && b.lastModified) {
+              return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
+            }
+            return 0;
+          });
+
+          if (postsInFolder.length > 0) {
+            setSocialPosts(
+              postsInFolder.slice(0, 2).map((img) => {
+                const filename = img.key.split("/").pop() ?? "Announcement";
+                const cleanAlt = filename
+                  .replace(/^\d+_\d+_?/, "")
+                  .replace(/\.[^/.]+$/, "")
+                  .replace(/[-_]/g, " ");
+                return {
+                  src: img.url,
+                  alt: cleanAlt || "School Announcement",
+                };
+              })
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch social posts for popup ad:", err);
+      }
+    }
+
+    void fetchSocialPosts();
 
     return () => {
       clearTimeout(showTimer);
@@ -184,50 +248,31 @@ export default function PopupAd() {
                 </h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <a
-                  href="/api/images/gallery/Notifications/Social_posts/1781030111849_167300.jpg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-red-500/40 bg-white/5 p-1 transition-all duration-300 hover:-translate-y-0.5 shadow-md shadow-black/10"
-                >
-                  <div className="relative aspect-square overflow-hidden rounded-xl">
-                    <Image
-                      src="/api/images/gallery/Notifications/Social_posts/1781030111849_167300.jpg"
-                      alt="Parents Meeting Announcement"
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 180px, 220px"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
-                        View Image <ExternalLink size={10} />
-                      </span>
+              <div className={`grid ${socialPosts.length === 1 ? "grid-cols-1" : "grid-cols-2"} gap-4`}>
+                {socialPosts.map((post, idx) => (
+                  <a
+                    key={post.src + idx}
+                    href={post.src}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-red-500/40 bg-white/5 p-1 transition-all duration-300 hover:-translate-y-0.5 shadow-md shadow-black/10"
+                  >
+                    <div className="relative aspect-square overflow-hidden rounded-xl">
+                      <Image
+                        src={post.src}
+                        alt={post.alt}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 180px, 220px"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
+                          View Image <ExternalLink size={10} />
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </a>
-
-                <a
-                  href="/api/images/gallery/Notifications/Social_posts/1781030111865_167302.jpg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-red-500/40 bg-white/5 p-1 transition-all duration-300 hover:-translate-y-0.5 shadow-md shadow-black/10"
-                >
-                  <div className="relative aspect-square overflow-hidden rounded-xl">
-                    <Image
-                      src="/api/images/gallery/Notifications/Social_posts/1781030111865_167302.jpg"
-                      alt="Parent-Teacher Conference Announcement"
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 180px, 220px"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-[11px] font-bold text-white bg-red-600/90 px-3 py-1 rounded-full border border-red-400/30 flex items-center gap-1 shadow-md">
-                        View Image <ExternalLink size={10} />
-                      </span>
-                    </div>
-                  </div>
-                </a>
+                  </a>
+                ))}
               </div>
 
               {/* Blue Section: Links & Buttons */}
