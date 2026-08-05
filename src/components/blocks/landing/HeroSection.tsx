@@ -34,17 +34,29 @@ function shuffleArray<T>(array: T[]): T[] {
 
 export function HeroHome() {
   const [videoList, setVideoList] = useState<string[]>(DEFAULT_VIDEOS)
-  const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0)
-  const [activeVideoSrc, setActiveVideoSrc] = useState<string>(DEFAULT_VIDEOS[0]!)
-  const [previousVideoSrc, setPreviousVideoSrc] = useState<string | null>(null)
-  const [incomingLoaded, setIncomingLoaded] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
   const [mounted, setMounted] = useState(false)
-  const activeVideoRef = useRef<HTMLVideoElement>(null)
 
+  // Track two static persistent HTML5 video elements for dual-layer zero-flicker crossfading
+  const videoRefA = useRef<HTMLVideoElement>(null)
+  const videoRefB = useRef<HTMLVideoElement>(null)
+
+  const [activeLayer, setActiveLayer] = useState<'A' | 'B'>('A')
+  const [srcA, setSrcA] = useState<string>(DEFAULT_VIDEOS[0]!)
+  const [srcB, setSrcB] = useState<string>(DEFAULT_VIDEOS[1] ?? DEFAULT_VIDEOS[0]!)
+
+  // Keep track of active layer & index refs to avoid stale closures in listeners/intervals
+  const activeLayerRef = useRef<'A' | 'B'>('A')
+  const currentIndexRef = useRef<number>(0)
+  const isTransitioningRef = useRef<boolean>(false)
+
+  activeLayerRef.current = activeLayer
+  currentIndexRef.current = currentIndex
+
+  // On mount, fetch dynamic video gallery list without resetting initial playing video
   useEffect(() => {
     setMounted(true)
 
-    // Fetch video list dynamically from API to pick up newly added clips automatically
     async function fetchVideos() {
       try {
         const res = await fetch("/api/gallery")
@@ -54,20 +66,13 @@ export function HeroHome() {
           const videoUrls = data.images
             .filter((img) => {
               const filename = img.key.split("/").pop() ?? ""
-              return (
-                img.key.startsWith("videos/") ||
-                /\.(mp4|webm|ogg)$/i.test(filename)
-              )
+              return img.key.startsWith("videos/") || /\.(mp4|webm|ogg)$/i.test(filename)
             })
             .map((img) => img.url)
 
           if (videoUrls.length > 0) {
             const shuffled = shuffleArray(videoUrls)
             setVideoList(shuffled)
-            const activeIdx = shuffled.indexOf(activeVideoSrc)
-            if (activeIdx !== -1) {
-              setCurrentVideoIndex(activeIdx)
-            }
           }
         }
       } catch (err) {
@@ -76,52 +81,73 @@ export function HeroHome() {
     }
 
     void fetchVideos()
-  }, [activeVideoSrc])
+  }, [])
 
-  // Change video slide seamlessly
-  const changeVideo = useCallback((newIndex: number) => {
-    setVideoList((list) => {
-      if (list.length === 0) return list
-      const nextIndex = (newIndex + list.length) % list.length
-      setCurrentVideoIndex(nextIndex)
-      const nextSrc = list[nextIndex]
-      if (nextSrc && nextSrc !== activeVideoSrc) {
-        setPreviousVideoSrc(activeVideoSrc)
-        setIncomingLoaded(false)
-        setActiveVideoSrc(nextSrc)
+  // Transition seamlessly to target index using dual layer video swap
+  const changeVideo = useCallback((newIdx: number) => {
+    if (videoList.length === 0 || isTransitioningRef.current) return
+    const nextIdx = (newIdx + videoList.length) % videoList.length
+    const nextSrc = videoList[nextIdx]
+    if (!nextSrc) return
+
+    isTransitioningRef.current = true
+    setCurrentIndex(nextIdx)
+
+    const currentLayer = activeLayerRef.current
+    const targetLayer = currentLayer === 'A' ? 'B' : 'A'
+    const targetRef = targetLayer === 'A' ? videoRefA : videoRefB
+
+    if (targetLayer === 'A') {
+      setSrcA(nextSrc)
+    } else {
+      setSrcB(nextSrc)
+    }
+
+    // Force load & play on target layer element once state updates
+    setTimeout(() => {
+      if (targetRef.current) {
+        targetRef.current.load()
+        const playPromise = targetRef.current.play()
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setActiveLayer(targetLayer)
+              isTransitioningRef.current = false
+            })
+            .catch(() => {
+              // Retry / skip gracefully if interrupted
+              setActiveLayer(targetLayer)
+              isTransitioningRef.current = false
+            })
+        } else {
+          setActiveLayer(targetLayer)
+          isTransitioningRef.current = false
+        }
+      } else {
+        isTransitioningRef.current = false
       }
-      return list
-    })
-  }, [activeVideoSrc])
+    }, 50)
+  }, [videoList])
 
   const goToNextVideo = useCallback(() => {
-    changeVideo(currentVideoIndex + 1)
-  }, [changeVideo, currentVideoIndex])
-
-  const goToPrevVideo = useCallback(() => {
-    changeVideo(currentVideoIndex - 1)
-  }, [changeVideo, currentVideoIndex])
-
-  const selectVideo = useCallback((index: number) => {
-    changeVideo(index)
+    changeVideo(currentIndexRef.current + 1)
   }, [changeVideo])
 
-  // Automatically change video every 8 seconds
+  const goToPrevVideo = useCallback(() => {
+    changeVideo(currentIndexRef.current - 1)
+  }, [changeVideo])
+
+  // Automatically advance to next video every 8 seconds
   useEffect(() => {
-    if (videoList.length === 0) return
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       goToNextVideo()
     }, 8000)
-    return () => clearInterval(interval)
-  }, [goToNextVideo, videoList.length])
-
-  // Compute next video in queue for preloading
-  const nextVideoIndex = (currentVideoIndex + 1) % (videoList.length || 1)
-  const nextVideoSrc = videoList[nextVideoIndex]
+    return () => clearInterval(timer)
+  }, [goToNextVideo])
 
   return (
-    <section className="relative h-screen overflow-hidden">
-      {/* Background Gradient Base */}
+    <section className="relative h-screen overflow-hidden bg-slate-950">
+      {/* Fallback rich background gradient */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -129,72 +155,52 @@ export function HeroHome() {
         }}
       />
 
-      {/* Hidden background preloader for the next upcoming video clip */}
-      {nextVideoSrc && nextVideoSrc !== activeVideoSrc && (
-        <video
-          key={nextVideoSrc}
-          src={nextVideoSrc}
-          preload="auto"
-          muted
-          playsInline
-          className="hidden"
-        />
-      )}
-
-      {/* Persistent Previous Video Layer — stays visible underneath while incoming video buffers */}
-      {previousVideoSrc && (
-        <video
-          key={previousVideoSrc}
-          className="absolute inset-0 w-full h-full object-cover z-[1]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src={previousVideoSrc} type={previousVideoSrc.endsWith(".mov") ? "video/quicktime" : "video/mp4"} />
-        </video>
-      )}
-
-      {/* Incoming Active Video Layer — fades in smoothly once ready */}
-      <motion.video
-        ref={activeVideoRef}
-        key={activeVideoSrc}
-        className="absolute inset-0 w-full h-full object-cover z-[2]"
+      {/* Layer A Video Element — persistent DOM node */}
+      <video
+        ref={videoRefA}
+        src={srcA}
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        onCanPlay={() => setIncomingLoaded(true)}
-        onPlaying={() => setIncomingLoaded(true)}
         onError={goToNextVideo}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: incomingLoaded ? 1 : 0 }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
-      >
-        <source src={activeVideoSrc} type={activeVideoSrc.endsWith(".mov") ? "video/quicktime" : "video/mp4"} />
-        Your browser does not support the video tag.
-      </motion.video>
+        style={{
+          opacity: activeLayer === 'A' ? 1 : 0,
+          zIndex: activeLayer === 'A' ? 2 : 1,
+        }}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out pointer-events-none"
+      />
 
-      {/* Gradient overlay for improved contrast — sits above video */}
-      <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-slate-900/90 z-[3]" />
+      {/* Layer B Video Element — persistent DOM node */}
+      <video
+        ref={videoRefB}
+        src={srcB}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        onError={goToNextVideo}
+        style={{
+          opacity: activeLayer === 'B' ? 1 : 0,
+          zIndex: activeLayer === 'B' ? 2 : 1,
+        }}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out pointer-events-none"
+      />
 
-      {/* Main content overlay — rendered immediately on top */}
+      {/* Contrast Overlay */}
+      <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/30 to-slate-950/70 z-[3]" />
+
+      {/* Content overlay */}
       <div className="relative z-[4] h-full flex flex-col items-center justify-center text-center px-4">
-        <h1
-          className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold mb-4 bg-linear-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text text-transparent drop-shadow-2xl"
-        >
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold mb-4 bg-linear-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text text-transparent drop-shadow-2xl">
           M.S.NAZ HIGH SCHOOL
         </h1>
-
-        <p
-          className="text-lg sm:text-xl md:text-3xl text-white mb-8 font-normal font-serif"
-        >
+        <p className="text-lg sm:text-xl md:text-3xl text-white mb-8 font-normal font-serif">
           Pursuit of Excellence | Know Thyself
         </p>
 
-        {/* Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/admission/apply"
@@ -212,42 +218,38 @@ export function HeroHome() {
         </div>
       </div>
 
-      {/* Left and right navigation controls - Rendered after mount */}
+      {/* Controls */}
       {mounted && videoList.length > 1 && (
         <>
           <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-[5]">
             <Button
               onClick={goToPrevVideo}
-              className="bg-white/30 hover:bg-white/50 p-2 rounded-full border-none cursor-pointer"
+              className="bg-white/30 hover:bg-white/50 p-2 rounded-full border-none cursor-pointer text-white"
             >
-              <ChevronLeft className="w-6 h-6 text-white" />
+              <ChevronLeft className="w-6 h-6" />
             </Button>
           </div>
           <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-[5]">
             <Button
               onClick={goToNextVideo}
-              className="bg-white/30 hover:bg-white/50 p-2 rounded-full border-none cursor-pointer"
+              className="bg-white/30 hover:bg-white/50 p-2 rounded-full border-none cursor-pointer text-white"
             >
-              <ChevronRight className="w-6 h-6 text-white" />
+              <ChevronRight className="w-6 h-6" />
             </Button>
+          </div>
+
+          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2 z-[5] max-w-[90vw] overflow-x-auto py-1 scrollbar-hide">
+            {videoList.map((_, index) => (
+              <Button
+                key={index}
+                className={`w-3 h-3 rounded-full border-none p-0 shrink-0 cursor-pointer ${index === currentIndex ? 'bg-white' : 'bg-white/50'}`}
+                onClick={() => changeVideo(index)}
+              />
+            ))}
           </div>
         </>
       )}
 
-      {/* Carousel indicators - Rendered after mount */}
-      {mounted && videoList.length > 1 && (
-        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2 z-[5] max-w-[90vw] overflow-x-auto py-1 scrollbar-hide">
-          {videoList.map((_, index) => (
-            <Button
-              key={index}
-              className={`w-3 h-3 rounded-full border-none p-0 shrink-0 cursor-pointer ${index === currentVideoIndex ? 'bg-white' : 'bg-white/50'}`}
-              onClick={() => selectVideo(index)}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Animated down chevron indicator */}
       <motion.div
         className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-[5]"
         animate={{ y: [0, 20, 0] }}
@@ -258,5 +260,3 @@ export function HeroHome() {
     </section>
   )
 }
-
-
