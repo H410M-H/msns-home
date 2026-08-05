@@ -204,7 +204,7 @@ export default function AdmissionClient() {
                   </p>
                 </div>
                 <Link
-                  href="/contact"
+                  href="/admission/apply"
                   className="group inline-flex items-center justify-center gap-2 w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/30 hover:brightness-110"
                 >
                   Start Application

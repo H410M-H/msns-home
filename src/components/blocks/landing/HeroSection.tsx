@@ -104,7 +104,7 @@ export function HeroHome() {
     setCurrentVideoIndex(index)
   }, [])
 
-  const currentSrc = videoList[currentVideoIndex] || DEFAULT_VIDEOS[0]
+  const currentSrc = videoList[currentVideoIndex] ?? DEFAULT_VIDEOS[0]
 
   return (
     <section className="relative h-screen overflow-hidden">
