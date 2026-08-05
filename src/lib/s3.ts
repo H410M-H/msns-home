@@ -21,30 +21,35 @@ export interface GalleryImage {
 }
 
 export async function listGalleryImages(): Promise<GalleryImage[]> {
-  const [galleryResponse, videosResponse] = await Promise.all([
-    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
-    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
-  ]);
-  const contents = [
-    ...(galleryResponse.Contents ?? []),
-    ...(videosResponse.Contents ?? [])
-  ];
+  try {
+    const [galleryResponse, videosResponse] = await Promise.all([
+      s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
+      s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
+    ]);
+    const contents = [
+      ...(galleryResponse.Contents ?? []),
+      ...(videosResponse.Contents ?? [])
+    ];
 
-  return contents
-    .filter((obj) => obj.Key && !obj.Key.endsWith("/"))
-    .map((obj) => ({
-      key: obj.Key!,
-      url: `/api/images/${obj.Key!}`,
-      lastModified: obj.LastModified?.toISOString(),
-      size: obj.Size,
-    }))
-    .sort((a, b) => {
-      // Sort newest first
-      if (a.lastModified && b.lastModified) {
-        return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
-      }
-      return 0;
-    });
+    return contents
+      .filter((obj) => obj.Key && !obj.Key.endsWith("/"))
+      .map((obj) => ({
+        key: obj.Key!,
+        url: `/api/images/${obj.Key!}`,
+        lastModified: obj.LastModified?.toISOString(),
+        size: obj.Size,
+      }))
+      .sort((a, b) => {
+        // Sort newest first
+        if (a.lastModified && b.lastModified) {
+          return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
+        }
+        return 0;
+      });
+  } catch (error) {
+    console.error("Error fetching gallery images from S3:", error);
+    return [];
+  }
 }
 
 /**
