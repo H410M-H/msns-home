@@ -37,13 +37,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Preload the static fallback LCP image for instant paint */}
-      <link
-        rel="preload"
-        href="/api/images/resolve/FrontView1_alaabu.jpg"
-        as="image"
-        type="image/jpeg"
-      />
       {/* Preload logo for header */}
       <link
         rel="preload"
