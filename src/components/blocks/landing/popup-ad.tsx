@@ -191,40 +191,95 @@ export default function PopupAd() {
                 Ranking <span className="font-bold text-yellow-300 drop-shadow-sm">2nd</span> in Ghakhar City 🏆
               </p>
               
-              <div className="mt-6 border-t border-white/10 pt-5">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-3">
-                  Top Achiever - 9th Grade
+              <div className="mt-4 border-t border-white/10 pt-4">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-2.5">
+                  Top Achievers — 10th Class (2026)
                 </h3>
                 
-                {/* Gold Achiever Card */}
+                {/* Gold Achiever Card - 1st Position */}
                 <div
-                  className="mx-auto md:mx-0 flex flex-col items-center md:items-start gap-4 rounded-2xl p-5 backdrop-blur-xl transition-all duration-300"
+                  className="mx-auto md:mx-0 flex items-center gap-3.5 rounded-2xl p-3.5 backdrop-blur-xl transition-all duration-300 mb-2.5"
                   style={{
-                    background: "linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(202, 138, 4, 0.25) 100%)",
+                    background: "linear-gradient(135deg, rgba(234, 179, 8, 0.18) 0%, rgba(202, 138, 4, 0.28) 100%)",
                     border: "2px solid rgba(234, 179, 8, 0.6)",
-                    boxShadow: "0 0 25px rgba(234, 179, 8, 0.25)",
+                    boxShadow: "0 0 20px rgba(234, 179, 8, 0.2)",
                   }}
                 >
-                  <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                  <div className="relative shrink-0">
+                    <Image
+                      src="/api/images/resolve/MOMINA_MANSHA_ogl2jd.jpg"
+                      alt="Momina - 1st Position"
+                      className="rounded-xl border-2 border-yellow-400/60 object-cover shadow-md"
+                      width={60}
+                      height={60}
+                    />
+                    <div className="absolute -top-1.5 -left-1.5 bg-yellow-400 text-yellow-950 p-1 rounded-full shadow-lg border border-yellow-200">
+                      <Award size={12} className="stroke-[2.5]" />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-0.5 min-w-0">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-yellow-400">
+                      🏆 1st Position
+                    </span>
+                    <span className="text-base font-extrabold text-white truncate">Momina</span>
+                    <span className="text-[11px] text-white/70">Roll No: 489953</span>
+                    <span className="text-xs font-bold text-yellow-200 mt-0.5">Marks: 1122/1200</span>
+                  </div>
+                </div>
+
+                {/* 2nd & 3rd Position Div */}
+                <div className="grid grid-cols-2 gap-2">
+                  {/* 2nd Position - Rehan Akhtar */}
+                  <div
+                    className="flex flex-col items-center text-center gap-1 rounded-xl p-2 backdrop-blur-md transition-all duration-300"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(226, 232, 240, 0.12) 0%, rgba(148, 163, 184, 0.18) 100%)",
+                      border: "1px solid rgba(226, 232, 240, 0.35)",
+                    }}
+                  >
                     <div className="relative">
                       <Image
-                        src="/api/images/resolve/MOMINA_MANSHA_ogl2jd.jpg"
-                        alt="Momina - 1st Position"
-                        className="rounded-2xl border-2 border-yellow-400/50 object-cover shadow-md"
-                        width={75}
-                        height={75}
+                        src="/api/images/resolve/1786006388883_246969.jpg"
+                        alt="Rehan Akhtar - 2nd Position"
+                        className="rounded-lg border border-slate-300/50 object-cover shadow-sm"
+                        width={46}
+                        height={46}
                       />
-                      <div className="absolute -top-2 -left-2 bg-yellow-400 text-yellow-950 p-1.5 rounded-full shadow-lg border border-yellow-200">
-                        <Award size={14} className="stroke-[2.5]" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-yellow-400">
-                        1st Position
+                      <span className="absolute -bottom-1 -right-1 bg-slate-200 text-slate-900 text-[8px] font-black px-1 rounded shadow">
+                        2nd
                       </span>
-                      <span className="text-lg font-extrabold text-white">Momina</span>
-                      <span className="text-xs text-white/70">Roll No: 206676</span>
-                      <span className="text-sm font-bold text-yellow-200 mt-1">Marks: 522/545</span>
+                    </div>
+                    <div className="flex flex-col gap-0.2 w-full">
+                      <span className="text-xs font-bold text-white truncate">Rehan Akhtar</span>
+                      <span className="text-[10px] text-white/60">Roll: 403428</span>
+                      <span className="text-[11px] font-bold text-slate-200">1037/1200</span>
+                    </div>
+                  </div>
+
+                  {/* 3rd Position - Ateeqa Noreen */}
+                  <div
+                    className="flex flex-col items-center text-center gap-1 rounded-xl p-2 backdrop-blur-md transition-all duration-300"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(217, 119, 6, 0.12) 0%, rgba(180, 83, 9, 0.18) 100%)",
+                      border: "1px solid rgba(245, 158, 11, 0.35)",
+                    }}
+                  >
+                    <div className="relative">
+                      <Image
+                        src="/api/images/resolve/1786006388716_246970.jpg"
+                        alt="Ateeqa Noreen - 3rd Position"
+                        className="rounded-lg border border-amber-400/50 object-cover shadow-sm"
+                        width={46}
+                        height={46}
+                      />
+                      <span className="absolute -bottom-1 -right-1 bg-amber-400 text-amber-950 text-[8px] font-black px-1 rounded shadow">
+                        3rd
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-0.2 w-full">
+                      <span className="text-xs font-bold text-white truncate">Ateeqa Noreen</span>
+                      <span className="text-[10px] text-white/60">Roll: 490206</span>
+                      <span className="text-[11px] font-bold text-amber-200">1011/1200</span>
                     </div>
                   </div>
                 </div>
