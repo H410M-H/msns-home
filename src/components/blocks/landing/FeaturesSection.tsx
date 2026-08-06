@@ -101,6 +101,24 @@ const allAchievers: Achiever[] = [
   { name: "Umer Saleem", year: 2025, rollNo: "403497", marks: 1044 },
   { name: "Sibgha Farooq Cheema", year: 2025, rollNo: "482362", marks: 1016 },
   { name: "Aneeba Fatima", year: 2025, rollNo: "482254", marks: 922 },
+
+  // --- 10th Class Distinctions (2026) ---
+  { name: "Momina", year: 2026, rollNo: "489953", marks: 1122 },
+  { name: "Rehan Akhtar", year: 2026, rollNo: "403428", marks: 1037 },
+  { name: "Ateeqa Noreen", year: 2026, rollNo: "490206", marks: 1011 },
+  { name: "Saira Nasar", year: 2026, rollNo: "489817", marks: 909 },
+  { name: "Shuja Ahmed", year: 2026, rollNo: "403666", marks: 894 },
+  { name: "Faizan Ali", year: 2026, rollNo: "403605", marks: 892 },
+  { name: "Armaan Ansar", year: 2026, rollNo: "489708", marks: 871 },
+  { name: "Subhan Ali", year: 2026, rollNo: "403132", marks: 837 },
+  { name: "Umama Shahbaz", year: 2026, rollNo: "490314", marks: 819 },
+  { name: "Hira Tariq", year: 2026, rollNo: "489966", marks: 817 },
+  { name: "Muhammad Ahmad", year: 2026, rollNo: "403271", marks: 782 },
+  { name: "Muhammad Abdullah", year: 2026, rollNo: "403152", marks: 773 },
+  { name: "Noor Fatima", year: 2026, rollNo: "489803", marks: 747 },
+  { name: "Muhammad Mahir Yar Cheema", year: 2026, rollNo: "403589", marks: 712 },
+  { name: "Jannat Shahzad", year: 2026, rollNo: "490171", marks: 702 },
+  { name: "Mohammad Sobhan Jamil", year: 2026, rollNo: "584550", marks: 657 },
 ];
 
 const topAchievers = allAchievers.filter((a) => a.marks >= 1000).sort((a, b) => b.marks - a.marks);
@@ -323,7 +341,7 @@ export function FeaturesSection() {
         <div className="mt-2">
           <div className="container mx-auto px-4 md:px-6 mb-4">
             <p className="text-xl uppercase tracking-[0.2em] text-white/80 font-semibold">
-              All Distinction Holders · 2010 – 2025
+              All Distinction Holders · 2010 – 2026
             </p>
           </div>
           <div
@@ -348,10 +366,10 @@ export function FeaturesSection() {
         <div className="container mx-auto px-4 md:px-6 mt-14">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex flex-wrap justify-center gap-8 md:gap-16 py-8 border-t border-white/[0.06]">
             {[
-              { value: "50+", label: "Distinction Holders" },
+              { value: "60+", label: "Distinction Holders" },
               { value: "1134", label: "Highest Score" },
               { value: `${topAchievers.length}`, label: "Scored 1000+" },
-              { value: "2010–2025", label: "Legacy of Excellence" },
+              { value: "2010–2026", label: "Legacy of Excellence" },
             ].map((stat, i) => (
               <motion.div key={`ach-stat-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1 }} className="text-center">
                 <div className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">{stat.value}</div>
