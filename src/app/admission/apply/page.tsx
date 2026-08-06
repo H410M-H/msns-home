@@ -10,9 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function OnlineAdmissionPage() {
-  return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans pt-20 md:pt-24 lg:pt-28">
-      <OnlineAdmissionForm />
-    </main>
-  );
+  return <OnlineAdmissionForm />;
 }

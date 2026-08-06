@@ -192,7 +192,7 @@ export function OnlineAdmissionForm() {
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-slate-900 via-emerald-950/40 to-slate-950 text-slate-100 font-sans pt-8 md:pt-12 pb-16 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-b from-slate-900 via-emerald-950/40 to-slate-950 text-slate-100 font-sans pt-20 md:pt-24 pb-16 overflow-hidden">
       {/* Dynamic Backdrop Glow Orbs */}
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[150px] pointer-events-none" />
