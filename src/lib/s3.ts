@@ -1,9 +1,18 @@
 import { S3Client, ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { env } from "~/env.js";
 
+// Clean endpoint host (strip bucket path suffix if present)
+let endpointHost = env.AWS_ENDPOINT_URL;
+try {
+  const url = new URL(env.AWS_ENDPOINT_URL);
+  if (url.pathname && url.pathname !== "/") {
+    endpointHost = url.origin;
+  }
+} catch (_e) {}
+
 export const s3Client = new S3Client({
-  region: env.AWS_DEFAULT_REGION,
-  endpoint: env.AWS_ENDPOINT_URL,
+  region: env.AWS_DEFAULT_REGION ?? "auto",
+  endpoint: endpointHost,
   credentials: {
     accessKeyId: env.AWS_ACCESS_KEY_ID,
     secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
