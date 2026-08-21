@@ -20,9 +20,9 @@ description: >
 - **Animations:** Framer Motion 12.4.7.
 - **3D Graphics:** Three.js 0.170, @react-three/drei, @react-three/fiber (for InfiniteGallery).
 - **Data Fetching:** tRPC 11.8.1, TanStack React Query 5.50.
-- **Storage:** AWS S3 (via Tigris/t3.storageapi.dev endpoint).
+- **Storage:** AWS S3 (via Cloudflare R2).
 - **Auth:** scaffolded (next-auth 5.0.0-beta.30) but UNUSED.
-- **Deployment:** Vercel / Railway.
+- **Deployment:** Vercel.
 
 ## Routing Structure (App Router)
 - **`/` (Home):** Hero, Features, InfiniteGallery (3D), QuickLinks, Testimonials, CTA, PopupAd.
