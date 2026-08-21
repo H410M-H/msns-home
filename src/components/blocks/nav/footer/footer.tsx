@@ -123,14 +123,21 @@ export const Footer = ({ className, ...props }: FooterProps) => {
           <div className="space-y-6 lg:ml-auto">
             <h3 className="text-sm font-bold text-green-900 tracking-wider uppercase">Quick Links</h3>
             <nav className="flex flex-col space-y-3">
-              {["Home", "About Us", "Academics", "Admissions", "Campus Life", "Contact"].map((item) => (
+              {[
+                { label: "Home", href: "/" },
+                { label: "About Us", href: "/about" },
+                { label: "Admissions", href: "/admission" },
+                { label: "Contact Us", href: "/contact" },
+                { label: "Terms of Service", href: "/terms-of-service" },
+                { label: "LMS Portal", href: "https://lms.msns.edu.pk" },
+              ].map((item) => (
                 <Link
-                  key={item}
-                  href="/#"
+                  key={item.label}
+                  href={item.href}
                   className="group flex items-center text-sm font-medium text-green-800 hover:text-pink-600 transition-colors"
                 >
                   <span className="w-0 h-[2px] bg-pink-500 mr-0 transition-all duration-300 group-hover:w-3 group-hover:mr-2" />
-                  {item}
+                  {item.label}
                 </Link>
               ))}
             </nav>
