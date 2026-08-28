@@ -9,9 +9,8 @@ const nextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ["nodemailer"],
   images: {
-    remotePatterns: [
-      // No external image domains needed - all images served via /api/images proxy
-    ],
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [],
   },
 };
 
