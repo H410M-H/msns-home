@@ -8,7 +8,9 @@ try {
   if (url.pathname && url.pathname !== "/") {
     endpointHost = url.origin;
   }
-} catch (_e) {}
+} catch {
+  // Ignore URL parse error
+}
 
 export const s3Client = new S3Client({
   region: env.AWS_DEFAULT_REGION ?? "auto",
@@ -110,7 +112,7 @@ export async function findImageByFilename(filename: string): Promise<string | nu
 
   // 3. Special handling for notification social posts index (e.g. social_posts_1, social_posts_2)
   if (searchClean.startsWith("social_posts_") || searchClean.startsWith("notification_")) {
-    const indexMatch = searchClean.match(/\d+$/);
+    const indexMatch = /\d+$/.exec(searchClean);
     const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : 0;
     const matchingObjs = contents.filter((obj) => {
       if (!obj.Key || obj.Key.endsWith("/")) return false;

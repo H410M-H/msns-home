@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Home, BookOpen, Compass, Phone } from "lucide-react";
+import { ArrowLeft, Home, BookOpen, Compass } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Header } from "~/components/blocks/nav/Header";
 import { Footer } from "~/components/blocks/nav/footer/footer";

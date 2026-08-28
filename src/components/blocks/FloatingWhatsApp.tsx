@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X } from "lucide-react";
+import { X } from "lucide-react";
 
 export function FloatingWhatsApp() {
   const [showTooltip, setShowTooltip] = useState(true);
