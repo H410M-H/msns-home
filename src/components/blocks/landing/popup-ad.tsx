@@ -12,11 +12,11 @@ interface SocialPost {
 
 const DEFAULT_POSTS: SocialPost[] = [
   {
-    src: "/api/images/gallery/Notifications/Social_posts/1781030111849_167300.jpg",
-    alt: "Parents Meeting Announcement",
+    src: "/api/images/resolve/social_posts_1",
+    alt: "Parents Meeting & School Announcement",
   },
   {
-    src: "/api/images/gallery/Notifications/Social_posts/1781030111865_167302.jpg",
+    src: "/api/images/resolve/social_posts_2",
     alt: "Parent-Teacher Conference Announcement",
   },
 ];
@@ -42,7 +42,8 @@ export default function PopupAd() {
             const lower = img.key.toLowerCase();
             return (
               lower.includes("social_posts") ||
-              lower.includes("notifications/social_posts")
+              lower.includes("notifications") ||
+              lower.includes("notification")
             );
           });
 
@@ -207,7 +208,7 @@ export default function PopupAd() {
                 >
                   <div className="relative shrink-0">
                     <Image
-                      src="/api/images/resolve/MOMINA_MANSHA_ogl2jd.jpg"
+                      src="/api/images/resolve/momina"
                       alt="Momina - 1st Position"
                       className="rounded-xl border-2 border-yellow-400/60 object-cover shadow-md"
                       width={60}
@@ -239,7 +240,7 @@ export default function PopupAd() {
                   >
                     <div className="relative">
                       <Image
-                        src="/api/images/resolve/1786006388883_246969.jpg"
+                        src="/api/images/resolve/rehan"
                         alt="Rehan Akhtar - 2nd Position"
                         className="rounded-lg border border-slate-300/50 object-cover shadow-sm"
                         width={46}
@@ -266,7 +267,7 @@ export default function PopupAd() {
                   >
                     <div className="relative">
                       <Image
-                        src="/api/images/resolve/1786006388716_246970.jpg"
+                        src="/api/images/resolve/ateeqa"
                         alt="Ateeqa Noreen - 3rd Position"
                         className="rounded-lg border border-amber-400/50 object-cover shadow-sm"
                         width={46}
