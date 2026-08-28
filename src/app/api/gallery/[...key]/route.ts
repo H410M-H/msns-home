@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { deleteFromS3 } from "~/lib/s3";
 
+export const dynamic = "force-dynamic";
+
 /**
  * Validates the request using the GALLERY_API_SECRET environment variable.
  * If not set, all requests are blocked in production.

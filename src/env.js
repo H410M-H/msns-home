@@ -58,6 +58,8 @@ export const env = createEnv({
   },
   skipValidation:
     !!process.env.SKIP_ENV_VALIDATION ||
+    !!process.env.VERCEL ||
+    !!process.env.VERCEL_ENV ||
     process.env.npm_lifecycle_event === "build" ||
     process.env.NEXT_PHASE === "phase-production-build" ||
     process.env.NODE_ENV === "production",

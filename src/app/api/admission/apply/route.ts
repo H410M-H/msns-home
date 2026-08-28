@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { sendAdmissionEmails, type AdmissionFormData } from "~/lib/email";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as Partial<AdmissionFormData>;

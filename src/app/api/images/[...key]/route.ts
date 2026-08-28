@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { s3Client, BUCKET } from "~/lib/s3";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ key: string[] }> }
