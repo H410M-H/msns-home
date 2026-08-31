@@ -12,6 +12,7 @@ import { FloatingWhatsApp } from "~/components/blocks/FloatingWhatsApp";
 import { Toaster } from "~/components/ui/sonner";
 import { SchoolSchema } from "~/components/SEOSchema";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.msns.edu.pk"),
@@ -163,6 +164,7 @@ export default function RootLayout({
           <FloatingWhatsApp />
           <Toaster />
           <SpeedInsights />
+          <Analytics />
         </TRPCReactProvider>
       </body>
     </html>
