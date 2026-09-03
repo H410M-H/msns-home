@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 import confetti from "canvas-confetti";
@@ -13,6 +13,14 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsVisible(false);
+      onClose();
+    }, 500); // wait for animation to finish
+  }, [onClose]);
+
   useEffect(() => {
     // Show popup shortly after mount
     const showTimer = setTimeout(() => {
@@ -22,13 +30,14 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
       
-      const interval = setInterval(function() {
+      const interval = setInterval(() => {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) {
-          return clearInterval(interval);
+          clearInterval(interval);
+          return;
         }
         const particleCount = 50 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+        void confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
       }, 250);
     }, 500);
 
@@ -41,15 +50,7 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
       clearTimeout(showTimer);
       clearTimeout(autoCloseTimer);
     };
-  }, []);
-
-  const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsVisible(false);
-      onClose();
-    }, 500); // wait for animation to finish
-  };
+  }, [handleClose]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) handleClose();
