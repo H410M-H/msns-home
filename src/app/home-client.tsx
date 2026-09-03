@@ -37,6 +37,11 @@ const PopupAd = dynamic(
   { ssr: false }
 );
 
+const NinthResultPopup = dynamic(
+  () => import("~/components/blocks/landing/ninth-result-popup"),
+  { ssr: false }
+);
+
 const QuickLinksSection = dynamic(
   () => import("~/components/blocks/landing/QuickLinksSection").then((m) => m.QuickLinksSection),
   { ssr: false }
@@ -68,6 +73,8 @@ interface GalleryImage {
 
 export default function HomeClient() {
   const [galleryImages, setGalleryImages] = useState<{ src: string, alt: string }[]>([]);
+  const [showNinthResult, setShowNinthResult] = useState(true);
+  const [showPopupAd, setShowPopupAd] = useState(false);
 
   useEffect(() => {
     // Defer gallery fetch until after initial paint to avoid blocking LCP
@@ -109,7 +116,15 @@ export default function HomeClient() {
   return (
     <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
-      <PopupAd />
+      {showNinthResult && (
+        <NinthResultPopup 
+          onClose={() => {
+            setShowNinthResult(false);
+            setShowPopupAd(true);
+          }} 
+        />
+      )}
+      {showPopupAd && <PopupAd />}
       <Toaster richColors closeButton />
       <FeaturesSection />
       <InfiniteGallery
