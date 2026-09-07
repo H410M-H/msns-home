@@ -131,6 +131,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
                 { label: "Campus Facilities", href: "/campus" },
                 { label: "Faculty & Mentors", href: "/faculty" },
                 { label: "Board Distinctions", href: "/achievements" },
+                { label: "Matric Resource Hub", href: "/resources" },
                 { label: "Official Downloads", href: "/downloads" },
                 { label: "Contact Us", href: "/contact" },
                 { label: "MSNS LMS Portal", href: "https://lms.msns.edu.pk" },
