@@ -203,9 +203,27 @@ export const Footer = ({ className, ...props }: FooterProps) => {
             </Button>
           </form>
         </div>
- 
+        {/* Regional Feeder Links */}
+        <div className="mt-8 pt-6 border-t border-green-200/60 flex flex-wrap items-center justify-between gap-4 text-xs text-green-800/80">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-green-900">Locations & Transport:</span>
+            <Link href="/wazirabad" className="hover:text-emerald-700 underline font-medium">
+              High School in Wazirabad
+            </Link>
+            <span>•</span>
+            <Link href="/ghakhar" className="hover:text-emerald-700 underline font-medium">
+              High School in Ghakhar Mandi
+            </Link>
+            <span>•</span>
+            <Link href="/resources" className="hover:text-emerald-700 underline font-medium">
+              BISE Gujranwala Resources
+            </Link>
+          </div>
+          <span className="text-[11px] text-green-700/70">Postal Code: 52200 | G.T. Road, Ghakhar</span>
+        </div>
+
         {/* Divider */}
-        <div className="mt-12 mb-8 border-t border-green-200" />
+        <div className="mt-6 mb-8 border-t border-green-200" />
 
         {/* Copyright */}
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">

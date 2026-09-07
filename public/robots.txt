@@ -60,28 +60,28 @@ Allow: /
 
 User-agent: *
 Allow: /
+Allow: /api/images/
+Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
 Disallow: /private/
 
-Sitemap: https://msns.edu.pk/sitemap.xml
 Sitemap: https://www.msns.edu.pk/sitemap.xml
 
-# Specific rules for Google
+# Specific rules for Googlebot
 User-agent: Googlebot
 Allow: /
+Allow: /api/images/
+Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
 Disallow: /private/
-Crawl-delay: 0
 
-# Specific rules for Bing
+# Specific rules for Bingbot
 User-agent: Bingbot
 Allow: /
+Allow: /api/images/
+Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
 Disallow: /private/
-Crawl-delay: 1
