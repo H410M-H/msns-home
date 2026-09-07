@@ -9,8 +9,7 @@ const nextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ["nodemailer"],
   images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [],
+    unoptimized: true,
   },
 };
 
