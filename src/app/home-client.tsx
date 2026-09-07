@@ -7,8 +7,7 @@ import { HeroHome } from "~/components/blocks/landing/HeroSection";
 import { Toaster } from "~/components/ui/sonner";
 
 const FeaturesSection = dynamic(
-  () => import("~/components/blocks/landing/FeaturesSection").then((m) => m.FeaturesSection),
-  { ssr: false }
+  () => import("~/components/blocks/landing/FeaturesSection").then((m) => m.FeaturesSection)
 );
 
 const InfiniteGallery = dynamic(
@@ -43,13 +42,11 @@ const NinthResultPopup = dynamic(
 );
 
 const LMSAppShowcase = dynamic(
-  () => import("~/components/blocks/landing/LMSAppShowcase").then((m) => m.LMSAppShowcase),
-  { ssr: false }
+  () => import("~/components/blocks/landing/LMSAppShowcase").then((m) => m.LMSAppShowcase)
 );
 
 const QuickLinksSection = dynamic(
-  () => import("~/components/blocks/landing/QuickLinksSection").then((m) => m.QuickLinksSection),
-  { ssr: false }
+  () => import("~/components/blocks/landing/QuickLinksSection").then((m) => m.QuickLinksSection)
 );
 
 const TestimonialsSection = dynamic(
@@ -65,8 +62,7 @@ const TestimonialsSection = dynamic(
 );
 
 const CTASection = dynamic(
-  () => import("~/components/blocks/landing/CTASection").then((m) => m.CTASection),
-  { ssr: false }
+  () => import("~/components/blocks/landing/CTASection").then((m) => m.CTASection)
 );
 
 interface GalleryImage {

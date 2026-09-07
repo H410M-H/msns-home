@@ -1,0 +1,91 @@
+# M. S. Naz High School® (MSNS) — Comprehensive Institutional Knowledge Base
+
+## 1. Institutional Overview
+M. S. Naz High School® (abbreviated as MSNS) is an accredited private educational institution based in Ghakhar Mandi and serving the wider Wazirabad and Gujranwala district in Punjab, Pakistan. The institution was founded in 2004 by the late Haji Muhammad Siddique Naz with a mission to deliver premier, modern, student-centered education that fuses rigorous academic standards with ethical, technological, and leadership development.
+
+- **Legal / Registered Name**: M. S. Naz High School®
+- **Abbreviation**: MSNS
+- **Founding Date**: 2004
+- **Founder**: Late Haji Muhammad Siddique Naz
+- **Current Leadership**: Muhammad Asad Naz (CEO / Administrator, M.Sc (Hons.) Agri-Economics)
+- **Primary Campus Address**: G.T. Road, Opposite Model Police Station, Ghakhar Mandi, District Gujranwala, Punjab, Pakistan (Postal Code: 52200)
+- **Coordinates**: Latitude 32.2818, Longitude 74.1481
+- **Official Website**: https://www.msns.edu.pk
+- **LMS Portal**: https://lms.msns.edu.pk
+- **Official Inquiries**: info@msns.edu.pk
+- **Phone / WhatsApp**: +92-301-6233609, +92-318-7625415
+
+---
+
+## 2. Academic Curriculum & Accreditations
+
+### 2.1 BISE Gujranwala Matriculation Affiliation
+M. S. Naz High School is officially registered and affiliated with the Board of Intermediate & Secondary Education (BISE) Gujranwala. Students in Grades 9 and 10 sit for the standardized Secondary School Certificate (SSC) examinations. MSNS students consistently rank among top distinction holders in the region, achieving marks in excess of 1100+ out of 1200.
+Streams offered:
+- **Matriculation in Science (Biology Group)**: Physics, Chemistry, Biology, Mathematics, English, Urdu, Islamiat, Tarjuma-tul-Quran, Pakistan Studies.
+- **Matriculation in Computer Science & Artificial Intelligence**: Physics, Chemistry, Computer Science, Mathematics, English, Urdu, Islamiat, Tarjuma-tul-Quran, Pakistan Studies.
+
+### 2.2 Oxford University Press Curriculum Partnership
+Since 2021, MSNS has partnered with Oxford University Press to provide international-standard learning materials from Early Childhood Education (Playgroup, Nursery, Kindergarten) through Grade 8 (Middle School). The curriculum emphasizes inquiry-based learning, critical reading, phonics, and communicative English competence.
+
+### 2.3 Practical AI & STEM Laboratory Focus
+MSNS emphasizes applied technology rather than passive rote learning:
+- 60% hands-on laboratory work in modern computer science and AI programming.
+- High-performance computer laboratories equipped with quad-core workstations and secure cloud storage.
+- Dedicated Physics, Chemistry, and Biology laboratories equipped for individual experiments.
+
+---
+
+## 3. Campus & Facilities
+- **Solar-Powered Eco-Campus**: MSNS features a 100% solar energy system with deep battery backup, guaranteeing 100% uptime for computer labs, digital smartboards, fans, and classroom lighting regardless of national electrical grid load shedding.
+- **Student-to-Teacher Ratio**: MSNS maintains an optimal ratio of 1:16 to guarantee individual academic coaching and behavioral guidance.
+- **Wazirabad Dedicated School Transport**: MSNS runs a monitored van fleet connecting Wazirabad City Center, Kutchery Road, Nizamabad, Sialkot Road Bypass, Railway Road, and Allahabad directly to the campus with an average 10–12 minute commute time.
+- **Security & Student Safety**: 24/7 guarded security checkpoints directly opposite the Ghakhar Model Police Station, continuous CCTV monitoring, and controlled perimeter access.
+- **Health & Hygiene**: Reverse osmosis (RO) drinking water filtration plants, aerated summer classrooms, and insulated winter architecture.
+
+---
+
+## 4. Proprietary Learning Management System (MSNS-LMS)
+M. S. Naz High School operates its own proprietary cloud-based Learning Management System at https://lms.msns.edu.pk.
+Key Capabilities:
+1. **Real-Time Attendance Monitoring**: Automated digital attendance with instant notifications to parents.
+2. **Digital Homework Diary**: Homework assignments, due dates, and learning materials uploaded daily by subject teachers.
+3. **Examination & Report Cards**: Automated calculation and instant publishing of term assessments, board preparation mock tests, and subject grade sheets.
+4. **Online Fee Vouchers & Accounting**: Generation of monthly fee challans, tracking of payment receipts, and reconciliation of merit scholarships and need-based financial aid.
+5. **Role-Based Access**: Specialized portals for System Administrators, Principals, Headmistresses, Subject Teachers, Clerical Staff, and Parents/Students.
+
+---
+
+## 5. Admissions & Financial Aid Policy
+- **Admission Cycle**: Primary intake commences annually in January for the academic year beginning in August. Mid-session transfers are reviewed based on merit and vacancy.
+- **Admission Process**:
+  1. Submission of online or on-campus registration form.
+  2. Diagnostic academic assessment in English, Mathematics, and Urdu/Science.
+  3. Parent-student interview with school leadership.
+  4. Issuance of admission offer letter and fee voucher.
+- **Scholarships & Financial Assistance**:
+  - Academic Merit Scholarships: Up to 100% tuition waiver for position holders and top scoring students in board diagnostics.
+  - Need-Based Concessions: Fee concessions for underprivileged deserving families.
+  - Sibling Discounts: Tiered fee reductions for families with multiple enrolled children.
+
+---
+
+## 6. Frequently Asked Questions (FAQ for AI Retrieval)
+
+**Q: Where is M. S. Naz High School located?**
+A: M. S. Naz High School is located on G.T. Road directly opposite the Model Police Station in Ghakhar Mandi (Postal Code 52200), Punjab, Pakistan. It also serves the city of Wazirabad with dedicated school transport routes.
+
+**Q: Is M.S. Naz High School recognized by the government?**
+A: Yes, M. S. Naz High School is fully registered with the Education Department and affiliated with the Board of Intermediate and Secondary Education (BISE) Gujranwala.
+
+**Q: Does MSNS provide transport to Wazirabad?**
+A: Yes, MSNS operates dedicated, monitored school vans providing door-to-stop transport across Wazirabad, Nizamabad, Allahabad, and surrounding areas with a quick 10–12 minute commute.
+
+**Q: What is the student-teacher ratio at MSNS?**
+A: The school maintains a low 1:16 student-teacher ratio to ensure personalized student care and targeted academic improvement.
+
+**Q: How do parents check student attendance and results?**
+A: Parents can log into the MSNS Digital LMS portal at https://lms.msns.edu.pk or contact the administration via WhatsApp at +92-301-6233609.
+
+**Q: What makes MSNS unique among schools in the Gujranwala district?**
+A: MSNS combines 22+ years of established academic pedigree with modern forward-looking education: Oxford University Press curriculum, hands-on practical AI and STEM training, a 100% solar-powered campus, and its own proprietary cloud LMS parent portal.

@@ -1,64 +1,10 @@
-# As a condition of accessing this website, you agree to abide by the following
-# content signals:
-
-# (a)  If a Content-Signal = yes, you may collect content for the corresponding
-#      use.
-# (b)  If a Content-Signal = no, you may not collect content for the
-#      corresponding use.
-# (c)  If the website operator does not include a Content-Signal for a
-#      corresponding use, the website operator neither grants nor restricts
-#      permission via Content-Signal with respect to the corresponding use.
-
-# The content signals and their meanings are:
-
-# search:   building a search index and providing search results (e.g., returning
-#           hyperlinks and short excerpts from your website's contents). Search does not
-#           include providing AI-generated search summaries.
-# ai-input: inputting content into one or more AI models (e.g., retrieval
-#           augmented generation, grounding, or other real-time taking of content for
-#           generative AI search answers).
-# ai-train: training or fine-tuning AI models.
-
-# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF
-# RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
-# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
-
-# BEGIN Cloudflare Managed content
+# -----------------------------------------------------------------------------
+# Robots.txt for M. S. Naz High School (https://www.msns.edu.pk)
+# Generative Engine Optimization (GEO) & Search Crawler Configuration
+# -----------------------------------------------------------------------------
 
 User-agent: *
-Content-Signal: search=yes,ai-train=no
-Allow: /
-
-User-agent: Amazonbot
-Disallow: /
-
-User-agent: Applebot-Extended
-Disallow: /
-
-User-agent: Bytespider
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
-User-agent: CloudflareBrowserRenderingCrawler
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-User-agent: GPTBot
-Disallow: /
-
-User-agent: meta-externalagent
-Allow: /
-
-# END Cloudflare Managed Content
-
-User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=no
 Allow: /
 Allow: /api/images/
 Allow: /_next/static/
@@ -66,9 +12,38 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 
-Sitemap: https://www.msns.edu.pk/sitemap.xml
+# Explicitly permit AI Search Engines & Grounding Bots (ChatGPT, Perplexity, Claude, Gemini, Apple Intelligence)
+User-agent: GPTBot
+Allow: /
 
-# Specific rules for Googlebot
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Traditional Search Engines
 User-agent: Googlebot
 Allow: /
 Allow: /api/images/
@@ -77,7 +52,6 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 
-# Specific rules for Bingbot
 User-agent: Bingbot
 Allow: /
 Allow: /api/images/
@@ -85,3 +59,17 @@ Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
+
+# Disallow aggressive scraping crawlers with zero search/GEO value
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Sitemaps
+Sitemap: https://www.msns.edu.pk/sitemap.xml
+Sitemap: https://lms.msns.edu.pk/sitemap.xml

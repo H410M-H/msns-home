@@ -4,9 +4,10 @@ export function SchoolSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': ['School', 'HighSchool', 'EducationalOrganization'],
+    '@id': 'https://www.msns.edu.pk/#school',
     name: 'M.S. Naz High School®',
     url: 'https://www.msns.edu.pk',
-    alternateName: ['MSNS', 'M.S. Naz High School', 'M.S. Naz High School® Wazirabad'],
+    alternateName: ['MSNS', 'M.S. Naz High School', 'M.S. Naz High School® Wazirabad', 'MS Naz High School Ghakhar'],
     logo: 'https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg',
     image: 'https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg',
     description: 'Premier academic school in Wazirabad & Ghakhar, offering BISE Gujranwala matriculation, Oxford curriculum standards, modern science & practical AI labs since 2004.',
@@ -38,9 +39,31 @@ export function SchoolSchema() {
       'https://www.facebook.com/msnazhighschool',
       'https://www.instagram.com/msnazhighschool',
       'https://twitter.com/msnazhighschool',
+      'https://www.youtube.com/@msns-edu-pk',
       'https://lms.msns.edu.pk',
     ],
     foundingDate: '2004',
+    founder: {
+      '@type': 'Person',
+      name: 'Haji Muhammad Siddique Naz (Late)',
+    },
+    knowsAbout: [
+      'BISE Gujranwala Matriculation Examination',
+      'Oxford University Press Curriculum',
+      'Secondary Education in Wazirabad',
+      'Practical Artificial Intelligence Curriculum',
+      'STEM Laboratory Education',
+      'Digital Learning Management Systems',
+    ],
+    subjectOf: {
+      '@type': 'WebApplication',
+      '@id': 'https://lms.msns.edu.pk/#app',
+      name: 'MSNS-LMS Portal',
+      url: 'https://lms.msns.edu.pk',
+      applicationCategory: 'EducationalApplication',
+      operatingSystem: 'All',
+      description: 'Official cloud Learning Management System and Parent Portal of M. S. Naz High School.',
+    },
     areaServed: ['Wazirabad', 'Ghakhar Mandi', 'Gujranwala', 'Rahwali', 'Alipur Chatha', 'Punjab'],
     educationalLevel: ['Primary Education', 'Secondary Education', 'High School'],
     curricula: [
@@ -139,6 +162,38 @@ export function CourseSchema({
       sameAs: 'https://www.msns.edu.pk',
     },
     educationalLevel,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function LMSApplicationSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    '@id': 'https://lms.msns.edu.pk/#app',
+    name: 'MSNS-LMS Portal',
+    url: 'https://lms.msns.edu.pk',
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web, Android (APK / PWA)',
+    description: 'Enterprise Learning Management System & Parent Portal for M.S. Naz High School. Offers real-time student attendance notifications, digital homework diaries, marks card publishing, and fee challan tracking.',
+    author: {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://www.msns.edu.pk/#school',
+      name: 'M.S. Naz High School®',
+      url: 'https://www.msns.edu.pk',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'PKR',
+      description: 'Included for all enrolled students, parents, and faculty of M. S. Naz High School.',
+    },
   };
 
   return (

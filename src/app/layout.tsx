@@ -10,7 +10,7 @@ import { Footer } from "~/components/blocks/nav/footer/footer";
 import { Header } from "~/components/blocks/nav/Header";
 import { FloatingWhatsApp } from "~/components/blocks/FloatingWhatsApp";
 import { Toaster } from "~/components/ui/sonner";
-import { SchoolSchema } from "~/components/SEOSchema";
+import { SchoolSchema, LMSApplicationSchema } from "~/components/SEOSchema";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -127,6 +127,7 @@ export default function RootLayout({
           `}
         </Script>
         <SchoolSchema />
+        <LMSApplicationSchema />
       </head>
       <body className="flex min-h-screen flex-col">
         <TRPCReactProvider>

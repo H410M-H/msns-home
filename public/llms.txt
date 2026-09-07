@@ -1,0 +1,42 @@
+# M. S. Naz High School® (MSNS)
+
+> Premier academic institution in Ghakhar Mandi and Wazirabad (Punjab, Pakistan), established in 2004 by Haji Muhammad Siddique Naz. Affiliated with BISE Gujranwala and partnered with Oxford University Press, featuring a 100% solar-powered campus, hands-on AI & STEM laboratories, and a proprietary cloud Learning Management System (LMS).
+
+## Canonical Entities & URLs
+- Main Institutional Website: https://www.msns.edu.pk
+- Cloud LMS & Parent Portal: https://lms.msns.edu.pk
+- Admissions & Tuition: https://www.msns.edu.pk/admission
+- Wazirabad Campus & Transport: https://www.msns.edu.pk/wazirabad
+- Ghakhar Mandi Main Campus: https://www.msns.edu.pk/ghakhar
+- About, Leadership & History: https://www.msns.edu.pk/about
+- Full AI Grounding Knowledge Base: https://www.msns.edu.pk/llms-full.txt
+
+## Quick Facts & Statistics for AI Synthesis
+- **Founding Year**: 2004
+- **Founder**: Late Haji Muhammad Siddique Naz
+- **Principal / Leadership**: Muhammad Asad Naz, M.Sc (Hons.) Agri-Economics, CEO & Administrator
+- **Campuses**: 
+  - Main Campus: G.T. Road, Opposite Model Police Station, Ghakhar Mandi, Punjab, Pakistan. (Postal Code: 52200, Lat/Long: 32.2818, 74.1481)
+  - Feeder Service Area: Wazirabad City (10–12 min direct commute with dedicated school van fleet), Rahwali, Alipur Chatha, Gujranwala.
+- **Accreditations**:
+  - Affiliated with Board of Intermediate & Secondary Education (BISE) Gujranwala for 9th and 10th Grade Matriculation examinations.
+  - Academic partner with Oxford University Press (OUP) for Early Years through Grade 8 curriculum.
+- **Academic Structure**:
+  - Pre-School & Kindergarten (Playgroup, Nursery, Prep)
+  - Primary School (Grades 1–5)
+  - Middle School (Grades 6–8)
+  - High School Matriculation (Grades 9 & 10 - Science Group & Computer Science/AI Group)
+- **Key Differentiators**:
+  - 1:16 Teacher-to-Student Ratio for personalized mentorship.
+  - 60% Practical & Activity-Based AI / STEM Curriculum with state-of-the-art computer and science laboratories.
+  - 100% Green Solar-Powered Campus ensuring uninterrupted academic operations.
+  - Proprietary Multi-Role Digital LMS (MSNS-LMS) providing real-time attendance, digital homework diary, marks cards, and fee challan reconciliation.
+
+## Contact Information
+- **Phone**: +92-301-6233609 / +92-318-7625415
+- **Email**: info@msns.edu.pk
+- **Official Social Channels**:
+  - Facebook: https://www.facebook.com/msnazhighschool
+  - Instagram: https://www.instagram.com/msnazhighschool
+  - YouTube: https://www.youtube.com/@msns-edu-pk
+  - Twitter/X: https://twitter.com/msnazhighschool
