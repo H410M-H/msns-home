@@ -8,21 +8,21 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+      "src": "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+      "src": "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+      "src": "/favicon.ico",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/x-icon",
       "purpose": "maskable"
     }
   ],

@@ -18,9 +18,18 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.msns.edu.pk"),
   title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
   icons: {
-    icon: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
-    shortcut: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
-    apple: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+    icon: [
+      {
+        url: "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
+        type: "image/jpeg",
+      },
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+    ],
+    shortcut: "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
+    apple: "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
   },
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
