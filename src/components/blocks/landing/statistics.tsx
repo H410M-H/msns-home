@@ -6,10 +6,10 @@ import { Card, CardContent } from "~/components/ui/card"
 
 export const KeyStatistics = () => {
   const stats = [
-    { icon: BookOpen, label: "AP Courses", value: "15+", color: "text-purple-600" },
-    { icon: Users, label: "Student-Teacher Ratio", value: "18:1", color: "text-teal-600" },
-    { icon: Trophy, label: "State Championships", value: "25", color: "text-amber-600" },
-    { icon: Lightbulb, label: "Clubs & Activities", value: "50+", color: "text-emerald-600" },
+    { icon: BookOpen, label: "Academic Curricula", value: "Oxford & Matric", color: "text-purple-600" },
+    { icon: Users, label: "Student-Teacher Ratio", value: "1:16", color: "text-teal-600" },
+    { icon: Trophy, label: "Board & Regional Distinctions", value: "50+", color: "text-amber-600" },
+    { icon: Lightbulb, label: "Practical AI & STEM Focus", value: "60% Labs", color: "text-emerald-600" },
   ]
 
   return (

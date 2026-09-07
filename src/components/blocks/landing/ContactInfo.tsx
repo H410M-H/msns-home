@@ -119,7 +119,7 @@ export const ContactInfo=() => {
             </div>
           </div>
           <Button asChild variant="ghost" className="mt-3 sm:mt-4 text-white hover:bg-white/20 group px-3 sm:px-4">
-            <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://maps.google.com/?q=32.2818,74.1481" target="_blank" rel="noopener noreferrer">
               <span className="text-sm">Get Directions</span>
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>

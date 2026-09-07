@@ -25,23 +25,19 @@ export const metadata: Metadata = {
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
   },
-  other: {
-    "google-adsense-account": "ca-pub-1351871288722699",
-  },
-  description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
-  keywords: ["www.msns.edu.pk", "msns.edu.pk", "https://www.msns.edu.pk", "msns", "m s naz", "m s naz high school", "msnaz", "m s naz oxford", "oxford", "msnazhighschool", "lms", "top schools", "ghakkhar", "gakhar", "wazirabad", "gujranwala", "sialkot", "lahore", "punjab", "pakistan", "msns-dev", "M.S. Naz High School®",
-    "educational excellence",
-    "academic achievement",
-    "leadership development",
-    "school admissions",
-    "extra-curricular activities",
-    "student-centered learning",
-    "modern education standards",
-    "high school education",
-    "oxford school",
-    "oxford contact",
-    "msnz",
-    "Pakistani education system"].join(", "),
+  description: "M. S. Naz High School in Wazirabad & Ghakhar offers academic excellence with BISE Gujranwala matriculation, Oxford curriculum standards, modern science & AI labs, and leadership development.",
+  keywords: [
+    "M.S. Naz High School",
+    "MSNS Wazirabad",
+    "MSNS Ghakhar Mandi",
+    "Best high school in Wazirabad",
+    "Top matric schools Gujranwala",
+    "Oxford curriculum school Punjab",
+    "BISE Gujranwala school admission",
+    "AI curriculum school Pakistan",
+    "Science labs high school Wazirabad",
+    "Smart school LMS Pakistan"
+  ],
   openGraph: {
     title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
     description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
@@ -119,37 +115,6 @@ export default function RootLayout({
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "we8pqjiu3j");
-          `}
-        </Script>
-
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1351871288722699"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
-        />
-
-        {/* Google Customer Reviews Badge */}
-        <Script
-          id="merchantWidgetScript"
-          src="https://www.gstatic.com/shopping/merchant/merchantwidget.js"
-          strategy="lazyOnload"
-        />
-        <Script id="merchantWidgetInit" strategy="lazyOnload">
-          {`
-            (function() {
-              var script = document.getElementById('merchantWidgetScript');
-              if (script) {
-                script.addEventListener('load', function() {
-                  if (window.merchantwidget) {
-                    window.merchantwidget.start({
-                      merchant_id: 5676917738,
-                      position: "BOTTOM_RIGHT"
-                    });
-                  }
-                });
-              }
-            })();
           `}
         </Script>
         <SchoolSchema />

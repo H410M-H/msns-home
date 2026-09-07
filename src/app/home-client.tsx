@@ -42,6 +42,11 @@ const NinthResultPopup = dynamic(
   { ssr: false }
 );
 
+const LMSAppShowcase = dynamic(
+  () => import("~/components/blocks/landing/LMSAppShowcase").then((m) => m.LMSAppShowcase),
+  { ssr: false }
+);
+
 const QuickLinksSection = dynamic(
   () => import("~/components/blocks/landing/QuickLinksSection").then((m) => m.QuickLinksSection),
   { ssr: false }
@@ -132,6 +137,7 @@ export default function HomeClient() {
         speed={1.0}
         visibleCount={12}
       />
+      <LMSAppShowcase />
       <QuickLinksSection />
       <TestimonialsSection />
       <CTASection />

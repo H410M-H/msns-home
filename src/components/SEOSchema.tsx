@@ -1,73 +1,80 @@
-'use client'
+// src/components/SEOSchema.tsx
 
 export function SchoolSchema() {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': ['High School', 'EducationalInstitution', 'Montessori', 'Secondary School', 'School', 'Nursery'],
+    '@type': ['School', 'HighSchool', 'EducationalOrganization'],
     name: 'M.S. Naz High School®',
     url: 'https://www.msns.edu.pk',
-    alternateName: ['MSNS', 'M.S. Naz High School', 'M.S. Naz High School®'],
-    alternate: ['https://msns.edu.pk', 'https://lms.msns.edu.pk'],
+    alternateName: ['MSNS', 'M.S. Naz High School', 'M.S. Naz High School® Wazirabad'],
     logo: 'https://www.msns.edu.pk/api/images/logos/Official_LOGO_grn_ic9ldd.png',
-    description: 'Premier high school in Pakistan offering educational excellence, leadership development, and modern education standards since 2004.',
-    telephone: ['+92-3016233609', '+92-3187625415'],
+    image: 'https://www.msns.edu.pk/api/images/logos/Official_LOGO_grn_ic9ldd.png',
+    description: 'Premier academic school in Wazirabad & Ghakhar, offering BISE Gujranwala matriculation, Oxford curriculum standards, modern science & practical AI labs since 2004.',
+    telephone: ['+92-318-7625415', '+92-301-6233609'],
     email: 'info@msns.edu.pk',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'M.S. Naz High School',
+      streetAddress: 'G.T. Road, Opposite Model Police Station',
       addressLocality: 'Ghakhar Mandi',
       addressRegion: 'Punjab',
-      postalCode: '51700',
+      postalCode: '52200',
       addressCountry: 'PK',
     },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 32.2818,
+      longitude: 74.1481,
+    },
+    hasMap: 'https://maps.google.com/?q=32.2818,74.1481',
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '07:30',
+        closes: '14:00',
+      },
+    ],
     sameAs: [
-      'https://msns.edu.pk',
-      'https://www.msns.edu.pk',
       'https://www.facebook.com/msnazhighschool',
       'https://www.instagram.com/msnazhighschool',
       'https://twitter.com/msnazhighschool',
+      'https://lms.msns.edu.pk',
     ],
     foundingDate: '2004',
-    areaServed: ['Wazirabad', 'Aujla Kalan', 'Kotli Kalan', 'Bhagat Pura', 'Kotli Khoja', 'Gujranwala', 'Sialkot', 'Lahore', 'Punjab', 'Pakistan', 'Ghakhar Mandi', 'Eimanabad', 'Eimanabad Road', 'Eimanabad Road Wazirabad', 'Eimanabad Road Gujranwala', 'Eimanabad Road Sialkot', 'Eimanabad Road Lahore', 'Eimanabad Road Punjab', 'Eimanabad Road Pakistan', 'Eimanabad Road Ghakhar Mandi'],
-    educationalLevel: 'Secondary Education',
+    areaServed: ['Wazirabad', 'Ghakhar Mandi', 'Gujranwala', 'Rahwali', 'Alipur Chatha', 'Punjab'],
+    educationalLevel: ['Primary Education', 'Secondary Education', 'High School'],
     curricula: [
       {
         '@type': 'EducationalOccupationalCredential',
-        name: 'Science Labs',
-        description: 'Advanced science programs with modern laboratory facilities',
+        name: 'BISE Gujranwala Matriculation',
+        description: 'Recognized 9th and 10th grade Science & Computer Science certification',
       },
       {
         '@type': 'EducationalOccupationalCredential',
-        name: 'AI Curriculum',
-        description: 'Artificial Intelligence and technology-focused education',
+        name: 'Oxford Academic Partnership',
+        description: 'Oxford University Press aligned curriculum from Early Years to Middle School',
       },
       {
         '@type': 'EducationalOccupationalCredential',
-        name: 'Oxford Partnership',
-        description: 'Academic excellence with Oxford-aligned curriculum',
-      },
-      {
-        '@type': 'EducationalOccupationalCredential',
-        name: 'Leadership Development',
-        description: 'Comprehensive leadership and character development programs',
+        name: 'Practical AI & STEM Education',
+        description: 'Hands-on practical AI, computer science, and modern science laboratory curriculum',
       },
     ],
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.8',
-      ratingCount: '500',
+      reviewCount: '150',
       bestRating: '5',
       worstRating: '1',
     },
-  }
+  };
 
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      suppressHydrationWarning
     />
-  )
+  );
 }
 
 export function BreadcrumbSchema({ items }: { items: Array<{ name: string; url: string }> }) {
@@ -80,36 +87,64 @@ export function BreadcrumbSchema({ items }: { items: Array<{ name: string; url: 
       name: item.name,
       item: item.url,
     })),
-  }
+  };
 
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      suppressHydrationWarning
     />
-  )
+  );
 }
 
-export function AggregateOfferSchema() {
+export function FAQSchema({ items }: { items: Array<{ question: string; answer: string }> }) {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'AggregateOffer',
-    priceCurrency: 'PKR',
-    offers: [
-      {
-        '@type': 'Offer',
-        name: 'Academic Programs',
-        description: 'Comprehensive academic programs with modern curriculum',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
       },
-    ],
-  }
+    })),
+  };
 
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      suppressHydrationWarning
     />
-  )
+  );
+}
+
+export function CourseSchema({
+  name,
+  description,
+  educationalLevel,
+}: {
+  name: string;
+  description: string;
+  educationalLevel: string;
+}) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name,
+    description,
+    provider: {
+      '@type': 'School',
+      name: 'M.S. Naz High School®',
+      sameAs: 'https://www.msns.edu.pk',
+    },
+    educationalLevel,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
 }

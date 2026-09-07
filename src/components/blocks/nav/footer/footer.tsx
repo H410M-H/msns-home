@@ -126,10 +126,14 @@ export const Footer = ({ className, ...props }: FooterProps) => {
               {[
                 { label: "Home", href: "/" },
                 { label: "About Us", href: "/about" },
-                { label: "Admissions", href: "/admission" },
+                { label: "Academics & Curricula", href: "/academics" },
+                { label: "Admissions & Fees", href: "/admission" },
+                { label: "Campus Facilities", href: "/campus" },
+                { label: "Faculty & Mentors", href: "/faculty" },
+                { label: "Board Distinctions", href: "/achievements" },
+                { label: "Official Downloads", href: "/downloads" },
                 { label: "Contact Us", href: "/contact" },
-                { label: "Terms of Service", href: "/terms-of-service" },
-                { label: "LMS Portal", href: "https://lms.msns.edu.pk" },
+                { label: "MSNS LMS Portal", href: "https://lms.msns.edu.pk" },
               ].map((item) => (
                 <Link
                   key={item.label}

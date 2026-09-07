@@ -28,9 +28,11 @@ export const Header = ({ className, ...props }: HeaderProps) => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
+    { name: 'Academics', path: '/academics' },
     { name: 'Admissions', path: '/admission' },
+    { name: 'Campus Life', path: '/campus' },
+    { name: 'Achievements', path: '/achievements' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Terms of Service', path: '/terms-of-service' },
   ]
 
   return (
@@ -46,7 +48,7 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="https://lms.msns.edu.pk" className="relative z-50">
+        <Link href="/" className="relative z-50" aria-label="M.S. Naz High School Home">
           <Image
             src="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
             alt="Logo"
@@ -58,16 +60,16 @@ export const Header = ({ className, ...props }: HeaderProps) => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-4">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-3">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               href={link.path}
               className={cn(
-                "px-4 py-2 rounded-lg font-medium transition-colors",
+                "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
                 pathname === link.path
-                  ? "text-green-100 bg-primary/10"
-                  : "text-white hover:bg-green-500 hover:text-green-800"
+                  ? "text-emerald-900 bg-emerald-100/80 font-semibold shadow-xs"
+                  : "text-white hover:bg-white/20 hover:text-emerald-100"
               )}
             >
               {link.name}
@@ -154,13 +156,18 @@ export const Header = ({ className, ...props }: HeaderProps) => {
             </DropdownMenu>
           ) : (
             <div className="flex items-center gap-2">
-              {/* <CountdownDialog /> */}
-              <Link href="https://lms.msns.edu.pk" >
+              <Link
+                href="https://lms.msns.edu.pk"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Access MSNS LMS Portal"
+              >
                 <Button
                   variant="default"
-                  className="rounded-full bg-linear-to-r from-primary to-emerald-600 hover:shadow-md"
+                  size="sm"
+                  className="rounded-full bg-linear-to-r from-emerald-600 to-teal-600 px-4 text-xs md:text-sm font-semibold text-white shadow-xs hover:shadow-md hover:from-emerald-700 hover:to-teal-700 cursor-pointer"
                 >
-                  Login
+                  LMS Portal
                 </Button>
               </Link>
             </div>
