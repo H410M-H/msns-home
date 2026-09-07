@@ -7,15 +7,18 @@ const DOMAIN = "www.msns.edu.pk";
 
 const URL_LIST = [
   "https://www.msns.edu.pk/",
-  "https://www.msns.edu.pk/about",
+  "https://www.msns.edu.pk/academics",
   "https://www.msns.edu.pk/admission",
+  "https://www.msns.edu.pk/admission/apply",
+  "https://www.msns.edu.pk/campus",
+  "https://www.msns.edu.pk/achievements",
+  "https://www.msns.edu.pk/faculty",
+  "https://www.msns.edu.pk/resources",
+  "https://www.msns.edu.pk/downloads",
+  "https://www.msns.edu.pk/wazirabad",
+  "https://www.msns.edu.pk/ghakhar",
+  "https://www.msns.edu.pk/about",
   "https://www.msns.edu.pk/contact",
-  "https://www.msns.edu.pk/terms-of-service",
-  "https://msns.edu.pk/",
-  "https://msns.edu.pk/about",
-  "https://msns.edu.pk/admission",
-  "https://msns.edu.pk/contact",
-  "https://msns.edu.pk/terms-of-service"
 ];
 
 /**
