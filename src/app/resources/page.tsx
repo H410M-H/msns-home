@@ -1,10 +1,7 @@
 import { type Metadata } from "next";
 import Link from "next/link";
 import { 
-  BookOpen, 
-  FileText, 
   Award, 
-  Sparkles, 
   ArrowRight, 
   CheckCircle2, 
   Download, 

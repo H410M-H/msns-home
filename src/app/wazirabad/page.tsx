@@ -3,13 +3,8 @@ import Link from "next/link";
 import { 
   MapPin, 
   Bus, 
-  Award, 
   CheckCircle2, 
-  Sparkles, 
-  ArrowRight,
-  ShieldCheck,
-  Phone,
-  Clock
+  ArrowRight
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";
 import { LOCATIONS_DATA } from "~/data/locations";

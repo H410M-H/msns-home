@@ -20,7 +20,6 @@ export async function GET(
     // Sanitize filename to prevent directory traversal
     const safeFilename = path.basename(filename);
     const key = `documents/${safeFilename}`;
-
     const rangeHeader = request.headers.get("range");
 
     try {
@@ -30,53 +29,35 @@ export async function GET(
         Range: rangeHeader ?? undefined,
       });
 
-      const s3Response = await s3Client.send(command);
+      const response = await s3Client.send(command);
 
-      if (s3Response.Body) {
-        const stream = s3Response.Body.transformToWebStream();
+      if (response.Body) {
+        const stream = response.Body.transformToWebStream();
         const headers = new Headers();
         headers.set("Accept-Ranges", "bytes");
-        headers.set(
-          "Content-Type",
-          s3Response.ContentType ?? "application/pdf"
-        );
-        if (s3Response.ContentLength !== undefined) {
-          headers.set("Content-Length", s3Response.ContentLength.toString());
-        }
-        if (s3Response.ContentRange) {
-          headers.set("Content-Range", s3Response.ContentRange);
-        }
-        headers.set(
-          "Content-Disposition",
-          `inline; filename="${safeFilename}"`
-        );
-        headers.set(
-          "Cache-Control",
-          "public, max-age=86400, stale-while-revalidate=604800"
-        );
+        const contentType = response.ContentType ?? (safeFilename.endsWith(".pdf") ? "application/pdf" : "application/octet-stream");
+        headers.set("Content-Type", contentType);
+        headers.set("Content-Disposition", `inline; filename="${safeFilename}"`);
+        if (response.ContentLength !== undefined) headers.set("Content-Length", response.ContentLength.toString());
+        if (response.ContentRange) headers.set("Content-Range", response.ContentRange);
+        headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
-        const status = s3Response.ContentRange ? 206 : 200;
+        const status = response.ContentRange ? 206 : 200;
         return new NextResponse(stream, { status, headers });
       }
-    } catch (s3Error: unknown) {
-      console.warn(`[S3 Document Stream] Could not fetch ${key} from R2, falling back to local:`, s3Error);
+    } catch (s3Err) {
+      console.warn(`Could not fetch ${key} from Cloudflare R2, attempting local fallback:`, s3Err);
     }
 
-    // Local fallback in public/documents/
+    // Local filesystem fallback
     const localPath = path.join(process.cwd(), "public", "documents", safeFilename);
     if (fs.existsSync(localPath)) {
-      const stat = fs.statSync(localPath);
       const fileBuffer = fs.readFileSync(localPath);
-
       const headers = new Headers();
-      headers.set("Content-Type", "application/pdf");
-      headers.set("Content-Length", stat.size.toString());
-      headers.set(
-        "Content-Disposition",
-        `inline; filename="${safeFilename}"`
-      );
-      headers.set("Cache-Control", "public, max-age=3600");
-
+      headers.set("Content-Type", safeFilename.endsWith(".pdf") ? "application/pdf" : "application/octet-stream");
+      headers.set("Content-Disposition", `inline; filename="${safeFilename}"`);
+      headers.set("Content-Length", fileBuffer.length.toString());
+      headers.set("Cache-Control", "public, max-age=86400");
       return new NextResponse(fileBuffer, { status: 200, headers });
     }
 

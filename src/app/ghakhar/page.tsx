@@ -4,11 +4,9 @@ import {
   MapPin, 
   Award, 
   CheckCircle2, 
-  Sparkles, 
   ArrowRight,
   ShieldCheck,
   Sun,
-  Users,
   FlaskConical
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";

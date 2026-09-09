@@ -415,6 +415,9 @@ export default function DownloadsPage() {
             </div>
           </div>
 
+          {/* New Syllabus Matric Textbooks Section */}
+          <MatricTextbooksSection />
+
           {/* Quick Notice */}
           <div className="bg-emerald-950 text-white rounded-3xl p-8 md:p-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 border border-emerald-900">
             <div>
