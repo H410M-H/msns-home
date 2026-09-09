@@ -12,6 +12,7 @@ import {
   FlaskConical
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";
+import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
   title: "Top High School in Ghakhar Mandi | Matric & Oxford Education | MSNS",
@@ -117,7 +118,7 @@ export default function GhakharLandingPage() {
           <div className="rounded-3xl bg-white border border-slate-200 p-8 md:p-12 shadow-xs mb-16">
             <div className="max-w-2xl mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
-                Proudly Serving Ghakhar Mandi & Surrounding Localities
+                Proudly Serving Ghakhar Mandi &amp; Surrounding Localities
               </h2>
               <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
                 Students attend MSNS from across Ghakhar town and adjacent residential zones via walking access and our dedicated transport fleet:
@@ -131,6 +132,26 @@ export default function GhakharLandingPage() {
                   <span className="text-xs font-semibold text-slate-800">{n}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Surrounding Localities Quick Navigation */}
+            <div className="pt-6 border-t border-slate-100 mb-6">
+              <h3 className="text-sm font-bold text-slate-900 mb-3">
+                All 34 Surrounding Localities, Towns &amp; Villages with School Van Service:
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {LOCATIONS_DATA.map((loc) => (
+                  <Link
+                    key={loc.slug}
+                    href={`/locations/${loc.slug}`}
+                    className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-200 border border-slate-200 text-xs font-medium text-slate-700 transition-colors shadow-2xs flex items-center gap-1.5"
+                  >
+                    <MapPin className="w-3 h-3 text-emerald-600" />
+                    <span>{loc.name}</span>
+                    <span className="text-[10px] text-slate-400 font-serif">({loc.urduName})</span>
+                  </Link>
+                ))}
+              </div>
             </div>
 
             <div className="border-t border-slate-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">

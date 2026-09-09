@@ -15,6 +15,7 @@ import {
   Cpu
 } from "lucide-react";
 import { BreadcrumbSchema, FAQSchema } from "~/components/SEOSchema";
+import { MatricTextbooksSection } from "~/components/blocks/downloads/MatricTextbooksSection";
 
 export const metadata: Metadata = {
   title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS",
@@ -252,6 +253,12 @@ export default function ResourcesPage() {
               </Link>
             </div>
           </div>
+
+          {/* New Syllabus Matric Textbooks Section */}
+          <MatricTextbooksSection 
+            title="Download Official BISE & PCTB Matric Textbooks"
+            subtitle="Get authentic, high-speed PDF downloads for Class 9 and Class 10 Science, Computer Science, and Compulsory subjects. Hosted on high-performance Cloudflare R2 storage."
+          />
 
           {/* FAQs Section */}
           <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 shadow-xs mb-20">

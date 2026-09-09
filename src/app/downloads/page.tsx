@@ -15,6 +15,7 @@ import {
   Award
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";
+import { MatricTextbooksSection } from "~/components/blocks/downloads/MatricTextbooksSection";
 
 export const metadata: Metadata = {
   title: "Official Downloads & Matric Academic Portal | M. S. Naz High School®",
@@ -197,6 +198,9 @@ export default function DownloadsPage() {
               </div>
             ))}
           </div>
+
+          {/* Interactive Matric Textbooks Download Directory */}
+          <MatricTextbooksSection />
 
           {/* Dedicated Matric Academic Resources Hub */}
           <div className="mb-24 pt-8 border-t border-slate-200">

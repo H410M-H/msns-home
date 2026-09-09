@@ -1,6 +1,5 @@
 import { type MetadataRoute } from "next";
-
-
+import { LOCATIONS_DATA } from "~/data/locations";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.msns.edu.pk";
@@ -99,5 +98,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  return staticPages;
+  // Dynamic location pages for 34+ surrounding villages and cities
+  const locationPages: MetadataRoute.Sitemap = LOCATIONS_DATA.map((loc) => ({
+    url: `${baseUrl}/locations/${loc.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...locationPages];
 }

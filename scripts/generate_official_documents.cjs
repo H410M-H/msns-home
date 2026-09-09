@@ -511,6 +511,60 @@ async function buildProspectus() {
       y -= 78;
     });
 
+
+    // HIGHLIGHT: UNIFORM & STUDENT LEADERSHIP CORPS
+    page.drawRectangle({
+      x: 40,
+      y: y - 180,
+      width: 515,
+      height: 180,
+      color: C_LIGHT_GREEN,
+      borderColor: C_EMERALD,
+      borderWidth: 1,
+    });
+
+    page.drawText('STUDENT DRESS STANDARDS & LEADERSHIP CORPS (SCOUTS & GUIDES)', {
+      x: 52,
+      y: y - 20,
+      size: 9.5,
+      font: fonts.bold,
+      color: C_DARK_GREEN,
+    });
+
+    const uniSummary = 'M. S. Naz High School instills equality, personal discipline, and civic pride through standardized attire and recognized leadership badges:';
+    wrapText(uniSummary, fonts.regular, 8, 490).forEach((ul, ui) => {
+      page.drawText(ul, { x: 52, y: y - 34 - ui * 10, size: 8, font: fonts.regular, color: C_TEXT_DARK });
+    });
+
+    const rolesList = [
+      {
+        title: 'Standard Female Uniform:',
+        desc: 'Bottle-green tunic with school crest, white shalwar, pinned white headscarf/hijab, green lanyard ID badge, and black shoes.',
+      },
+      {
+        title: 'Standard Male Uniform:',
+        desc: 'Crisp white collared shirt with chest pocket & right-sleeve crest, green-gold diagonal tie, black trousers, black leather belt, polished shoes.',
+      },
+      {
+        title: 'Girl Guide Leader (Senior Wing):',
+        desc: 'Full pristine white uniform (tunic, shalwar, hijab) with green "GIRL GUIDE" shoulder sash and leadership insignia badge.',
+      },
+      {
+        title: 'Boy Scout Leader (Troop Distinction):',
+        desc: 'Complete khaki uniform with epaulettes, deep green beret with crest, red neckerchief with woggle, and dual-language sash.',
+      },
+    ];
+
+    let uy = y - 60;
+    rolesList.forEach((r) => {
+      page.drawText('• ' + r.title, { x: 52, y: uy, size: 8, font: fonts.bold, color: C_DARK_GREEN });
+      const rLines = wrapText(r.desc, fonts.regular, 7.5, 480);
+      rLines.forEach((rl, rli) => {
+        page.drawText(rl, { x: 62, y: uy - 10 - rli * 9, size: 7.5, font: fonts.regular, color: C_TEXT_DARK });
+      });
+      uy -= 28;
+    });
+
     drawFooter(page, fonts, 3, totalPages);
   }
 
@@ -1607,12 +1661,17 @@ async function buildFeePolicy() {
 async function buildCodeOfConduct() {
   const doc = await PDFDocument.create();
   const logo = await doc.embedJpg(logoBytes);
+  let uniformImg = null;
+  const uniformPath = path.join(ROOT_DIR, 'public', 'images', 'uniform-leadership-guidelines.jpg');
+  if (fs.existsSync(uniformPath)) {
+    uniformImg = await doc.embedJpg(fs.readFileSync(uniformPath));
+  }
   const fonts = {
     regular: await doc.embedFont(StandardFonts.Helvetica),
     bold: await doc.embedFont(StandardFonts.HelveticaBold),
   };
 
-  const totalPages = 2;
+  const totalPages = 3;
 
   // PAGE 1: DISCIPLINE & CODE OF CONDUCT
   {
@@ -1687,15 +1746,119 @@ async function buildCodeOfConduct() {
     drawFooter(page, fonts, 1, totalPages);
   }
 
-  // PAGE 2: COMPLETE UNIFORM SPECIFICATIONS
+  // PAGE 2: VISUAL UNIFORM & LEADERSHIP GUIDELINES (INFOGRAPHIC)
+  {
+    const page = doc.addPage([595.28, 841.89]);
+    const { width, height } = page.getSize();
+    drawHeader(page, fonts, logo, 'Naz High School Uniform & Leadership Guidelines');
+
+    let y = height - 90;
+
+    page.drawText('STANDARD & DISTINGUISHED ROLES FOR REAL STUDENTS', {
+      x: 40,
+      y,
+      size: 11,
+      font: fonts.bold,
+      color: C_DARK_GREEN,
+    });
+
+    y -= 14;
+
+    const desc = 'Official visual reference for standard student attire and leadership role uniforms (Girl Guides & Boy Scouts). Strict adherence to uniform neatness and badges is mandatory.';
+    wrapText(desc, fonts.regular, 8.5, 515).forEach((dl) => {
+      page.drawText(dl, { x: 40, y, size: 8.5, font: fonts.regular, color: C_TEXT_DARK });
+      y -= 12;
+    });
+
+    y -= 6;
+
+    // Embed the Infographic Image
+    if (uniformImg) {
+      const imgWidth = 515;
+      const imgHeight = (imgWidth * uniformImg.height) / uniformImg.width;
+      const drawHeight = Math.min(imgHeight, 350);
+      page.drawRectangle({
+        x: 38,
+        y: y - drawHeight - 4,
+        width: imgWidth + 4,
+        height: drawHeight + 6,
+        color: C_WHITE,
+        borderColor: C_EMERALD,
+        borderWidth: 1.5,
+      });
+      page.drawImage(uniformImg, {
+        x: 40,
+        y: y - drawHeight - 2,
+        width: imgWidth,
+        height: drawHeight,
+      });
+      y -= drawHeight + 20;
+    }
+
+    // Two Quick Summary Boxes below image
+    const boxW = 250;
+    // Box 1: Regular Students
+    page.drawRectangle({
+      x: 40,
+      y: y - 165,
+      width: boxW,
+      height: 165,
+      color: C_BG_CARD,
+      borderColor: C_BORDER,
+      borderWidth: 0.75,
+    });
+    page.drawText('1 & 2: REGULAR STUDENTS ATTIRE', { x: 50, y: y - 18, size: 9, font: fonts.bold, color: C_DARK_GREEN });
+    const regText = [
+      '- Female: Deep green tunic with crest, white shalwar, white hijab/headscarf, ID badge on green lanyard, black shoes.',
+      '- Male: White button-down shirt with chest pocket crest, right-sleeve crest, green & gold striped tie, black trousers, black belt, polished shoes.',
+      '- Grooming: Clean, ironed garments daily.',
+    ];
+    let regY = y - 34;
+    regText.forEach((rt) => {
+      wrapText(rt, fonts.regular, 7.8, boxW - 20).forEach((rtl) => {
+        page.drawText(rtl, { x: 50, y: regY, size: 7.8, font: fonts.regular, color: C_TEXT_DARK });
+        regY -= 11;
+      });
+      regY -= 2;
+    });
+
+    // Box 2: Leadership Roles
+    page.drawRectangle({
+      x: 305,
+      y: y - 165,
+      width: boxW,
+      height: 165,
+      color: C_BG_CARD,
+      borderColor: C_BORDER,
+      borderWidth: 0.75,
+    });
+    page.drawText('3 & 4: LEADERSHIP DISTINCTIONS', { x: 315, y: y - 18, size: 9, font: fonts.bold, color: C_DARK_GREEN });
+    const leadText = [
+      '- Girl Guide Leader: Full pristine white uniform (tunic, shalwar, hijab) with green "GIRL GUIDE" sash and leadership chest badge.',
+      '- Boy Scout Leader: Complete khaki uniform, green beret with crest, red neckerchief with woggle, dual-language "BOY SCOUT / Pakistan Boy Scout" green sash, chest badges.',
+      '- Selection: Merit, discipline, and community service.',
+    ];
+    let leadY = y - 34;
+    leadText.forEach((lt) => {
+      wrapText(lt, fonts.regular, 7.8, boxW - 20).forEach((ltl) => {
+        page.drawText(ltl, { x: 315, y: leadY, size: 7.8, font: fonts.regular, color: C_TEXT_DARK });
+        leadY -= 11;
+      });
+      leadY -= 2;
+    });
+
+    drawFooter(page, fonts, 2, totalPages);
+  }
+
+  // PAGE 3: DETAILED SPECIFICATIONS, HOUSE WEAR & SEASONAL CODES
   {
     const page = doc.addPage([595.28, 841.89]);
     const { height } = page.getSize();
-    drawHeader(page, fonts, logo, 'Official Student Uniform Specifications');
+    drawHeader(page, fonts, logo, 'Detailed Uniform Specifications & Dress Regulations');
 
     let y = height - 95;
 
-    page.drawText('OFFICIAL UNIFORM GUIDELINES (SUMMER & WINTER)', {
+    page.drawText('OFFICIAL DRESS REGULATIONS & SEASONAL SPECIFICATIONS', {
       x: 40,
       y,
       size: 11,
@@ -1705,97 +1868,68 @@ async function buildCodeOfConduct() {
 
     y -= 20;
 
-    page.drawRectangle({
-      x: 40,
-      y: y - 110,
-      width: 515,
-      height: 110,
-      color: C_WHITE,
-      borderColor: C_EMERALD,
-      borderWidth: 1,
-    });
-
-    page.drawText('BOYS UNIFORM SPECIFICATIONS (PRE-SCHOOL TO GRADE 10)', {
-      x: 52,
-      y: y - 18,
-      size: 9.5,
-      font: fonts.bold,
-      color: C_DARK_GREEN,
-    });
-
-    const boysRules = [
-      '- Summer Shirt: Crisp white half/full-sleeve collared shirt with official green school monogram on left pocket.',
-      '- Trousers: Standard khaki dress trousers (neatly pressed, regular fit).',
-      '- Winter Additions: Official bottle-green V-neck pullover sweater with school monogram or bottle-green blazer.',
-      '- Footwear: Plain black oxford shoes (lace-up or velcro for juniors) with black socks and official bottle-green belt.',
-      '- Grooming: Neat, short military-standard haircut. Jewelry, watches, or fancy wristbands are prohibited.',
+    const sections = [
+      {
+        title: 'SECTION A: STANDARD FEMALE UNIFORM (GRADES 1 - 10)',
+        items: [
+          'Tunic & Shalwar: Standard bottle-green tunic incorporating local cultural dress with official school crest on left chest. Paired with white cotton shalwar.',
+          'Headwear: Detailed white headscarf (Hijab or Dupatta) neatly pinned across hair and chest.',
+          'Identity: School ID badge with "M. S. Naz High School" clearly visible on official green lanyard.',
+          'Footwear: Plain black oxford shoes with white socks. No heels, sandals, or fashion footwear.',
+        ],
+      },
+      {
+        title: 'SECTION B: STANDARD MALE UNIFORM (GRADES 1 - 10)',
+        items: [
+          'Shirt & Trousers: Crisp white button-down collared shirt with school crest on pocket and embroidered right-sleeve badge. Standard black dress trousers with black leather belt.',
+          'Necktie: Official green and gold diagonal-striped necktie featuring embroidered school crest.',
+          'Identity: School ID badge with "M. S. Naz High School" worn at all times.',
+          'Footwear: Plain black or dark brown polished formal shoes with black socks.',
+          'Hair & Grooming: Short military-standard haircut. Shaving mandatory for senior students.',
+        ],
+      },
+      {
+        title: 'SECTION C: DISTINGUISHED LEADERSHIP CORPS (SCOUTS & GUIDES)',
+        items: [
+          'Girl Guide Leader: Full white uniform (tunic, shalwar, hijab) with left-tunic crest, green "GIRL GUIDE" shoulder sash, and Pakistan Girl Guides leadership chest badges.',
+          'Boy Scout Leader: Full Khaki uniform with buttoned chest pockets and epaulettes. Green beret with detailed crest on left temple, red neckerchief with official toggle, and green sash with "BOY SCOUT / Pakistan Boy Scout".',
+          'Role & Privileges: Ceremonial assembly flag-raising, campus prefect duties, and representing MSNS in district scouting jamborees.',
+        ],
+      },
+      {
+        title: 'SECTION D: WINTER ADDITIONS & SPORTS HOUSE ATTIRE',
+        items: [
+          'Winter Outerwear: Official bottle-green V-neck pullover sweater with school monogram or bottle-green blazer. Non-uniform jackets/hoodies are confiscated.',
+          'Physical Education Days: Respective House T-Shirts (Iqbal / Jinnah / Sir Syed / Tipu Houses) with white athletic track pants and white trainers.',
+        ],
+      },
     ];
 
-    boysRules.forEach((br, bi) => {
-      page.drawText(br, { x: 52, y: y - 34 - bi * 14, size: 8, font: fonts.regular, color: C_TEXT_DARK });
+    sections.forEach((sec) => {
+      page.drawRectangle({
+        x: 40,
+        y: y - 120,
+        width: 515,
+        height: 120,
+        color: C_WHITE,
+        borderColor: C_EMERALD,
+        borderWidth: 0.75,
+      });
+
+      page.drawText(sec.title, { x: 50, y: y - 18, size: 9, font: fonts.bold, color: C_DARK_GREEN });
+      let itemY = y - 32;
+      sec.items.forEach((item) => {
+        wrapText(item, fonts.regular, 7.8, 495).forEach((il) => {
+          page.drawText(il, { x: 50, y: itemY, size: 7.8, font: fonts.regular, color: C_TEXT_DARK });
+          itemY -= 10.5;
+        });
+        itemY -= 2;
+      });
+
+      y -= 130;
     });
 
-    y -= 125;
-
-    page.drawRectangle({
-      x: 40,
-      y: y - 110,
-      width: 515,
-      height: 110,
-      color: C_WHITE,
-      borderColor: C_EMERALD,
-      borderWidth: 1,
-    });
-
-    page.drawText('GIRLS UNIFORM SPECIFICATIONS (PRE-SCHOOL TO GRADE 10)', {
-      x: 52,
-      y: y - 18,
-      size: 9.5,
-      font: fonts.bold,
-      color: C_DARK_GREEN,
-    });
-
-    const girlsRules = [
-      '- Summer Qameez: Plain white A-line cotton qameez with bottle-green collar/piping and embroidered school crest.',
-      '- Shalwar & Dupatta: White cotton shalwar with white cotton dupatta / sash (pinned neatly across shoulders).',
-      '- Winter Additions: Official bottle-green V-neck woolen sweater or tailored bottle-green school blazer.',
-      '- Footwear: Plain black closed shoes with white socks.',
-      '- Hair & Grooming: Hair tied neatly in black ribbons/pins or plain white hijab. Nail polish and makeup are prohibited.',
-    ];
-
-    girlsRules.forEach((gr, gi) => {
-      page.drawText(gr, { x: 52, y: y - 34 - gi * 14, size: 8, font: fonts.regular, color: C_TEXT_DARK });
-    });
-
-    y -= 125;
-
-    page.drawRectangle({
-      x: 40,
-      y: y - 55,
-      width: 515,
-      height: 55,
-      color: C_LIGHT_GREEN,
-      borderColor: C_BORDER,
-      borderWidth: 0.75,
-    });
-
-    page.drawText('PHYSICAL EDUCATION & SPORTS ATTIRE', {
-      x: 52,
-      y: y - 16,
-      size: 9,
-      font: fonts.bold,
-      color: C_DARK_GREEN,
-    });
-
-    page.drawText('On designated sports and physical education days, students wear their respective House T-Shirts (Iqbal / Jinnah / Sir Syed / Tipu Houses) with white sports track trousers and white athletic trainers.', {
-      x: 52,
-      y: y - 32,
-      size: 8,
-      font: fonts.regular,
-      color: C_DARK_GREEN,
-    });
-
-    drawFooter(page, fonts, 2, totalPages);
+    drawFooter(page, fonts, 3, totalPages);
   }
 
   const pdfBytes = await doc.save();

@@ -12,6 +12,7 @@ import {
   Clock
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";
+import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
   title: "Best High School in Wazirabad | Admissions & Top Matric Results | MSNS",
@@ -132,6 +133,31 @@ export default function WazirabadLandingPage() {
                   Inquire Route <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+            </div>
+          </div>
+
+          {/* Surrounding Localities Quick Navigation */}
+          <div className="rounded-3xl bg-white border border-slate-200 p-8 md:p-10 shadow-xs mb-16">
+            <div className="max-w-2xl mb-6">
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Surrounding Wazirabad &amp; Gujranwala Localities Served by MSNS Fleet
+              </h3>
+              <p className="text-xs md:text-sm text-slate-600">
+                In addition to Wazirabad city center, our school buses and vans provide scheduled daily transit across 34+ surrounding towns and rural localities:
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {LOCATIONS_DATA.map((loc) => (
+                <Link
+                  key={loc.slug}
+                  href={`/locations/${loc.slug}`}
+                  className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-200 border border-slate-200 text-xs font-medium text-slate-700 transition-colors shadow-2xs flex items-center gap-1.5"
+                >
+                  <MapPin className="w-3 h-3 text-emerald-600" />
+                  <span>{loc.name}</span>
+                  <span className="text-[10px] text-slate-400 font-serif">({loc.urduName})</span>
+                </Link>
+              ))}
             </div>
           </div>
 
