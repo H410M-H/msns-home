@@ -4,13 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Home, BookOpen, Compass } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { Header } from "~/components/blocks/nav/Header";
-import { Footer } from "~/components/blocks/nav/footer/footer";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col bg-linear-to-b from-yellow-50 via-white to-green-50">
-      <Header />
       <main className="flex-1 flex items-center justify-center px-4 py-28 md:py-36">
         <div className="mx-auto max-w-xl text-center">
           <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-white p-3 shadow-xl border border-green-100">
@@ -85,7 +82,6 @@ export default function NotFound() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Header } from "~/components/blocks/nav/Header";
-import { Footer } from "~/components/blocks/nav/footer/footer";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | M.S. Naz High School",
@@ -11,7 +9,6 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-linear-to-b from-yellow-50 via-white to-green-50">
-      <Header />
       <main className="mx-auto max-w-4xl px-6 py-28 md:py-36 text-slate-800">
         <div className="rounded-3xl border border-green-100 bg-white/80 p-8 md:p-12 shadow-xl backdrop-blur-md">
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-green-900 mb-4">
@@ -64,7 +61,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
