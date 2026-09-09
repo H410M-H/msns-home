@@ -10,7 +10,11 @@ import {
   FlaskConical, 
   Cpu, 
   Calculator, 
-  Sparkles
+  Sparkles,
+  FileText,
+  Layers,
+  GraduationCap,
+  ShieldCheck
 } from "lucide-react";
 import { MATRIC_TEXTBOOKS } from "~/data/matric-textbooks";
 
@@ -20,11 +24,12 @@ interface MatricTextbooksSectionProps {
 }
 
 export function MatricTextbooksSection({
-  title = "New Syllabus Matric Textbooks (PCTB E-Books)",
-  subtitle = "Download official Punjab Curriculum & Textbook Board (PCTB) e-textbooks for Class 9 and Class 10. Aligned with the Single National Curriculum (SNC) & BISE Gujranwala board examination patterns.",
+  title = "New Syllabus Matric Textbooks & Comprehensive Notes",
+  subtitle = "Download official Punjab Curriculum & Textbook Board (PCTB) complete e-textbooks and high-yield MSNS notes for Class 9 and Class 10. Aligned with the Single National Curriculum (SNC) & BISE Gujranwala board examination patterns.",
 }: MatricTextbooksSectionProps) {
   const [selectedGrade, setSelectedGrade] = useState<"Class 9" | "Class 10">("Class 9");
   const [selectedGroup, setSelectedGroup] = useState<"ALL" | "Science" | "Computer Science" | "Compulsory">("ALL");
+  const [resourceType, setResourceType] = useState<"ALL" | "BOOKS" | "NOTES">("ALL");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredBooks = useMemo(() => {
@@ -69,7 +74,7 @@ export function MatricTextbooksSection({
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
         <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-100/80 border border-emerald-200 mb-3 shadow-2xs">
-          <BookOpen className="w-3.5 h-3.5 text-emerald-700" /> PCTB Lahore E-Library Portal
+          <BookOpen className="w-3.5 h-3.5 text-emerald-700" /> PCTB & BISE Official E-Library Portal
         </span>
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-3">
           {title}
@@ -79,15 +84,15 @@ export function MatricTextbooksSection({
         </p>
       </div>
 
-      {/* Controls: Grade Switcher + Filter + Search */}
+      {/* Controls: Grade Switcher + Resource Filter + Search */}
       <div className="p-4 md:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs mb-8 space-y-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
           
           {/* Grade Selector Tabs */}
-          <div className="inline-flex p-1.5 rounded-2xl bg-slate-100 border border-slate-200/80 w-full md:w-auto">
+          <div className="inline-flex p-1.5 rounded-2xl bg-slate-100 border border-slate-200/80 w-full lg:w-auto">
             <button
               onClick={() => setSelectedGrade("Class 9")}
-              className={`flex-1 md:flex-initial px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex-1 lg:flex-initial px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
                 selectedGrade === "Class 9"
                   ? "bg-emerald-700 text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900"
@@ -97,7 +102,7 @@ export function MatricTextbooksSection({
             </button>
             <button
               onClick={() => setSelectedGrade("Class 10")}
-              className={`flex-1 md:flex-initial px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex-1 lg:flex-initial px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
                 selectedGrade === "Class 10"
                   ? "bg-emerald-700 text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-900"
@@ -107,12 +112,46 @@ export function MatricTextbooksSection({
             </button>
           </div>
 
+          {/* Resource Type Filter */}
+          <div className="inline-flex p-1.5 rounded-2xl bg-slate-100 border border-slate-200/80 w-full lg:w-auto">
+            <button
+              onClick={() => setResourceType("ALL")}
+              className={`flex-1 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                resourceType === "ALL"
+                  ? "bg-white text-emerald-800 shadow-xs font-bold"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              All Resources
+            </button>
+            <button
+              onClick={() => setResourceType("BOOKS")}
+              className={`flex-1 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                resourceType === "BOOKS"
+                  ? "bg-white text-emerald-800 shadow-xs font-bold"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Full Textbooks
+            </button>
+            <button
+              onClick={() => setResourceType("NOTES")}
+              className={`flex-1 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                resourceType === "NOTES"
+                  ? "bg-white text-emerald-800 shadow-xs font-bold"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Syllabuses & Notes
+            </button>
+          </div>
+
           {/* Search Input */}
-          <div className="relative w-full md:w-72">
+          <div className="relative w-full lg:w-72">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search textbook or chapter..."
+              placeholder="Search subject or chapter..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all placeholder:text-slate-400"
@@ -122,8 +161,8 @@ export function MatricTextbooksSection({
 
         {/* Group Filter Chips */}
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1">
-            Group:
+          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1 flex items-center gap-1">
+            <Layers className="w-3.5 h-3.5" /> Group:
           </span>
           {(["ALL", "Science", "Computer Science", "Compulsory"] as const).map((grp) => (
             <button
@@ -139,7 +178,7 @@ export function MatricTextbooksSection({
             </button>
           ))}
           <span className="ml-auto text-xs text-slate-400 font-medium">
-            Showing {filteredBooks.length} textbooks
+            Showing {filteredBooks.length} subjects
           </span>
         </div>
       </div>
@@ -152,7 +191,7 @@ export function MatricTextbooksSection({
           return (
             <div
               key={book.id}
-              className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:border-emerald-200"
+              className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:border-emerald-300"
             >
               <div>
                 {/* Card Top */}
@@ -204,51 +243,106 @@ export function MatricTextbooksSection({
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-                <span className="text-[11px] font-semibold text-slate-400">{book.fileSize}</span>
-                
-                <div className="flex items-center gap-1.5">
-                  <a
-                    href={book.downloadUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 hover:text-emerald-800 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 transition-colors"
-                    title="Preview PDF"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" /> Preview
-                  </a>
-                  <a
-                    href={book.downloadUrl}
-                    download={book.filename}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 transition-all px-3 py-1.5 rounded-xl shadow-xs hover:shadow-md"
-                    title={`Download ${book.grade} ${book.subject} PDF`}
-                  >
-                    <Download className="w-3.5 h-3.5" /> Download PDF
-                  </a>
-                </div>
+              {/* Action Downloads (Textbook & Notes) */}
+              <div className="pt-4 border-t border-slate-100 space-y-2">
+                {/* 1. Full Textbook Download */}
+                {resourceType !== "NOTES" && (
+                  <div className="flex items-center justify-between gap-2 p-2 rounded-2xl bg-emerald-50/60 border border-emerald-100/80">
+                    <div className="min-w-0">
+                      <div className="text-[11px] font-bold text-emerald-950 flex items-center gap-1 truncate">
+                        <BookOpen className="w-3.5 h-3.5 text-emerald-700 shrink-0" /> Complete Textbook
+                      </div>
+                      <div className="text-[10px] text-emerald-700 font-semibold">{book.fileSize}</div>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <a
+                        href={book.downloadUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-lg text-slate-600 hover:text-emerald-800 hover:bg-emerald-100/60 transition-colors"
+                        title={`Preview ${book.subject} Textbook`}
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                      <a
+                        href={book.downloadUrl}
+                        download={book.filename}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-white bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 transition-all px-3 py-1.5 rounded-xl shadow-xs"
+                        title={`Direct Download ${book.grade} ${book.subject} Full Textbook`}
+                      >
+                        <Download className="w-3 h-3" /> Book PDF
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 2. Syllabus & High-Yield Notes Download */}
+                {resourceType !== "BOOKS" && (
+                  <div className="flex items-center justify-between gap-2 p-2 rounded-2xl bg-slate-50 border border-slate-200/70">
+                    <div className="min-w-0">
+                      <div className="text-[11px] font-bold text-slate-900 flex items-center gap-1 truncate">
+                        <FileText className="w-3.5 h-3.5 text-slate-600 shrink-0" /> Syllabus & Short Notes
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-medium">{book.notesSize}</div>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <a
+                        href={book.notesDownloadUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors"
+                        title={`Preview ${book.subject} Notes`}
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                      <a
+                        href={book.notesDownloadUrl}
+                        download={book.notesFilename}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-800 bg-white hover:bg-slate-100 border border-slate-200 transition-all px-3 py-1.5 rounded-xl shadow-2xs"
+                        title={`Direct Download ${book.grade} ${book.subject} Short Notes & Syllabus`}
+                      >
+                        <Download className="w-3 h-3 text-emerald-700" /> Notes PDF
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Bottom Info Banner */}
-      <div className="mt-8 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-700">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>
-            All textbooks are hosted on high-speed Cloudflare R2 storage for instant direct download. For paper print editions, visit the Punjab Curriculum and Textbook Board.
-          </span>
+      {/* Bottom Info Banner - 100% Direct Cloudflare Delivery */}
+      <div className="mt-8 p-5 rounded-3xl bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center shrink-0 text-emerald-300">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-emerald-100 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Direct Cloudflare High-Speed Storage
+            </h4>
+            <p className="text-xs text-slate-300 mt-0.5 leading-relaxed max-w-2xl">
+              All complete original textbooks, institutional documents, and board examination notes are served directly via Cloudflare global edge storage. Free and unrestricted universal download access for all students, parents, and educators worldwide—with zero external redirects.
+            </p>
+          </div>
         </div>
-        <a
-          href="https://pctb.punjab.gov.pk/E-Books"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-bold text-emerald-800 hover:text-emerald-900 shrink-0 inline-flex items-center gap-1"
-        >
-          PCTB Official E-Books Portal <ExternalLink className="w-3 h-3" />
-        </a>
+        <div className="flex items-center gap-2 shrink-0 w-full md:w-auto justify-end">
+          <a
+            href="/api/documents/msns-matriculation-scheme-of-studies.pdf"
+            download="msns-matriculation-scheme-of-studies.pdf"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-950 bg-emerald-400 hover:bg-emerald-300 transition-colors px-4 py-2.5 rounded-xl shadow-xs"
+          >
+            <GraduationCap className="w-3.5 h-3.5" /> Scheme of Studies (PDF)
+          </a>
+          <a
+            href="/api/documents/msns-bise-matric-resource-guide.pdf"
+            download="msns-bise-matric-resource-guide.pdf"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-colors px-4 py-2.5 rounded-xl"
+          >
+            <Download className="w-3.5 h-3.5" /> BISE Resource Guide (PDF)
+          </a>
+        </div>
       </div>
     </section>
   );

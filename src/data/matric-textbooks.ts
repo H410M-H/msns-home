@@ -11,13 +11,15 @@ export interface MatricTextbook {
   filename: string;
   fileSize: string;
   downloadUrl: string;
-  officialPortalUrl: string;
   description: string;
   keyChapters: string[];
+  notesFilename: string;
+  notesSize: string;
+  notesDownloadUrl: string;
 }
 
 export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
-  // --- CLASS 9 ---
+  // ==================== CLASS 9 ====================
   {
     id: "physics-9",
     grade: "Class 9",
@@ -25,14 +27,13 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "فزکس",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 9,
     filename: "pctb-class-9-physics.pdf",
-    fileSize: "18.2 MB PDF",
+    fileSize: "36.3 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-physics.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
-    description: "Official Punjab Board textbook covering Physical Quantities, Kinematics, Dynamics, Turning Effect of Forces, Gravitation, Work & Energy, Properties of Matter, Thermal Properties, and Transfer of Heat.",
+    description: "Official complete Punjab Board textbook covering Physical Quantities, Kinematics, Dynamics, Turning Effect of Forces, Gravitation, Work & Energy, Properties of Matter, Thermal Properties, and Transfer of Heat.",
     keyChapters: [
       "Ch 1: Physical Quantities & Measurement",
       "Ch 2: Kinematics (Equations of Motion)",
@@ -43,7 +44,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 7: Properties of Matter (Density & Pressure)",
       "Ch 8: Thermal Properties of Matter",
       "Ch 9: Transfer of Heat"
-    ]
+    ],
+    notesFilename: "msns-class-9-physics-notes.pdf",
+    notesSize: "6.4 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-physics-notes.pdf"
   },
   {
     id: "chemistry-9",
@@ -52,14 +56,13 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "کیمسٹری",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 8,
     filename: "pctb-class-9-chemistry.pdf",
-    fileSize: "16.4 MB PDF",
+    fileSize: "54.0 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-chemistry.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
-    description: "Official textbook detailing Fundamentals of Chemistry, Structure of Atoms, Periodic Table, Structure of Molecules, Physical States of Matter, Solutions, Electrochemistry, and Chemical Reactivity.",
+    description: "Official complete textbook detailing Fundamentals of Chemistry, Structure of Atoms, Periodic Table, Structure of Molecules, Physical States of Matter, Solutions, Electrochemistry, and Chemical Reactivity.",
     keyChapters: [
       "Ch 1: Fundamentals of Chemistry (Mole & Avogadro)",
       "Ch 2: Structure of Atoms (Bohr & Rutherford)",
@@ -69,7 +72,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 6: Solutions (Molarity & Solubility)",
       "Ch 7: Electrochemistry (Redox & Cells)",
       "Ch 8: Chemical Reactivity (Metals & Non-metals)"
-    ]
+    ],
+    notesFilename: "msns-class-9-chemistry-notes.pdf",
+    notesSize: "5.7 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-chemistry-notes.pdf"
   },
   {
     id: "biology-9",
@@ -78,14 +84,13 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "بائیولوجی",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 9,
     filename: "pctb-class-9-biology.pdf",
-    fileSize: "21.5 MB PDF",
+    fileSize: "29.9 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-biology.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
-    description: "Complete Punjab board biology syllabus covering Introduction to Biology, Solving a Biological Problem, Biodiversity, Cells and Tissues, Cell Cycle, Enzymes, Bioenergetics, Nutrition, and Transport.",
+    description: "Complete Punjab board biology textbook covering Introduction to Biology, Solving a Biological Problem, Biodiversity, Cells and Tissues, Cell Cycle, Enzymes, Bioenergetics, Nutrition, and Transport.",
     keyChapters: [
       "Ch 1: Introduction to Biology & Careers",
       "Ch 2: Solving a Biological Problem",
@@ -96,7 +101,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 7: Bioenergetics (Photosynthesis & Respiration)",
       "Ch 8: Nutrition (Human Digestive System)",
       "Ch 9: Transport (Circulation in Humans & Plants)"
-    ]
+    ],
+    notesFilename: "msns-class-9-biology-notes.pdf",
+    notesSize: "6.7 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-biology-notes.pdf"
   },
   {
     id: "computer-science-9",
@@ -105,13 +113,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "کمپیوٹر سائنس",
     group: "Computer Science",
     medium: "English",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 5,
     filename: "pctb-class-9-computer-science.pdf",
-    fileSize: "14.8 MB PDF",
+    fileSize: "17.1 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-computer-science.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Modernized digital curriculum focusing on Problem Solving, Binary Number Systems, Computer Networks & Architecture, Cyber Security & Ethical Computing, and HTML Web Designing.",
     keyChapters: [
       "Unit 1: Problem Solving (Flowcharts & Algorithms)",
@@ -119,7 +126,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Unit 3: Computer Networks & Communications",
       "Unit 4: Data and Cyber Security & Ethics",
       "Unit 5: Designing Website (HTML Fundamentals)"
-    ]
+    ],
+    notesFilename: "msns-class-9-computer-science-notes.pdf",
+    notesSize: "4.9 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-computer-science-notes.pdf"
   },
   {
     id: "mathematics-9",
@@ -128,14 +138,13 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "ریاضی (سائنس)",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 17,
     filename: "pctb-class-9-mathematics.pdf",
-    fileSize: "22.1 MB PDF",
+    fileSize: "108.6 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-mathematics.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
-    description: "Prescribed textbook for Science matriculants: Matrices & Determinants, Real & Complex Numbers, Logarithms, Algebraic Expressions, Factorization, Linear Equations, Trigonometric Theorems, and Geometry.",
+    description: "Prescribed complete textbook for Science matriculants: Matrices & Determinants, Real & Complex Numbers, Logarithms, Algebraic Expressions, Factorization, Linear Equations, Trigonometric Theorems, and Geometry.",
     keyChapters: [
       "Ch 1: Matrices and Determinants",
       "Ch 2: Real and Complex Numbers",
@@ -146,7 +155,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 7: Linear Equations and Inequalities",
       "Ch 9: Introduction to Coordinate Geometry",
       "Ch 12: Line Bisectors & Angle Bisectors (Theorems)"
-    ]
+    ],
+    notesFilename: "msns-class-9-mathematics-notes.pdf",
+    notesSize: "5.9 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-mathematics-notes.pdf"
   },
   {
     id: "english-9",
@@ -155,14 +167,13 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "انگریزی لازمی",
     group: "Compulsory",
     medium: "English",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 12,
     filename: "pctb-class-9-english.pdf",
-    fileSize: "15.6 MB PDF",
+    fileSize: "18.7 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-english.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
-    description: "Official English prose, poetry, and grammar textbook: The Saviour of Mankind, Patriotism, Daffodils, Media and Its Impact, Sultan Ahmad Mosque, Stopping by Woods, and formal writing.",
+    description: "Official complete English prose, poetry, and grammar textbook: The Saviour of Mankind, Patriotism, Daffodils, Media and Its Impact, Sultan Ahmad Mosque, Stopping by Woods, and formal writing.",
     keyChapters: [
       "Unit 1: The Saviour of Mankind (PBUH)",
       "Unit 2: Patriotism",
@@ -172,7 +183,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Unit 6: The Quaid's Vision and Pakistan",
       "Unit 7: Sultan Ahmad Mosque (Blue Mosque)",
       "Unit 8: Stopping by Woods on a Snowy Evening"
-    ]
+    ],
+    notesFilename: "msns-class-9-english-notes.pdf",
+    notesSize: "4.4 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-english-notes.pdf"
   },
   {
     id: "urdu-9",
@@ -181,13 +195,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "اردو لازمی",
     group: "Compulsory",
     medium: "Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 14,
     filename: "pctb-class-9-urdu.pdf",
-    fileSize: "19.3 MB PDF",
+    fileSize: "9.8 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-9-urdu.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Syllabus containing classical and modern Urdu essays, stories, Nazmein, and Ghazliyat by Mir Taqi Mir, Asadullah Khan Ghalib, Allama Iqbal, and Sir Syed Ahmad Khan.",
     keyChapters: [
       "سبق 1: ہجرتِ نبویؐ (مولانا شبلی نعمانی)",
@@ -195,7 +208,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "سبق 3: کاہلی (سر سید احمد خان)",
       "حصہ نظم: حمد، نعت، برسات کی بہاریں",
       "حصہ غزل: میر تقی میر، خواجہ حیدر علی آتش، اسد اللہ خان غالب"
-    ]
+    ],
+    notesFilename: "msns-class-9-urdu-notes.pdf",
+    notesSize: "4.5 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-urdu-notes.pdf"
   },
   {
     id: "tarjuma-tul-quran-9",
@@ -204,13 +220,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "ترجمۃ القرآن المجید",
     group: "Compulsory",
     medium: "Urdu & Arabic",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Single National Curriculum (50 Marks Compulsory)",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete 222-Page Single National Curriculum (SNC) Edition",
     totalChapters: 10,
     filename: "pctb-class-9-tarjuma-tul-quran.pdf",
-    fileSize: "17.8 MB PDF",
+    fileSize: "34.0 MB Full PDF (222 Pages)",
     downloadUrl: "/api/documents/pctb-class-9-tarjuma-tul-quran.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Government of Punjab mandatory Quranic translation and tafseer textbook: Surah Maryam, Surah Taha, Surah Al-Anbiya, Surah Al-Hajj, Surah Al-Furqan, with vocabulary and moral virtues.",
     keyChapters: [
       "تعارف و پس منظر: سورۃ مریم",
@@ -219,7 +234,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "تعارف و پس منظر: سورۃ الحج",
       "تعارف و پس منظر: سورۃ الفرقان",
       "تعارف و پس منظر: سورۃ الشعراء و سورۃ النمل"
-    ]
+    ],
+    notesFilename: "msns-class-9-tarjuma-tul-quran-notes.pdf",
+    notesSize: "4.1 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-tarjuma-tul-quran-notes.pdf"
   },
   {
     id: "islamiat-9",
@@ -228,13 +246,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "اسلامیات لازمی",
     group: "Compulsory",
     medium: "Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete 170-Page Single National Curriculum (SNC) Edition",
     totalChapters: 6,
     filename: "pctb-class-9-islamiat.pdf",
-    fileSize: "12.5 MB PDF",
+    fileSize: "23.9 MB Full PDF (170 Pages)",
     downloadUrl: "/api/documents/pctb-class-9-islamiat.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Core textbook covering Quranic selected verses, Ahadith-e-Nabawiyyah with translations, Islamic beliefs (Tauheed, Risalat, Akhirat), and Seerat-un-Nabi (PBUH).",
     keyChapters: [
       "باب اوّل: قرآن مجید و احادیثِ نبویہؐ",
@@ -242,7 +259,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "باب سوم: سیرتِ طیبہ حضرت محمد رسول اللہؐ",
       "باب چہارم: اخلاق و آداب (صدق، امانت، والدین کا احترام)",
       "باب پنجم: حسنِ معاشرت اور سماجی ذمہ داریاں"
-    ]
+    ],
+    notesFilename: "msns-class-9-islamiat-notes.pdf",
+    notesSize: "4.0 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-islamiat-notes.pdf"
   },
   {
     id: "pakistan-studies-9",
@@ -251,23 +271,25 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "مطالعہ پاکستان",
     group: "Compulsory",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete 115-Page Single National Curriculum (SNC) Edition",
     totalChapters: 4,
     filename: "pctb-class-9-pakistan-studies.pdf",
-    fileSize: "13.9 MB PDF",
+    fileSize: "21.0 MB Full PDF (115 Pages)",
     downloadUrl: "/api/documents/pctb-class-9-pakistan-studies.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Official text for Ideological Basis of Pakistan, Making of Pakistan (1857-1947), Land and Environment, and History of Pakistan (Phase I).",
     keyChapters: [
       "Ch 1: Ideological Basis of Pakistan (Two-Nation Theory)",
       "Ch 2: Making of Pakistan (1906 to 1947)",
       "Ch 3: Land and Environment of Pakistan (Geography & Climate)",
       "Ch 4: Women's Empowerment & Rights in Pakistan"
-    ]
+    ],
+    notesFilename: "msns-class-9-pakistan-studies-notes.pdf",
+    notesSize: "4.1 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-9-pakistan-studies-notes.pdf"
   },
 
-  // --- CLASS 10 ---
+  // ==================== CLASS 10 ====================
   {
     id: "physics-10",
     grade: "Class 10",
@@ -275,13 +297,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "فزکس",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete 342-Page Comprehensive Single National Curriculum Edition",
     totalChapters: 9,
     filename: "pctb-class-10-physics.pdf",
-    fileSize: "19.5 MB PDF",
+    fileSize: "179.4 MB Full PDF (342 Pages)",
     downloadUrl: "/api/documents/pctb-class-10-physics.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Simple Harmonic Motion & Waves, Sound, Geometrical Optics, Electrostatics, Current Electricity, Electromagnetism, Basic Electronics, Information and Communication Technology, and Atomic and Nuclear Physics.",
     keyChapters: [
       "Ch 10: Simple Harmonic Motion and Waves",
@@ -293,7 +314,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 16: Basic Electronics (Logic Gates & Cathode Ray)",
       "Ch 17: Information and Communication Technology",
       "Ch 18: Atomic and Nuclear Physics (Radioactivity & Half-Life)"
-    ]
+    ],
+    notesFilename: "msns-class-10-physics-notes.pdf",
+    notesSize: "6.1 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-physics-notes.pdf"
   },
   {
     id: "chemistry-10",
@@ -302,13 +326,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "کیمسٹری",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 8,
     filename: "pctb-class-10-chemistry.pdf",
-    fileSize: "17.8 MB PDF",
+    fileSize: "108.9 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-chemistry.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Chemical Equilibrium, Acids, Bases and Salts, Organic Chemistry, Hydrocarbons, Biochemistry, Environmental Chemistry (The Atmosphere & Water), and Chemical Industries.",
     keyChapters: [
       "Ch 9: Chemical Equilibrium (Law of Mass Action)",
@@ -319,7 +342,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 14: Environmental Chemistry I: The Atmosphere",
       "Ch 15: Environmental Chemistry II: Water (Hardness & Treatment)",
       "Ch 16: Chemical Industries (Metallurgy, Solvay Process, Urea)"
-    ]
+    ],
+    notesFilename: "msns-class-10-chemistry-notes.pdf",
+    notesSize: "4.6 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-chemistry-notes.pdf"
   },
   {
     id: "biology-10",
@@ -328,13 +354,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "بائیولوجی",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Education, Curriculum, Training and Assessment Authority (PECTAA)",
+    edition: "Complete PECTAA Revised Single National Curriculum Edition",
     totalChapters: 9,
     filename: "pctb-class-10-biology.pdf",
-    fileSize: "22.7 MB PDF",
+    fileSize: "56.1 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-biology.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Gaseous Exchange, Homeostasis, Coordination and Control, Support and Movement, Reproduction, Inheritance, Biotechnology, and Pharmacology.",
     keyChapters: [
       "Ch 10: Gaseous Exchange in Plants & Humans",
@@ -346,7 +371,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 16: Man and His Environment (Ecosystems & Pollution)",
       "Ch 17: Biotechnology (Genetic Engineering & Fermentation)",
       "Ch 18: Pharmacology (Medicinal & Addictive Drugs)"
-    ]
+    ],
+    notesFilename: "msns-class-10-biology-notes.pdf",
+    notesSize: "5.6 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-biology-notes.pdf"
   },
   {
     id: "computer-science-10",
@@ -355,13 +383,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "کمپیوٹر سائنس",
     group: "Computer Science",
     medium: "English",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 5,
     filename: "pctb-class-10-computer-science.pdf",
-    fileSize: "16.1 MB PDF",
+    fileSize: "42.4 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-computer-science.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Structured programming in C Language: Introduction to Programming, User Interface & Variables, Conditional Logic (If-Else & Switch), Loops & Control Structures, and Functions.",
     keyChapters: [
       "Unit 1: Introduction to Programming (C Environment & IDE)",
@@ -369,7 +396,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Unit 3: Conditional Logic (Relational Operators & If Statements)",
       "Unit 4: Data Structures & Loops (For, While, Do-While Loops)",
       "Unit 5: Functions (User-Defined Functions & Modular Code)"
-    ]
+    ],
+    notesFilename: "msns-class-10-computer-science-notes.pdf",
+    notesSize: "4.0 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-computer-science-notes.pdf"
   },
   {
     id: "mathematics-10",
@@ -378,13 +408,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "ریاضی (سائنس)",
     group: "Science",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete Single National Curriculum (SNC) Textbook Edition",
     totalChapters: 13,
     filename: "pctb-class-10-mathematics.pdf",
-    fileSize: "23.4 MB PDF",
+    fileSize: "99.0 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-mathematics.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Quadratic Equations, Theory of Quadratic Equations, Variations, Partial Fractions, Sets and Functions, Basic Statistics, Introduction to Trigonometry, and Circle Geometry Theorems.",
     keyChapters: [
       "Ch 1: Quadratic Equations (Factoring & Quadratic Formula)",
@@ -395,7 +424,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Ch 6: Basic Statistics (Mean, Median, Mode & Deviation)",
       "Ch 7: Introduction to Trigonometry (Identities & Heights)",
       "Ch 9: Chords of a Circle (Mandatory 8-Mark Theorems)"
-    ]
+    ],
+    notesFilename: "msns-class-10-mathematics-notes.pdf",
+    notesSize: "4.7 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-mathematics-notes.pdf"
   },
   {
     id: "english-10",
@@ -404,13 +436,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "انگریزی لازمی",
     group: "Compulsory",
     medium: "English",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Education, Curriculum, Training and Assessment Authority (PECTAA)",
+    edition: "Complete PECTAA Revised Single National Curriculum Edition",
     totalChapters: 13,
     filename: "pctb-class-10-english.pdf",
-    fileSize: "16.8 MB PDF",
+    fileSize: "50.7 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-english.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Hazrat Muhammad (PBUH) an Embodiment of Justice, Chinese New Year, Try Again, First Aid, Television vs Newspapers, Little by Little One Walks Far, A World Without Books, and Peace.",
     keyChapters: [
       "Unit 1: Hazrat Muhammad (PBUH) an Embodiment of Justice",
@@ -421,7 +452,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "Unit 6: Television vs Newspapers",
       "Unit 7: Little by Little One Walks Far",
       "Unit 8: Peace (Poem by Dr. Hartmann)"
-    ]
+    ],
+    notesFilename: "msns-class-10-english-notes.pdf",
+    notesSize: "4.1 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-english-notes.pdf"
   },
   {
     id: "urdu-10",
@@ -430,13 +464,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "اردو لازمی",
     group: "Compulsory",
     medium: "Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Education, Curriculum, Training and Assessment Authority (PECTAA)",
+    edition: "Complete PECTAA Revised Single National Curriculum Edition",
     totalChapters: 15,
     filename: "pctb-class-10-urdu.pdf",
-    fileSize: "20.2 MB PDF",
+    fileSize: "46.5 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-urdu.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Senior matric Urdu literature: Mirza Muhammad Saeed, Paristan ki Shehzadi, Urdu Adab mein Eid-ul-Fitr, Mujhe Mere Doston se Bachao, and classical poetry of Hasrat Mohani and Jigar Muradabadi.",
     keyChapters: [
       "سبق 1: مرزا محمد سعید (شاہد احمد دہلوی)",
@@ -445,7 +478,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "سبق 4: اردو ادب میں عید الفطر",
       "حصہ نظم: میدانِ کربلا میں صبح کا منظر (میر انیس)، فاطمہ بنتِ عبداللہ (اقبال)",
       "حصہ غزل: حسرت موہانی، جگر مراد آبادی، فراق گورکھپوری"
-    ]
+    ],
+    notesFilename: "msns-class-10-urdu-notes.pdf",
+    notesSize: "4.0 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-urdu-notes.pdf"
   },
   {
     id: "tarjuma-tul-quran-10",
@@ -454,13 +490,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "ترجمۃ القرآن المجید",
     group: "Compulsory",
     medium: "Urdu & Arabic",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Single National Curriculum (50 Marks Compulsory)",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete 240-Page Single National Curriculum (SNC) Edition",
     totalChapters: 10,
     filename: "pctb-class-10-tarjuma-tul-quran.pdf",
-    fileSize: "18.5 MB PDF",
+    fileSize: "44.7 MB Full PDF (240 Pages)",
     downloadUrl: "/api/documents/pctb-class-10-tarjuma-tul-quran.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Prescribed translation, thematic commentary, and moral lessons from Surah Al-Qasas, Surah Al-Ankabut, Surah Ar-Rum, Surah Luqman, Surah As-Sajdah, and Surah Al-Ahzab.",
     keyChapters: [
       "تعارف و پس منظر: سورۃ القصص",
@@ -469,7 +504,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "تعارف و پس منظر: سورۃ لقمان (حکمت و تربیتِ اولاد)",
       "تعارف و پس منظر: سورۃ السجدہ",
       "تعارف و پس منظر: سورۃ الاحزاب (غزوہ احزاب و احکامِ پردہ)"
-    ]
+    ],
+    notesFilename: "msns-class-10-tarjuma-tul-quran-notes.pdf",
+    notesSize: "4.0 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-tarjuma-tul-quran-notes.pdf"
   },
   {
     id: "islamiat-10",
@@ -478,13 +516,12 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "اسلامیات لازمی",
     group: "Compulsory",
     medium: "Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Curriculum and Textbook Board (PCTB)",
+    edition: "Complete 170-Page Single National Curriculum (SNC) Edition",
     totalChapters: 6,
     filename: "pctb-class-10-islamiat.pdf",
-    fileSize: "13.1 MB PDF",
+    fileSize: "36.6 MB Full PDF (170 Pages)",
     downloadUrl: "/api/documents/pctb-class-10-islamiat.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "Tafseer of selected Quranic Ayat, Ahadith-e-Nabawiyyah with context, Seerat-un-Nabi (PBUH) Conquest of Makkah and Farewell Pilgrimage, and contemporary Islamic ethics.",
     keyChapters: [
       "باب اوّل: قرآن مجید، فہمِ قرآن و احادیث مبارکہؐ",
@@ -492,7 +529,10 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
       "باب سوم: سیرتِ طیبہؐ (فتح مکہ، خطبہ حجۃ الوداع)",
       "باب چہارم: اسلامی ریاست اور شہریوں کے حقوق",
       "باب پنجم: اسلامی نظامِ عدل و انصاف"
-    ]
+    ],
+    notesFilename: "msns-class-10-islamiat-notes.pdf",
+    notesSize: "3.8 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-islamiat-notes.pdf"
   },
   {
     id: "pakistan-studies-10",
@@ -501,20 +541,22 @@ export const MATRIC_TEXTBOOKS: MatricTextbook[] = [
     urduSubject: "مطالعہ پاکستان",
     group: "Compulsory",
     medium: "English & Urdu",
-    publisher: "Punjab Curriculum and Textbook Board (PCTB Lahore)",
-    edition: "Latest Single National Curriculum (SNC) Revised Edition",
+    publisher: "Punjab Education, Curriculum, Training and Assessment Authority (PECTAA)",
+    edition: "Complete PECTAA Revised Single National Curriculum Edition",
     totalChapters: 4,
     filename: "pctb-class-10-pakistan-studies.pdf",
-    fileSize: "14.7 MB PDF",
+    fileSize: "98.0 MB Full PDF",
     downloadUrl: "/api/documents/pctb-class-10-pakistan-studies.pdf",
-    officialPortalUrl: "https://pctb.punjab.gov.pk/E-Books",
     description: "History of Pakistan (1971 to present), Foreign Policy of Pakistan & International Relations, Economic Development of Pakistan, and Population, Society & Culture.",
     keyChapters: [
       "Ch 5: History of Pakistan II (1971 to Modern Era & 1973 Constitution)",
       "Ch 6: Pakistan in World Affairs (Foreign Policy & CPEC)",
       "Ch 7: Economic Development of Pakistan (Agriculture, Industry & Energy)",
       "Ch 8: Population, Society and Culture of Pakistan"
-    ]
+    ],
+    notesFilename: "msns-class-10-pakistan-studies-notes.pdf",
+    notesSize: "4.3 KB PDF",
+    notesDownloadUrl: "/api/documents/msns-class-10-pakistan-studies-notes.pdf"
   }
 ];
 

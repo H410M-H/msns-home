@@ -49,3 +49,6 @@ yarn-error.log*
 /scratch
 graphify-out/
 .env*
+
+# Large temporary textbook source files hosted in Cloudflare R2
+public/documents/*-full.pdf
