@@ -4,19 +4,21 @@
 # -----------------------------------------------------------------------------
 
 User-agent: *
-Content-Signal: search=yes,ai-input=yes,ai-train=no
+Content-Signal: search=yes,ai-input=yes,ai-train=yes
 Allow: /
 Allow: /api/images/
 Allow: /api/documents/
 Allow: /documents/
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /sitemap.xml
 Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 
-# Explicitly permit AI Search Engines & Grounding Bots (ChatGPT, Perplexity, Claude, Gemini, Apple Intelligence)
+# Explicitly permit AI Search Engines, Grounding Bots & Model Training Crawlers
+# OpenAI (ChatGPT, Search, Grounding)
 User-agent: GPTBot
 Allow: /
 
@@ -26,25 +28,47 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+# Perplexity AI
 User-agent: PerplexityBot
 Allow: /
 
+# Anthropic (Claude)
 User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+# Google AI & Extended Crawlers (Gemini, AI Overviews)
 User-agent: Google-Extended
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
+User-agent: GoogleOther-Image
+Allow: /
+
+# Apple Intelligence
 User-agent: Applebot
 Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
 
+# Meta AI
 User-agent: meta-externalagent
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# xAI (Grok) / Twitter
+User-agent: Twitterbot
 Allow: /
 
 # Traditional Search Engines

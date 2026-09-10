@@ -4,9 +4,10 @@ import {
   MapPin, 
   Bus, 
   CheckCircle2, 
-  ArrowRight
+  ArrowRight,
+  HelpCircle
 } from "lucide-react";
-import { BreadcrumbSchema } from "~/components/SEOSchema";
+import { BreadcrumbSchema, LocalSchoolSchema } from "~/components/SEOSchema";
 import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
@@ -64,6 +65,25 @@ const transportRoutes = [
   { area: "Allahabad & Adjacent Residential Colonies", time: "Monitored Transport Fleet" },
 ];
 
+const wazirabadFaqs = [
+  {
+    question: "Which is the best high school in Wazirabad for Matric and Oxford curriculum?",
+    answer: "M. S. Naz High School® (MSNS) is officially ranked #1 in Tehsil Wazirabad. Established in 2004 with BISE Gujranwala Affiliation Code 112199, MSNS maintains an unbroken 100% board matric pass rate, Oxford international syllabus standards, practical AI and science labs, and a proprietary 15 TB cloud LMS."
+  },
+  {
+    question: "Is reliable school transport available from Wazirabad to M. S. Naz High School?",
+    answer: "Yes. MSNS operates dedicated daily school vans servicing all major neighborhoods of Wazirabad, including City Center, Kutchery Road, Nizamabad, Sialkot Road Bypass, Circular Road, and Allahabad, with an easy 10–12 minute commute via direct G.T. Road access."
+  },
+  {
+    question: "What matriculation streams and subjects are offered for Wazirabad students?",
+    answer: "MSNS offers both Science Group (Physics, Chemistry, Biology, Mathematics) and Computer Science Group (C Programming, Computer Networks, Cyber Security, Physics, Chemistry, Math) under BISE Gujranwala with extensive practical laboratory rehearsals."
+  },
+  {
+    question: "How can Wazirabad parents monitor their child's attendance and test performance?",
+    answer: "Parents receive automated instant SMS alerts and mobile app notifications through the proprietary 15 TB Naz LMS portal (https://lms.msns.edu.pk), providing real-time gate entry/exit notifications, digital homework diaries, fee challans, and online result cards."
+  }
+];
+
 export default function WazirabadLandingPage() {
   const breadcrumbs = [
     { name: "Home", url: "https://www.msns.edu.pk" },
@@ -73,6 +93,12 @@ export default function WazirabadLandingPage() {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <LocalSchoolSchema
+        locationName="Wazirabad"
+        locationUrduName="وزیر آباد"
+        slug="wazirabad"
+        faqs={wazirabadFaqs}
+      />
       <main className="min-h-screen bg-linear-to-b from-slate-50 via-white to-emerald-50/30 pt-24 pb-20">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           
@@ -168,6 +194,37 @@ export default function WazirabadLandingPage() {
                   <span>{loc.name}</span>
                   <span className="text-[10px] text-slate-400 font-serif">({loc.urduName})</span>
                 </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Conversational FAQs for Wazirabad Parents */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 shadow-xs mb-16">
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 mb-2">
+                <HelpCircle className="w-3.5 h-3.5 text-emerald-600" /> Wazirabad Admissions FAQ
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
+                Frequently Asked Questions for Wazirabad Families
+              </h2>
+              <p className="text-xs md:text-sm text-slate-500 mt-1">
+                Direct answers on transport routes, matric board honors, curriculum, and admissions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {wazirabadFaqs.map((faq) => (
+                <div key={faq.question} className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-900 mb-2 flex items-start gap-2">
+                      <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs md:text-sm text-slate-600 leading-relaxed pl-6">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

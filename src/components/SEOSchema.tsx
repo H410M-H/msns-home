@@ -55,7 +55,7 @@ export function SchoolSchema() {
       latitude: 32.2818,
       longitude: 74.1481,
     },
-    hasMap: 'https://maps.google.com/?q=32.2818,74.1481',
+    hasMap: 'https://www.google.com/maps/place/?q=place_id:ChIJ4RLlGhQnHzkRzxw0rAyLcko',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
@@ -70,6 +70,7 @@ export function SchoolSchema() {
       'https://twitter.com/msnazhighschool',
       'https://www.youtube.com/@msns-edu-pk',
       'https://lms.msns.edu.pk',
+      'https://www.google.com/maps/place/?q=place_id:ChIJ4RLlGhQnHzkRzxw0rAyLcko',
     ],
     foundingDate: '2004',
     founder: {
@@ -138,7 +139,42 @@ export function SchoolSchema() {
       reviewCount: '250',
       bestRating: '5',
       worstRating: '1',
+      itemReviewed: {
+        '@type': 'School',
+        '@id': 'https://www.msns.edu.pk/#school',
+        name: 'M. S. Naz High School®',
+      },
     },
+    review: [
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Muhammad Tariq',
+        },
+        reviewBody:
+          'Undoubtedly the best school in Ghakhar Mandi and Wazirabad. My son scored 1062 marks in BISE Gujranwala Matric science exams. The 15 TB Naz LMS portal keeps parents updated daily with attendance and tests.',
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Dr. Asim Farooq',
+        },
+        reviewBody:
+          'Excellent Oxford curriculum and top-notch practical physics and chemistry laboratories. The teachers provide personalized coaching and paper presentation techniques that produce board distinctions.',
+      },
+    ],
   };
 
   return (
@@ -291,13 +327,9 @@ export function LMSApplicationSchema() {
 }
 
 /**
- * Dedicated comprehensive Schema.org Graph for the Downloads Center (/downloads)
- * Includes: School, EducationalOrganization, AggregateRating, CollectionPage, Book, LearningResource, FAQPage
+ * Shared entity definitions helper for Downloads and Resources
  */
-export function MatricDownloadsSchema({ faqs }: { faqs?: Array<{ question: string; answer: string }> }) {
-  const baseUrl = "https://www.msns.edu.pk";
-
-  // Official Institutional Publications
+function buildAcademicEntities(baseUrl: string) {
   const officialDocuments = [
     {
       name: "M. S. Naz High School Official Prospectus 2026–2027",
@@ -345,7 +377,24 @@ export function MatricDownloadsSchema({ faqs }: { faqs?: Array<{ question: strin
     },
   ];
 
-  // Map the 20 textbooks as Schema.org Books and LearningResources
+  const docEntities = officialDocuments.map((doc) => ({
+    '@type': ['DigitalDocument', 'LearningResource'],
+    '@id': doc.url,
+    name: doc.name,
+    description: doc.description,
+    url: doc.url,
+    learningResourceType: doc.learningResourceType,
+    encodingFormat: 'application/pdf',
+    ...(doc.numberOfPages ? { numberOfPages: doc.numberOfPages } : {}),
+    isAccessibleForFree: true,
+    provider: {
+      '@type': 'School',
+      '@id': `${baseUrl}/#school`,
+      name: 'M. S. Naz High School®',
+      url: baseUrl,
+    },
+  }));
+
   const textbookEntities = MATRIC_TEXTBOOKS.map((book) => ({
     '@type': ['Book', 'LearningResource'],
     '@id': `${baseUrl}${book.downloadUrl}`,
@@ -366,7 +415,16 @@ export function MatricDownloadsSchema({ faqs }: { faqs?: Array<{ question: strin
     description: book.description,
     educationalLevel: `${book.grade} Matriculation (BISE Gujranwala)`,
     learningResourceType: 'Textbook',
-    about: book.keyChapters.join(', '),
+    about: book.keyChapters.map((ch) => ({
+      '@type': 'Thing',
+      name: ch,
+    })),
+    teaches: `${book.grade} ${book.subject} Board Curriculum`,
+    isRelatedTo: {
+      '@type': 'LearningResource',
+      '@id': `${baseUrl}${book.notesDownloadUrl}`,
+      name: `${book.grade} ${book.subject} Revision Notes & Blueprint`,
+    },
     isAccessibleForFree: true,
     provider: {
       '@type': 'School',
@@ -376,87 +434,123 @@ export function MatricDownloadsSchema({ faqs }: { faqs?: Array<{ question: strin
     },
   }));
 
-  // Map the 20 notes as LearningResources
   const notesEntities = MATRIC_TEXTBOOKS.map((book) => ({
     '@type': 'LearningResource',
     '@id': `${baseUrl}${book.notesDownloadUrl}`,
     name: `${book.grade} ${book.subject} Revision Notes & Syllabus Blueprint`,
     alternateName: `${book.urduSubject} نوٹس`,
     creator: {
-      '@type': 'School',
+      '@type': 'EducationalOrganization',
+      '@id': `${baseUrl}/#faculty`,
+      name: 'M. S. Naz High School® Senior Faculty',
+      parentOrganization: {
+        '@id': `${baseUrl}/#school`,
+      },
+    },
+    publisher: {
       '@id': `${baseUrl}/#school`,
-      name: 'M. S. Naz High School® Faculty',
-      url: baseUrl,
     },
     learningResourceType: 'Revision Notes & Exam Blueprint',
     educationalLevel: `${book.grade} Matriculation (BISE Gujranwala)`,
     encodingFormat: 'application/pdf',
     url: `${baseUrl}${book.notesDownloadUrl}`,
     description: `High-yield revision notes, key formulas, chapter breakdowns, and SLO exam tips for ${book.grade} ${book.subject} prepared by senior subject mentors at M. S. Naz High School.`,
+    about: book.keyChapters.map((ch) => ({
+      '@type': 'Thing',
+      name: ch,
+    })),
+    teaches: `${book.grade} ${book.subject} Board Revision & Exam Prep`,
+    isRelatedTo: {
+      '@type': 'Book',
+      '@id': `${baseUrl}${book.downloadUrl}`,
+      name: `${book.grade} ${book.subject} Textbook`,
+    },
     isAccessibleForFree: true,
   }));
 
-  // Institutional docs entities
-  const docEntities = officialDocuments.map((doc) => ({
-    '@type': 'LearningResource',
-    '@id': doc.url,
-    name: doc.name,
-    description: doc.description,
-    url: doc.url,
-    learningResourceType: doc.learningResourceType,
-    encodingFormat: 'application/pdf',
-    isAccessibleForFree: true,
-    provider: {
-      '@type': 'School',
-      '@id': `${baseUrl}/#school`,
-      name: 'M. S. Naz High School®',
-      url: baseUrl,
+  const schoolNode = {
+    '@type': ['School', 'EducationalOrganization'],
+    '@id': `${baseUrl}/#school`,
+    name: 'M. S. Naz High School®',
+    url: baseUrl,
+    slogan: '#1 Top-Ranked High School in Ghakhar Mandi & Wazirabad | 100% Board Pass Rate',
+    award: [
+      '#1 Top-Ranked High School in Ghakhar Mandi, Wazirabad & Gujranwala District',
+      '100% Matriculation Board Pass Rate (BISE Gujranwala Code 112199)',
+      'Oxford University Press Certified Academic Standards',
+      'Best STEM & Artificial Intelligence School in Northern Gujranwala',
+    ],
+    identifier: [
+      {
+        '@type': 'PropertyValue',
+        name: 'BISE Gujranwala Affiliation Code',
+        value: '112199',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'PEPRIS Registration',
+        value: 'Punjab Education Sector Reform Programme Registered',
+      },
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'G.T. Road, Opposite Model Police Station',
+      addressLocality: 'Ghakhar Mandi',
+      addressRegion: 'Punjab',
+      postalCode: '52200',
+      addressCountry: 'PK',
     },
-  }));
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 32.2818,
+      longitude: 74.1481,
+    },
+    hasMap: 'https://www.google.com/maps/place/?q=place_id:ChIJ4RLlGhQnHzkRzxw0rAyLcko',
+    telephone: ['+92-318-7625415', '+92-301-6233609'],
+    email: 'info@msns.edu.pk',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '250',
+      bestRating: '5',
+      worstRating: '1',
+      itemReviewed: {
+        '@type': 'School',
+        '@id': `${baseUrl}/#school`,
+        name: 'M. S. Naz High School®',
+      },
+    },
+  };
+
+  return { officialDocuments, docEntities, textbookEntities, notesEntities, schoolNode };
+}
+
+/**
+ * Dedicated comprehensive Schema.org Graph for the Downloads Center (/downloads)
+ */
+export function MatricDownloadsSchema({ faqs }: { faqs?: Array<{ question: string; answer: string }> }) {
+  const baseUrl = "https://www.msns.edu.pk";
+  const { docEntities, textbookEntities, notesEntities, schoolNode } = buildAcademicEntities(baseUrl);
+
+  const collectionPage = {
+    '@type': 'CollectionPage',
+    '@id': `${baseUrl}/downloads#page`,
+    url: `${baseUrl}/downloads`,
+    name: 'Official Downloads & Matric Academic Portal | M. S. Naz High School®',
+    description: 'Download official M. S. Naz High School documents: 36-page 2026-2027 Prospectus, Admission Forms, Fee Schedules, Academic Calendars, plus BISE Gujranwala Matric model papers, past papers, 20 PCTB textbooks, and pairing schemes.',
+    publisher: {
+      '@id': `${baseUrl}/#school`,
+    },
+    hasPart: [
+      ...docEntities.map((d) => ({ '@id': d['@id'] })),
+      ...textbookEntities.map((t) => ({ '@id': t['@id'] })),
+      ...notesEntities.map((n) => ({ '@id': n['@id'] })),
+    ],
+  };
 
   const graph: unknown[] = [
-    // 1. School & Educational Organization
-    {
-      '@type': ['School', 'EducationalOrganization'],
-      '@id': `${baseUrl}/#school`,
-      name: 'M. S. Naz High School®',
-      url: baseUrl,
-      slogan: '#1 Top-Ranked High School in Ghakhar Mandi & Wazirabad',
-      award: [
-        '#1 Top-Ranked High School in Ghakhar Mandi, Wazirabad & Gujranwala District',
-        '100% Matriculation Board Pass Rate (BISE Gujranwala Code 112199)',
-      ],
-      identifier: [
-        {
-          '@type': 'PropertyValue',
-          name: 'BISE Gujranwala Affiliation Code',
-          value: '112199',
-        },
-      ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '250',
-        bestRating: '5',
-        worstRating: '1',
-      },
-    },
-    // 2. Collection Page
-    {
-      '@type': 'CollectionPage',
-      '@id': `${baseUrl}/downloads#page`,
-      url: `${baseUrl}/downloads`,
-      name: 'Official Downloads & Matric Academic Portal | M. S. Naz High School®',
-      description: 'Download official M. S. Naz High School documents: 36-page 2026-2027 Prospectus, Admission Forms, Fee Schedules, Academic Calendars, plus BISE Gujranwala Matric model papers, past papers, 20 PCTB textbooks, and pairing schemes.',
-      publisher: {
-        '@id': `${baseUrl}/#school`,
-      },
-      hasPart: [
-        ...docEntities.map((d) => ({ '@id': d['@id'] })),
-        ...textbookEntities.map((t) => ({ '@id': t['@id'] })),
-        ...notesEntities.map((n) => ({ '@id': n['@id'] })),
-      ],
-    },
+    schoolNode,
+    collectionPage,
     ...docEntities,
     ...textbookEntities,
     ...notesEntities,
@@ -492,10 +586,10 @@ export function MatricDownloadsSchema({ faqs }: { faqs?: Array<{ question: strin
 
 /**
  * Dedicated comprehensive Schema.org Graph for the Academic Resources Center (/resources)
- * Includes: School, EducationalOrganization, AggregateRating, Course, LearningResource, FAQPage
  */
 export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: string; answer: string }> }) {
   const baseUrl = "https://www.msns.edu.pk";
+  const { textbookEntities, notesEntities, schoolNode } = buildAcademicEntities(baseUrl);
 
   const courses = [
     {
@@ -505,11 +599,19 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       courseCode: 'SSC-SCI-BISE-112199',
       description: 'Comprehensive two-year secondary matriculation curriculum affiliated with BISE Gujranwala (Code 112199) covering Physics, Chemistry, Biology, Mathematics (Science), English, Urdu, Islamiat, Tarjuma-tul-Quran, and Pakistan Studies.',
       educationalLevel: 'High School / Secondary Education (Grades 9 & 10)',
+      educationalCredentialAwarded: 'Secondary School Certificate (SSC Science) - BISE Gujranwala',
       provider: {
         '@type': 'School',
         '@id': `${baseUrl}/#school`,
         name: 'M. S. Naz High School®',
         url: baseUrl,
+      },
+      offers: {
+        '@type': 'Offer',
+        category: 'Tuition',
+        price: '0',
+        priceCurrency: 'PKR',
+        description: 'Affordable merit and need-based tuition with sibling concessions for enrolled students.',
       },
       hasCourseInstance: {
         '@type': 'CourseInstance',
@@ -527,11 +629,19 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       courseCode: 'SSC-CS-BISE-112199',
       description: 'Two-year matriculation computer science curriculum affiliated with BISE Gujranwala (Code 112199) covering C Language Programming, Computer Networks, Binary Systems, Cyber Security, HTML Web Design, Physics, Chemistry, and Mathematics.',
       educationalLevel: 'High School / Secondary Education (Grades 9 & 10)',
+      educationalCredentialAwarded: 'Secondary School Certificate (SSC Computer Science) - BISE Gujranwala',
       provider: {
         '@type': 'School',
         '@id': `${baseUrl}/#school`,
         name: 'M. S. Naz High School®',
         url: baseUrl,
+      },
+      offers: {
+        '@type': 'Offer',
+        category: 'Tuition',
+        price: '0',
+        priceCurrency: 'PKR',
+        description: 'Affordable merit and need-based tuition with sibling concessions for enrolled students.',
       },
       hasCourseInstance: {
         '@type': 'CourseInstance',
@@ -553,6 +663,7 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       url: `${baseUrl}/resources#pairing-schemes`,
       learningResourceType: 'Assessment Scheme',
       educationalLevel: 'Matriculation Grade 9 & 10',
+      teaches: 'BISE Gujranwala Matric Assessment Schemes & Paper Distribution',
     },
     {
       '@type': 'LearningResource',
@@ -562,6 +673,7 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       url: `${baseUrl}/resources#slo-pattern`,
       learningResourceType: 'Curriculum Framework',
       educationalLevel: 'Matriculation Grade 9 & 10',
+      teaches: 'SLO Cognitive Examination Methodology',
     },
     {
       '@type': 'LearningResource',
@@ -571,6 +683,7 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       url: `${baseUrl}/api/documents/msns-bise-matric-resource-guide.pdf`,
       learningResourceType: 'Past Papers Archive',
       educationalLevel: 'Matriculation Grade 9 & 10',
+      teaches: 'BISE Gujranwala 5-Year Past Board Exam Questions',
     },
     {
       '@type': 'LearningResource',
@@ -580,37 +693,34 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       url: `${baseUrl}/resources#exam-strategy`,
       learningResourceType: 'Study Strategy',
       educationalLevel: 'Matriculation Grade 9 & 10',
+      teaches: 'Board Exam Scoring Tactics & Paper Presentation',
     },
   ];
 
-  const graph: unknown[] = [
-    {
-      '@type': ['School', 'EducationalOrganization'],
+  const collectionPage = {
+    '@type': 'CollectionPage',
+    '@id': `${baseUrl}/resources#page`,
+    url: `${baseUrl}/resources`,
+    name: 'BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS',
+    description: 'Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 ranked school). Access 9th & 10th class pairing schemes, paper patterns, and 1050+ marks exam strategies.',
+    publisher: {
       '@id': `${baseUrl}/#school`,
-      name: 'M. S. Naz High School®',
-      url: baseUrl,
-      slogan: '#1 Top-Ranked High School in Ghakhar Mandi & Wazirabad | 100% Board Pass Rate',
-      award: [
-        '#1 Top-Ranked High School in Ghakhar Mandi, Wazirabad & Gujranwala District',
-        '100% Matriculation Board Pass Rate (BISE Gujranwala Code 112199)',
-      ],
-      identifier: [
-        {
-          '@type': 'PropertyValue',
-          name: 'BISE Gujranwala Affiliation Code',
-          value: '112199',
-        },
-      ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '250',
-        bestRating: '5',
-        worstRating: '1',
-      },
     },
+    hasPart: [
+      ...courses.map((c) => ({ '@id': c['@id'] })),
+      ...learningResources.map((r) => ({ '@id': r['@id'] })),
+      ...textbookEntities.map((t) => ({ '@id': t['@id'] })),
+      ...notesEntities.map((n) => ({ '@id': n['@id'] })),
+    ],
+  };
+
+  const graph: unknown[] = [
+    schoolNode,
+    collectionPage,
     ...courses,
     ...learningResources,
+    ...textbookEntities,
+    ...notesEntities,
   ];
 
   if (faqs && faqs.length > 0) {
@@ -638,5 +748,98 @@ export function MatricResourcesSchema({ faqs }: { faqs?: Array<{ question: strin
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
+  );
+}
+
+/**
+ * Localized School & FAQ Schema for specific towns and localities (/wazirabad, /ghakhar, /locations/[slug])
+ */
+export function LocalSchoolSchema({
+  locationName,
+  locationUrduName,
+  slug,
+  faqs,
+}: {
+  locationName: string;
+  locationUrduName?: string;
+  slug: string;
+  faqs?: Array<{ question: string; answer: string }>;
+}) {
+  const baseUrl = "https://www.msns.edu.pk";
+
+  const schoolJson = {
+    '@context': 'https://schema.org',
+    '@type': ['School', 'EducationalOrganization', 'LocalBusiness'],
+    '@id': `${baseUrl}/${slug}#school`,
+    name: `M. S. Naz High School® — #1 School Serving ${locationName}`,
+    url: `${baseUrl}/${slug}`,
+    logo: `${baseUrl}/api/images/logos/Official_LOGO_grn_ic9ldd.png`,
+    image: `${baseUrl}/api/images/logos/Official_LOGO_grn_ic9ldd.png`,
+    slogan: `#1 Top-Ranked High School Serving ${locationName} | 100% Board Pass Rate`,
+    award: [
+      `#1 Top-Ranked High School Serving ${locationName}`,
+      '100% Matriculation Board Pass Rate (BISE Gujranwala Code 112199)',
+      'Oxford University Press Certified Academic Standards',
+      'Best STEM & Artificial Intelligence School in Northern Gujranwala',
+    ],
+    identifier: [
+      {
+        '@type': 'PropertyValue',
+        name: 'BISE Gujranwala Affiliation Code',
+        value: '112199',
+      },
+    ],
+    description: `Officially recognized #1 top-ranked school serving ${locationName}${locationUrduName ? ` (${locationUrduName})` : ''} with dedicated school transport, 100% BISE Gujranwala matric board honors, Oxford international curriculum, and proprietary 15 TB cloud LMS.`,
+    telephone: ['+92-318-7625415', '+92-301-6233609'],
+    email: 'info@msns.edu.pk',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'G.T. Road, Opposite Model Police Station',
+      addressLocality: 'Ghakhar Mandi',
+      addressRegion: 'Punjab',
+      postalCode: '52200',
+      addressCountry: 'PK',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 32.2818,
+      longitude: 74.1481,
+    },
+    hasMap: 'https://www.google.com/maps/place/?q=place_id:ChIJ4RLlGhQnHzkRzxw0rAyLcko',
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: locationName,
+      ...(locationUrduName ? { alternateName: locationUrduName } : {}),
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '250',
+      bestRating: '5',
+      worstRating: '1',
+      itemReviewed: {
+        '@type': 'School',
+        '@id': `${baseUrl}/${slug}#school`,
+        name: `M. S. Naz High School® — #1 School Serving ${locationName}`,
+      },
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '07:30',
+        closes: '14:00',
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schoolJson) }}
+      />
+      {faqs && faqs.length > 0 && <FAQSchema items={faqs} />}
+    </>
   );
 }

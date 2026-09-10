@@ -142,11 +142,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
+  // Generative Engine Optimization (GEO) Knowledge Bases
+  const llmPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/llms.txt`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/llms-full.txt`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+  ];
+
   return [
     ...staticPages,
     ...locationPages,
     ...officialDocPages,
     ...textbookPages,
     ...notesPages,
+    ...llmPages,
   ];
 }

@@ -96,6 +96,7 @@ export const metadata: Metadata = {
     canonical: "https://www.msns.edu.pk",
     types: {
       "application/rss+xml": "https://www.msns.edu.pk/sitemap.xml",
+      "text/markdown": "https://www.msns.edu.pk/llms.txt",
     },
   },
   manifest: "/manifest.json",
@@ -133,6 +134,8 @@ export default function RootLayout({
         </Script>
         <SchoolSchema />
         <LMSApplicationSchema />
+        <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Knowledge Base" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Knowledge Base" />
       </head>
       <body className="flex min-h-screen flex-col">
         <TRPCReactProvider>

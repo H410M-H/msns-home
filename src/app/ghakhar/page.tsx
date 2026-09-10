@@ -7,9 +7,10 @@ import {
   ArrowRight,
   ShieldCheck,
   Sun,
-  FlaskConical
+  FlaskConical,
+  HelpCircle
 } from "lucide-react";
-import { BreadcrumbSchema } from "~/components/SEOSchema";
+import { BreadcrumbSchema, LocalSchoolSchema } from "~/components/SEOSchema";
 import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
@@ -82,6 +83,25 @@ const neighborhoods = [
   "Rahwali & Adjacent Feeder Towns"
 ];
 
+const ghakharFaqs = [
+  {
+    question: "Which is the #1 top-ranked school in Ghakhar Mandi?",
+    answer: "M. S. Naz High School® (MSNS) is officially recognized as the #1 top-ranked school in Ghakhar Mandi. Founded in 2004 by late Haji Muhammad Siddique Naz directly on G.T. Road opposite the Model Police Station, MSNS maintains an unbroken 100% board matric pass rate (BISE Gujranwala Code 112199), Oxford curriculum standards, modern science & AI labs, and a 15 TB cloud LMS."
+  },
+  {
+    question: "Where is M. S. Naz High School located in Ghakhar Mandi?",
+    answer: "The campus is prime and central: Main Campus, G.T. Road, opposite Model Police Station, Ghakhar Mandi (Postal Code 52200). Admissions desk is open Monday to Saturday from 7:30 AM to 2:00 PM."
+  },
+  {
+    question: "What curriculum and science laboratory facilities are available at the Ghakhar campus?",
+    answer: "MSNS offers Oxford University Press curriculum from Pre-School to Middle School, transitioning into BISE Gujranwala Matriculation Science and Computer Science groups. Campus facilities include independent Physics, Chemistry, Biology, and AI computing laboratories with 100% solar backup."
+  },
+  {
+    question: "Does MSNS provide school transport across Ghakhar and surrounding villages?",
+    answer: "Yes. MSNS operates an extensive monitored school transport van service covering all neighborhoods of Ghakhar Mandi as well as 34 surrounding towns, union councils, and villages with safe door-to-school transit."
+  }
+];
+
 export default function GhakharLandingPage() {
   const breadcrumbs = [
     { name: "Home", url: "https://www.msns.edu.pk" },
@@ -91,6 +111,12 @@ export default function GhakharLandingPage() {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <LocalSchoolSchema
+        locationName="Ghakhar Mandi"
+        locationUrduName="گکھڑ منڈی"
+        slug="ghakhar"
+        faqs={ghakharFaqs}
+      />
       <main className="min-h-screen bg-linear-to-b from-slate-50 via-white to-emerald-50/30 pt-24 pb-20">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           
@@ -176,6 +202,37 @@ export default function GhakharLandingPage() {
               >
                 Apply Online <ArrowRight className="w-3.5 h-3.5" />
               </Link>
+            </div>
+          </div>
+
+          {/* Conversational FAQs for Ghakhar Families */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 shadow-xs mb-16">
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 mb-2">
+                <HelpCircle className="w-3.5 h-3.5 text-emerald-600" /> Ghakhar Mandi Education FAQ
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
+                Frequently Asked Questions about Ghakhar Campus
+              </h2>
+              <p className="text-xs md:text-sm text-slate-500 mt-1">
+                Verified answers on admissions, board records, curriculum, and campus life in Ghakhar Mandi.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {ghakharFaqs.map((faq) => (
+                <div key={faq.question} className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-900 mb-2 flex items-start gap-2">
+                      <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs md:text-sm text-slate-600 leading-relaxed pl-6">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
