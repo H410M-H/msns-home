@@ -61,19 +61,19 @@ const TEXTBOOKS_MAP = [
   },
   {
     key: 'documents/pctb-class-9-tarjuma-tul-quran.pdf',
-    source: 'c:/msns/msns-home/public/documents/pctb-class-9-tarjuma-tul-quran-full.pdf',
+    source: 'c:/msns/msns-home/scratch/pctb-class-9-tarjuma-tul-quran-full.pdf',
     title: 'Class 9 Tarjuma-tul-Quran'
   },
   {
     key: 'documents/pctb-class-9-pakistan-studies.pdf',
-    source: 'c:/msns/msns-home/public/documents/pctb-class-9-pakistan-studies-full.pdf',
+    source: 'c:/msns/msns-home/scratch/pctb-class-9-pakistan-studies-full.pdf',
     title: 'Class 9 Pakistan Studies'
   },
 
   // Class 10
   {
     key: 'documents/pctb-class-10-physics.pdf',
-    source: 'c:/msns/msns-home/public/documents/pctb-class-10-physics-full.pdf',
+    source: 'c:/msns/msns-home/scratch/pctb-class-10-physics-full.pdf',
     title: 'Class 10 Physics (342 Pages)'
   },
   {
@@ -118,7 +118,7 @@ const TEXTBOOKS_MAP = [
   },
   {
     key: 'documents/pctb-class-10-islamiat.pdf',
-    source: 'c:/msns/msns-home/public/documents/pctb-class-10-islamiat-full.pdf',
+    source: 'c:/msns/msns-home/scratch/pctb-class-10-islamiat-full.pdf',
     title: 'Class 10 Islamiat Compulsory'
   }
 ];
