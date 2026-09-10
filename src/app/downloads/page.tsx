@@ -45,19 +45,19 @@ const documents = [
     icon: FileText,
     title: "School Prospectus 2026–2027",
     category: "Official Publication",
-    size: "243 KB PDF",
-    description: "Comprehensive institutional overview: Oxford English medium curriculum, BISE Gujranwala affiliations, AI labs, 15 TB cloud, fee structure, and admissions roadmap.",
-    pdfUrl: "/documents/msns-prospectus-2026-2027.pdf",
+    size: "36-Page Official Edition",
+    description: "Complete comprehensive 36-page institutional prospectus: campus infrastructure, real facilities, Oxford English medium, matric science & CS syllabuses, student leadership uniforms, Naz LMS ecosystem, fee schedules, and admission roadmap.",
+    pdfUrl: "/api/documents/msns-prospectus-2026-2027.pdf",
     filename: "msns-prospectus-2026-2027.pdf",
-    badge: "Updated Edition"
+    badge: "36-Page Edition"
   },
   {
     icon: FileSpreadsheet,
     title: "Offline Admission Registration Form",
     category: "Admissions Desk",
-    size: "238 KB PDF",
+    size: "Printable PDF",
     description: "Standard printable 2-page walk-in admission application with guardian declarations, document checklists, and medical emergency authorizations.",
-    pdfUrl: "/documents/msns-offline-admission-form-2026-2027.pdf",
+    pdfUrl: "/api/documents/msns-offline-admission-form-2026-2027.pdf",
     filename: "msns-offline-admission-form-2026-2027.pdf",
     badge: "Printable Form"
   },
@@ -65,9 +65,9 @@ const documents = [
     icon: Calendar,
     title: "Annual Academic Calendar 2026–2027",
     category: "Schedules & Terms",
-    size: "238 KB PDF",
+    size: "Academic Schedule",
     description: "Term timetables, first/mid/final exam dates, gazetted public holidays, winter & summer breaks, sports galas, and parent-teacher conferences.",
-    pdfUrl: "/documents/msns-academic-calendar-2026-2027.pdf",
+    pdfUrl: "/api/documents/msns-academic-calendar-2026-2027.pdf",
     filename: "msns-academic-calendar-2026-2027.pdf",
     badge: "Term Schedule"
   },
@@ -75,9 +75,9 @@ const documents = [
     icon: BookOpen,
     title: "Matriculation Scheme of Studies (BISE)",
     category: "Academic Roadmap",
-    size: "239 KB PDF",
+    size: "Official Blueprint",
     description: "Detailed subject breakdown for 9th and 10th Science & Computer Science groups under BISE Gujranwala board guidelines and practical marks division.",
-    pdfUrl: "/documents/msns-matriculation-scheme-of-studies.pdf",
+    pdfUrl: "/api/documents/msns-matriculation-scheme-of-studies.pdf",
     filename: "msns-matriculation-scheme-of-studies.pdf",
     badge: "Board Affiliated"
   },
@@ -85,9 +85,9 @@ const documents = [
     icon: FileText,
     title: "Tuition Fee Policy & Challan Guide",
     category: "Finance & Accounts",
-    size: "238 KB PDF",
+    size: "Fee Schedule",
     description: "Official schedule of monthly tuition fees, admission charges, sibling concession criteria, late fine policies, and online fee challan instructions.",
-    pdfUrl: "/documents/msns-tuition-fee-policy-and-challan-guide.pdf",
+    pdfUrl: "/api/documents/msns-tuition-fee-policy-and-challan-guide.pdf",
     filename: "msns-tuition-fee-policy-and-challan-guide.pdf",
     badge: "Transparent Fees"
   },
@@ -95,9 +95,9 @@ const documents = [
     icon: ShieldAlert,
     title: "Student Code of Conduct & Uniform Rules",
     category: "Campus Discipline",
-    size: "238 KB PDF",
-    description: "Institutional discipline policy: 85% attendance prerequisite, summer/winter uniform codes, lab safety guidelines, and prohibited electronic devices.",
-    pdfUrl: "/documents/msns-code-of-conduct-and-uniform-rules.pdf",
+    size: "Illustrated Policy",
+    description: "Institutional discipline policy: 85% attendance prerequisite, summer/winter uniform codes, lab safety guidelines, and leadership uniform guidelines.",
+    pdfUrl: "/api/documents/msns-code-of-conduct-and-uniform-rules.pdf",
     filename: "msns-code-of-conduct-and-uniform-rules.pdf",
     badge: "Campus Rules"
   },
@@ -105,9 +105,9 @@ const documents = [
     icon: Award,
     title: "BISE Matric Resource & Exam Guide",
     category: "Matric Portal",
-    size: "238 KB PDF",
+    size: "Exam Prep Guide",
     description: "Consolidated guide to BISE Gujranwala SLO model papers, 5-year past paper archives, 1200 marks grading scheme, and PCTB official textbook download portals.",
-    pdfUrl: "/documents/msns-bise-matric-resource-guide.pdf",
+    pdfUrl: "/api/documents/msns-bise-matric-resource-guide.pdf",
     filename: "msns-bise-matric-resource-guide.pdf",
     badge: "Exam Prep"
   }
@@ -334,7 +334,7 @@ export default function DownloadsPage() {
                   </li>
                 </ul>
                 <a 
-                  href="/documents/msns-bise-matric-resource-guide.pdf"
+                  href="/api/documents/msns-bise-matric-resource-guide.pdf"
                   download="msns-bise-matric-resource-guide.pdf"
                   className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-semibold text-xs transition-colors shadow-xs"
                 >
@@ -373,7 +373,7 @@ export default function DownloadsPage() {
                   </div>
                 </div>
                 <a 
-                  href="/documents/msns-matriculation-scheme-of-studies.pdf"
+                  href="/api/documents/msns-matriculation-scheme-of-studies.pdf"
                   download="msns-matriculation-scheme-of-studies.pdf"
                   className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-semibold text-xs transition-colors shadow-xs"
                 >
@@ -397,7 +397,7 @@ export default function DownloadsPage() {
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <a 
-                  href="/documents/msns-bise-matric-resource-guide.pdf"
+                  href="/api/documents/msns-bise-matric-resource-guide.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-colors inline-flex items-center gap-1.5"
@@ -405,11 +405,11 @@ export default function DownloadsPage() {
                   <ExternalLink className="w-3.5 h-3.5" /> Preview
                 </a>
                 <a 
-                  href="/documents/msns-bise-matric-resource-guide.pdf"
+                  href="/api/documents/msns-bise-matric-resource-guide.pdf"
                   download="msns-bise-matric-resource-guide.pdf"
                   className="px-5 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-bold transition-all shadow-md inline-flex items-center gap-1.5"
                 >
-                  <Download className="w-4 h-4" /> Download PDF (238 KB)
+                  <Download className="w-4 h-4" /> Download PDF (Guide)
                 </a>
               </div>
             </div>
