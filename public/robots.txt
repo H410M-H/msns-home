@@ -7,6 +7,10 @@ User-agent: *
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Allow: /
 Allow: /api/images/
+Allow: /api/documents/
+Allow: /documents/
+Allow: /llms.txt
+Allow: /llms-full.txt
 Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
@@ -47,6 +51,10 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 Allow: /api/images/
+Allow: /api/documents/
+Allow: /documents/
+Allow: /llms.txt
+Allow: /llms-full.txt
 Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
@@ -55,6 +63,10 @@ Disallow: /private/
 User-agent: Bingbot
 Allow: /
 Allow: /api/images/
+Allow: /api/documents/
+Allow: /documents/
+Allow: /llms.txt
+Allow: /llms-full.txt
 Allow: /_next/static/
 Disallow: /api/
 Disallow: /admin/
@@ -70,6 +82,8 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
-# Sitemaps
+# Sitemaps & Large Language Model (LLM) Standards
 Sitemap: https://www.msns.edu.pk/sitemap.xml
 Sitemap: https://lms.msns.edu.pk/sitemap.xml
+LLM-Text: https://www.msns.edu.pk/llms.txt
+LLM-Full-Text: https://www.msns.edu.pk/llms-full.txt

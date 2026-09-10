@@ -4,11 +4,7 @@ import {
   Trophy, 
   Award, 
   GraduationCap, 
-  Star, 
-  Sparkles, 
-  ArrowRight,
-  TrendingUp,
-  CheckCircle2
+  ArrowRight
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";
 

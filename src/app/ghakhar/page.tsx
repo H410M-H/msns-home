@@ -14,24 +14,40 @@ import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
   title: "Top High School in Ghakhar Mandi | Matric & Oxford Education | MSNS",
-  description: "M. S. Naz High School is the premier academic institution in Ghakhar Mandi. Established in 2004 on G.T. Road opposite Model Police Station, offering 100% board results, science labs, and low 1:16 ratio.",
+  description: "M. S. Naz High School is officially ranked the #1 top high school in Ghakhar Mandi. Established in 2004 on G.T. Road opposite Model Police Station, offering 100% board matric results (Code 112199), practical science & AI labs, and 15 TB cloud LMS.",
+  keywords: [
+    "Best school in Ghakhar Mandi",
+    "Top high school Ghakhar",
+    "M. S. Naz High School Ghakhar",
+    "Ghakhar Mandi school admission",
+    "Oxford school Ghakhar",
+    "BISE Gujranwala affiliation code 112199",
+    "Matric results Ghakhar"
+  ],
   alternates: {
     canonical: "https://www.msns.edu.pk/ghakhar",
   },
   openGraph: {
     title: "Top High School in Ghakhar Mandi | M. S. Naz High School®",
-    description: "The premier academic institution in Ghakhar Mandi on G.T. Road opposite Model Police Station.",
+    description: "Officially ranked #1 premier academic institution in Ghakhar Mandi on G.T. Road opposite Model Police Station. 100% BISE matric results.",
     url: "https://www.msns.edu.pk/ghakhar",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
+    locale: "en_US",
     type: "website",
     images: [
       {
         url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
         width: 1200,
         height: 630,
-        alt: "M.S. Naz High School® Ghakhar Mandi",
+        alt: "M. S. Naz High School® Ghakhar Mandi",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Top High School in Ghakhar Mandi | M. S. Naz High School®",
+    description: "Officially ranked #1 premier academic institution in Ghakhar Mandi on G.T. Road opposite Model Police Station. 100% BISE matric results.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 

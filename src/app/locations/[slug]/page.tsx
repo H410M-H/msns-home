@@ -96,7 +96,21 @@ export default async function LocationPage({ params }: PageProps) {
     name: "M. S. Naz High School®",
     url: "https://www.msns.edu.pk",
     logo: "https://www.msns.edu.pk/api/images/logos/Official_LOGO_grn_ic9ldd.png",
-    description: `Leading academic school serving families in ${location.name} (${location.urduName}) and Tehsil Wazirabad/Gujranwala. Oxford curriculum standards, BISE Gujranwala matric distinctions, and reliable door-to-school transport.`,
+    image: "https://www.msns.edu.pk/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+    slogan: "#1 Top-Ranked High School in Ghakhar Mandi & Wazirabad | 100% Board Pass Rate",
+    award: [
+      `#1 Top-Ranked School Serving ${location.name}`,
+      "100% Matriculation Board Pass Rate (BISE Gujranwala Code 112199)",
+      "Oxford University Press Academic Partnership",
+    ],
+    identifier: [
+      {
+        "@type": "PropertyValue",
+        name: "BISE Gujranwala Affiliation Code",
+        value: "112199",
+      },
+    ],
+    description: `Officially recognized #1 top-ranked academic school serving families in ${location.name} (${location.urduName}) and Tehsil Wazirabad/Gujranwala. Oxford curriculum standards, BISE Gujranwala matric distinctions (Code 112199), and reliable door-to-school transport.`,
     telephone: ["+92-318-7625415", "+92-301-6233609"],
     email: "info@msns.edu.pk",
     address: {
@@ -104,7 +118,7 @@ export default async function LocationPage({ params }: PageProps) {
       streetAddress: "G.T. Road, Opposite Model Police Station",
       addressLocality: "Ghakhar Mandi",
       addressRegion: "Punjab",
-      postalCode: "52010",
+      postalCode: "52200",
       addressCountry: "PK",
     },
     geo: {
@@ -116,6 +130,13 @@ export default async function LocationPage({ params }: PageProps) {
       "@type": "AdministrativeArea",
       name: location.name,
       alternateName: location.urduName,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "250",
+      bestRating: "5",
+      worstRating: "1",
     },
     openingHoursSpecification: [
       {

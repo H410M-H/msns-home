@@ -4,11 +4,9 @@ import {
   BookOpen, 
   Cpu, 
   FlaskConical, 
-  GraduationCap, 
   CheckCircle2, 
   Award, 
   Sparkles, 
-  FileText,
   ArrowRight
 } from "lucide-react";
 import { BreadcrumbSchema } from "~/components/SEOSchema";

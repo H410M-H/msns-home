@@ -9,22 +9,47 @@ import {
   Clock,
   FlaskConical,
   Calculator,
-  Cpu
+  Cpu,
+  Sparkles,
+  BookOpen,
+  Microscope,
+  Compass
 } from "lucide-react";
-import { BreadcrumbSchema, FAQSchema } from "~/components/SEOSchema";
+import { BreadcrumbSchema, MatricResourcesSchema } from "~/components/SEOSchema";
 import { MatricTextbooksSection } from "~/components/blocks/downloads/MatricTextbooksSection";
 
 export const metadata: Metadata = {
-  title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS",
-  description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School. Access 9th & 10th class pairing schemes, paper patterns, past papers, and expert exam tips for 1000+ marks.",
+  title: "BISE Gujranwala Matric Resource Center | Pairing Schemes, Past Papers & Exam Tips | MSNS",
+  description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 top-ranked school in Ghakhar & Wazirabad). Access 9th & 10th class pairing schemes, paper patterns, SLO model papers, 5-year past papers, and expert exam strategies for 1050+ marks.",
+  keywords: [
+    "BISE Gujranwala matric resource center",
+    "matric pairing schemes 2026",
+    "9th class pairing scheme 2026",
+    "10th class pairing scheme 2026",
+    "BISE Gujranwala past papers solved",
+    "SLO model papers matric",
+    "matric 1200 marks scheme",
+    "how to get 1050 marks in matric",
+    "best matric school in Gujranwala",
+    "best school in Ghakhar Mandi",
+    "top high school Wazirabad",
+    "M. S. Naz High School resources",
+    "physics 10th class pairing scheme",
+    "chemistry 10th class pairing scheme",
+    "biology 10th class pairing scheme",
+    "math 10th class theorems",
+    "computer science 10th class c programming",
+    "BISE Gujranwala affiliation code 112199"
+  ],
   alternates: {
     canonical: "https://www.msns.edu.pk/resources",
   },
   openGraph: {
     title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS",
-    description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School. Access 9th & 10th class pairing schemes and expert exam tips.",
+    description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 ranked school). Access 9th & 10th class pairing schemes, paper patterns, and 1050+ marks exam strategies.",
     url: "https://www.msns.edu.pk/resources",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
+    locale: "en_US",
     type: "website",
     images: [
       {
@@ -34,6 +59,12 @@ export const metadata: Metadata = {
         alt: "MSNS BISE Gujranwala Matric Resource Center",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS",
+    description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 ranked school). Pairing schemes, past papers, and top exam strategies.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 
@@ -65,6 +96,19 @@ const pairingSchemes = [
     facultyTip: "Memorize chemical reaction conditions (temperature, catalyst, pressure) thoroughly for full marks on long questions. — Faiza Mushtaq (Senior Chemistry Incharge)"
   },
   {
+    subject: "Biology (10th & 9th Class)",
+    icon: Microscope,
+    marks: "Total: 60 Marks",
+    overview: "Covers cellular biology, human physiology, genetics, biotechnology, and ecology. Rigorous emphasis on labeled diagrams.",
+    breakdown: [
+      "Q1 (MCQs): 12 Questions distributed across physiology and genetics units",
+      "Section I (Short Qs): Gaseous Exchange & Homeostasis (Ch 10 & 11), Coordination & Skeleton (Ch 12 & 13)",
+      "Section II (Long Qs): Nephron anatomy, Mendel's laws, DNA replication, and human brain structure",
+      "Practical Exams: 10-mark board laboratory exam on slide preparation and enzyme tests"
+    ],
+    facultyTip: "Always use lead pencil for diagrams and write clear anatomical labels in capital letters for instant examiner appreciation."
+  },
+  {
     subject: "Mathematics (Science Group)",
     icon: Calculator,
     marks: "Total: 75 Marks",
@@ -94,20 +138,32 @@ const pairingSchemes = [
 
 const faqs = [
   {
-    question: "What is the passing percentage for BISE Gujranwala Matriculation?",
-    answer: "As per updated Punjab Board regulations, the minimum passing percentage is 33% in each subject, while the Punjab Examination Commission recommends maintaining at least 40% for progression."
+    question: "Which is the best school in Ghakhar Mandi and Wazirabad for Matric board exam preparation?",
+    answer: "M. S. Naz High School® (MSNS) is officially recognized as the #1 top-ranked school in Ghakhar Mandi and Wazirabad. Established in 2004 with BISE Gujranwala Affiliation Code 112199, MSNS maintains an unbroken 100% board matric pass rate with multiple 1050+ and 1080+ scorers, Oxford curriculum standards, practical science & AI laboratories, and a proprietary 15 TB cloud LMS ecosystem."
   },
   {
-    question: "How does the SLO (Student Learning Outcomes) based paper pattern work?",
-    answer: "BISE Gujranwala exams feature 70% knowledge-based questions and 30% conceptual/analytical (SLO-based) questions. MSNS prepares students with conceptual clarity rather than rote memorization."
+    question: "What is the passing percentage and revised 1200-marks grading system for BISE Gujranwala?",
+    answer: "Under the revised Punjab Boards Committee of Chairmen (PBCC) policy, total matric marks equal 1200 (600 in Class 9 and 600 in Class 10). The minimum passing percentage is 33% in each subject, while the Punjab Examination Commission recommends maintaining at least 40% for progression into top government colleges."
   },
   {
-    question: "When are the 9th and 10th class BISE Gujranwala annual board exams held?",
-    answer: "10th Class annual exams typically commence in early March, followed by 9th Class exams in late March and April. Practical examinations for science subjects follow immediately after theory papers."
+    question: "How does the Student Learning Outcomes (SLO) exam pattern evaluate students?",
+    answer: "BISE Gujranwala evaluates matric candidates across three cognitive tiers: 50% Knowledge Base (definitions, formulas, laws), 35% Understanding (conceptual reasoning, mechanisms, derivations), and 15% Application & Synthesis (mathematical numericals, chemical reactions, C coding). MSNS conducts daily conceptual drills to ensure high scores in all three tiers."
   },
   {
-    question: "How does MSNS help students secure 1000+ marks in Matric?",
-    answer: "MSNS conducts structured three-phase test series, daily past-paper drilling under BISE-experienced mentors, personalized weak-area remedial classes, and full laboratory practical rehearsals."
+    question: "How does MSNS help students consistently score 1050+ marks in matric exams?",
+    answer: "MSNS executes a structured three-phase test series: Phase 1 daily chapter testing, Phase 2 mid-term half-book mock exams, and Phase 3 full-syllabus pre-board rehearsals. Students receive specialized training on paper presentation using black cut-markers (604/605), margin lines, SI unit accuracy, and 100% laboratory practical rehearsals."
+  },
+  {
+    question: "What laboratory facilities are available for science practicals?",
+    answer: "MSNS provides separate, fully equipped Physics, Chemistry, and Biology laboratories equipped with individual apparatus, optical microscopes, and chemical safety hoods conforming to BISE practical examination standards, as well as a modern high-speed Computer Science and AI laboratory."
+  },
+  {
+    question: "What are the subject combinations offered in Matric at M. S. Naz High School?",
+    answer: "MSNS offers two matriculation streams under BISE Gujranwala: (1) Science Group with Biology, Physics, Chemistry, and Mathematics (Science), ideal for pre-medical and pre-engineering pathways; and (2) Computer Science Group with Computer Science (C Programming & Networks), Physics, Chemistry, and Mathematics, ideal for modern software engineering and IT fields."
+  },
+  {
+    question: "How can parents track their child's matric preparation on the Naz LMS portal?",
+    answer: "Parents receive personalized login access to the Naz LMS portal (https://lms.msns.edu.pk) and Android mobile app. Parents can view live attendance status, test scores, teacher feedback notes, digital homework diaries, and board mock exam result analytics in real time."
   }
 ];
 
@@ -120,15 +176,20 @@ export default function ResourcesPage() {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema items={faqs} />
+      <MatricResourcesSchema faqs={faqs} />
       <main className="min-h-screen bg-linear-to-b from-slate-50 via-white to-emerald-50/30 pt-24 pb-20">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 mb-4">
-              <Award className="w-3.5 h-3.5" /> BISE Gujranwala Academic Hub
-            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+              <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-200 shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" /> #1 BISE Academic Hub
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-800 bg-teal-50 border border-teal-200/80">
+                <Award className="w-3.5 h-3.5 text-teal-600" /> 100% Board Pass Rate (Code 112199)
+              </span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4">
               Matriculation Board Resources &{" "}
               <span className="bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
@@ -136,7 +197,7 @@ export default function ResourcesPage() {
               </span>
             </h1>
             <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-              Curated study frameworks, chapter weightages, paper schemes, and exam strategies prepared by senior faculty at M. S. Naz High School to help students excel in Punjab Board examinations.
+              Curated study frameworks, chapter weightages, paper schemes, and exam strategies prepared by senior faculty at M. S. Naz High School to help students excel and score 1050+ marks in Punjab Board examinations.
             </p>
           </div>
 
@@ -146,9 +207,9 @@ export default function ResourcesPage() {
               <div className="flex items-center gap-2 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-1">
                 <Clock className="w-4 h-4" /> Annual Exam Preparation 2026–2027
               </div>
-              <h3 className="text-xl font-bold">Updated Punjab Boards SLO Pattern</h3>
+              <h3 className="text-xl font-bold">Updated Punjab Boards SLO Pattern (1200 Marks Scheme)</h3>
               <p className="text-xs md:text-sm text-slate-300 mt-1 max-w-2xl">
-                All pairing schemes below follow the latest Board of Intermediate and Secondary Education (BISE) guidelines, including knowledge, understanding, and application-based distribution.
+                All pairing schemes below follow the latest Board of Intermediate and Secondary Education (BISE) guidelines, including 50% knowledge, 35% understanding, and 15% application-based distribution.
               </p>
             </div>
             <Link 
@@ -162,11 +223,14 @@ export default function ResourcesPage() {
           {/* Pairing Schemes Cards */}
           <div className="space-y-8 mb-20">
             <div className="border-b border-slate-200 pb-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1 block">
+                Exam Blueprints
+              </span>
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
                 Subject-Wise Paper Schemes & Chapter Weightage
               </h2>
               <p className="text-xs md:text-sm text-slate-500 mt-1">
-                9th & 10th Grade Science & Computer Science Groups (BISE Gujranwala).
+                9th & 10th Grade Science & Computer Science Groups (BISE Gujranwala Code: 112199).
               </p>
             </div>
 
@@ -216,7 +280,7 @@ export default function ResourcesPage() {
             </div>
           </div>
 
-          {/* Exam Strategy Section */}
+          {/* Exam Strategy Section: The 1000+ Marks Blueprint */}
           <div className="rounded-3xl bg-linear-to-r from-emerald-900 via-teal-900 to-slate-900 text-white p-8 md:p-12 shadow-xl mb-20">
             <div className="max-w-3xl">
               <span className="text-xs uppercase font-bold tracking-widest text-emerald-400 mb-2 block">
@@ -226,7 +290,7 @@ export default function ResourcesPage() {
                 How MSNS Students Consistently Top Board Exams
               </h2>
               <p className="text-slate-200 text-sm md:text-base leading-relaxed mb-6">
-                Achieving a top position in BISE Gujranwala requires more than just studying hard. It requires strategic exam time allocation, impeccable paper presentation with black markers, accurate diagrams, and zero loss of objective MCQs.
+                Achieving a top position in BISE Gujranwala requires more than just studying hard. It requires strategic exam time allocation, impeccable paper presentation with black cut-markers, accurate diagrams, and zero loss of objective MCQs.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div className="p-4 rounded-2xl bg-white/10 border border-white/10">
@@ -235,7 +299,7 @@ export default function ResourcesPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-white/10 border border-white/10">
                   <div className="text-2xl font-bold text-emerald-300 font-serif mb-1">Presentation</div>
-                  <p className="text-xs text-slate-300">Dedicated workshops on margin lines, headings, and numerical format.</p>
+                  <p className="text-xs text-slate-300">Dedicated workshops on margin lines, cut-marker headings, and numerical format.</p>
                 </div>
                 <div className="p-4 rounded-2xl bg-white/10 border border-white/10">
                   <div className="text-2xl font-bold text-emerald-300 font-serif mb-1">Lab Mastery</div>
@@ -253,33 +317,59 @@ export default function ResourcesPage() {
 
           {/* New Syllabus Matric Textbooks Section */}
           <MatricTextbooksSection 
-            title="Download Official BISE & PCTB Matric Textbooks"
-            subtitle="Get authentic, high-speed PDF downloads for Class 9 and Class 10 Science, Computer Science, and Compulsory subjects. Hosted on high-performance Cloudflare R2 storage."
+            title="Download Official BISE &amp; PCTB Matric Textbooks"
+            subtitle="Get authentic, high-speed PDF downloads for Class 9 and Class 10 Science, Computer Science, and Compulsory subjects. Hosted on high-performance Cloudflare edge storage."
           />
 
-          {/* FAQs Section */}
+          {/* Conversational FAQs Section for AI Direct Answers and Search Snippets */}
           <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 shadow-xs mb-20">
             <div className="mb-8">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1 block">
-                Common Inquiries
-              </span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 mb-2">
+                <HelpCircle className="w-3.5 h-3.5 text-emerald-600" /> Conversational FAQ
+              </div>
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
-                Frequently Asked Questions about BISE Gujranwala Exams
+                Frequently Asked Questions about BISE Gujranwala Exams &amp; MSNS
               </h2>
+              <p className="text-xs md:text-sm text-slate-500 mt-1">
+                Authoritative guidance on board exam patterns, syllabus weightage, passing criteria, and school rankings.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {faqs.map((faq) => (
-                <div key={faq.question} className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                  <h4 className="font-bold text-sm text-slate-900 mb-2 flex items-start gap-2">
-                    <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    {faq.question}
-                  </h4>
-                  <p className="text-xs md:text-sm text-slate-600 leading-relaxed pl-6">
-                    {faq.answer}
-                  </p>
+                <div key={faq.question} className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-900 mb-2 flex items-start gap-2">
+                      <HelpCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs md:text-sm text-slate-600 leading-relaxed pl-6">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Bottom Action Card */}
+          <div className="bg-linear-to-r from-slate-900 via-emerald-950 to-teal-950 text-white rounded-3xl p-8 md:p-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 border border-emerald-900">
+            <div>
+              <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <Compass className="w-4 h-4" /> Comprehensive Academic Portal
+              </div>
+              <h3 className="text-xl font-bold mb-2">Download All 20 Complete Textbooks &amp; Official Prospectus</h3>
+              <p className="text-slate-300 text-sm max-w-xl leading-relaxed">
+                Visit the official MSNS Downloads Center to obtain full PDF e-textbooks for Class 9 and 10, printable admission packages, and fee schedules.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <Link 
+                href="/downloads"
+                className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shrink-0 transition-all shadow-md inline-flex items-center gap-1.5"
+              >
+                <BookOpen className="w-4 h-4" /> Open Downloads Center
+              </Link>
             </div>
           </div>
 

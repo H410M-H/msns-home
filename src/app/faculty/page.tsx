@@ -3,9 +3,6 @@ import Link from "next/link";
 import { 
   GraduationCap, 
   Users, 
-  Award, 
-  BookOpen, 
-  Sparkles, 
   ArrowRight,
   ShieldCheck,
   HeartHandshake

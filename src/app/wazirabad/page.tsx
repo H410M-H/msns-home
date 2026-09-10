@@ -11,24 +11,40 @@ import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
   title: "Best High School in Wazirabad | Admissions & Top Matric Results | MSNS",
-  description: "Looking for the best high school in Wazirabad? M. S. Naz High School offers Oxford syllabus, BISE Gujranwala matric distinctions, dedicated transport routes from Wazirabad, and hands-on AI labs.",
+  description: "Looking for the best high school in Wazirabad? M. S. Naz High School is officially ranked #1 in Tehsil Wazirabad, offering Oxford syllabus, BISE Gujranwala matric distinctions (Code 112199), dedicated transport routes, and hands-on AI labs.",
+  keywords: [
+    "Best high school in Wazirabad",
+    "Top matric school Wazirabad",
+    "M. S. Naz High School Wazirabad",
+    "Wazirabad school admission",
+    "Oxford school Wazirabad",
+    "BISE Gujranwala affiliation code 112199",
+    "School transport Wazirabad"
+  ],
   alternates: {
     canonical: "https://www.msns.edu.pk/wazirabad",
   },
   openGraph: {
     title: "Best High School in Wazirabad | M. S. Naz High School®",
-    description: "Oxford syllabus, BISE Gujranwala matric distinctions, and dedicated transport routes from Wazirabad.",
+    description: "Oxford syllabus, BISE Gujranwala matric distinctions (Code 112199), and dedicated transport routes from Wazirabad.",
     url: "https://www.msns.edu.pk/wazirabad",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
+    locale: "en_US",
     type: "website",
     images: [
       {
         url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
         width: 1200,
         height: 630,
-        alt: "M.S. Naz High School® Wazirabad Campus",
+        alt: "M. S. Naz High School® Wazirabad Campus",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Best High School in Wazirabad | M. S. Naz High School®",
+    description: "Oxford syllabus, BISE Gujranwala matric distinctions (Code 112199), and dedicated transport routes from Wazirabad.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 

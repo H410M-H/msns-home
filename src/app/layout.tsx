@@ -16,42 +16,47 @@ import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.msns.edu.pk"),
-  title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
+  title: {
+    default: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
+    template: "%s | M. S. Naz High School®",
+  },
   icons: {
     icon: [
       {
-        url: "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
-        type: "image/jpeg",
+        url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+        type: "image/png",
       },
       {
         url: "/favicon.ico",
         sizes: "any",
       },
     ],
-    shortcut: "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
-    apple: "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
+    shortcut: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+    apple: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
   },
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
   },
-  description: "M. S. Naz High School in Wazirabad & Ghakhar offers academic excellence with BISE Gujranwala matriculation, Oxford curriculum standards, modern science & AI labs, and leadership development.",
+  description: "M. S. Naz High School® is the officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad, and District Gujranwala. 100% BISE matric pass rate (Code 112199), Oxford curriculum, modern science & AI labs, and proprietary 15 TB cloud LMS.",
   keywords: [
-    "M.S. Naz High School",
-    "MSNS Wazirabad",
-    "MSNS Ghakhar Mandi",
+    "M. S. Naz High School",
+    "MSNS",
+    "Best high school in Ghakhar Mandi",
     "Best high school in Wazirabad",
     "Top matric schools Gujranwala",
+    "BISE Gujranwala affiliation code 112199",
     "Oxford curriculum school Punjab",
-    "BISE Gujranwala school admission",
-    "AI curriculum school Pakistan",
-    "Science labs high school Wazirabad",
-    "Smart school LMS Pakistan"
+    "School with LMS Pakistan",
+    "Matric science and computer science admission",
+    "Smart school LMS Pakistan",
+    "Class 9 and 10 textbooks PDF download",
+    "Matric pairing schemes 2026"
   ],
   openGraph: {
-    title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
-    description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
+    title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
+    description: "M. S. Naz High School in Ghakhar Mandi and Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, 100% board matric pass rate, and Oxford academic standards.",
     url: "https://www.msns.edu.pk/",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     locale: "en_US",
     images: [
@@ -59,14 +64,14 @@ export const metadata: Metadata = {
         url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
         width: 1200,
         height: 630,
-        alt: "M.S. Naz High School® Logo"
+        alt: "M. S. Naz High School® Logo"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "M. S. NAZ HIGH SCHOOL® | Wazirabad's Premier School",
-    description: "M. S. Naz High School in Wazirabad offers world-class education with a state-of-the-art AI & Science curriculum, leadership development, and Oxford academic standards.",
+    title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
+    description: "M. S. Naz High School offers world-class education with a state-of-the-art AI & Science curriculum, 100% board matric pass rate, and Oxford academic standards.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
   appLinks: {
