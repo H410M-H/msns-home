@@ -234,7 +234,7 @@ export default function DownloadsPage() {
                   Official Punjab Textbooks (9th &amp; 10th)
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                  All prescribed textbooks for Science and Computer Science groups available in authentic PDF format directly through the Punjab Curriculum and Textbook Board library:
+                  All prescribed textbooks for Science and Computer Science groups available in authentic PDF format directly through our official institutional repository:
                 </p>
                 <div className="grid grid-cols-2 gap-2 mb-6 text-xs text-slate-700 font-medium">
                   <div className="flex items-center gap-1.5 p-2 rounded-lg bg-slate-50 border border-slate-100">
@@ -257,12 +257,10 @@ export default function DownloadsPage() {
                   </div>
                 </div>
                 <a 
-                  href="https://pctb.punjab.gov.pk/E-Books"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-colors shadow-xs"
+                  href="#matric-textbooks"
+                  className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs transition-colors shadow-xs"
                 >
-                  Visit Official PCTB E-Books Portal <ExternalLink className="w-3.5 h-3.5" />
+                  <BookOpen className="w-3.5 h-3.5" /> Browse & Download Complete Textbooks Below
                 </a>
               </div>
 

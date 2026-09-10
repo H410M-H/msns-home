@@ -32,6 +32,7 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
     { name: 'About', path: '/about' },
     { name: 'Academics', path: '/academics' },
     { name: 'Admissions', path: '/admission' },
+    { name: 'Downloads', path: '/downloads' },
     { name: 'Campus Life', path: '/campus' },
     { name: 'Achievements', path: '/achievements' },
     { name: 'Contact', path: '/contact' },

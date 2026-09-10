@@ -8,27 +8,32 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ filename: string }> }
+  { params }: { params: Promise<{ slug: string[] }> }
 ) {
   try {
-    const { filename } = await params;
+    const { slug } = await params;
 
-    if (!filename) {
+    if (!slug || slug.length === 0) {
       return new NextResponse("Document filename is required", { status: 400 });
     }
 
+    const filename = slug[slug.length - 1] ?? "";
     // Sanitize filename to prevent directory traversal
     const safeFilename = path.basename(filename);
     const rangeHeader = request.headers.get("range");
+    const subpath = slug.map((s) => path.basename(s)).join("/");
 
     // Keys to search in Cloudflare R2
     const candidateKeys = [
+      `documents/${subpath}`,
       `documents/${safeFilename}`,
-      `documents/books/${safeFilename}`,
       `documents/notes/${safeFilename}`,
+      `documents/books/${safeFilename}`,
     ];
 
-    for (const key of candidateKeys) {
+    const uniqueKeys = Array.from(new Set(candidateKeys));
+
+    for (const key of uniqueKeys) {
       try {
         const command = new GetObjectCommand({
           Bucket: BUCKET,
@@ -67,6 +72,7 @@ export async function GET(
 
     // Local filesystem fallbacks
     const candidateLocalPaths = [
+      path.join(process.cwd(), "public", "documents", subpath),
       path.join(process.cwd(), "public", "documents", safeFilename),
       path.join(process.cwd(), "public", "documents", "notes", safeFilename),
     ];
