@@ -8,21 +8,21 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+      "src": "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+      "src": "https://lms.msns.edu.pk/api/images/gallery/about/Logo/1787988267420_247673.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+      "src": "/favicon.ico",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/x-icon",
       "purpose": "maskable"
     }
   ],
@@ -31,15 +31,15 @@
   "categories": ["education"],
   "screenshots": [
     {
-      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/w_540,h_720,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+      "src": "/api/images/resolve/FrontView1_alaabu.jpg",
       "sizes": "540x720",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "narrow"
     },
     {
-      "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/w_1280,h_720,c_fit,q_auto,f_auto/v1762033683/mono_MS_Naz_School_ue6upl.png",
+      "src": "/api/images/resolve/FrontView1_alaabu.jpg",
       "sizes": "1280x720",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "wide"
     }
   ],
@@ -51,7 +51,7 @@
       "url": "/lms",
       "icons": [
         {
-          "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+          "src": "/web-app-manifest-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -64,7 +64,7 @@
       "url": "/admission",
       "icons": [
         {
-          "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+          "src": "/web-app-manifest-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -77,7 +77,7 @@
       "url": "/contact",
       "icons": [
         {
-          "src": "https://res.cloudinary.com/dvvbxrs55/image/upload/v1729267533/Official_LOGO_grn_ic9ldd.png",
+          "src": "/web-app-manifest-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
         }

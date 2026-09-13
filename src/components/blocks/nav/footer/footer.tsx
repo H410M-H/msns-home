@@ -93,12 +93,11 @@ export const Footer = ({ className, ...props }: FooterProps) => {
                 Empowering minds and shaping the future through quality education, 
                 fostering creativity, and instilling strong moral values.
               </p>
-
               <div className="flex space-x-4 pt-2">
                 {[
-                  { icon: Facebook, label: "Facebook", href: "#", color: "hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50" },
-                  { icon: Twitter, label: "Twitter", href: "#", color: "hover:text-sky-500 hover:border-sky-300 hover:bg-sky-50" },
-                  { icon: Instagram, label: "Instagram", href: "#", color: "hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50" },
+                  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/msnazhighschool", color: "hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50" },
+                  { icon: Twitter, label: "Twitter", href: "https://twitter.com/msnazhighschool", color: "hover:text-sky-500 hover:border-sky-300 hover:bg-sky-50" },
+                  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/msnazhighschool", color: "hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50" },
                   { icon: Linkedin, label: "LinkedIn", href: "#", color: "hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50" },
                 ].map(({ icon: Icon, label, href, color }) => (
                   <Link
@@ -124,14 +123,26 @@ export const Footer = ({ className, ...props }: FooterProps) => {
           <div className="space-y-6 lg:ml-auto">
             <h3 className="text-sm font-bold text-green-900 tracking-wider uppercase">Quick Links</h3>
             <nav className="flex flex-col space-y-3">
-              {["Home", "About Us", "Academics", "Admissions", "Campus Life", "Contact"].map((item) => (
+              {[
+                { label: "Home", href: "/" },
+                { label: "About Us", href: "/about" },
+                { label: "Academics & Curricula", href: "/academics" },
+                { label: "Admissions & Fees", href: "/admission" },
+                { label: "Campus Facilities", href: "/campus" },
+                { label: "Faculty & Mentors", href: "/faculty" },
+                { label: "Board Distinctions", href: "/achievements" },
+                { label: "Matric Resource Hub", href: "/resources" },
+                { label: "Official Downloads", href: "/downloads" },
+                { label: "Contact Us", href: "/contact" },
+                { label: "MSNS LMS Portal", href: "https://lms.msns.edu.pk" },
+              ].map((item) => (
                 <Link
-                  key={item}
-                  href="/#"
+                  key={item.label}
+                  href={item.href}
                   className="group flex items-center text-sm font-medium text-green-800 hover:text-pink-600 transition-colors"
                 >
                   <span className="w-0 h-[2px] bg-pink-500 mr-0 transition-all duration-300 group-hover:w-3 group-hover:mr-2" />
-                  {item}
+                  {item.label}
                 </Link>
               ))}
             </nav>
@@ -192,9 +203,27 @@ export const Footer = ({ className, ...props }: FooterProps) => {
             </Button>
           </form>
         </div>
- 
+        {/* Regional Feeder Links */}
+        <div className="mt-8 pt-6 border-t border-green-200/60 flex flex-wrap items-center justify-between gap-4 text-xs text-green-800/80">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-green-900">Locations & Transport:</span>
+            <Link href="/wazirabad" className="hover:text-emerald-700 underline font-medium">
+              High School in Wazirabad
+            </Link>
+            <span>•</span>
+            <Link href="/ghakhar" className="hover:text-emerald-700 underline font-medium">
+              High School in Ghakhar Mandi
+            </Link>
+            <span>•</span>
+            <Link href="/resources" className="hover:text-emerald-700 underline font-medium">
+              BISE Gujranwala Resources
+            </Link>
+          </div>
+          <span className="text-[11px] text-green-700/70">Postal Code: 52200 | G.T. Road, Ghakhar</span>
+        </div>
+
         {/* Divider */}
-        <div className="mt-12 mb-8 border-t border-green-200" />
+        <div className="mt-6 mb-8 border-t border-green-200" />
 
         {/* Copyright */}
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">

@@ -1,95 +1,71 @@
-"use client";
+import { type Metadata, type Viewport } from "next";
+import HomeClient from "./home-client";
 
-import { HeroHome } from "~/components/blocks/landing/HeroSection";
-import { QuickLinksSection } from "~/components/blocks/landing/QuickLinksSection";
-import { FeaturesSection } from "~/components/blocks/landing/FeaturesSection";
-import { CTASection } from "~/components/blocks/landing/CTASection";
-import { TestimonialsSection } from "~/components/blocks/landing/Testimonials";
-import PopupAd from "~/components/blocks/landing/popup-ad";
-import { Toaster } from "~/components/ui/sonner";
-import InfiniteGallery from "~/components/blocks/landing/InfiniteGallery";
-import { useEffect, useState } from "react";
+export const viewport: Viewport = {
+  themeColor: "#064e3b",
+};
 
-export const dynamic = "force-dynamic";
-
-interface GalleryImage {
-  key: string;
-  url: string;
-  lastModified?: string;
-  size?: number;
-}
-
-// Fallback static images served from S3 proxy (used when API fails or during SSR)
-const FALLBACK_IMAGES = [
-  { src: "/api/images/gallery/IMG_3349_ldaqqy.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3360_h9xvsz.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6774_zymsqa.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/POSTER_vb1tvs.jpg", alt: "School Poster" },
-  { src: "/api/images/gallery/IMG_3135_dzhkaf.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3045_rrwon6.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3015_ocmbrn.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/H7H_1547_scojlx.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3033_fdu53k.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3101_tib63s.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_2930_kfkrzt.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3136_nufwsu.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3276_rgkfiv.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_2873_ecywt5.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6199_elv8zj.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3037_djwx6t.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6184_ozj3hr.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3330_kneelc.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3218_jmv7n8.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3151_gsuhua.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_8987_pfrlog.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_5049_ojzbjj.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_3095_y27vai.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6082_ogohxu.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/IMG_E2799_g5fgq7.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/DSC_6187_j6ovz3.jpg", alt: "School Event" },
-  { src: "/api/images/gallery/H7H_4932_xjhmck.jpg", alt: "School Event" },
-];
+export const metadata: Metadata = {
+  title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
+  description: "M. S. Naz High School® is the officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad, and District Gujranwala. 100% BISE matric pass rate (Code 112199), Oxford curriculum, modern science & practical AI labs, and proprietary 15 TB cloud LMS.",
+  keywords: [
+    "best school in Ghakhar Mandi",
+    "top school in Wazirabad",
+    "best matric school Gujranwala",
+    "M. S. Naz High School",
+    "MSNS",
+    "BISE Gujranwala affiliation code 112199",
+    "Oxford curriculum school Punjab",
+    "school with LMS Pakistan",
+    "matric science admission",
+    "Ghakhar Mandi school",
+    "Wazirabad high school",
+    "high school G.T. Road",
+    "Naz LMS portal"
+  ],
+  alternates: {
+    canonical: "https://www.msns.edu.pk",
+  },
+  openGraph: {
+    title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
+    description: "Officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad & Gujranwala. 100% BISE matric results, Oxford curriculum, STEM/AI labs, and 15 TB cloud LMS.",
+    url: "https://www.msns.edu.pk",
+    siteName: "M. S. Naz High School®",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+        width: 1200,
+        height: 630,
+        alt: "M. S. Naz High School® Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
+    description: "Officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad & Gujranwala. 100% BISE matric results, Oxford curriculum, and STEM/AI labs.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
+  },
+};
 
 export default function Home() {
-  const [galleryImages, setGalleryImages] = useState(FALLBACK_IMAGES);
-
-  useEffect(() => {
-    async function fetchGallery() {
-      try {
-        const res = await fetch("/api/gallery");
-        if (!res.ok) throw new Error("Failed to fetch gallery");
-        const data = (await res.json()) as { images: GalleryImage[] };
-
-        if (data.images && data.images.length > 0) {
-          setGalleryImages(
-            data.images.map((img) => ({
-              src: img.url,
-              alt: img.key.split("/").pop()?.replace(/[-_]/g, " ") ?? "Gallery Image",
-            }))
-          );
-        }
-      } catch {
-        // Keep fallback images on error
-      }
-    }
-
-    void fetchGallery();
-  }, []);
-
   return (
-    <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
-      <HeroHome />
-      <PopupAd />
-      <Toaster richColors closeButton />
-      <FeaturesSection />
-      <InfiniteGallery
-        images={galleryImages}
-        speed={1.0}
-        visibleCount={12}
+    <>
+      {/* Preload logo for header and initial hero video */}
+      <link
+        rel="preload"
+        href="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
+        as="image"
       />
-      <QuickLinksSection />
-      <TestimonialsSection />
-      <CTASection />
-    </main>
+      <link
+        rel="preload"
+        href="/api/images/videos/clip1_awtegx.mp4"
+        as="video"
+        type="video/mp4"
+      />
+      <HomeClient />
+    </>
   );
 }

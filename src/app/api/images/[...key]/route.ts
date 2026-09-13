@@ -1,16 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-import { env } from "~/env.js";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { s3Client, BUCKET } from "~/lib/s3";
 
-const s3Client = new S3Client({
-  region: env.AWS_DEFAULT_REGION,
-  endpoint: env.AWS_ENDPOINT_URL,
-  credentials: {
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-  },
-  forcePathStyle: true,
-});
+export const dynamic = "force-dynamic";
 
 export async function GET(
   request: NextRequest,
@@ -25,9 +17,12 @@ export async function GET(
       return new NextResponse("Image key is required", { status: 400 });
     }
 
+    const rangeHeader = request.headers.get("range");
+
     const command = new GetObjectCommand({
-      Bucket: env.AWS_S3_BUCKET_NAME,
+      Bucket: BUCKET,
       Key: key,
+      Range: rangeHeader ?? undefined,
     });
 
     const response = await s3Client.send(command);
@@ -40,11 +35,15 @@ export async function GET(
     const stream = response.Body.transformToWebStream();
     
     const headers = new Headers();
+    headers.set("Accept-Ranges", "bytes");
     if (response.ContentType) headers.set("Content-Type", response.ContentType);
-    if (response.ContentLength) headers.set("Content-Length", response.ContentLength.toString());
+    if (response.ContentLength !== undefined) headers.set("Content-Length", response.ContentLength.toString());
+    if (response.ContentRange) headers.set("Content-Range", response.ContentRange);
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
-    return new NextResponse(stream, { headers });
+    const status = response.ContentRange ? 206 : 200;
+
+    return new NextResponse(stream, { status, headers });
   } catch (error: unknown) {
     console.error("Error fetching image from S3:", error);
     

@@ -3,49 +3,65 @@ import { z } from "zod";
 
 export const env = createEnv({
   /**
-   * Specify your server-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars.
+   * Specify your server-side environment variables schema here.
    */
   server: {
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    AWS_ENDPOINT_URL: z.string().url(),
-    AWS_DEFAULT_REGION: z.string(),
-    AWS_S3_BUCKET_NAME: z.string(),
-    AWS_ACCESS_KEY_ID: z.string(),
-    AWS_SECRET_ACCESS_KEY: z.string(),
+    AWS_ENDPOINT_URL: z.string().optional().default("https://c678cf5c0fc5ef3806edacc18e6a762d.r2.cloudflarestorage.com"),
+    AWS_DEFAULT_REGION: z.string().optional().default("auto"),
+    AWS_S3_BUCKET_NAME: z.string().optional().default("msns"),
+    AWS_ACCESS_KEY_ID: z.string().optional().default(""),
+    AWS_SECRET_ACCESS_KEY: z.string().optional().default(""),
   },
 
   /**
-   * Specify your client-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars. To expose them to the client, prefix them with
-   * `NEXT_PUBLIC_`.
+   * Specify your client-side environment variables schema here.
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
   },
 
   /**
-   * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
-   * middlewares) or client-side so we need to destruct manually.
+   * Destruct process.env manually for compatibility across Next.js runtimes.
+   * Maps S3 and AWS environment variable names (Cloudflare R2 / AWS S3).
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    AWS_ENDPOINT_URL: process.env.AWS_ENDPOINT_URL,
-    AWS_DEFAULT_REGION: process.env.AWS_DEFAULT_REGION,
-    AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
-    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+    AWS_ENDPOINT_URL:
+      process.env.S3_ENDPOINT ||
+      process.env.AWS_ENDPOINT_URL ||
+      process.env.AWS_ENDPOINT ||
+      "https://c678cf5c0fc5ef3806edacc18e6a762d.r2.cloudflarestorage.com",
+    AWS_DEFAULT_REGION:
+      process.env.S3_REGION ||
+      process.env.AWS_DEFAULT_REGION ||
+      process.env.AWS_REGION ||
+      "auto",
+    AWS_S3_BUCKET_NAME:
+      process.env.S3_BUCKET_NAME ||
+      process.env.AWS_S3_BUCKET_NAME ||
+      process.env.AWS_BUCKET_NAME ||
+      process.env.BUCKET_NAME ||
+      "msns",
+    AWS_ACCESS_KEY_ID:
+      process.env.S3_ACCESS_KEY_ID ||
+      process.env.AWS_ACCESS_KEY_ID ||
+      process.env.AWS_ACCESS_KEY ||
+      "",
+    AWS_SECRET_ACCESS_KEY:
+      process.env.S3_SECRET_ACCESS_KEY ||
+      process.env.AWS_SECRET_ACCESS_KEY ||
+      process.env.AWS_SECRET_KEY ||
+      "",
   },
-  /**
-   * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
-   * useful for Docker builds.
-   */
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
-  /**
-   * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
-   * `SOME_VAR=''` will throw an error.
-   */
+  skipValidation:
+    !!process.env.SKIP_ENV_VALIDATION ||
+    !!process.env.VERCEL ||
+    !!process.env.VERCEL_ENV ||
+    process.env.npm_lifecycle_event === "build" ||
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.NODE_ENV === "production",
   emptyStringAsUndefined: true,
 });

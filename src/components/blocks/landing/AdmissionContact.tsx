@@ -15,10 +15,10 @@ const contactItems = [
   {
     icon: Mail,
     title: "Email",
-    content: "msnazhighschool@gmail.com",
+    content: "admissions@msns.edu.pk",
     color: "text-sky-600 dark:text-sky-400",
     bgColor: "bg-sky-500/10",
-    link: "mailto: msnazhighschool@gmail.com",
+    link: "mailto:admissions@msns.edu.pk",
   },
   {
     icon: Clock,

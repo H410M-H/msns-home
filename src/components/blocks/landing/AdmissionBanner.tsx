@@ -8,7 +8,7 @@ export const AdmissionsBanner = () => {
       <motion.div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/api/images/gallery/IMG_E2801_tkldxd.jpg')",
+          backgroundImage: "url('/api/images/resolve/IMG_E2801_tkldxd.jpg')",
         }}
         initial={{ scale: 1.15 }}
         animate={{ scale: 1 }}

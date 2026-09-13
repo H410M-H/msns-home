@@ -1,33 +1,35 @@
-"use client"
+import { type Metadata } from "next";
+import AboutClient from "./about-client";
 
-import { useState } from "react"
-import { useScroll, useTransform, useSpring } from "framer-motion"
-import { SchoolValues } from "~/components/blocks/landing/values"
-import { MissionStatement } from "~/components/blocks/landing/mission-statement"
-import { KeyStatistics } from "~/components/blocks/landing/statistics"
-import { MessageFromCEO } from "~/components/blocks/landing/message-ceo"
-import { HeroSection } from "~/components/blocks/landing/hero-section"
+export const metadata: Metadata = {
+  title: "About Us | M. S. Naz High School® | Mission & History",
+  description: "Learn about the mission, values, and history of M. S. Naz High School. Explore a message from our leadership, our key statistics, and our commitment to educational excellence.",
+  alternates: {
+    canonical: "https://www.msns.edu.pk/about",
+  },
+  openGraph: {
+    title: "About Us | M. S. Naz High School® | Mission & History",
+    description: "Learn about the mission, values, and history of M. S. Naz High School. Explore a message from our leadership, our key statistics, and our commitment to educational excellence.",
+    url: "https://www.msns.edu.pk/about",
+    siteName: "M.S. Naz High School®",
+    type: "website",
+    images: [
+      {
+        url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
+        width: 1200,
+        height: 630,
+        alt: "M.S. Naz High School® Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | M. S. Naz High School® | Mission & History",
+    description: "Learn about the mission, values, and history of M. S. Naz High School. Explore a message from our leadership, our key statistics, and our commitment to educational excellence.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
+  },
+};
 
 export default function About() {
-  const { scrollYProgress } = useScroll()
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
-  const rotateX = useSpring(useTransform(scrollYProgress, [0, 1], [15, 0]), {
-    stiffness: 300,
-    damping: 40,
-  })
-
-  const [expandedValue, setExpandedValue] = useState<number | null>(null)
-
-  return (
-    <section className="flex flex-col min-h-screen pt-4 bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
-      <main className="grow">
-        <HeroSection scale={scale} rotateX={rotateX} />
-        <MessageFromCEO />
-        <MissionStatement />
-        <KeyStatistics />
-        <SchoolValues expandedValue={expandedValue} setExpandedValue={setExpandedValue} />
-      </main>
-    </section>
-  )
+  return <AboutClient />;
 }
-

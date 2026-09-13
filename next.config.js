@@ -6,10 +6,18 @@ await import("./src/env.js");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
+  serverExternalPackages: ["nodemailer"],
   images: {
-    remotePatterns: [
-      // No external image domains needed - all images served via /api/images proxy
-    ],
+    unoptimized: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/documents/:path*",
+        destination: "/api/documents/:path*",
+      },
+    ];
   },
 };
 
