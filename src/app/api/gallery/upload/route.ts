@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { uploadToS3 } from "~/lib/s3";
+import { optimizeImageForUpload } from "~/lib/image-optimizer";
 
 export const dynamic = "force-dynamic";
 
@@ -66,19 +67,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const rawBuffer = Buffer.from(await file.arrayBuffer());
+    const optimized = await optimizeImageForUpload(rawBuffer, file.type);
     const timestamp = Date.now();
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const key = `${category}/${timestamp}_${sanitizedName}`;
 
-    await uploadToS3(key, buffer, file.type);
+    await uploadToS3(key, optimized.buffer, optimized.contentType);
 
     return NextResponse.json({
       key,
       url: `/api/images/${key}`,
       filename: file.name,
-      size: file.size,
-      contentType: file.type,
+      size: optimized.size,
+      contentType: optimized.contentType,
+      isOptimized: optimized.isOptimized,
     });
   } catch (error) {
     console.error("Error uploading file:", error);

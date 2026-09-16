@@ -21,6 +21,7 @@ description: >
 - **3D Graphics:** Three.js 0.170, @react-three/drei, @react-three/fiber (for InfiniteGallery).
 - **Data Fetching:** tRPC 11.8.1, TanStack React Query 5.50.
 - **Storage:** AWS S3 (via Cloudflare R2).
+- **Media & Image Optimization:** Dual-Tier Pipeline — Sharp server-side upload compression (`src/lib/image-optimizer.ts`), auto-orient, 2048px clamping, and Next.js edge AVIF/WebP transcoding (`minimumCacheTTL: 31536000`).
 - **Auth:** scaffolded (next-auth 5.0.0-beta.30) but UNUSED.
 - **Deployment:** Vercel.
 
@@ -56,8 +57,9 @@ description: >
 - **PWA:** `manifest.json` with app icons and shortcuts.
 
 ## File & Asset Handling (Connection to msns-build)
-- **Shared Storage:** Uses the same Tigris S3 bucket as `msns-build`.
-- **Image Serving:** ALL images are served through Next.js API as a proxy to S3 (`/api/images/...`). No external image domains configured.
+- **Shared Storage:** Uses the same Cloudflare R2 S3-compatible bucket as `msns-build`.
+- **Image Serving:** ALL images are served through Next.js API as a proxy to S3 (`/api/images/...`).
+- **Dual-Tier Image Optimization:** Server-side Sharp upload compression (`src/lib/image-optimizer.ts`) + Next.js Edge AVIF/WebP transcoding with 1-year immutable cache (`minimumCacheTTL: 31536000`). `unoptimized: true` must never be enabled in production.
 - **LMS Connection:** No code-level connection to `msns-build`. Linked via URLs (`https://lms.msns.edu.pk`).
 - **Migration Scripts:** `migrate_final.js` and `migrate_images.js` used to migrate from Cloudinary to Tigris S3.
 
