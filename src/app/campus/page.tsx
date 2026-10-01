@@ -16,16 +16,20 @@ import {
 import { BreadcrumbSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
-  title: "Campus Life & Modern Facilities | M. S. Naz High School®",
-  description: "Discover the state-of-the-art campus of M. S. Naz High School. Solar-powered infrastructure, modern Physics & Chemistry labs, AI computer labs with 15TB cloud, library, and secure transport.",
+  title: "Campus Facilities & Infrastructure | Solar, STEM & Transport",
+  description: "Tour M. S. Naz High School campus facilities: uninterrupted solar power, high-tech AI computer labs, modern science laboratories, and reliable bus transport.",
   alternates: {
     canonical: "https://www.msns.edu.pk/campus",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Campus Life & Modern Facilities | M. S. Naz High School®",
-    description: "Solar-powered infrastructure, modern Physics & Chemistry labs, AI computer labs with 15TB cloud, library, and secure transport.",
+    title: "Campus Facilities & Infrastructure | Solar, STEM & Transport",
+    description: "Tour M. S. Naz High School campus facilities: uninterrupted solar power, high-tech AI computer labs, modern science laboratories, and reliable bus transport.",
     url: "https://www.msns.edu.pk/campus",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     images: [
       {
@@ -35,6 +39,12 @@ export const metadata: Metadata = {
         alt: "M.S. Naz High School® Campus Facilities",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Campus Facilities & Infrastructure | Solar, STEM & Transport",
+    description: "Tour M. S. Naz High School campus facilities: uninterrupted solar power, high-tech AI computer labs, modern science laboratories, and reliable bus transport.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 

@@ -32,12 +32,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!location) {
     return {
-      title: "Location Not Found | M. S. Naz High School®",
+      title: "Location Not Found",
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   }
 
-  const title = `Top School Serving ${location.name} (${location.urduName}) | Admissions & Transport | MSNS`;
-  const description = `M. S. Naz High School serves students from ${location.name} with dedicated school transport (${location.commuteTimeMinutes} min commute), Oxford curriculum, BISE Gujranwala matric board honors, and STEM/AI labs.`;
+  // Generate unique, context-tailored title per location
+  let title = `Leading School Serving ${location.name} (${location.urduName}) | Safe Commute`;
+  if (location.slug === "ghakhar-mandi") {
+    title = `Top School in Ghakhar Mandi (${location.urduName}) | G.T. Road Campus Admissions`;
+  } else if (location.slug === "wazirabad") {
+    title = `Top School Serving Wazirabad (${location.urduName}) | Van Commute & Admissions`;
+  } else if (location.type === "City" || location.type === "Tehsil") {
+    title = `High School for ${location.name} (${location.urduName}) Students | Oxford & Matric`;
+  } else if (location.type === "Town") {
+    title = `Best School for ${location.name} (${location.urduName}) | Admissions & Transport`;
+  } else if (location.type === "Village") {
+    title = `Quality Schooling for ${location.name} (${location.urduName}) | Bus Pickup Available`;
+  }
+
+  // Generate unique 140-158 character meta description from location-specific data
+  let description = location.description;
+  if (description.length > 158) {
+    const cut = description.slice(0, 155);
+    const lastSpace = cut.lastIndexOf(" ");
+    let sliced = cut.slice(0, lastSpace);
+    if (!sliced.endsWith(".")) sliced += ".";
+    description = sliced;
+  } else if (description.length < 140) {
+    const suffix = " Admissions open at MSNS.";
+    if ((description + suffix).length <= 160) {
+      description = description.endsWith(".") ? description.slice(0, -1) + suffix : description + suffix;
+    }
+  }
 
   return {
     title,
@@ -54,11 +84,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: `https://www.msns.edu.pk/locations/${location.slug}`,
     },
+    robots: {
+      index: true,
+      follow: true,
+    },
     openGraph: {
       title,
       description,
       url: `https://www.msns.edu.pk/locations/${location.slug}`,
-      siteName: "M.S. Naz High School®",
+      siteName: "M. S. Naz High School®",
       type: "website",
       images: [
         {
@@ -68,6 +102,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           alt: `M. S. Naz High School Serving ${location.name}`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
     },
   };
 }

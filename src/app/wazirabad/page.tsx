@@ -11,8 +11,8 @@ import { BreadcrumbSchema, LocalSchoolSchema } from "~/components/SEOSchema";
 import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
-  title: "Best High School in Wazirabad | Admissions & Top Matric Results | MSNS",
-  description: "Looking for the best high school in Wazirabad? M. S. Naz High School is officially ranked #1 in Tehsil Wazirabad, offering Oxford syllabus, BISE Gujranwala matric distinctions (Code 112199), dedicated transport routes, and hands-on AI labs.",
+  title: "Best High School for Wazirabad Students | Daily Bus Commute & Admissions",
+  description: "Top-ranked high school serving Wazirabad students with dedicated school bus routes, Oxford-aligned curriculum, and top BISE Gujranwala matric results.",
   keywords: [
     "Best high school in Wazirabad",
     "Top matric school Wazirabad",
@@ -25,9 +25,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk/wazirabad",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Best High School in Wazirabad | M. S. Naz High School®",
-    description: "Oxford syllabus, BISE Gujranwala matric distinctions (Code 112199), and dedicated transport routes from Wazirabad.",
+    title: "Best High School for Wazirabad Students | Daily Bus Commute & Admissions",
+    description: "Top-ranked high school serving Wazirabad students with dedicated school bus routes, Oxford-aligned curriculum, and top BISE Gujranwala matric results.",
     url: "https://www.msns.edu.pk/wazirabad",
     siteName: "M. S. Naz High School®",
     locale: "en_US",
@@ -43,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Best High School in Wazirabad | M. S. Naz High School®",
-    description: "Oxford syllabus, BISE Gujranwala matric distinctions (Code 112199), and dedicated transport routes from Wazirabad.",
+    title: "Best High School for Wazirabad Students | Daily Bus Commute & Admissions",
+    description: "Top-ranked high school serving Wazirabad students with dedicated school bus routes, Oxford-aligned curriculum, and top BISE Gujranwala matric results.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

@@ -1,9 +1,18 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Home, BookOpen, Compass } from "lucide-react";
+import { Home, BookOpen, Compass } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import { BackButton } from "~/components/ui/back-button";
+
+export const metadata: Metadata = {
+  title: "404 - Page Not Found",
+  description: "The page you are looking for does not exist or has been moved. Explore M. S. Naz High School academic programs, admissions, and campus resources.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function NotFound() {
   return (
@@ -63,13 +72,7 @@ export default function NotFound() {
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button
-              onClick={() => window.history.back()}
-              variant="outline"
-              className="w-full sm:w-auto rounded-full border-green-200 bg-white text-green-800 hover:bg-green-50"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
-            </Button>
+            <BackButton />
 
             <Button
               asChild

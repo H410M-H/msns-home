@@ -10,16 +10,20 @@ import {
 import { BreadcrumbSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
-  title: "Faculty & Academic Leadership | M. S. Naz High School®",
-  description: "Meet the dedicated educators and academic leadership of M. S. Naz High School. Experienced subject specialists, mentor-to-student ratio of 1:16, and professional educator training.",
+  title: "Faculty & Mentors | Experienced Educators & Subject Specialists",
+  description: "Meet the qualified faculty and leadership at MSNS. Expert educators with a 1:16 student-teacher ratio committed to Oxford curriculum and board exam success.",
   alternates: {
     canonical: "https://www.msns.edu.pk/faculty",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Faculty & Academic Leadership | M. S. Naz High School®",
-    description: "Meet the dedicated educators and academic leadership of M. S. Naz High School.",
+    title: "Faculty & Mentors | Experienced Educators & Subject Specialists",
+    description: "Meet the qualified faculty and leadership at MSNS. Expert educators with a 1:16 student-teacher ratio committed to Oxford curriculum and board exam success.",
     url: "https://www.msns.edu.pk/faculty",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     images: [
       {
@@ -29,6 +33,12 @@ export const metadata: Metadata = {
         alt: "M.S. Naz High School® Faculty",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Faculty & Mentors | Experienced Educators & Subject Specialists",
+    description: "Meet the qualified faculty and leadership at MSNS. Expert educators with a 1:16 student-teacher ratio committed to Oxford curriculum and board exam success.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 

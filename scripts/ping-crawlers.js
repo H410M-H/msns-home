@@ -19,6 +19,8 @@ const URL_LIST = [
   "https://www.msns.edu.pk/faculty",
   "https://www.msns.edu.pk/about",
   "https://www.msns.edu.pk/contact",
+  "https://www.msns.edu.pk/privacy-policy",
+  "https://www.msns.edu.pk/terms-of-service",
   "https://www.msns.edu.pk/llms.txt",
   "https://www.msns.edu.pk/llms-full.txt",
   "https://www.msns.edu.pk/api/documents/msns-prospectus-2026-2027.pdf",

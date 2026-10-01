@@ -2,8 +2,15 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | M.S. Naz High School",
-  description: "Privacy Policy and data protection terms for M.S. Naz High School.",
+  title: "Privacy Policy & Student Data Protection",
+  description: "Read the M. S. Naz High School privacy policy regarding student data protection, online admission records, parental confidentiality, and website digital security.",
+  alternates: {
+    canonical: "https://www.msns.edu.pk/privacy-policy",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function PrivacyPolicyPage() {

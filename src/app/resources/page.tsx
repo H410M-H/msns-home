@@ -19,8 +19,8 @@ import { BreadcrumbSchema, MatricResourcesSchema } from "~/components/SEOSchema"
 import { MatricTextbooksSection } from "~/components/blocks/downloads/MatricTextbooksSection";
 
 export const metadata: Metadata = {
-  title: "BISE Gujranwala Matric Resource Center | Pairing Schemes, Past Papers & Exam Tips | MSNS",
-  description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 top-ranked school in Ghakhar & Wazirabad). Access 9th & 10th class pairing schemes, paper patterns, SLO model papers, 5-year past papers, and expert exam strategies for 1050+ marks.",
+  title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Tips",
+  description: "Access BISE Gujranwala 9th and 10th class pairing schemes, SLO model papers, 5-year past papers, and proven matriculation exam strategies curated by MSNS.",
   keywords: [
     "BISE Gujranwala matric resource center",
     "matric pairing schemes 2026",
@@ -44,9 +44,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk/resources",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS",
-    description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 ranked school). Access 9th & 10th class pairing schemes, paper patterns, and 1050+ marks exam strategies.",
+    title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Tips",
+    description: "Access BISE Gujranwala 9th and 10th class pairing schemes, SLO model papers, 5-year past papers, and proven matriculation exam strategies curated by MSNS.",
     url: "https://www.msns.edu.pk/resources",
     siteName: "M. S. Naz High School®",
     locale: "en_US",
@@ -62,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Exam Tips | MSNS",
-    description: "Official BISE Gujranwala Matric Resource Center by M. S. Naz High School (#1 ranked school). Pairing schemes, past papers, and top exam strategies.",
+    title: "BISE Gujranwala Matric Resource Center | Pairing Schemes & Tips",
+    description: "Access BISE Gujranwala 9th and 10th class pairing schemes, SLO model papers, 5-year past papers, and proven matriculation exam strategies curated by MSNS.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

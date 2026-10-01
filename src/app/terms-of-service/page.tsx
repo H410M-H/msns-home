@@ -2,16 +2,20 @@ import { type Metadata } from "next";
 import TermsClient from "./terms-client";
 
 export const metadata: Metadata = {
-  title: "Terms of Service & Privacy Policy | M. S. Naz High School®",
-  description: "Read the institutional governance, terms of service, and privacy policies for M. S. Naz High School, including affiliations, society rules, and LMS documentation.",
+  title: "Institutional Terms of Service & Code of Conduct",
+  description: "Review institutional terms of service, campus enrollment policies, student code of conduct, and educational governance guidelines at M. S. Naz High School.",
   alternates: {
     canonical: "https://www.msns.edu.pk/terms-of-service",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Terms of Service & Privacy Policy | M. S. Naz High School®",
-    description: "Read the institutional governance, terms of service, and privacy policies for M. S. Naz High School, including affiliations, society rules, and LMS documentation.",
+    title: "Institutional Terms of Service & Code of Conduct",
+    description: "Review institutional terms of service, campus enrollment policies, student code of conduct, and educational governance guidelines at M. S. Naz High School.",
     url: "https://www.msns.edu.pk/terms-of-service",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     images: [
       {
@@ -24,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Terms of Service & Privacy Policy | M. S. Naz High School®",
-    description: "Read the institutional governance, terms of service, and privacy policies for M. S. Naz High School, including affiliations, society rules, and LMS documentation.",
+    title: "Institutional Terms of Service & Code of Conduct",
+    description: "Review institutional terms of service, campus enrollment policies, student code of conduct, and educational governance guidelines at M. S. Naz High School.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

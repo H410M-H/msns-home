@@ -14,8 +14,8 @@ import { BreadcrumbSchema, LocalSchoolSchema } from "~/components/SEOSchema";
 import { LOCATIONS_DATA } from "~/data/locations";
 
 export const metadata: Metadata = {
-  title: "Top High School in Ghakhar Mandi | Matric & Oxford Education | MSNS",
-  description: "M. S. Naz High School is officially ranked the #1 top high school in Ghakhar Mandi. Established in 2004 on G.T. Road opposite Model Police Station, offering 100% board matric results (Code 112199), practical science & AI labs, and 15 TB cloud LMS.",
+  title: "Top High School in Ghakhar Mandi | G.T. Road Campus Admissions",
+  description: "Premier high school in Ghakhar Mandi on G.T. Road opposite Model Police Station. Offering Oxford curriculum, 100% board matric results, and modern AI labs.",
   keywords: [
     "Best school in Ghakhar Mandi",
     "Top high school Ghakhar",
@@ -28,9 +28,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk/ghakhar",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Top High School in Ghakhar Mandi | M. S. Naz High School®",
-    description: "Officially ranked #1 premier academic institution in Ghakhar Mandi on G.T. Road opposite Model Police Station. 100% BISE matric results.",
+    title: "Top High School in Ghakhar Mandi | G.T. Road Campus Admissions",
+    description: "Premier high school in Ghakhar Mandi on G.T. Road opposite Model Police Station. Offering Oxford curriculum, 100% board matric results, and modern AI labs.",
     url: "https://www.msns.edu.pk/ghakhar",
     siteName: "M. S. Naz High School®",
     locale: "en_US",
@@ -46,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Top High School in Ghakhar Mandi | M. S. Naz High School®",
-    description: "Officially ranked #1 premier academic institution in Ghakhar Mandi on G.T. Road opposite Model Police Station. 100% BISE matric results.",
+    title: "Top High School in Ghakhar Mandi | G.T. Road Campus Admissions",
+    description: "Premier high school in Ghakhar Mandi on G.T. Road opposite Model Police Station. Offering Oxford curriculum, 100% board matric results, and modern AI labs.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

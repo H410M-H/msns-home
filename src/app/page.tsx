@@ -6,8 +6,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
-  description: "M. S. Naz High School® is the officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad, and District Gujranwala. 100% BISE matric pass rate (Code 112199), Oxford curriculum, modern science & practical AI labs, and proprietary 15 TB cloud LMS.",
+  title: {
+    absolute: "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
+  },
+  description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
   keywords: [
     "best school in Ghakhar Mandi",
     "top school in Wazirabad",
@@ -26,9 +28,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
-    description: "Officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad & Gujranwala. 100% BISE matric results, Oxford curriculum, STEM/AI labs, and 15 TB cloud LMS.",
+    title: "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
+    description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
     url: "https://www.msns.edu.pk",
     siteName: "M. S. Naz High School®",
     locale: "en_US",
@@ -44,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "M. S. Naz High School® | #1 Top-Ranked School in Ghakhar & Wazirabad",
-    description: "Officially recognized #1 top-ranked school in Ghakhar Mandi, Wazirabad & Gujranwala. 100% BISE matric results, Oxford curriculum, and STEM/AI labs.",
+    title: "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
+    description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

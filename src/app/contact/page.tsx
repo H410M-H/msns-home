@@ -3,16 +3,20 @@ import { ContactInfo } from "~/components/blocks/landing/ContactInfo";
 import { GeometricBackground } from "~/components/blocks/landing/GeometricBg";
 
 export const metadata: Metadata = {
-  title: "Contact Us | M. S. Naz High School® | Wazirabad Campus",
-  description: "Get in touch with M. S. Naz High School. Find our physical campus address in Wazirabad, telephone numbers, emails, and contact details for admissions and queries.",
+  title: "Contact Admissions & Campus Office | Directions & Helplines",
+  description: "Contact M. S. Naz High School campus in Ghakhar Mandi & Wazirabad. Get admission helplines, official emails, campus visiting hours, and Google Maps directions.",
   alternates: {
     canonical: "https://www.msns.edu.pk/contact",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Contact Us | M. S. Naz High School® | Wazirabad Campus",
-    description: "Get in touch with M. S. Naz High School. Find our physical campus address in Wazirabad, telephone numbers, emails, and contact details for admissions and queries.",
+    title: "Contact Admissions & Campus Office | Directions & Helplines",
+    description: "Contact M. S. Naz High School campus in Ghakhar Mandi & Wazirabad. Get admission helplines, official emails, campus visiting hours, and Google Maps directions.",
     url: "https://www.msns.edu.pk/contact",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     images: [
       {
@@ -25,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us | M. S. Naz High School® | Wazirabad Campus",
-    description: "Get in touch with M. S. Naz High School. Find our physical campus address in Wazirabad, telephone numbers, emails, and contact details for admissions and queries.",
+    title: "Contact Admissions & Campus Office | Directions & Helplines",
+    description: "Contact M. S. Naz High School campus in Ghakhar Mandi & Wazirabad. Get admission helplines, official emails, campus visiting hours, and Google Maps directions.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

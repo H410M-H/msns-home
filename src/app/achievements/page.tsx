@@ -9,16 +9,20 @@ import {
 import { BreadcrumbSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
-  title: "Board Results & Academic Achievements | M. S. Naz High School®",
-  description: "Explore the academic achievements and BISE Gujranwala matriculation results of M. S. Naz High School students. Consistent 100% pass rates, distinction holders, and university alumni success.",
+  title: "Academic Achievements & Board Results | 100% Matric Pass",
+  description: "Explore BISE Gujranwala board examination results and honors at MSNS. Over 22 years of academic excellence, 100% matric pass rates, and distinction holders.",
   alternates: {
     canonical: "https://www.msns.edu.pk/achievements",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Board Results & Academic Achievements | M. S. Naz High School®",
-    description: "Explore the academic achievements and BISE Gujranwala matriculation results of M. S. Naz High School students.",
+    title: "Academic Achievements & Board Results | 100% Matric Pass",
+    description: "Explore BISE Gujranwala board examination results and honors at MSNS. Over 22 years of academic excellence, 100% matric pass rates, and distinction holders.",
     url: "https://www.msns.edu.pk/achievements",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     images: [
       {
@@ -28,6 +32,12 @@ export const metadata: Metadata = {
         alt: "M.S. Naz High School® Achievements",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Academic Achievements & Board Results | 100% Matric Pass",
+    description: "Explore BISE Gujranwala board examination results and honors at MSNS. Over 22 years of academic excellence, 100% matric pass rates, and distinction holders.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 

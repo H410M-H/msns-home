@@ -12,16 +12,20 @@ import {
 import { BreadcrumbSchema } from "~/components/SEOSchema";
 
 export const metadata: Metadata = {
-  title: "Academic Programs & Curricula | M. S. Naz High School® | Oxford & Matric",
-  description: "Explore academic programs at M. S. Naz High School. Oxford-aligned primary & middle school curriculum, BISE Gujranwala matriculation in Science & Computer Science, and hands-on AI labs.",
+  title: "Academic Programs & Curriculum | Oxford & BISE Matric",
+  description: "Explore academic programs at MSNS featuring Oxford curriculum for primary and middle grades, BISE Gujranwala matric science streams, and advanced STEM education.",
   alternates: {
     canonical: "https://www.msns.edu.pk/academics",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Academic Programs & Curricula | M. S. Naz High School®",
-    description: "Oxford-aligned primary & middle school curriculum, BISE Gujranwala matriculation in Science & Computer Science, and hands-on AI labs.",
+    title: "Academic Programs & Curriculum | Oxford & BISE Matric",
+    description: "Explore academic programs at MSNS featuring Oxford curriculum for primary and middle grades, BISE Gujranwala matric science streams, and advanced STEM education.",
     url: "https://www.msns.edu.pk/academics",
-    siteName: "M.S. Naz High School®",
+    siteName: "M. S. Naz High School®",
     type: "website",
     images: [
       {
@@ -31,6 +35,12 @@ export const metadata: Metadata = {
         alt: "M.S. Naz High School® Academics",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Academic Programs & Curriculum | Oxford & BISE Matric",
+    description: "Explore academic programs at MSNS featuring Oxford curriculum for primary and middle grades, BISE Gujranwala matric science streams, and advanced STEM education.",
+    images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
 

@@ -69,6 +69,8 @@ export function SchoolSchema() {
       'https://www.instagram.com/msnazhighschool',
       'https://twitter.com/msnazhighschool',
       'https://www.youtube.com/@msns-edu-pk',
+      'https://www.linkedin.com/company/msnazhighschool',
+      'https://github.com/Faizan-Azam',
       'https://lms.msns.edu.pk',
       'https://www.google.com/maps/place/?q=place_id:ChIJ4RLlGhQnHzkRzxw0rAyLcko',
     ],

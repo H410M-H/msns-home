@@ -22,8 +22,8 @@ import { BreadcrumbSchema, MatricDownloadsSchema } from "~/components/SEOSchema"
 import { MatricTextbooksSection } from "~/components/blocks/downloads/MatricTextbooksSection";
 
 export const metadata: Metadata = {
-  title: "Official Downloads & Matric Academic Portal | M. S. Naz High School®",
-  description: "Download official M. S. Naz High School documents: 36-page 2026–2027 Prospectus, Admission Forms, Fee Schedules, Academic Calendars, plus BISE Gujranwala Matric model papers, past papers, 20 PCTB textbooks, and pairing schemes.",
+  title: "Official Downloads & Matric Academic Portal",
+  description: "Download official school prospectus, admission forms, fee schedules, BISE Gujranwala matric model papers, past papers, and Punjab Board PCTB textbooks in PDF.",
   keywords: [
     "M. S. Naz High School downloads",
     "MSNS downloads portal",
@@ -48,9 +48,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk/downloads",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Official Downloads & Matric Academic Portal | M. S. Naz High School®",
-    description: "Download official 36-page school prospectus, admission forms, fee schedule, and BISE Gujranwala Matric academic resources & 20 PCTB textbooks.",
+    title: "Official Downloads & Matric Academic Portal",
+    description: "Download official school prospectus, admission forms, fee schedules, BISE Gujranwala matric model papers, past papers, and Punjab Board PCTB textbooks in PDF.",
     url: "https://www.msns.edu.pk/downloads",
     siteName: "M. S. Naz High School®",
     locale: "en_US",
@@ -66,8 +70,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Official Downloads & Matric Academic Portal | M. S. Naz High School®",
-    description: "Download official 36-page prospectus, admission forms, fee schedules, and complete BISE Gujranwala matric textbooks and notes.",
+    title: "Official Downloads & Matric Academic Portal",
+    description: "Download official school prospectus, admission forms, fee schedules, BISE Gujranwala matric model papers, past papers, and Punjab Board PCTB textbooks in PDF.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };
