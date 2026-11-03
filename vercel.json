@@ -1,4 +1,20 @@
 {
-  "framework": "nextjs",
-  "buildCommand": "next build"
+  "crons": [
+    {
+      "path": "/api/crons/serp-tracker",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/crons/gsc-sync",
+      "schedule": "0 4 * * 1"
+    },
+    {
+      "path": "/api/crons/sitemap-ping",
+      "schedule": "0 6 1 * *"
+    },
+    {
+      "path": "/api/crons/health-perf",
+      "schedule": "*/30 * * * *"
+    }
+  ]
 }
