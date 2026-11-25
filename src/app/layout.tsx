@@ -91,10 +91,11 @@ export const metadata: Metadata = {
     }
   },
   category: "Education",
+  // No default canonical here: a layout-level canonical is inherited by every
+  // page that doesn't set its own (including not-found) and points them all at
+  // the home page. Each page sets its own canonical instead.
   alternates: {
-    canonical: "https://www.msns.edu.pk",
     types: {
-      "application/rss+xml": "https://www.msns.edu.pk/sitemap.xml",
       "text/markdown": "https://www.msns.edu.pk/llms.txt",
     },
   },

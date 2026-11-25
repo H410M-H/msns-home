@@ -171,13 +171,6 @@ export default async function LocationPage({ params }: PageProps) {
       name: location.name,
       alternateName: location.urduName,
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "250",
-      bestRating: "5",
-      worstRating: "1",
-    },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",

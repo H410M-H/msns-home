@@ -135,48 +135,6 @@ export function SchoolSchema() {
         description: 'Hands-on practical AI, computer science, and modern science laboratory curriculum',
       },
     ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '250',
-      bestRating: '5',
-      worstRating: '1',
-      itemReviewed: {
-        '@type': 'School',
-        '@id': 'https://www.msns.edu.pk/#school',
-        name: 'M. S. Naz High School®',
-      },
-    },
-    review: [
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5',
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Muhammad Tariq',
-        },
-        reviewBody:
-          'Undoubtedly the best school in Ghakhar Mandi and Wazirabad. My son scored 1062 marks in BISE Gujranwala Matric science exams. The 15 TB Naz LMS portal keeps parents updated daily with attendance and tests.',
-      },
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5',
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Dr. Asim Farooq',
-        },
-        reviewBody:
-          'Excellent Oxford curriculum and top-notch practical physics and chemistry laboratories. The teachers provide personalized coaching and paper presentation techniques that produce board distinctions.',
-      },
-    ],
   };
 
   return (
@@ -510,18 +468,6 @@ function buildAcademicEntities(baseUrl: string) {
     hasMap: 'https://www.google.com/maps/place/?q=place_id:ChIJ4RLlGhQnHzkRzxw0rAyLcko',
     telephone: ['+92-318-7625415', '+92-301-6233609'],
     email: 'info@msns.edu.pk',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '250',
-      bestRating: '5',
-      worstRating: '1',
-      itemReviewed: {
-        '@type': 'School',
-        '@id': `${baseUrl}/#school`,
-        name: 'M. S. Naz High School®',
-      },
-    },
   };
 
   return { officialDocuments, docEntities, textbookEntities, notesEntities, schoolNode };
@@ -812,18 +758,6 @@ export function LocalSchoolSchema({
       '@type': 'AdministrativeArea',
       name: locationName,
       ...(locationUrduName ? { alternateName: locationUrduName } : {}),
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '250',
-      bestRating: '5',
-      worstRating: '1',
-      itemReviewed: {
-        '@type': 'School',
-        '@id': `${baseUrl}/${slug}#school`,
-        name: `M. S. Naz High School® — #1 School Serving ${locationName}`,
-      },
     },
     openingHoursSpecification: [
       {

@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.msns.edu.pk/privacy-policy",
   },
+  openGraph: {
+    title: "Privacy Policy & Student Data Protection",
+    description: "How M. S. Naz High School protects student data, online admission records and parental confidentiality.",
+    url: "https://www.msns.edu.pk/privacy-policy",
+    siteName: "M. S. Naz High School®",
+    type: "website",
+    images: [{ url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png", alt: "M.S. Naz High School® Logo" }],
+  },
   robots: {
     index: true,
     follow: true,
