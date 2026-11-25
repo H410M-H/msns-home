@@ -1,188 +1,157 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useMemo, useRef, useState, type ComponentRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  Float,
-  MeshDistortMaterial,
-  MeshWobbleMaterial,
-  OrbitControls,
-  PerspectiveCamera,
-  Stars,
-} from "@react-three/drei";
-import type * as THREE from "three";
+import { Float, MeshDistortMaterial } from "@react-three/drei";
+import * as THREE from "three";
+import type { PillarKey } from "~/content/about";
 
-export type MorphPillar = "academic" | "stem" | "eco";
+const PILLAR_STYLE: Record<
+  PillarKey,
+  { color: string; emissive: string; distort: number }
+> = {
+  academic: { color: "#10b981", emissive: "#065f46", distort: 0.22 },
+  stem: { color: "#2dd4bf", emissive: "#0f766e", distort: 0.38 },
+  eco: { color: "#f59e0b", emissive: "#92400e", distort: 0.3 },
+};
 
-function MorphicCore({
-  activePillar,
-  wireframe,
-}: {
-  activePillar: MorphPillar;
-  wireframe: boolean;
-}) {
-  const meshRef = useRef<THREE.Mesh>(null);
+/**
+ * One mesh that "morphs" between pillars: it contracts, swaps geometry and
+ * colour at the smallest point, then springs back out with a burst of
+ * surface distortion. The whole group leans toward the pointer.
+ */
+function MorphicCore({ pillar }: { pillar: PillarKey }) {
+  const group = useRef<THREE.Group>(null);
+  const mesh = useRef<THREE.Mesh>(null);
+  const material = useRef<ComponentRef<typeof MeshDistortMaterial>>(null);
+  const shown = useRef<PillarKey>(pillar);
+  const scale = useRef(1);
+  const targetColor = useMemo(() => new THREE.Color(), []);
+  const targetEmissive = useMemo(() => new THREE.Color(), []);
 
-  useFrame((_, delta) => {
-    if (!meshRef.current) return;
-    meshRef.current.rotation.x += delta * 0.28;
-    meshRef.current.rotation.y += delta * 0.38;
+  const geometries = useMemo(
+    () => ({
+      academic: new THREE.IcosahedronGeometry(1.35, 4),
+      stem: new THREE.TorusKnotGeometry(0.95, 0.32, 180, 24),
+      eco: new THREE.SphereGeometry(1.3, 64, 64),
+    }),
+    [],
+  );
+  // Props are only the starting point: later pillar changes are animated in
+  // useFrame, so geometry and colours must not be swapped by a re-render.
+  const [initial] = useState(() => ({
+    geometry: geometries[pillar],
+    style: PILLAR_STYLE[pillar],
+  }));
+
+  useFrame((state, delta) => {
+    const g = group.current;
+    const m = mesh.current;
+    const mat = material.current;
+    if (!g || !m || !mat) return;
+
+    const dt = Math.min(delta, 0.05);
+    const morphing = shown.current !== pillar;
+
+    // Contract while morphing, expand when settled.
+    const targetScale = morphing ? 0.05 : 1;
+    scale.current = THREE.MathUtils.damp(scale.current, targetScale, 9, dt);
+    m.scale.setScalar(scale.current);
+
+    if (morphing && scale.current < 0.12) {
+      shown.current = pillar;
+      m.geometry = geometries[pillar];
+      mat.distort = 0.7; // burst, then settle below
+    }
+
+    const style = PILLAR_STYLE[shown.current];
+    mat.distort = THREE.MathUtils.damp(mat.distort, style.distort, 2.5, dt);
+    targetColor.set(style.color);
+    targetEmissive.set(style.emissive);
+    mat.color.lerp(targetColor, 1 - Math.exp(-6 * dt));
+    mat.emissive.lerp(targetEmissive, 1 - Math.exp(-6 * dt));
+
+    // Kinetic lean toward the pointer plus a slow idle spin.
+    m.rotation.y += dt * 0.35;
+    g.rotation.x = THREE.MathUtils.damp(
+      g.rotation.x,
+      state.pointer.y * -0.35,
+      4,
+      dt,
+    );
+    g.rotation.y = THREE.MathUtils.damp(
+      g.rotation.y,
+      state.pointer.x * 0.5,
+      4,
+      dt,
+    );
   });
 
-  if (activePillar === "academic") {
-    return (
-      <Float speed={2.4} rotationIntensity={1.2} floatIntensity={1.5}>
-        <mesh ref={meshRef} scale={1.35}>
-          <icosahedronGeometry args={[1.45, 1]} />
-          <meshStandardMaterial
-            color="#10b981"
-            emissive="#059669"
-            emissiveIntensity={0.25}
-            roughness={0.15}
-            metalness={0.85}
-            wireframe={wireframe}
-          />
-        </mesh>
-      </Float>
-    );
-  }
-
-  if (activePillar === "stem") {
-    return (
-      <Float speed={3.0} rotationIntensity={1.6} floatIntensity={1.7}>
-        <mesh ref={meshRef} scale={1.15}>
-          <torusKnotGeometry args={[1.15, 0.36, 128, 32]} />
-          <MeshDistortMaterial
-            color="#2dd4bf"
-            emissive="#0d9488"
-            emissiveIntensity={0.3}
-            roughness={0.2}
-            metalness={0.75}
-            distort={0.35}
-            speed={2.8}
-            wireframe={wireframe}
-          />
-        </mesh>
-      </Float>
-    );
-  }
-
   return (
-    <Float speed={2.0} rotationIntensity={0.9} floatIntensity={1.3}>
-      <mesh ref={meshRef} scale={1.3}>
-        <sphereGeometry args={[1.38, 36, 36]} />
-        <MeshWobbleMaterial
-          color="#f59e0b"
-          emissive="#d97706"
-          emissiveIntensity={0.25}
-          roughness={0.25}
-          metalness={0.65}
-          factor={0.45}
-          speed={2.2}
-          wireframe={wireframe}
-        />
-      </mesh>
-    </Float>
+    <group ref={group} position={[0, 0.45, 0]} scale={0.78}>
+      <Float speed={2} rotationIntensity={0.6} floatIntensity={1.1}>
+        <mesh ref={mesh} geometry={initial.geometry}>
+          <MeshDistortMaterial
+            ref={material}
+            color={initial.style.color}
+            emissive={initial.style.emissive}
+            emissiveIntensity={0.35}
+            roughness={0.18}
+            metalness={0.7}
+            distort={initial.style.distort}
+            speed={2.2}
+          />
+        </mesh>
+      </Float>
+      <Orbiters />
+    </group>
   );
 }
 
-export function About3DCanvas({
-  activePillar = "academic",
-  onPillarSelect,
-}: {
-  activePillar?: MorphPillar;
-  onPillarSelect?: (p: MorphPillar) => void;
-}) {
-  const [pillar, setPillar] = useState<MorphPillar>(activePillar);
-  const [wireframe, setWireframe] = useState(true);
-  const current = onPillarSelect ? activePillar : pillar;
-  const select = (p: MorphPillar) => {
-    setPillar(p);
-    onPillarSelect?.(p);
-  };
-
+/** Three small satellites on tilted orbits around the core. */
+function Orbiters() {
+  const ring = useRef<THREE.Group>(null);
+  useFrame((_, delta) => {
+    if (ring.current) ring.current.rotation.z += Math.min(delta, 0.05) * 0.6;
+  });
   return (
-    <div className="relative h-[460px] w-full overflow-hidden rounded-3xl border border-slate-800/90 bg-slate-950/80 shadow-2xl sm:h-[520px]">
-      <Canvas dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
-        <PerspectiveCamera makeDefault position={[0, 0, 5.0]} fov={45} />
-        <ambientLight intensity={0.65} />
-        <directionalLight
-          position={[10, 10, 5]}
-          intensity={1.6}
-          color="#ffffff"
-        />
-        <pointLight position={[-10, -10, -5]} intensity={0.9} color="#10b981" />
-        <Stars
-          radius={50}
-          depth={35}
-          count={600}
-          factor={4}
-          saturation={0}
-          fade
-          speed={1}
-        />
-        <MorphicCore activePillar={current} wireframe={wireframe} />
-        <OrbitControls
-          enableZoom={true}
-          minDistance={2.5}
-          maxDistance={6.8}
-          enablePan={false}
-        />
-      </Canvas>
-      <div className="absolute top-4 left-4 z-10 max-w-[240px] rounded-2xl border border-emerald-500/30 bg-slate-900/80 p-2.5 backdrop-blur-md">
-        <div className="flex items-center space-x-2.5">
-          <img
-            src="/api/images/resolve/FrontView1_alaabu.jpg"
-            alt="MSNS Campus"
-            className="h-11 w-11 rounded-xl border border-emerald-400/30 object-cover"
-          />
-          <div>
-            <p className="text-[10px] font-bold text-emerald-400 uppercase">
-              Campus View
-            </p>
-            <p className="text-xs font-semibold text-white">
-              Main Academic Wing
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="absolute top-4 right-4 z-10">
-        <button
-          type="button"
-          onClick={() => setWireframe(!wireframe)}
-          className="rounded-xl border border-slate-700 bg-slate-900/85 px-3 py-1.5 text-xs font-semibold text-emerald-400"
-        >
-          Wireframe: {wireframe ? "ON" : "OFF"}
-        </button>
-      </div>
-      <div className="absolute right-4 bottom-4 left-4 z-10 flex items-center justify-between rounded-2xl border border-slate-700/70 bg-slate-900/85 p-2.5 px-4 text-xs backdrop-blur-md">
-        <span className="font-mono text-[11px] text-slate-300">
-          3D Morphic Core: {current.toUpperCase()}
-        </span>
-        <div className="flex space-x-1.5">
-          <button
-            type="button"
-            onClick={() => select("academic")}
-            className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold ${current === "academic" ? "bg-emerald-500 text-white" : "bg-slate-800 text-slate-300"}`}
-          >
-            Academic
-          </button>
-          <button
-            type="button"
-            onClick={() => select("stem")}
-            className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold ${current === "stem" ? "bg-teal-500 text-white" : "bg-slate-800 text-slate-300"}`}
-          >
-            AI Lab
-          </button>
-          <button
-            type="button"
-            onClick={() => select("eco")}
-            className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold ${current === "eco" ? "bg-amber-500 text-white" : "bg-slate-800 text-slate-300"}`}
-          >
-            Solar
-          </button>
-        </div>
-      </div>
-    </div>
+    <group ref={ring} rotation={[1.1, 0.2, 0]}>
+      {[0, 1, 2].map((i) => {
+        const a = (i / 3) * Math.PI * 2;
+        return (
+          <mesh key={i} position={[Math.cos(a) * 2.2, Math.sin(a) * 2.2, 0]}>
+            <sphereGeometry args={[0.09, 16, 16]} />
+            <meshStandardMaterial
+              color="#fef3c7"
+              emissive="#fbbf24"
+              emissiveIntensity={1.2}
+            />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+export default function About3DCanvas({
+  pillar,
+  active,
+}: {
+  pillar: PillarKey;
+  active: boolean;
+}) {
+  return (
+    <Canvas
+      aria-hidden
+      frameloop={active ? "always" : "never"}
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 0, 5.2], fov: 45 }}
+      gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
+    >
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[6, 8, 5]} intensity={1.5} />
+      <pointLight position={[-6, -4, -4]} intensity={1.1} color="#34d399" />
+      <MorphicCore pillar={pillar} />
+    </Canvas>
   );
 }

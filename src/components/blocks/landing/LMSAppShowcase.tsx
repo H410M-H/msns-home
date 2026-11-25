@@ -14,6 +14,8 @@ import {
   Laptop,
   Activity,
 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { TiltCard } from "~/components/motion/TiltCard";
 import { Button } from "~/components/ui/button";
 
 function GooglePlayIcon({ className }: { className?: string }) {
@@ -209,129 +211,148 @@ export const LMSAppShowcase = () => {
               </button>
             </div>
 
-            {/* Tab 1: Smartphone App 3D Mockup */}
-            {activeTab === "mobile" && (
-              <div className="group relative w-full max-w-sm overflow-hidden rounded-3xl border border-emerald-500/30 bg-slate-950/80 shadow-2xl shadow-emerald-950/50 backdrop-blur-xl">
-                <div className="relative aspect-square w-full">
-                  <Image
-                    src="/images/lms-app-mockup.jpg"
-                    alt="MSNS Smart App Mobile Preview"
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 400px"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent opacity-80" />
-                  <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between">
-                    <div>
-                      <div className="text-xs font-bold text-white">
-                        MSNS Smart Android App
-                      </div>
-                      <div className="text-[10px] text-emerald-400">
-                        Available on Google Play & APK
-                      </div>
-                    </div>
-                    <span className="rounded-full border border-emerald-400/40 bg-emerald-500/20 px-2.5 py-1 text-[10px] font-bold text-emerald-300">
-                      v1.4.5 Live
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Tab 2: Web Portal Dashboard Showcase */}
-            {activeTab === "web" && (
-              <div className="group relative w-full max-w-sm overflow-hidden rounded-3xl border border-emerald-500/30 bg-slate-950/80 shadow-2xl shadow-emerald-950/50 backdrop-blur-xl">
-                <div className="relative aspect-square w-full">
-                  <Image
-                    src="/images/lms-dashboard-showcase.jpg"
-                    alt="MSNS LMS Web Portal Dashboard"
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 400px"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent opacity-80" />
-                  <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between">
-                    <div>
-                      <div className="text-xs font-bold text-white">
-                        Next-Gen LMS Dashboard
-                      </div>
-                      <div className="text-[10px] text-emerald-400">
-                        lms.msns.edu.pk
+            {/* Morphing 3D card swap between tabs */}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeTab}
+                className="w-full max-w-sm [transform-style:preserve-3d]"
+                initial={{ opacity: 0, rotateY: -18, scale: 0.94 }}
+                animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+                exit={{ opacity: 0, rotateY: 18, scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 220, damping: 26 }}
+                style={{ transformPerspective: 1000 }}
+              >
+                <TiltCard max={7} className="rounded-3xl">
+                  {/* Tab 1: Smartphone App 3D Mockup */}
+                  {activeTab === "mobile" && (
+                    <div className="group relative w-full max-w-sm overflow-hidden rounded-3xl border border-emerald-500/30 bg-slate-950/80 shadow-2xl shadow-emerald-950/50 backdrop-blur-xl">
+                      <div className="relative aspect-square w-full">
+                        <Image
+                          src="/images/lms-app-mockup.jpg"
+                          alt="MSNS Smart App Mobile Preview"
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+                        <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between">
+                          <div>
+                            <div className="text-xs font-bold text-white">
+                              MSNS Smart Android App
+                            </div>
+                            <div className="text-[10px] text-emerald-400">
+                              Available on Google Play & APK
+                            </div>
+                          </div>
+                          <span className="rounded-full border border-emerald-400/40 bg-emerald-500/20 px-2.5 py-1 text-[10px] font-bold text-emerald-300">
+                            v1.4.5 Live
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <Link
-                      href="https://lms.msns.edu.pk"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-bold text-slate-950 transition-colors hover:bg-emerald-400"
-                    >
-                      Visit Portal →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
+                  )}
 
-            {/* Tab 3: Interactive Mock Dashboard Card */}
-            {activeTab === "card" && (
-              <div className="relative w-full max-w-sm rounded-3xl border border-emerald-500/30 bg-linear-to-b from-emerald-800/40 to-slate-900/90 p-6 shadow-2xl backdrop-blur-xl">
-                <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-lg font-black text-slate-950">
-                      M
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-white">
-                        MSNS Smart App
+                  {/* Tab 2: Web Portal Dashboard Showcase */}
+                  {activeTab === "web" && (
+                    <div className="group relative w-full max-w-sm overflow-hidden rounded-3xl border border-emerald-500/30 bg-slate-950/80 shadow-2xl shadow-emerald-950/50 backdrop-blur-xl">
+                      <div className="relative aspect-square w-full">
+                        <Image
+                          src="/images/lms-dashboard-showcase.jpg"
+                          alt="MSNS LMS Web Portal Dashboard"
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+                        <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between">
+                          <div>
+                            <div className="text-xs font-bold text-white">
+                              Next-Gen LMS Dashboard
+                            </div>
+                            <div className="text-[10px] text-emerald-400">
+                              lms.msns.edu.pk
+                            </div>
+                          </div>
+                          <Link
+                            href="https://lms.msns.edu.pk"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-bold text-slate-950 transition-colors hover:bg-emerald-400"
+                          >
+                            Visit Portal →
+                          </Link>
+                        </div>
                       </div>
-                      <div className="text-[11px] text-emerald-400">
-                        Parent & Student Access
+                    </div>
+                  )}
+
+                  {/* Tab 3: Interactive Mock Dashboard Card */}
+                  {activeTab === "card" && (
+                    <div className="relative w-full max-w-sm rounded-3xl border border-emerald-500/30 bg-linear-to-b from-emerald-800/40 to-slate-900/90 p-6 shadow-2xl backdrop-blur-xl">
+                      <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-lg font-black text-slate-950">
+                            M
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-white">
+                              MSNS Smart App
+                            </div>
+                            <div className="text-[11px] text-emerald-400">
+                              Parent & Student Access
+                            </div>
+                          </div>
+                        </div>
+                        <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-400" />
+                      </div>
+
+                      {/* Mock Dashboard Widgets */}
+                      <div className="space-y-3 text-xs">
+                        <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
+                          <span className="text-slate-300">
+                            Today&apos;s Attendance
+                          </span>
+                          <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-bold text-emerald-300">
+                            Present (07:34 AM)
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
+                          <span className="text-slate-300">
+                            Class 10th Matric Prep
+                          </span>
+                          <span className="font-semibold text-white">
+                            10-Tulip (Biology)
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
+                          <span className="text-slate-300">
+                            Recent Test Result
+                          </span>
+                          <span className="font-bold text-emerald-300">
+                            Physics: 95/100 (A+)
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
+                          <span className="text-slate-300">
+                            Monthly Fee Status
+                          </span>
+                          <span className="rounded-full bg-sky-500/20 px-2.5 py-0.5 font-semibold text-sky-300">
+                            Verified Online
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 border-t border-white/10 pt-4 text-center">
+                        <p className="text-[11px] text-slate-400">
+                          Secured with encrypted credentials & 15 TB central
+                          cloud infrastructure.
+                        </p>
                       </div>
                     </div>
-                  </div>
-                  <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-400" />
-                </div>
-
-                {/* Mock Dashboard Widgets */}
-                <div className="space-y-3 text-xs">
-                  <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
-                    <span className="text-slate-300">
-                      Today&apos;s Attendance
-                    </span>
-                    <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-bold text-emerald-300">
-                      Present (07:34 AM)
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
-                    <span className="text-slate-300">
-                      Class 10th Matric Prep
-                    </span>
-                    <span className="font-semibold text-white">
-                      10-Tulip (Biology)
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
-                    <span className="text-slate-300">Recent Test Result</span>
-                    <span className="font-bold text-emerald-300">
-                      Physics: 95/100 (A+)
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 p-3.5">
-                    <span className="text-slate-300">Monthly Fee Status</span>
-                    <span className="rounded-full bg-sky-500/20 px-2.5 py-0.5 font-semibold text-sky-300">
-                      Verified Online
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-6 border-t border-white/10 pt-4 text-center">
-                  <p className="text-[11px] text-slate-400">
-                    Secured with encrypted credentials & 15 TB central cloud
-                    infrastructure.
-                  </p>
-                </div>
-              </div>
-            )}
+                  )}
+                </TiltCard>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
