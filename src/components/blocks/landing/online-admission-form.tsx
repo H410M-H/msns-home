@@ -72,6 +72,8 @@ export function OnlineAdmissionForm() {
     academicSession: "2026–2027",
     transportNeeded: "No",
     remarks: "",
+    // Honeypot: hidden from people; bots that fill every field get filtered.
+    website: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -103,7 +105,7 @@ export function OnlineAdmissionForm() {
         throw new Error(data.error ?? "Failed to submit application");
       }
 
-      setSubmittedRef(data.registrationId ?? "MSN-ADM-2026-0001");
+      setSubmittedRef(data.registrationId ?? "(pending)");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
@@ -254,6 +256,18 @@ export function OnlineAdmissionForm() {
           onSubmit={handleSubmit}
           className="rounded-3xl border border-emerald-500/20 bg-slate-900/80 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl p-6 md:p-10 space-y-10"
         >
+          <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+            <label htmlFor="website">Leave this field empty</label>
+            <input
+              id="website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData.website}
+              onChange={handleChange}
+            />
+          </div>
           {error && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
