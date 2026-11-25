@@ -14,6 +14,15 @@ export const env = createEnv({
     AWS_S3_BUCKET_NAME: z.string().optional().default("msns"),
     AWS_ACCESS_KEY_ID: z.string().optional().default(""),
     AWS_SECRET_ACCESS_KEY: z.string().optional().default(""),
+    // Admission emails. Without these, production refuses online applications.
+    SMTP_HOST: z.string().optional(),
+    SMTP_PORT: z.coerce.number().int().positive().optional(),
+    SMTP_USER: z.string().optional(),
+    SMTP_PASS: z.string().optional(),
+    // Bearer secret for the gallery upload/delete API (requests are rejected without it).
+    GALLERY_API_SECRET: z.string().min(16).optional(),
+    // Google Places reviews on the home page.
+    GOOGLE_MAPS_API_KEY: z.string().optional(),
   },
 
   /**
@@ -55,6 +64,12 @@ export const env = createEnv({
       process.env.AWS_SECRET_ACCESS_KEY ||
       process.env.AWS_SECRET_KEY ||
       "",
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASS: process.env.SMTP_PASS,
+    GALLERY_API_SECRET: process.env.GALLERY_API_SECRET,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
   },
   skipValidation:
     !!process.env.SKIP_ENV_VALIDATION ||

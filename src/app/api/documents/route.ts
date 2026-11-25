@@ -72,7 +72,7 @@ export async function GET() {
       .filter((obj) => obj.Key && !obj.Key.endsWith("/") && obj.Size && obj.Size > 0)
       .sort((a, b) => (a.Key?.split("/").length ?? 0) - (b.Key?.split("/").length ?? 0))
       .filter((obj) => {
-        const rawFilename = obj.Key!.replace(/^documents\//, "");
+        const rawFilename = obj.Key.replace(/^documents\//, "");
         const baseName = rawFilename.split("/").pop()!;
         if (seenFiles.has(baseName)) {
           return false;
@@ -82,7 +82,7 @@ export async function GET() {
       });
 
     const documents = filteredContents.map((obj) => {
-      const key = obj.Key!;
+      const key = obj.Key;
       const rawFilename = key.replace(/^documents\//, "");
       const baseName = rawFilename.split("/").pop()!;
 

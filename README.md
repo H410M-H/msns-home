@@ -1,29 +1,44 @@
-# LIVE PREVIEW: https://msns.edu.pk
+# msns-home
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Public website of M. S. Naz High School — https://www.msns.edu.pk
 
-## What's next? How do I make an app with this?
+Next.js 15 (App Router), React 19, Tailwind CSS 4, deployed on Vercel. Media
+and documents are served from a Cloudflare R2 bucket that is shared with the
+LMS (`lms.msns.edu.pk`).
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Development
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```sh
+npm ci
+cp .env.example .env.local   # fill in values
+npm run dev
+```
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Checks (also run in CI on every pull request):
 
-## Learn More
+```sh
+npm run typecheck
+npm run lint
+SKIP_ENV_VALIDATION=1 npm run build
+```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Layout
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- `src/app` — pages and route handlers
+  - `api/images` — streams public media (`gallery/`, `videos/`, `logos/`,
+    `social/`, `placeholders/`) from R2; `api/images/resolve/<name>` looks an
+    image up by filename
+  - `api/documents` — lists and serves PDFs under `documents/`
+    (`/documents/*` is rewritten here)
+  - `api/gallery` — authenticated upload/delete (`GALLERY_API_SECRET`)
+  - `api/admission/apply` — online admission form; emails the office via SMTP
+  - `api/google-reviews` — Google Places reviews, cached for a day
+- `src/components` — UI and page sections
+- `src/lib` — R2 client, email, image helpers
+- `scripts/` — content generation and upload scripts; `scripts/legacy/` holds
+  one-off migrations that have already run
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Environment
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+See `.env.example`. Security headers and the Content Security Policy are set in
+`next.config.js`; add any new third-party origin there.

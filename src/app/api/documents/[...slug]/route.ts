@@ -51,7 +51,11 @@ export async function GET(
             response.ContentType ??
             (safeFilename.endsWith(".pdf")
               ? "application/pdf"
-              : "application/octet-stream");
+              : safeFilename.endsWith(".jpg") || safeFilename.endsWith(".jpeg")
+                ? "image/jpeg"
+                : safeFilename.endsWith(".png")
+                  ? "image/png"
+                  : "application/octet-stream");
           headers.set("Content-Type", contentType);
           headers.set("Content-Disposition", `inline; filename="${safeFilename}"`);
           if (response.ContentLength !== undefined) {
