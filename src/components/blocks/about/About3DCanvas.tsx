@@ -89,4 +89,4 @@ export function About3DCanvas({ activePillar = "academic", onPillarSelect }: { a
       </div>
     </div>
   );
-            }
+}
