@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { KineticText } from "~/components/motion/KineticText";
+import { Magnetic } from "~/components/motion/Magnetic";
+import { MorphBlobs } from "~/components/motion/MorphBlobs";
 
 const DEFAULT_VIDEOS = [
   "/api/images/videos/clip1_awtegx.mp4",
@@ -36,6 +39,7 @@ export function HeroHome() {
   const [videoList, setVideoList] = useState<string[]>(DEFAULT_VIDEOS);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [mounted, setMounted] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   // Track two static persistent HTML5 video elements for dual-layer zero-flicker crossfading
   const videoRefA = useRef<HTMLVideoElement>(null);
@@ -147,13 +151,15 @@ export function HeroHome() {
     changeVideo(currentIndexRef.current - 1);
   }, [changeVideo]);
 
-  // Automatically advance to next video every 8 seconds
+  // Automatically advance to next video every 8 seconds (not for visitors
+  // who prefer reduced motion; they can still use the controls).
   useEffect(() => {
+    if (reduceMotion) return;
     const timer = setInterval(() => {
       goToNextVideo();
     }, 8000);
     return () => clearInterval(timer);
-  }, [goToNextVideo]);
+  }, [goToNextVideo, reduceMotion]);
 
   return (
     <section className="relative h-screen overflow-hidden bg-slate-950">
@@ -202,30 +208,39 @@ export function HeroHome() {
 
       {/* Contrast Overlay */}
       <div className="absolute inset-0 z-[3] bg-linear-to-t from-slate-950/80 via-slate-950/30 to-slate-950/70" />
+      <MorphBlobs tone="dark" className="z-[3] mix-blend-screen" />
 
       {/* Content overlay */}
       <div className="relative z-[4] flex h-full flex-col items-center justify-center px-4 text-center">
-        <h1 className="mb-4 bg-linear-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text font-serif text-4xl font-bold text-transparent drop-shadow-2xl sm:text-5xl md:text-7xl">
-          M.S.NAZ HIGH SCHOOL
+        <h1 className="mb-4 font-serif text-4xl font-bold drop-shadow-2xl sm:text-5xl md:text-7xl">
+          <KineticText
+            mode="settle"
+            text="M.S.NAZ HIGH SCHOOL"
+            wordClassName="bg-linear-to-r from-yellow-100 via-green-400 to-orange-200 bg-clip-text text-transparent"
+          />
         </h1>
         <p className="mb-8 font-serif text-lg font-normal text-white sm:text-xl md:text-3xl">
           Pursuit of Excellence | Know Thyself
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Link
-            href="/admission/apply"
-            className="group inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-105 hover:from-emerald-400 hover:to-teal-500 hover:shadow-emerald-500/50"
-          >
-            Apply Now
-            <Sparkles className="h-4 w-4 text-amber-200 transition-transform group-hover:rotate-12" />
-          </Link>
-          <Link
-            href="/about"
-            className="rounded-full border border-white/30 bg-white/20 px-7 py-3.5 text-base font-medium text-white shadow-md backdrop-blur-md transition-all duration-300 hover:border-white/50 hover:bg-white/30"
-          >
-            Learn More
-          </Link>
+          <Magnetic>
+            <Link
+              href="/admission/apply"
+              className="group inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-105 hover:from-emerald-400 hover:to-teal-500 hover:shadow-emerald-500/50"
+            >
+              Apply Now
+              <Sparkles className="h-4 w-4 text-amber-200 transition-transform group-hover:rotate-12" />
+            </Link>
+          </Magnetic>
+          <Magnetic>
+            <Link
+              href="/about"
+              className="rounded-full border border-white/30 bg-white/20 px-7 py-3.5 text-base font-medium text-white shadow-md backdrop-blur-md transition-all duration-300 hover:border-white/50 hover:bg-white/30"
+            >
+              Learn More
+            </Link>
+          </Magnetic>
         </div>
       </div>
 
@@ -234,6 +249,7 @@ export function HeroHome() {
         <>
           <div className="absolute top-1/2 left-4 z-[5] -translate-y-1/2 transform">
             <Button
+              aria-label="Previous video"
               onClick={goToPrevVideo}
               className="cursor-pointer rounded-full border-none bg-white/30 p-2 text-white hover:bg-white/50"
             >
@@ -242,6 +258,7 @@ export function HeroHome() {
           </div>
           <div className="absolute top-1/2 right-4 z-[5] -translate-y-1/2 transform">
             <Button
+              aria-label="Next video"
               onClick={goToNextVideo}
               className="cursor-pointer rounded-full border-none bg-white/30 p-2 text-white hover:bg-white/50"
             >
@@ -253,6 +270,8 @@ export function HeroHome() {
             {videoList.map((_, index) => (
               <Button
                 key={index}
+                aria-label={`Show video ${index + 1}`}
+                aria-current={index === currentIndex}
                 className={`h-3 w-3 shrink-0 cursor-pointer rounded-full border-none p-0 ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
                 onClick={() => changeVideo(index)}
               />

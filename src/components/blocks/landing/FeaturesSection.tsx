@@ -2,6 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { KineticText } from "~/components/motion/KineticText";
+import { TiltCard } from "~/components/motion/TiltCard";
+import { yearsOfService } from "~/content/about";
 import {
   Award,
   Users,
@@ -282,8 +285,9 @@ function FeatureCard({ feature }: { feature: Feature }) {
     categoryColors[feature.category] ?? categoryColors["Academic Excellence"]!;
   return (
     <div className="group relative w-[280px] flex-shrink-0 sm:w-[310px]">
-      <div
-        className={`relative h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 backdrop-blur-xl transition-all duration-500 hover:border-white/15 hover:bg-white/[0.09] hover:shadow-xl ${colors.glow} hover:-translate-y-1`}
+      <TiltCard
+        max={10}
+        className={`h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 hover:border-white/15 hover:bg-white/[0.09] hover:shadow-xl ${colors.glow}`}
       >
         <div
           className={`absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-r ${colors.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
@@ -307,7 +311,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
         <div
           className={`absolute -right-16 -bottom-16 h-32 w-32 rounded-full bg-gradient-to-br ${colors.accent} opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-[0.06]`}
         />
-      </div>
+      </TiltCard>
     </div>
   );
 }
@@ -355,67 +359,74 @@ function TopAchieverCard({
 }) {
   const isFirst = index === 0;
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
-      className={`group relative overflow-hidden rounded-2xl border backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 ${
-        isFirst
-          ? "border-amber-400/25 bg-gradient-to-br from-amber-500/[0.1] via-yellow-500/[0.04] to-transparent shadow-amber-400/10 hover:shadow-xl md:col-span-2 lg:col-span-1"
-          : "border-amber-400/15 bg-white/[0.04] shadow-amber-400/5 hover:shadow-lg"
-      }`}
+    <TiltCard
+      max={6}
+      className="h-full rounded-2xl"
+      wrapperClassName={isFirst ? "md:col-span-2 lg:col-span-1" : undefined}
     >
-      {/* Top accent */}
-      <div
-        className={`absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 ${isFirst ? "opacity-70" : "opacity-40 group-hover:opacity-70"} transition-opacity duration-500`}
-      />
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.97 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
+        className={`group relative h-full overflow-hidden rounded-2xl border backdrop-blur-xl transition-[border-color,box-shadow] duration-500 ${
+          isFirst
+            ? "border-amber-400/25 bg-gradient-to-br from-amber-500/[0.1] via-yellow-500/[0.04] to-transparent shadow-amber-400/10 hover:shadow-xl"
+            : "border-amber-400/15 bg-white/[0.04] shadow-amber-400/5 hover:shadow-lg"
+        }`}
+      >
+        {/* Top accent */}
+        <div
+          className={`absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 ${isFirst ? "opacity-70" : "opacity-40 group-hover:opacity-70"} transition-opacity duration-500`}
+        />
 
-      <div className="p-5 md:p-6">
-        <div className="flex items-center gap-4">
-          {/* Trophy icon */}
-          <div
-            className={`flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 shadow-lg shadow-amber-400/25 transition-transform duration-300 group-hover:scale-110 ${isFirst ? "h-14 w-14" : "h-11 w-11"}`}
-          >
-            <Trophy
-              className={`text-white ${isFirst ? "h-7 w-7" : "h-5 w-5"}`}
-              strokeWidth={1.8}
-            />
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <p className="mb-0.5 text-[10px] font-semibold tracking-[0.18em] text-amber-400/60 uppercase">
-              {isFirst ? "★ Highest Scorer" : "Top Achiever"} — {achiever.year}
-            </p>
-            <h4
-              className={`truncate font-bold text-white ${isFirst ? "text-lg md:text-xl" : "text-base"}`}
+        <div className="p-5 md:p-6">
+          <div className="flex items-center gap-4">
+            {/* Trophy icon */}
+            <div
+              className={`flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 shadow-lg shadow-amber-400/25 transition-transform duration-300 group-hover:scale-110 ${isFirst ? "h-14 w-14" : "h-11 w-11"}`}
             >
-              {achiever.name}
-            </h4>
-            {achiever.rollNo !== "—" && (
-              <p className="mt-0.5 font-mono text-[17px] text-white/90">
-                Roll # {achiever.rollNo}
+              <Trophy
+                className={`text-white ${isFirst ? "h-7 w-7" : "h-5 w-5"}`}
+                strokeWidth={1.8}
+              />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <p className="mb-0.5 text-[10px] font-semibold tracking-[0.18em] text-amber-400/60 uppercase">
+                {isFirst ? "★ Highest Scorer" : "Top Achiever"} —{" "}
+                {achiever.year}
               </p>
-            )}
-          </div>
+              <h4
+                className={`truncate font-bold text-white ${isFirst ? "text-lg md:text-xl" : "text-base"}`}
+              >
+                {achiever.name}
+              </h4>
+              {achiever.rollNo !== "—" && (
+                <p className="mt-0.5 font-mono text-[17px] text-white/90">
+                  Roll # {achiever.rollNo}
+                </p>
+              )}
+            </div>
 
-          {/* Marks */}
-          <div className="shrink-0 text-right">
-            <span
-              className={`bg-gradient-to-r from-amber-300 to-yellow-500 bg-clip-text leading-none font-black text-transparent tabular-nums ${isFirst ? "text-3xl md:text-4xl" : "text-2xl"}`}
-            >
-              {achiever.marks}
-            </span>
-            <p className="mt-0.5 text-[9px] tracking-wider text-white/30 uppercase">
-              marks
-            </p>
+            {/* Marks */}
+            <div className="shrink-0 text-right">
+              <span
+                className={`bg-gradient-to-r from-amber-300 to-yellow-500 bg-clip-text leading-none font-black text-transparent tabular-nums ${isFirst ? "text-3xl md:text-4xl" : "text-2xl"}`}
+              >
+                {achiever.marks}
+              </span>
+              <p className="mt-0.5 text-[9px] tracking-wider text-white/30 uppercase">
+                marks
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute -right-16 -bottom-16 h-32 w-32 rounded-full bg-amber-400/10 opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
-    </motion.div>
+        {/* Ambient glow */}
+        <div className="pointer-events-none absolute -right-16 -bottom-16 h-32 w-32 rounded-full bg-amber-400/10 opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
+      </motion.div>
+    </TiltCard>
   );
 }
 
@@ -482,10 +493,12 @@ export function FeaturesSection() {
               Why Choose MSNS
             </span>
             <h2 className="text-4xl leading-[1.1] font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-              Built for{" "}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 bg-clip-text text-transparent">
-                Excellence
-              </span>
+              <KineticText text="Built for" />{" "}
+              <KineticText
+                text="Excellence"
+                delay={0.12}
+                wordClassName="bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 bg-clip-text text-transparent"
+              />
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-white/45 md:text-lg">
               Academic rigor, modern infrastructure, and personalized care — at
@@ -510,7 +523,7 @@ export function FeaturesSection() {
             className="flex flex-wrap justify-center gap-8 border-t border-white/[0.06] py-8 md:gap-16"
           >
             {[
-              { value: "16+", label: "Years of Excellence" },
+              { value: `${yearsOfService()}+`, label: "Years of Excellence" },
               { value: "1:16", label: "Student-Teacher Ratio" },
               { value: "100%", label: "Board Results" },
               { value: "15TB", label: "Cloud Storage" },
@@ -523,7 +536,10 @@ export function FeaturesSection() {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className="text-center"
               >
-                <div className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-2xl font-bold text-transparent md:text-3xl">
+                <div
+                  suppressHydrationWarning
+                  className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-2xl font-bold text-transparent md:text-3xl"
+                >
                   {stat.value}
                 </div>
                 <div className="mt-1 text-xs font-medium tracking-wider text-white/40 uppercase">
