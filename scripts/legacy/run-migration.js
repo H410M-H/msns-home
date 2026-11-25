@@ -7,10 +7,18 @@ import { S3Client, PutObjectCommand, ListObjectsV2Command } from '@aws-sdk/clien
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const endpoint = 'https://c678cf5c0fc5ef3806edacc18e6a762d.r2.cloudflarestorage.com';
-const bucket = 'msns';
-const accessKeyId = 'f3afb5cbae3f64a15d4030d65e741736';
-const secretAccessKey = '3d90d3b9db6197138dd290f0122c1fe3198ddc7767e77a22d9a6115dd3db7f91';
+// One-off Cloudinary -> R2 migration (already run). Credentials come from the
+// environment; never hardcode them. Usage:
+//   AWS_ENDPOINT_URL=... AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=... node scripts/legacy/run-migration.js
+const endpoint = process.env.AWS_ENDPOINT_URL ?? process.env.S3_ENDPOINT;
+const bucket = process.env.AWS_S3_BUCKET_NAME ?? process.env.S3_BUCKET_NAME ?? 'msns';
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID ?? process.env.S3_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY ?? process.env.S3_SECRET_ACCESS_KEY;
+
+if (!endpoint || !accessKeyId || !secretAccessKey) {
+  console.error('Missing AWS_ENDPOINT_URL / AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY');
+  process.exit(1);
+}
 
 const s3 = new S3Client({
   endpoint,
@@ -60,8 +68,8 @@ async function run() {
 
   const urls = new Set();
 
-  const file1 = path.join(__dirname, '..', 'old_urls.txt');
-  const file2 = path.join(__dirname, '..', '..', 'msns-build', 'old_urls.txt');
+  const file1 = path.join(__dirname, '..', '..', 'old_urls.txt');
+  const file2 = path.join(__dirname, '..', '..', '..', 'msns-build', 'old_urls.txt');
 
   [file1, file2].forEach(filePath => {
     if (fs.existsSync(filePath)) {
