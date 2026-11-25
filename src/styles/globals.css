@@ -1,8 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@plugin 'tailwindcss-animate';
+@plugin "tailwindcss-animate";
 
-@source '../../*.{js,ts,jsx,tsx,mdx}';
+@source "../../*.{js,ts,jsx,tsx,mdx}";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -227,5 +227,44 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+/* Morphing gradient blobs (MorphBlobs component) */
+@keyframes morph-blob {
+  0%,
+  100% {
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 63% 37% 41% 59% / 58% 61% 39% 42%;
+    transform: translate3d(4%, -6%, 0) rotate(60deg) scale(1.06);
+  }
+  66% {
+    border-radius: 37% 63% 52% 48% / 39% 46% 54% 61%;
+    transform: translate3d(-5%, 4%, 0) rotate(130deg) scale(0.96);
+  }
+}
+
+.morph-blob {
+  animation: morph-blob 18s ease-in-out infinite;
+  will-change: transform, border-radius;
+}
+
+.morph-blob--slow {
+  animation-duration: 26s;
+}
+
+.morph-blob--reverse {
+  animation-direction: reverse;
+  animation-duration: 22s;
+}
+
+/* Honour the OS "reduce motion" setting for CSS-driven motion */
+@media (prefers-reduced-motion: reduce) {
+  .morph-blob,
+  [style*="marquee-left"],
+  [style*="marquee-right"] {
+    animation: none !important;
   }
 }
