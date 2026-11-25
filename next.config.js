@@ -39,7 +39,10 @@ const securityHeaders = [
   },
   // No "preload": the domain isn't on the HSTS preload list, and preloading
   // commits every subdomain to HTTPS permanently. Add it only when submitting.
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains",
+  },
 ];
 
 /** @type {import('next').NextConfig} */

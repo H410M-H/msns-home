@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { Card, CardHeader } from "~/components/ui/card"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Card, CardHeader } from "~/components/ui/card";
+import Image from "next/image";
 
 export function QuickLinksSection() {
   const socialLinks = {
@@ -12,7 +12,7 @@ export function QuickLinksSection() {
     facebook: "https://www.facebook.com/msnazhighschool",
     youtube: "https://www.youtube.com/@msns-edu-pk",
     email: "mailto:info@msns.edu.pk",
-  }
+  };
 
   const socialIcons = [
     {
@@ -35,7 +35,7 @@ export function QuickLinksSection() {
       src: "/api/images/social/mail-3d_ese59y.png",
       link: socialLinks.email,
     },
-  ]
+  ];
 
   return (
     <motion.div
@@ -43,18 +43,18 @@ export function QuickLinksSection() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.7 }}
     >
-      <section className="py-8 px-4 md:px-8 bg-transparent backdrop-blur-lg rounded-xl border border-green-900/20">
-        <div className="max-w-4xl mx-auto font-serif">
+      <section className="rounded-xl border border-green-900/20 bg-transparent px-4 py-8 backdrop-blur-lg md:px-8">
+        <div className="mx-auto max-w-4xl font-serif">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-6xl  font-bold mb-4 text-center bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-transparent">
+            <h2 className="mb-4 bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-center text-6xl font-bold text-transparent">
               Connect With Us
             </h2>
-            <p className="text-green-900 text-center mb-8 text-lg">
+            <p className="mb-8 text-center text-lg text-green-900">
               Follow our social channels for updates and announcements
             </p>
           </motion.div>
@@ -66,21 +66,25 @@ export function QuickLinksSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="bg-gray-800/20 border border-gray-700 backdrop-blur-xs rounded-xl hover:shadow-2xl transition-all duration-300 w-full max-w-2xl">
+            <Card className="w-full max-w-2xl rounded-xl border border-gray-700 bg-gray-800/20 backdrop-blur-xs transition-all duration-300 hover:shadow-2xl">
               <CardHeader className="flex flex-col items-center space-y-6 p-8">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
+                <div className="grid w-full grid-cols-2 gap-6 md:grid-cols-4">
                   {socialIcons.map((icon, _index) => (
                     <motion.div
                       key={icon.name}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 10,
+                      }}
                       className="flex justify-center"
                     >
                       <Link
                         href={icon.link}
                         target="_blank"
-                        className="p-4 rounded-lg bg-gray-700/30 hover:bg-gray-600/50 transition-colors duration-200 w-full flex justify-center"
+                        className="flex w-full justify-center rounded-lg bg-gray-700/30 p-4 transition-colors duration-200 hover:bg-gray-600/50"
                       >
                         <Image
                           src={icon.src || "/placeholder.svg"}
@@ -95,15 +99,15 @@ export function QuickLinksSection() {
                 </div>
 
                 <div className="mt-6 text-center">
-                  <p className="bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty mb-2 ">Direct Contact:
+                  <p className="mb-2 bg-linear-to-r from-emerald-900/90 via-green-900/60 to-blue-900 bg-clip-text text-pretty">
+                    Direct Contact:
                     <Link
                       href="mailto:info@msns.edu.pk"
-                      className="text-green-900 hover:text-blue-500 transition-colors text-lg font-medium pl-6"
+                      className="pl-6 text-lg font-medium text-green-900 transition-colors hover:text-blue-500"
                     >
                       info@msns.edu.pk
                     </Link>
                   </p>
-
                 </div>
               </CardHeader>
             </Card>
@@ -111,6 +115,5 @@ export function QuickLinksSection() {
         </div>
       </section>
     </motion.div>
-  )
+  );
 }
-

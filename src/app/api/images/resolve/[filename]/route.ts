@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ filename: string }> }
+  { params }: { params: Promise<{ filename: string }> },
 ) {
   const { filename } = await params;
   if (!filename) {
@@ -29,7 +29,7 @@ export async function GET(
     }
 
     const stream = response.Body.transformToWebStream();
-    
+
     const headers = new Headers();
     if (isInlineMediaType(response.ContentType)) {
       headers.set("Content-Type", response.ContentType!);
@@ -38,10 +38,14 @@ export async function GET(
       headers.set("Content-Disposition", "attachment");
     }
     headers.set("X-Content-Type-Options", "nosniff");
-    if (response.ContentLength) headers.set("Content-Length", response.ContentLength.toString());
+    if (response.ContentLength)
+      headers.set("Content-Length", response.ContentLength.toString());
     // The filename -> key mapping can change when the gallery is reorganised,
     // so cache for a day rather than pinning the result for a year.
-    headers.set("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
+    headers.set(
+      "Cache-Control",
+      "public, max-age=86400, stale-while-revalidate=604800",
+    );
 
     return new NextResponse(stream, { headers });
   } catch (error) {

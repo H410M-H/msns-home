@@ -1,7 +1,11 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { isEmailConfigured, sendAdmissionEmails, type AdmissionFormData } from "~/lib/email";
+import {
+  isEmailConfigured,
+  sendAdmissionEmails,
+  type AdmissionFormData,
+} from "~/lib/email";
 
 export const dynamic = "force-dynamic";
 
@@ -77,7 +81,10 @@ function clientIp(req: Request): string {
 export async function POST(req: Request) {
   if (isRateLimited(clientIp(req))) {
     return NextResponse.json(
-      { error: "Too many applications from this connection. Please try again later." },
+      {
+        error:
+          "Too many applications from this connection. Please try again later.",
+      },
       { status: 429 },
     );
   }
@@ -105,11 +112,17 @@ export async function POST(req: Request) {
 
   // Honeypot filled: pretend success so bots don't adapt, but send nothing.
   if (input.website) {
-    return NextResponse.json({ success: true, message: "Application submitted successfully!", registrationId });
+    return NextResponse.json({
+      success: true,
+      message: "Application submitted successfully!",
+      registrationId,
+    });
   }
 
   if (!isEmailConfigured() && process.env.NODE_ENV === "production") {
-    console.error(`[admission] SMTP is not configured; application ${registrationId} was not delivered`);
+    console.error(
+      `[admission] SMTP is not configured; application ${registrationId} was not delivered`,
+    );
     return NextResponse.json(
       {
         error:
@@ -144,7 +157,10 @@ export async function POST(req: Request) {
     // Dispatch emails to admin@msns.edu.pk and msnazhighschool@gmail.com
     await sendAdmissionEmails(applicationData);
   } catch (error) {
-    console.error(`[admission] failed to send application ${registrationId}:`, error);
+    console.error(
+      `[admission] failed to send application ${registrationId}:`,
+      error,
+    );
     return NextResponse.json(
       { error: "Failed to submit application. Please try again later." },
       { status: 500 },

@@ -1,6 +1,5 @@
 // src/app/layout.tsx
 
-
 import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
@@ -36,7 +35,8 @@ export const metadata: Metadata = {
   verification: {
     google: "UEssQjRtMsHt_ioT8H5RUA2Rnl0_9QEl0d8tL6JBi1E",
   },
-  description: "M. S. Naz High School in Wazirabad & Ghakhar offers academic excellence with BISE Gujranwala matriculation, Oxford curriculum standards, modern science & AI labs.",
+  description:
+    "M. S. Naz High School in Wazirabad & Ghakhar offers academic excellence with BISE Gujranwala matriculation, Oxford curriculum standards, modern science & AI labs.",
   keywords: [
     "M. S. Naz High School",
     "MSNS",
@@ -49,11 +49,12 @@ export const metadata: Metadata = {
     "Matric science and computer science admission",
     "Smart school LMS Pakistan",
     "Class 9 and 10 textbooks PDF download",
-    "Matric pairing schemes 2026"
+    "Matric pairing schemes 2026",
   ],
   openGraph: {
     title: "M. S. Naz High School® | Premier School in Wazirabad & Ghakhar",
-    description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
+    description:
+      "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
     url: "https://www.msns.edu.pk/",
     siteName: "M. S. Naz High School®",
     type: "website",
@@ -63,21 +64,22 @@ export const metadata: Metadata = {
         url: "/api/images/logos/Official_LOGO_grn_ic9ldd.png",
         width: 1200,
         height: 630,
-        alt: "M. S. Naz High School® Logo"
-      }
-    ]
+        alt: "M. S. Naz High School® Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "M. S. Naz High School® | Premier School in Wazirabad & Ghakhar",
-    description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
+    description:
+      "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
   appLinks: {
     web: {
       url: "https://lms.msns.edu.pk",
-      should_fallback: true
-    }
+      should_fallback: true,
+    },
   },
   robots: {
     index: true,
@@ -87,8 +89,8 @@ export const metadata: Metadata = {
       follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
-      "max-snippet": -1
-    }
+      "max-snippet": -1,
+    },
   },
   category: "Education",
   // No default canonical here: a layout-level canonical is inherited by every
@@ -134,8 +136,18 @@ export default function RootLayout({
         </Script>
         <SchoolSchema />
         <LMSApplicationSchema />
-        <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Knowledge Base" />
-        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Knowledge Base" />
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href="/llms.txt"
+          title="LLM Knowledge Base"
+        />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href="/llms-full.txt"
+          title="Full LLM Knowledge Base"
+        />
       </head>
       <body className="flex min-h-screen flex-col">
         <Header />

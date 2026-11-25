@@ -6,10 +6,9 @@ import { isGalleryRequestAuthorized } from "~/lib/gallery-auth";
 
 export const dynamic = "force-dynamic";
 
-
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ key: string[] }> }
+  { params }: { params: Promise<{ key: string[] }> },
 ) {
   try {
     // Authentication check
@@ -23,7 +22,7 @@ export async function DELETE(
     if (!key) {
       return NextResponse.json(
         { error: "Image key is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -32,7 +31,7 @@ export async function DELETE(
     if (!ALLOWED_PREFIXES.some((prefix) => key.startsWith(prefix))) {
       return NextResponse.json(
         { error: "Cannot delete items outside of allowed directories" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -44,7 +43,7 @@ export async function DELETE(
     console.error("Error deleting image:", error);
     return NextResponse.json(
       { error: "Failed to delete image" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

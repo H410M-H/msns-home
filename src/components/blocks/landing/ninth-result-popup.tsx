@@ -28,8 +28,13 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
       // Trigger confetti
       const duration = 3000;
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
-      
+      const defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 100,
+      };
+
       const interval = setInterval(() => {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) {
@@ -37,7 +42,12 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
           return;
         }
         const particleCount = 50 * (timeLeft / duration);
-        void confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+        void confetti(
+          Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: Math.random(), y: Math.random() - 0.2 },
+          }),
+        );
       }, 250);
     }, 500);
 
@@ -62,7 +72,7 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
     "/api/images/resolve/270675",
     "/api/images/resolve/270676",
     "/api/images/resolve/270677",
-    "/api/images/resolve/270678"
+    "/api/images/resolve/270678",
   ];
 
   return (
@@ -76,51 +86,67 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
     >
       <style jsx>{`
         @keyframes slideIn {
-          0% { transform: translateY(40px) scale(0.95); opacity: 0; }
-          100% { transform: translateY(0) scale(1); opacity: 1; }
+          0% {
+            transform: translateY(40px) scale(0.95);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
         }
         @keyframes slideOut {
-          0% { transform: translateY(0) scale(1); opacity: 1; }
-          100% { transform: translateY(30px) scale(0.95); opacity: 0; }
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(30px) scale(0.95);
+            opacity: 0;
+          }
         }
       `}</style>
 
       <div
-        className={`relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/20 shadow-2xl bg-gradient-to-br from-indigo-900/90 to-purple-900/90 transition-all duration-500 ${
-          isClosing ? "animate-[slideOut_0.5s_ease-in_forwards]" : "animate-[slideIn_0.6s_ease-out]"
+        className={`relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/20 bg-gradient-to-br from-indigo-900/90 to-purple-900/90 shadow-2xl transition-all duration-500 ${
+          isClosing
+            ? "animate-[slideOut_0.5s_ease-in_forwards]"
+            : "animate-[slideIn_0.6s_ease-out]"
         }`}
         style={{
-          boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset",
+          boxShadow:
+            "0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset",
         }}
       >
         <button
           onClick={handleClose}
-          className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 transition-all border border-white/10 hover:scale-105"
+          className="absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white/80 transition-all hover:scale-105 hover:bg-white/20"
           aria-label="Close popup"
         >
           <X size={18} />
         </button>
-        
-        <div className="p-6 md:p-10 text-center">
-          <div className="mb-4 inline-block rounded-full px-5 py-2 text-sm font-bold uppercase tracking-wider text-yellow-300 bg-yellow-500/20 border border-yellow-500/40">
+
+        <div className="p-6 text-center md:p-10">
+          <div className="mb-4 inline-block rounded-full border border-yellow-500/40 bg-yellow-500/20 px-5 py-2 text-sm font-bold tracking-wider text-yellow-300 uppercase">
             🎉 Results Announced
           </div>
-          
-          <h2 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500 drop-shadow-md mb-2">
+
+          <h2 className="mb-2 bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-3xl font-extrabold text-transparent drop-shadow-md md:text-5xl">
             9th Class Outstanding Results!
           </h2>
-          <p className="text-purple-200 text-lg md:text-xl mb-8">
-            Congratulations to our brilliant students for their exceptional performance ✨
+          <p className="mb-8 text-lg text-purple-200 md:text-xl">
+            Congratulations to our brilliant students for their exceptional
+            performance ✨
           </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
             {images.map((src, idx) => (
               <a
                 key={idx}
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative aspect-[3/4] overflow-hidden rounded-xl border border-white/20 shadow-lg group block bg-white/5"
+                className="group relative block aspect-[3/4] overflow-hidden rounded-xl border border-white/20 bg-white/5 shadow-lg"
               >
                 <Image
                   src={src}
@@ -129,8 +155,8 @@ export default function NinthResultPopup({ onClose }: NinthResultPopupProps) {
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-xs font-bold text-white bg-indigo-600/90 px-3 py-1.5 rounded-full border border-indigo-400/30">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="rounded-full border border-indigo-400/30 bg-indigo-600/90 px-3 py-1.5 text-xs font-bold text-white">
                     View Full Image
                   </span>
                 </div>

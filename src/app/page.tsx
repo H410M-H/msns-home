@@ -7,9 +7,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    absolute: "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
+    absolute:
+      "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
   },
-  description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
+  description:
+    "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
   keywords: [
     "best school in Ghakhar Mandi",
     "top school in Wazirabad",
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
     "Ghakhar Mandi school",
     "Wazirabad high school",
     "high school G.T. Road",
-    "Naz LMS portal"
+    "Naz LMS portal",
   ],
   alternates: {
     canonical: "https://www.msns.edu.pk",
@@ -34,7 +36,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
-    description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
+    description:
+      "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
     url: "https://www.msns.edu.pk",
     siteName: "M. S. Naz High School®",
     locale: "en_US",
@@ -51,7 +54,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "M. S. Naz High School® | Top Matric & Oxford School in Wazirabad",
-    description: "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
+    description:
+      "Discover academic excellence at M. S. Naz High School Wazirabad. Offering Oxford curriculum, BISE Gujranwala matric distinctions, modern science labs, and LMS.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

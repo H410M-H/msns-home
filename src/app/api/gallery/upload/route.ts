@@ -19,7 +19,6 @@ const ALLOWED_TYPES = [
 // Allowed upload categories to prevent path injection
 const ALLOWED_CATEGORIES = ["gallery", "logos", "social", "placeholders"];
 
-
 export async function POST(request: NextRequest) {
   try {
     // Authentication check
@@ -34,8 +33,10 @@ export async function POST(request: NextRequest) {
     // Validate category against allowlist (prevents path injection)
     if (!ALLOWED_CATEGORIES.includes(category)) {
       return NextResponse.json(
-        { error: `Invalid category. Allowed: ${ALLOWED_CATEGORIES.join(", ")}` },
-        { status: 400 }
+        {
+          error: `Invalid category. Allowed: ${ALLOWED_CATEGORIES.join(", ")}`,
+        },
+        { status: 400 },
       );
     }
 
@@ -46,14 +47,14 @@ export async function POST(request: NextRequest) {
     if (!ALLOWED_TYPES.includes(file.type)) {
       return NextResponse.json(
         { error: "Invalid file type. Allowed: JPEG, PNG, WebP, GIF, AVIF" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         { error: "File size exceeds 10MB limit" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest) {
     console.error("Error uploading file:", error);
     return NextResponse.json(
       { error: "Failed to upload file" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

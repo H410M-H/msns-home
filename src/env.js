@@ -9,7 +9,12 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    AWS_ENDPOINT_URL: z.string().optional().default("https://c678cf5c0fc5ef3806edacc18e6a762d.r2.cloudflarestorage.com"),
+    AWS_ENDPOINT_URL: z
+      .string()
+      .optional()
+      .default(
+        "https://c678cf5c0fc5ef3806edacc18e6a762d.r2.cloudflarestorage.com",
+      ),
     AWS_DEFAULT_REGION: z.string().optional().default("auto"),
     AWS_S3_BUCKET_NAME: z.string().optional().default("msns"),
     AWS_ACCESS_KEY_ID: z.string().optional().default(""),

@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ key: string[] }> }
+  { params }: { params: Promise<{ key: string[] }> },
 ) {
   try {
     const p = await params;
@@ -25,7 +25,8 @@ export async function GET(
 
     // Only pass through a single, well-formed byte range.
     const rawRange = request.headers.get("range");
-    const rangeHeader = rawRange && /^bytes=\d*-\d*$/.test(rawRange) ? rawRange : undefined;
+    const rangeHeader =
+      rawRange && /^bytes=\d*-\d*$/.test(rawRange) ? rawRange : undefined;
 
     const command = new GetObjectCommand({
       Bucket: BUCKET,
@@ -41,7 +42,7 @@ export async function GET(
 
     // Convert the stream into a Response
     const stream = response.Body.transformToWebStream();
-    
+
     const headers = new Headers();
     headers.set("Accept-Ranges", "bytes");
     if (isInlineMediaType(response.ContentType)) {
@@ -51,8 +52,10 @@ export async function GET(
       headers.set("Content-Disposition", "attachment");
     }
     headers.set("X-Content-Type-Options", "nosniff");
-    if (response.ContentLength !== undefined) headers.set("Content-Length", response.ContentLength.toString());
-    if (response.ContentRange) headers.set("Content-Range", response.ContentRange);
+    if (response.ContentLength !== undefined)
+      headers.set("Content-Length", response.ContentLength.toString());
+    if (response.ContentRange)
+      headers.set("Content-Range", response.ContentRange);
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
     const status = response.ContentRange ? 206 : 200;
@@ -60,7 +63,7 @@ export async function GET(
     return new NextResponse(stream, { status, headers });
   } catch (error: unknown) {
     console.error("Error fetching image from S3:", error);
-    
+
     if (error instanceof Error && error.name === "NoSuchKey") {
       return new NextResponse("Image not found", { status: 404 });
     }
@@ -68,4 +71,3 @@ export async function GET(
     return new NextResponse("Internal server error", { status: 500 });
   }
 }
-

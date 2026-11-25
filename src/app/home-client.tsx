@@ -6,8 +6,10 @@ import { Loader2 } from "lucide-react";
 import { HeroHome } from "~/components/blocks/landing/HeroSection";
 import { Toaster } from "~/components/ui/sonner";
 
-const FeaturesSection = dynamic(
-  () => import("~/components/blocks/landing/FeaturesSection").then((m) => m.FeaturesSection)
+const FeaturesSection = dynamic(() =>
+  import("~/components/blocks/landing/FeaturesSection").then(
+    (m) => m.FeaturesSection,
+  ),
 );
 
 const InfiniteGallery = dynamic(
@@ -15,54 +17,60 @@ const InfiniteGallery = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="relative h-[70vh] md:h-screen w-full bg-slate-950 flex items-center justify-center">
+      <div className="relative flex h-[70vh] w-full items-center justify-center bg-slate-950 md:h-screen">
         <div className="flex flex-col items-center gap-4">
           <div className="relative h-12 w-12">
             <div className="absolute inset-0 rounded-full border-2 border-white/10" />
             <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-emerald-400" />
           </div>
-          <p className="text-sm text-white/40 tracking-wide uppercase">
+          <p className="text-sm tracking-wide text-white/40 uppercase">
             Loading Gallery…
           </p>
         </div>
       </div>
     ),
-  }
+  },
 );
 
 // Lazy-load PopupAd — it shows after 4s anyway, no need to block initial paint
-const PopupAd = dynamic(
-  () => import("~/components/blocks/landing/popup-ad"),
-  { ssr: false }
-);
+const PopupAd = dynamic(() => import("~/components/blocks/landing/popup-ad"), {
+  ssr: false,
+});
 
 const NinthResultPopup = dynamic(
   () => import("~/components/blocks/landing/ninth-result-popup"),
-  { ssr: false }
+  { ssr: false },
 );
 
-const LMSAppShowcase = dynamic(
-  () => import("~/components/blocks/landing/LMSAppShowcase").then((m) => m.LMSAppShowcase)
+const LMSAppShowcase = dynamic(() =>
+  import("~/components/blocks/landing/LMSAppShowcase").then(
+    (m) => m.LMSAppShowcase,
+  ),
 );
 
-const QuickLinksSection = dynamic(
-  () => import("~/components/blocks/landing/QuickLinksSection").then((m) => m.QuickLinksSection)
+const QuickLinksSection = dynamic(() =>
+  import("~/components/blocks/landing/QuickLinksSection").then(
+    (m) => m.QuickLinksSection,
+  ),
 );
 
 const TestimonialsSection = dynamic(
-  () => import("~/components/blocks/landing/Testimonials").then((m) => m.TestimonialsSection),
+  () =>
+    import("~/components/blocks/landing/Testimonials").then(
+      (m) => m.TestimonialsSection,
+    ),
   {
     ssr: false,
     loading: () => (
-      <div className="h-[400px] flex items-center justify-center">
+      <div className="flex h-[400px] items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
       </div>
     ),
-  }
+  },
 );
 
-const CTASection = dynamic(
-  () => import("~/components/blocks/landing/CTASection").then((m) => m.CTASection)
+const CTASection = dynamic(() =>
+  import("~/components/blocks/landing/CTASection").then((m) => m.CTASection),
 );
 
 interface GalleryImage {
@@ -73,7 +81,9 @@ interface GalleryImage {
 }
 
 export default function HomeClient() {
-  const [galleryImages, setGalleryImages] = useState<{ src: string, alt: string }[]>([]);
+  const [galleryImages, setGalleryImages] = useState<
+    { src: string; alt: string }[]
+  >([]);
   const [showNinthResult, setShowNinthResult] = useState(true);
   const [showPopupAd, setShowPopupAd] = useState(false);
 
@@ -95,15 +105,21 @@ export default function HomeClient() {
         if (data.images && data.images.length > 0) {
           const imagesOnly = data.images.filter((img) => {
             const filename = img.key.split("/").pop() ?? "";
-            const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(filename) || img.key.startsWith("videos/");
-            return !isVideo && img.key.toLowerCase().startsWith("gallery/landing/");
+            const isVideo =
+              /\.(mp4|webm|ogg|mov)$/i.test(filename) ||
+              img.key.startsWith("videos/");
+            return (
+              !isVideo && img.key.toLowerCase().startsWith("gallery/landing/")
+            );
           });
 
           setGalleryImages(
             imagesOnly.map((img) => ({
               src: img.url,
-              alt: img.key.split("/").pop()?.replace(/[-_]/g, " ") ?? "Gallery Image",
-            }))
+              alt:
+                img.key.split("/").pop()?.replace(/[-_]/g, " ") ??
+                "Gallery Image",
+            })),
           );
         }
       } catch (err) {
@@ -118,21 +134,17 @@ export default function HomeClient() {
     <main className="min-h-screen bg-linear-to-br from-green-800/60 to-emerald-50 font-sans">
       <HeroHome />
       {showNinthResult && (
-        <NinthResultPopup 
+        <NinthResultPopup
           onClose={() => {
             setShowNinthResult(false);
             setShowPopupAd(true);
-          }} 
+          }}
         />
       )}
       {showPopupAd && <PopupAd />}
       <Toaster richColors closeButton />
       <FeaturesSection />
-      <InfiniteGallery
-        images={galleryImages}
-        speed={1.0}
-        visibleCount={12}
-      />
+      <InfiniteGallery images={galleryImages} speed={1.0} visibleCount={12} />
       <LMSAppShowcase />
       <QuickLinksSection />
       <TestimonialsSection />

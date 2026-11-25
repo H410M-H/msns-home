@@ -37,26 +37,86 @@ const DOCUMENT_CATALOG: Record<string, { title: string; category: string }> = {
     category: "Policy",
   },
   // Textbooks
-  "pctb-class-9-physics.pdf": { title: "Class 9 Physics (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-chemistry.pdf": { title: "Class 9 Chemistry (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-biology.pdf": { title: "Class 9 Biology (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-computer-science.pdf": { title: "Class 9 Computer Science (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-mathematics.pdf": { title: "Class 9 Mathematics Science (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-english.pdf": { title: "Class 9 English Compulsory (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-urdu.pdf": { title: "Class 9 Urdu Compulsory (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-tarjuma-tul-quran.pdf": { title: "Class 9 Tarjuma-tul-Quran (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-islamiat.pdf": { title: "Class 9 Islamiat Compulsory (PCTB E-Book)", category: "Academic" },
-  "pctb-class-9-pakistan-studies.pdf": { title: "Class 9 Pakistan Studies (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-physics.pdf": { title: "Class 10 Physics (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-chemistry.pdf": { title: "Class 10 Chemistry (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-biology.pdf": { title: "Class 10 Biology (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-computer-science.pdf": { title: "Class 10 Computer Science (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-mathematics.pdf": { title: "Class 10 Mathematics Science (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-english.pdf": { title: "Class 10 English Compulsory (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-urdu.pdf": { title: "Class 10 Urdu Compulsory (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-tarjuma-tul-quran.pdf": { title: "Class 10 Tarjuma-tul-Quran (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-islamiat.pdf": { title: "Class 10 Islamiat Compulsory (PCTB E-Book)", category: "Academic" },
-  "pctb-class-10-pakistan-studies.pdf": { title: "Class 10 Pakistan Studies (PCTB E-Book)", category: "Academic" },
+  "pctb-class-9-physics.pdf": {
+    title: "Class 9 Physics (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-chemistry.pdf": {
+    title: "Class 9 Chemistry (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-biology.pdf": {
+    title: "Class 9 Biology (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-computer-science.pdf": {
+    title: "Class 9 Computer Science (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-mathematics.pdf": {
+    title: "Class 9 Mathematics Science (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-english.pdf": {
+    title: "Class 9 English Compulsory (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-urdu.pdf": {
+    title: "Class 9 Urdu Compulsory (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-tarjuma-tul-quran.pdf": {
+    title: "Class 9 Tarjuma-tul-Quran (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-islamiat.pdf": {
+    title: "Class 9 Islamiat Compulsory (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-9-pakistan-studies.pdf": {
+    title: "Class 9 Pakistan Studies (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-physics.pdf": {
+    title: "Class 10 Physics (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-chemistry.pdf": {
+    title: "Class 10 Chemistry (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-biology.pdf": {
+    title: "Class 10 Biology (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-computer-science.pdf": {
+    title: "Class 10 Computer Science (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-mathematics.pdf": {
+    title: "Class 10 Mathematics Science (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-english.pdf": {
+    title: "Class 10 English Compulsory (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-urdu.pdf": {
+    title: "Class 10 Urdu Compulsory (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-tarjuma-tul-quran.pdf": {
+    title: "Class 10 Tarjuma-tul-Quran (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-islamiat.pdf": {
+    title: "Class 10 Islamiat Compulsory (PCTB E-Book)",
+    category: "Academic",
+  },
+  "pctb-class-10-pakistan-studies.pdf": {
+    title: "Class 10 Pakistan Studies (PCTB E-Book)",
+    category: "Academic",
+  },
 };
 
 export async function GET() {
@@ -69,8 +129,13 @@ export async function GET() {
 
     const seenFiles = new Set<string>();
     const filteredContents = contents
-      .filter((obj) => obj.Key && !obj.Key.endsWith("/") && obj.Size && obj.Size > 0)
-      .sort((a, b) => (a.Key?.split("/").length ?? 0) - (b.Key?.split("/").length ?? 0))
+      .filter(
+        (obj) => obj.Key && !obj.Key.endsWith("/") && obj.Size && obj.Size > 0,
+      )
+      .sort(
+        (a, b) =>
+          (a.Key?.split("/").length ?? 0) - (b.Key?.split("/").length ?? 0),
+      )
       .filter((obj) => {
         const rawFilename = obj.Key.replace(/^documents\//, "");
         const baseName = rawFilename.split("/").pop()!;
@@ -89,15 +154,22 @@ export async function GET() {
       let title = "";
       let category = "General";
 
-      const catalogItem = DOCUMENT_CATALOG[rawFilename] ?? DOCUMENT_CATALOG[baseName];
+      const catalogItem =
+        DOCUMENT_CATALOG[rawFilename] ?? DOCUMENT_CATALOG[baseName];
       if (catalogItem) {
         title = catalogItem.title;
         category = catalogItem.category;
-      } else if (baseName.startsWith("msns-class-") && baseName.endsWith("-notes.pdf")) {
+      } else if (
+        baseName.startsWith("msns-class-") &&
+        baseName.endsWith("-notes.pdf")
+      ) {
         const match = /^msns-class-(\d+)-(.+)-notes\.pdf$/.exec(baseName);
         if (match) {
           const grade = match[1];
-          const sub = match[2]?.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) ?? "";
+          const sub =
+            match[2]
+              ?.replace(/-/g, " ")
+              .replace(/\b\w/g, (c) => c.toUpperCase()) ?? "";
           title = `Class ${grade} ${sub} (Syllabus & High-Yield Notes)`;
           category = "Academic";
         }
@@ -109,7 +181,8 @@ export async function GET() {
           .replace(/\b\w/g, (c) => c.toUpperCase());
       }
 
-      const lastModified = obj.LastModified?.toISOString() ?? new Date().toISOString();
+      const lastModified =
+        obj.LastModified?.toISOString() ?? new Date().toISOString();
 
       return {
         key,
@@ -127,7 +200,7 @@ export async function GET() {
     console.error("Error listing documents in msns-home:", error);
     return NextResponse.json(
       { error: "Failed to list documents" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -37,13 +37,17 @@ const URL_LIST = [
 async function pingSitemap(serviceName, pingUrl) {
   return new Promise((resolve) => {
     console.log(`[+] Pinging ${serviceName}...`);
-    https.get(pingUrl, (res) => {
-      console.log(`  └─ Response Status: ${res.statusCode} ${res.statusMessage}`);
-      resolve(res.statusCode);
-    }).on("error", (err) => {
-      console.error(`  └─ Error pinging ${serviceName}:`, err.message);
-      resolve(null);
-    });
+    https
+      .get(pingUrl, (res) => {
+        console.log(
+          `  └─ Response Status: ${res.statusCode} ${res.statusMessage}`,
+        );
+        resolve(res.statusCode);
+      })
+      .on("error", (err) => {
+        console.error(`  └─ Error pinging ${serviceName}:`, err.message);
+        resolve(null);
+      });
   });
 }
 
@@ -52,7 +56,7 @@ async function submitIndexNow() {
     host: DOMAIN,
     key: INDEXNOW_KEY,
     keyLocation: `https://${DOMAIN}/${INDEXNOW_KEY}.txt`,
-    urlList: URL_LIST
+    urlList: URL_LIST,
   });
 
   const options = {
@@ -62,17 +66,21 @@ async function submitIndexNow() {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Content-Length": Buffer.byteLength(payload)
-    }
+      "Content-Length": Buffer.byteLength(payload),
+    },
   };
 
   return new Promise((resolve) => {
-    console.log("[+] Submitting URLs via IndexNow (Bing/Yandex/Seznam/Naver)...");
+    console.log(
+      "[+] Submitting URLs via IndexNow (Bing/Yandex/Seznam/Naver)...",
+    );
     const req = https.request(options, (res) => {
       let body = "";
       res.on("data", (chunk) => (body += chunk));
       res.on("end", () => {
-        console.log(`  └─ Response Status: ${res.statusCode} ${res.statusMessage}`);
+        console.log(
+          `  └─ Response Status: ${res.statusCode} ${res.statusMessage}`,
+        );
         if (res.statusCode === 200 || res.statusCode === 202) {
           console.log("  └─ Successfully submitted URLs to IndexNow!");
         } else {
@@ -96,8 +104,14 @@ async function main() {
   console.log("=== MSNS Crawler Index Submission Tool ===");
   console.log(`Target Sitemap: ${SITEMAP_URL}\n`);
 
-  await pingSitemap("Google Search Console Ping", `https://www.google.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`);
-  await pingSitemap("Bing Webmaster Ping", `https://www.bing.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`);
+  await pingSitemap(
+    "Google Search Console Ping",
+    `https://www.google.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
+  );
+  await pingSitemap(
+    "Bing Webmaster Ping",
+    `https://www.bing.com/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
+  );
   await submitIndexNow();
 
   console.log("\n[✔] Crawler ping sequence executed successfully.");

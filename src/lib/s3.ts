@@ -56,11 +56,19 @@ async function listAllUncached(prefix: string): Promise<ListedObject[]> {
   let token: string | undefined;
   do {
     const page = await s3Client.send(
-      new ListObjectsV2Command({ Bucket: BUCKET, Prefix: prefix, ContinuationToken: token }),
+      new ListObjectsV2Command({
+        Bucket: BUCKET,
+        Prefix: prefix,
+        ContinuationToken: token,
+      }),
     );
     for (const obj of page.Contents ?? []) {
       if (!obj.Key || obj.Key.endsWith("/")) continue;
-      out.push({ key: obj.Key, lastModified: obj.LastModified?.toISOString(), size: obj.Size });
+      out.push({
+        key: obj.Key,
+        lastModified: obj.LastModified?.toISOString(),
+        size: obj.Size,
+      });
     }
     token = page.IsTruncated ? page.NextContinuationToken : undefined;
   } while (token);
@@ -71,17 +79,26 @@ async function listAllUncached(prefix: string): Promise<ListedObject[]> {
  * Cached bucket listing (ListObjectsV2 is a billed Class-A operation). Results are
  * shared across requests for an hour, or until S3_LISTING_TAG is revalidated.
  */
-export const listObjects = unstable_cache(listAllUncached, ["s3-list-objects"], {
-  revalidate: 3600,
-  tags: [S3_LISTING_TAG],
-});
+export const listObjects = unstable_cache(
+  listAllUncached,
+  ["s3-list-objects"],
+  {
+    revalidate: 3600,
+    tags: [S3_LISTING_TAG],
+  },
+);
 
 /** Gallery and video objects, newest first. */
 async function listMediaObjects(): Promise<ListedObject[]> {
-  const [gallery, videos] = await Promise.all([listObjects("gallery/"), listObjects("videos/")]);
+  const [gallery, videos] = await Promise.all([
+    listObjects("gallery/"),
+    listObjects("videos/"),
+  ]);
   return [...gallery, ...videos].sort((a, b) => {
     if (a.lastModified && b.lastModified) {
-      return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
+      return (
+        new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
+      );
     }
     return 0;
   });
@@ -123,7 +140,9 @@ const LEGACY_SUBSTRING_ALIASES = new Set([
  * This allows msns-home components to reference images by filename only,
  * so moving images between folders in the admin gallery won't break references.
  */
-export async function findImageByFilename(filename: string): Promise<string | null> {
+export async function findImageByFilename(
+  filename: string,
+): Promise<string | null> {
   const contents = await listMediaObjects();
 
   const searchLower = filename.toLowerCase().trim();
@@ -142,7 +161,10 @@ export async function findImageByFilename(filename: string): Promise<string | nu
   }
 
   // 3. Social post index (e.g. social_posts_1, social_posts_2)
-  if (searchClean.startsWith("social_posts_") || searchClean.startsWith("notification_")) {
+  if (
+    searchClean.startsWith("social_posts_") ||
+    searchClean.startsWith("notification_")
+  ) {
     const indexMatch = /\d+$/.exec(searchClean);
     const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : 0;
     const matching = contents.filter((obj) => {
@@ -166,7 +188,9 @@ export async function findImageByFilename(filename: string): Promise<string | nu
  * Resolves multiple filenames to their full S3 keys using the cached listing.
  * Returns a map of filename -> full key (or null if not found).
  */
-export async function resolveImageFilenames(filenames: string[]): Promise<Record<string, string | null>> {
+export async function resolveImageFilenames(
+  filenames: string[],
+): Promise<Record<string, string | null>> {
   const contents = await listMediaObjects();
   const basenameMap = new Map<string, string>();
   for (const obj of contents) {
@@ -183,7 +207,7 @@ export async function resolveImageFilenames(filenames: string[]): Promise<Record
 export async function uploadToS3(
   key: string,
   body: Buffer | Uint8Array,
-  contentType: string
+  contentType: string,
 ): Promise<string> {
   const command = new PutObjectCommand({
     Bucket: BUCKET,

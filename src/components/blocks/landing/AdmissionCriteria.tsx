@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { BookOpenCheck, Cake, School, Star, BadgeCheck } from "lucide-react"
-import { motion } from "framer-motion"
+import { BookOpenCheck, Cake, School, Star, BadgeCheck } from "lucide-react";
+import { motion } from "framer-motion";
 
 const ageRequirements = [
   { grade: "Nursery", age: "3 years" },
@@ -9,14 +9,14 @@ const ageRequirements = [
   { grade: "Kindergarten", age: "5 years" },
   { grade: "Grade 1", age: "6 years" },
   { grade: "Other Grades", age: "Age appropriate for the grade level" },
-]
+];
 
 const academicConsiderations = [
   "Performance in the entrance assessment",
   "Previous academic records",
   "Teacher recommendations (for transfers)",
   "Interview performance",
-]
+];
 
 const additionalConsiderations = [
   "Student character and values alignment with our school philosophy",
@@ -24,7 +24,7 @@ const additionalConsiderations = [
   "Special talents or abilities",
   "Siblings of current students (priority consideration)",
   "Children of alumni (priority consideration)",
-]
+];
 
 export const AdmissionsCriteria = () => {
   return (
@@ -35,25 +35,26 @@ export const AdmissionsCriteria = () => {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-2"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-2xl font-bold text-slate-900 md:text-3xl dark:text-white">
           Admissions{" "}
           <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
             Criteria
           </span>
         </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xl">
-          Understand our age, academic, and holistic requirements for each grade level.
+        <p className="max-w-xl text-sm text-slate-500 dark:text-slate-400">
+          Understand our age, academic, and holistic requirements for each grade
+          level.
         </p>
       </motion.div>
 
       {/* Age Requirements */}
       <motion.div
-        className="rounded-2xl border border-slate-200/60 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] overflow-hidden"
+        className="overflow-hidden rounded-2xl border border-slate-200/60 bg-white dark:border-white/[0.08] dark:bg-white/[0.03]"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <div className="p-5 pb-0 flex items-center gap-3">
+        <div className="flex items-center gap-3 p-5 pb-0">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10">
             <Cake className="h-5 w-5 text-amber-600 dark:text-amber-400" />
           </div>
@@ -79,8 +80,10 @@ export const AdmissionsCriteria = () => {
                 {ageRequirements.map((req, index) => (
                   <tr
                     key={req.grade}
-                    className={`border-t border-slate-100 dark:border-white/[0.05] transition-colors hover:bg-slate-50/60 dark:hover:bg-white/[0.02] ${
-                      index % 2 === 0 ? "bg-transparent" : "bg-slate-50/30 dark:bg-white/[0.01]"
+                    className={`border-t border-slate-100 transition-colors hover:bg-slate-50/60 dark:border-white/[0.05] dark:hover:bg-white/[0.02] ${
+                      index % 2 === 0
+                        ? "bg-transparent"
+                        : "bg-slate-50/30 dark:bg-white/[0.01]"
                     }`}
                   >
                     <td className="p-3.5 font-medium text-slate-800 dark:text-slate-200">
@@ -99,12 +102,12 @@ export const AdmissionsCriteria = () => {
 
       {/* Academic Requirements */}
       <motion.div
-        className="rounded-2xl border border-slate-200/60 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] p-5 md:p-6"
+        className="rounded-2xl border border-slate-200/60 bg-white p-5 md:p-6 dark:border-white/[0.08] dark:bg-white/[0.03]"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <div className="flex items-center gap-3 mb-4">
+        <div className="mb-4 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10">
             <BookOpenCheck className="h-5 w-5 text-sky-600 dark:text-sky-400" />
           </div>
@@ -114,7 +117,8 @@ export const AdmissionsCriteria = () => {
         </div>
 
         <p className="mb-5 text-sm text-slate-500 dark:text-slate-400">
-          We seek students who demonstrate academic potential and a willingness to learn. Admission decisions are based on:
+          We seek students who demonstrate academic potential and a willingness
+          to learn. Admission decisions are based on:
         </p>
 
         <ul className="grid gap-3 sm:grid-cols-2">
@@ -124,10 +128,12 @@ export const AdmissionsCriteria = () => {
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.25 + index * 0.06 }}
-              className="flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] p-3.5 border border-transparent hover:border-sky-500/15 transition-colors"
+              className="flex items-center gap-3 rounded-xl border border-transparent bg-slate-50 p-3.5 transition-colors hover:border-sky-500/15 dark:bg-white/[0.04]"
             >
-              <School className="h-4 w-4 text-sky-500 flex-shrink-0" />
-              <span className="text-sm text-slate-600 dark:text-slate-300">{item}</span>
+              <School className="h-4 w-4 flex-shrink-0 text-sky-500" />
+              <span className="text-sm text-slate-600 dark:text-slate-300">
+                {item}
+              </span>
             </motion.li>
           ))}
         </ul>
@@ -135,12 +141,12 @@ export const AdmissionsCriteria = () => {
 
       {/* Additional Considerations */}
       <motion.div
-        className="rounded-2xl border border-slate-200/60 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] p-5 md:p-6"
+        className="rounded-2xl border border-slate-200/60 bg-white p-5 md:p-6 dark:border-white/[0.08] dark:bg-white/[0.03]"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <div className="flex items-center gap-3 mb-4">
+        <div className="mb-4 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/10">
             <Star className="h-5 w-5 text-purple-600 dark:text-purple-400" />
           </div>
@@ -160,14 +166,16 @@ export const AdmissionsCriteria = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.35 + index * 0.06 }}
-              className="flex items-start gap-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] p-3.5 border border-transparent hover:border-purple-500/15 transition-colors"
+              className="flex items-start gap-3 rounded-xl border border-transparent bg-slate-50 p-3.5 transition-colors hover:border-purple-500/15 dark:bg-white/[0.04]"
             >
-              <BadgeCheck className="mt-0.5 h-4 w-4 text-purple-500 flex-shrink-0" />
-              <span className="text-sm text-slate-600 dark:text-slate-300">{item}</span>
+              <BadgeCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-purple-500" />
+              <span className="text-sm text-slate-600 dark:text-slate-300">
+                {item}
+              </span>
             </motion.div>
           ))}
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};

@@ -104,11 +104,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "msns-bise-matric-resource-guide.pdf",
   ];
 
-  const officialDocPages: MetadataRoute.Sitemap = officialDocs.map((filename) => ({
-    url: `${baseUrl}/api/documents/${filename}`,
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
-  }));
+  const officialDocPages: MetadataRoute.Sitemap = officialDocs.map(
+    (filename) => ({
+      url: `${baseUrl}/api/documents/${filename}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    }),
+  );
 
   // All 20 PCTB Official Matriculation Textbooks (Cloudflare R2 Direct Downloads)
   const textbookPages: MetadataRoute.Sitemap = MATRIC_TEXTBOOKS.map((book) => ({
@@ -123,7 +125,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly" as const,
     priority: 0.85,
   }));
-
 
   return [
     ...staticPages,

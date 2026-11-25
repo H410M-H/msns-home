@@ -35,7 +35,7 @@ const RASTER_IMAGE_TYPES = new Set([
 export async function optimizeImageForUpload(
   inputBuffer: Buffer,
   originalContentType: string,
-  options: ImageOptimizationOptions = {}
+  options: ImageOptimizationOptions = {},
 ): Promise<OptimizedImageResult> {
   const contentType = originalContentType.toLowerCase().trim();
 
@@ -125,7 +125,7 @@ export async function optimizeImageForUpload(
   } catch (error) {
     console.warn(
       "[ImageOptimizer] Sharp optimization failed, falling back to original buffer:",
-      error instanceof Error ? error.message : error
+      error instanceof Error ? error.message : error,
     );
     return {
       buffer: inputBuffer,
