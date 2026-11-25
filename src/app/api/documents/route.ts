@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { ListObjectsV2Command } from "@aws-sdk/client-s3";
-import { s3Client, BUCKET } from "~/lib/s3";
+import { listObjects } from "~/lib/s3";
 
 export const dynamic = "force-dynamic";
 
@@ -62,13 +61,11 @@ const DOCUMENT_CATALOG: Record<string, { title: string; category: string }> = {
 
 export async function GET() {
   try {
-    const command = new ListObjectsV2Command({
-      Bucket: BUCKET,
-      Prefix: "documents/",
-    });
-
-    const response = await s3Client.send(command);
-    const contents = response.Contents ?? [];
+    const contents = (await listObjects("documents/")).map((o) => ({
+      Key: o.key,
+      Size: o.size,
+      LastModified: o.lastModified ? new Date(o.lastModified) : undefined,
+    }));
 
     const seenFiles = new Set<string>();
     const filteredContents = contents

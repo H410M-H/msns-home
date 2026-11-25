@@ -1,21 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { deleteFromS3 } from "~/lib/s3";
+import { deleteFromS3, S3_LISTING_TAG } from "~/lib/s3";
+
+import { revalidateTag } from "next/cache";
+import { isGalleryRequestAuthorized } from "~/lib/gallery-auth";
 
 export const dynamic = "force-dynamic";
 
-/**
- * Validates the request using the GALLERY_API_SECRET environment variable.
- * If not set, all requests are blocked in production.
- */
-function isAuthorized(request: NextRequest): boolean {
-  const secret = process.env.GALLERY_API_SECRET;
-  if (!secret) {
-    // In development, allow if no secret is set
-    return process.env.NODE_ENV === "development";
-  }
-  const authHeader = request.headers.get("Authorization");
-  return authHeader === `Bearer ${secret}`;
-}
 
 export async function DELETE(
   request: NextRequest,
@@ -23,7 +13,7 @@ export async function DELETE(
 ) {
   try {
     // Authentication check
-    if (!isAuthorized(request)) {
+    if (!isGalleryRequestAuthorized(request)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -47,6 +37,7 @@ export async function DELETE(
     }
 
     await deleteFromS3(key);
+    revalidateTag(S3_LISTING_TAG);
 
     return NextResponse.json({ success: true, deletedKey: key });
   } catch (error) {
