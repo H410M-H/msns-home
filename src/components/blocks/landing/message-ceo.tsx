@@ -32,6 +32,7 @@ export const MessageFromCEO = () => {
                 src="/api/images/resolve/haji_muhammad_siddique_naz_d5ct3l.jpg"
                 alt="Haji Muhammad Siddique Naz"
                 fill
+                sizes="(min-width: 768px) 320px, 288px"
                 className="object-contain p-2 rounded-2xl"
               />
             </motion.div>

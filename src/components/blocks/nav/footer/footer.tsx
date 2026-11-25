@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import Image from "next/image";
 import {
@@ -15,7 +14,6 @@ import {
   Phone,
   MapPin,
   ArrowUp,
-  Send
 } from 'lucide-react';
 
 type FooterProps = React.HTMLAttributes<HTMLElement>;
@@ -182,27 +180,6 @@ export const Footer = ({ className, ...props }: FooterProps) => {
           </div>
         </div>
 
-        {/* Newsletter Banner */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white/40 border border-white/60 shadow-sm backdrop-blur-xl rounded-3xl p-8 lg:p-10">
-          <div className="space-y-2">
-            <h3 className="text-lg font-bold text-green-900">Subscribe to our Newsletter</h3>
-            <p className="text-sm font-medium text-green-800/80">Get the latest updates, news, and announcements directly to your inbox.</p>
-          </div>
-          <form className="relative max-w-md md:ml-auto w-full">
-            <Input
-              type="email"
-              placeholder="Enter your email address..."
-              className="pl-5 pr-14 h-14 bg-white/60 border-white text-green-900 placeholder:text-green-700/50 focus:border-green-500 focus:ring-green-500/20 rounded-2xl shadow-xs"
-            />
-            <Button
-              type="submit"
-              size="icon"
-              className="absolute right-2 top-2 h-10 w-10 rounded-xl bg-green-600 hover:bg-green-700 text-white shadow-md transition-all hover:scale-105"
-            >
-              <Send className="h-4 w-4 ml-0.5" />
-            </Button>
-          </form>
-        </div>
         {/* Regional Feeder Links */}
         <div className="mt-8 pt-6 border-t border-green-200/60 flex flex-wrap items-center justify-between gap-4 text-xs text-green-800/80">
           <div className="flex items-center gap-2">
@@ -227,7 +204,7 @@ export const Footer = ({ className, ...props }: FooterProps) => {
 
         {/* Copyright */}
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
-          <p className="text-center text-sm font-medium text-green-800/80">
+          <p className="text-center text-sm font-medium text-green-800/80" suppressHydrationWarning>
             © {new Date().getFullYear()}{" "}
             <span className="text-green-900 font-bold">MSNS-DEV™</span> |{" "}
             <span className="text-green-900 font-bold">M.S. NAZ HIGH SCHOOL®</span>
