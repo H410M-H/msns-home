@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> }
+  { params }: { params: Promise<{ slug: string[] }> },
 ) {
   try {
     const { slug } = await params;
@@ -51,9 +51,16 @@ export async function GET(
             response.ContentType ??
             (safeFilename.endsWith(".pdf")
               ? "application/pdf"
-              : "application/octet-stream");
+              : safeFilename.endsWith(".jpg") || safeFilename.endsWith(".jpeg")
+                ? "image/jpeg"
+                : safeFilename.endsWith(".png")
+                  ? "image/png"
+                  : "application/octet-stream");
           headers.set("Content-Type", contentType);
-          headers.set("Content-Disposition", `inline; filename="${safeFilename}"`);
+          headers.set(
+            "Content-Disposition",
+            `inline; filename="${safeFilename}"`,
+          );
           if (response.ContentLength !== undefined) {
             headers.set("Content-Length", response.ContentLength.toString());
           }
@@ -85,9 +92,12 @@ export async function GET(
           "Content-Type",
           safeFilename.endsWith(".pdf")
             ? "application/pdf"
-            : "application/octet-stream"
+            : "application/octet-stream",
         );
-        headers.set("Content-Disposition", `inline; filename="${safeFilename}"`);
+        headers.set(
+          "Content-Disposition",
+          `inline; filename="${safeFilename}"`,
+        );
         headers.set("Content-Length", fileBuffer.length.toString());
         headers.set("Cache-Control", "public, max-age=86400");
         return new NextResponse(fileBuffer, { status: 200, headers });

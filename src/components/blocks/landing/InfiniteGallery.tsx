@@ -1,7 +1,14 @@
 "use client";
 
 import type React from "react";
-import { useRef, useMemo, useCallback, useState, useEffect, Suspense } from "react";
+import {
+  useRef,
+  useMemo,
+  useCallback,
+  useState,
+  useEffect,
+  Suspense,
+} from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -173,7 +180,11 @@ function ImagePlane({
 
     // Dynamically assign correct texture
     const currentTexture = textures[plane.imageIndex];
-    if (currentTexture && material.uniforms.map && material.uniforms.map.value !== currentTexture) {
+    if (
+      currentTexture &&
+      material.uniforms.map &&
+      material.uniforms.map.value !== currentTexture
+    ) {
       material.uniforms.map.value = currentTexture;
     }
 
@@ -219,13 +230,16 @@ function GalleryScene({
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
-        typeof img === "string" ? { src: img, alt: "" } : img
+        typeof img === "string" ? { src: img, alt: "" } : img,
       ),
-    [images]
+    [images],
   );
 
   const textures = useTexture(normalizedImages.map((img) => img.src));
-  const textureArray = useMemo(() => (Array.isArray(textures) ? textures : [textures]), [textures]);
+  const textureArray = useMemo(
+    () => (Array.isArray(textures) ? textures : [textures]),
+    [textures],
+  );
 
   useEffect(() => {
     textureArray.forEach((t) => {
@@ -236,14 +250,17 @@ function GalleryScene({
 
   const textureAspects = useMemo(() => {
     return textureArray.map((t) => {
-      const img = t?.image as { width?: number; height?: number } | null | undefined;
+      const img = t?.image as
+        | { width?: number; height?: number }
+        | null
+        | undefined;
       return img?.width && img?.height ? img.width / img.height : 1;
     });
   }, [textureArray]);
 
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
-    [visibleCount]
+    [visibleCount],
   );
 
   useEffect(() => {
@@ -286,7 +303,7 @@ function GalleryScene({
       imageIndex: totalImages > 0 ? i % totalImages : 0,
       x: spatialPositions[i]?.x ?? 0,
       y: spatialPositions[i]?.y ?? 0,
-    }))
+    })),
   );
 
   useEffect(() => {
@@ -308,7 +325,7 @@ function GalleryScene({
       // Increase scroll velocity (mutating ref directly to prevent React re-renders)
       scrollVelocityRef.current += event.deltaY * 0.005 * speed;
     },
-    [speed]
+    [speed],
   );
 
   const handleKeyDown = useCallback(
@@ -319,7 +336,7 @@ function GalleryScene({
         scrollVelocityRef.current += 1 * speed;
       }
     },
-    [speed]
+    [speed],
   );
 
   useEffect(() => {
@@ -340,12 +357,14 @@ function GalleryScene({
   useFrame((state, delta) => {
     // Smoothly decay/interpolate back to baseline speed
     const baseTargetSpeed = 0.8 * speed;
-    scrollVelocityRef.current += (baseTargetSpeed - scrollVelocityRef.current) * 0.05;
+    scrollVelocityRef.current +=
+      (baseTargetSpeed - scrollVelocityRef.current) * 0.05;
 
     // Clamping: ensure it always zooms in at a minimum speed
     const minZoomSpeed = 0.3 * speed;
     if (scrollVelocityRef.current < minZoomSpeed) {
-      scrollVelocityRef.current += (minZoomSpeed - scrollVelocityRef.current) * 0.1;
+      scrollVelocityRef.current +=
+        (minZoomSpeed - scrollVelocityRef.current) * 0.1;
     }
 
     const time = state.clock.getElapsedTime();
@@ -485,7 +504,7 @@ function GalleryLoader() {
           <div className="absolute inset-0 rounded-full border-2 border-white/10" />
           <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-emerald-400" />
         </div>
-        <p className="text-sm text-white/40 tracking-wide uppercase">
+        <p className="text-sm tracking-wide text-white/40 uppercase">
           Loading Gallery…
         </p>
       </div>
@@ -530,22 +549,22 @@ export default function InfiniteGallery({
     <section className="relative w-full overflow-hidden">
       {/* Section header */}
       <div
-        className="relative z-10 pt-20 pb-6 md:pt-28 md:pb-10 px-6 md:px-12"
+        className="relative z-10 px-6 pt-20 pb-6 md:px-12 md:pt-28 md:pb-10"
         style={{
           background:
             "linear-gradient(to bottom, #060e1a 0%, transparent 100%)",
         }}
       >
-        <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] text-sky-400 bg-sky-500/10 border border-sky-500/20">
+        <span className="mb-3 inline-block rounded-full border border-sky-500/20 bg-sky-500/10 px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-sky-400 uppercase">
           Life at MSNS
         </span>
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
+        <h2 className="text-3xl leading-[1.1] font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
           Campus{" "}
           <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
             Gallery
           </span>
         </h2>
-        <p className="mt-3 text-sm md:text-base text-white/40 max-w-lg leading-relaxed">
+        <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/40 md:text-base">
           Explore moments from our campus life.
         </p>
       </div>
@@ -556,11 +575,11 @@ export default function InfiniteGallery({
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-green-950/10 to-slate-900" />
 
         {/* Ambient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-500/[0.12] rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/[0.12] rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/[0.06] rounded-full blur-[150px] pointer-events-none" />
+        <div className="pointer-events-none absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-blue-500/[0.12] blur-[120px]" />
+        <div className="pointer-events-none absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-purple-500/[0.12] blur-[120px]" />
+        <div className="pointer-events-none absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/[0.06] blur-[150px]" />
 
-        <div className={`relative w-full h-full ${className}`} style={style}>
+        <div className={`relative h-full w-full ${className}`} style={style}>
           {webglSupported ? (
             <Suspense fallback={<GalleryLoader />}>
               <Canvas
@@ -582,8 +601,8 @@ export default function InfiniteGallery({
               </Canvas>
             </Suspense>
           ) : (
-            <div className="flex items-center justify-center h-full">
-              <p className="text-white/50 text-base">
+            <div className="flex h-full items-center justify-center">
+              <p className="text-base text-white/50">
                 WebGL is not supported on this device.
               </p>
             </div>

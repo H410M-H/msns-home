@@ -3,7 +3,8 @@ import AboutClient from "./about-client";
 
 export const metadata: Metadata = {
   title: "About Our School | Vision, Heritage & Leadership",
-  description: "Explore the 20+ year legacy of M. S. Naz High School. Learn about our founding vision, academic leadership, core values, and dedication to student development.",
+  description:
+    "Explore the 20+ year legacy of M. S. Naz High School. Learn about our founding vision, academic leadership, core values, and dedication to student development.",
   alternates: {
     canonical: "https://www.msns.edu.pk/about",
   },
@@ -12,8 +13,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "About Our School | Vision, Heritage & Leadership | M. S. Naz High School®",
-    description: "Explore the 20+ year legacy of M. S. Naz High School. Learn about our founding vision, academic leadership, core values, and dedication to student development.",
+    title:
+      "About Our School | Vision, Heritage & Leadership | M. S. Naz High School®",
+    description:
+      "Explore the 20+ year legacy of M. S. Naz High School. Learn about our founding vision, academic leadership, core values, and dedication to student development.",
     url: "https://www.msns.edu.pk/about",
     siteName: "M. S. Naz High School®",
     type: "website",
@@ -28,8 +31,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Our School | Vision, Heritage & Leadership | M. S. Naz High School®",
-    description: "Explore the 20+ year legacy of M. S. Naz High School. Learn about our founding vision, academic leadership, core values, and dedication to student development.",
+    title:
+      "About Our School | Vision, Heritage & Leadership | M. S. Naz High School®",
+    description:
+      "Explore the 20+ year legacy of M. S. Naz High School. Learn about our founding vision, academic leadership, core values, and dedication to student development.",
     images: ["/api/images/logos/Official_LOGO_grn_ic9ldd.png"],
   },
 };

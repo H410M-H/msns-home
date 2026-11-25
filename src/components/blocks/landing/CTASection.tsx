@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Button } from "~/components/ui/button"
-import { ChevronRight } from 'lucide-react'
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "~/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 export const CTASection = () => {
   return (
-    <section className="bg-green-700 text-primary-foreground py-16 px-4 md:px-8">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="text-primary-foreground bg-green-700 px-4 py-16 md:px-8">
+      <div className="mx-auto max-w-4xl text-center">
         <motion.h2
-          className="text-3xl font-bold mb-4"
+          className="mb-4 text-3xl font-bold"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -19,7 +19,7 @@ export const CTASection = () => {
           Ready to Join Our Community?
         </motion.h2>
         <motion.p
-          className="text-xl mb-8"
+          className="mb-8 text-xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -34,16 +34,15 @@ export const CTASection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <Link href="/admission">
-          <Button 
-  size="lg" 
-  className="bg-emerald-500 hover:bg-emerald-600 text-white text-lg px-8 py-6 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
->
-  Start Your Journey <ChevronRight className="ml-2 h-5 w-5" />
-</Button>
+            <Button
+              size="lg"
+              className="rounded-full bg-emerald-500 px-8 py-6 text-lg text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-emerald-600"
+            >
+              Start Your Journey <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
           </Link>
         </motion.div>
       </div>
     </section>
-  )
-}
-
+  );
+};

@@ -12,13 +12,13 @@ export async function GET() {
         headers: {
           "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
         },
-      }
+      },
     );
   } catch (error) {
     console.error("Error listing gallery images:", error);
     return NextResponse.json(
       { error: "Failed to list gallery images" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

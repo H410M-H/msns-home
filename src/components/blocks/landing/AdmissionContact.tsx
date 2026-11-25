@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Mail, Phone, Clock, CalendarDays } from "lucide-react"
-import { motion } from "framer-motion"
+import { Mail, Phone, Clock, CalendarDays } from "lucide-react";
+import { motion } from "framer-motion";
 
 const contactItems = [
   {
@@ -27,12 +27,12 @@ const contactItems = [
     color: "text-purple-600 dark:text-purple-400",
     bgColor: "bg-purple-500/10",
   },
-]
+];
 
 export const ContactAdmissions = () => {
   return (
-    <div className="h-full rounded-2xl border border-slate-200/60 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] p-6 backdrop-blur-sm">
-      <div className="flex items-center gap-3 mb-6">
+    <div className="h-full rounded-2xl border border-slate-200/60 bg-white p-6 backdrop-blur-sm dark:border-white/[0.08] dark:bg-white/[0.03]">
+      <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 shadow-md shadow-sky-500/20">
           <CalendarDays className="h-5 w-5 text-white" />
         </div>
@@ -43,9 +43,9 @@ export const ContactAdmissions = () => {
 
       <div className="space-y-3">
         {contactItems.map((item, index) => {
-          const Icon = item.icon
-          const isLink = !!item.link
-          const Tag = isLink ? "a" : "div"
+          const Icon = item.icon;
+          const isLink = !!item.link;
+          const Tag = isLink ? "a" : "div";
 
           return (
             <motion.div
@@ -56,15 +56,12 @@ export const ContactAdmissions = () => {
             >
               <Tag
                 {...(isLink ? { href: item.link } : {})}
-                className={`
-                  block rounded-xl bg-slate-50 dark:bg-white/[0.04] p-4
-                  border border-transparent hover:border-slate-200 dark:hover:border-white/10
-                  transition-all duration-200
-                  ${isLink ? "cursor-pointer hover:shadow-sm" : ""}
-                `}
+                className={`block rounded-xl border border-transparent bg-slate-50 p-4 transition-all duration-200 hover:border-slate-200 dark:bg-white/[0.04] dark:hover:border-white/10 ${isLink ? "cursor-pointer hover:shadow-sm" : ""} `}
               >
                 <div className="flex items-start gap-3">
-                  <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${item.bgColor} flex-shrink-0`}>
+                  <div
+                    className={`flex h-8 w-8 items-center justify-center rounded-lg ${item.bgColor} flex-shrink-0`}
+                  >
                     <Icon className={`h-4 w-4 ${item.color}`} />
                   </div>
                   <div>
@@ -73,12 +70,15 @@ export const ContactAdmissions = () => {
                     </h3>
                     {Array.isArray(item.content) ? (
                       item.content.map((line, i) => (
-                        <p key={i} className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                        <p
+                          key={i}
+                          className="mt-0.5 text-xs text-slate-500 dark:text-slate-400"
+                        >
                           {line}
                         </p>
                       ))
                     ) : (
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                      <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                         {item.content}
                       </p>
                     )}
@@ -86,7 +86,7 @@ export const ContactAdmissions = () => {
                 </div>
               </Tag>
             </motion.div>
-          )
+          );
         })}
       </div>
 
@@ -94,11 +94,11 @@ export const ContactAdmissions = () => {
         initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
         href="/contact"
-        className="mt-5 flex items-center justify-center gap-2 w-full rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-sky-500/20 transition-all hover:shadow-lg hover:brightness-110"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-sky-500/20 transition-all hover:shadow-lg hover:brightness-110"
       >
         <CalendarDays className="h-4 w-4" />
         Schedule a Campus Tour
       </motion.a>
     </div>
-  )
-}
+  );
+};

@@ -10,7 +10,7 @@ export function FloatingWhatsApp() {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=Hello%20M.S.%20Naz%20High%20School%2C%20I%20have%20an%20inquiry%20regarding%20admissions.`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 pointer-events-auto">
+    <div className="pointer-events-auto fixed right-6 bottom-6 z-50 flex flex-col items-end gap-2">
       {/* Interactive Tooltip Badge */}
       <AnimatePresence>
         {showTooltip && (
@@ -18,18 +18,21 @@ export function FloatingWhatsApp() {
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            className="relative flex items-center gap-2 bg-slate-900/90 text-white text-xs px-3.5 py-2 rounded-2xl shadow-xl border border-emerald-500/30 backdrop-blur-md max-w-[220px]"
+            className="relative flex max-w-[220px] items-center gap-2 rounded-2xl border border-emerald-500/30 bg-slate-900/90 px-3.5 py-2 text-xs text-white shadow-xl backdrop-blur-md"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
             <p className="leading-tight">
-              Admissions Help? <strong className="text-emerald-400 block font-semibold">Chat on WhatsApp</strong>
+              Admissions Help?{" "}
+              <strong className="block font-semibold text-emerald-400">
+                Chat on WhatsApp
+              </strong>
             </p>
             <button
               onClick={() => setShowTooltip(false)}
-              className="text-slate-400 hover:text-white p-0.5 rounded-full"
+              className="rounded-full p-0.5 text-slate-400 hover:text-white"
               aria-label="Dismiss hint"
             >
               <X className="h-3 w-3" />
@@ -45,15 +48,15 @@ export function FloatingWhatsApp() {
         rel="noopener noreferrer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="relative group flex items-center justify-center h-14 w-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-[0_8px_25px_rgba(37,211,102,0.45)] hover:shadow-[0_12px_35px_rgba(37,211,102,0.6)] transition-all duration-300 border-2 border-white/20"
+        className="group relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/20 bg-[#25D366] text-white shadow-[0_8px_25px_rgba(37,211,102,0.45)] transition-all duration-300 hover:bg-[#20ba5a] hover:shadow-[0_12px_35px_rgba(37,211,102,0.6)]"
         aria-label="Chat on WhatsApp with M.S. Naz High School"
       >
         {/* Pulsing ring background */}
-        <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-40 group-hover:opacity-60 animate-ping pointer-events-none" />
+        <span className="pointer-events-none absolute -inset-1 animate-ping rounded-full bg-[#25D366] opacity-40 group-hover:opacity-60" />
 
         {/* WhatsApp Custom Icon */}
         <svg
-          className="h-7 w-7 fill-current relative z-10"
+          className="relative z-10 h-7 w-7 fill-current"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >

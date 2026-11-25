@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export const GeometricBackground = () => {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  if (!mounted) return null
+  if (!mounted) return null;
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-slate-900">
       {/* Main background gradient */}
       <div className="absolute inset-0 bg-linear-to-br from-blue-900 via-slate-900 to-purple-900"></div>
-      
+
       {/* Animated geometric shapes */}
       <div className="absolute inset-0">
         {/* Large shapes */}
@@ -24,11 +24,11 @@ export const GeometricBackground = () => {
         <div className="geometric-shape shape-3"></div>
         <div className="geometric-shape shape-4"></div>
         <div className="geometric-shape shape-5"></div>
-        
+
         {/* Small floating particles */}
         {Array.from({ length: 20 }).map((_, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className="particle"
             style={{
               left: `${Math.random() * 100}%`,
@@ -43,10 +43,10 @@ export const GeometricBackground = () => {
           ></div>
         ))}
       </div>
-      
+
       {/* Overlay gradient for better text readability */}
       <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-slate-900/50"></div>
-      
+
       {/* CSS for animations */}
       <style jsx global>{`
         .geometric-shape {
@@ -56,58 +56,78 @@ export const GeometricBackground = () => {
           opacity: 0.5;
           animation: morph 15s linear infinite alternate;
         }
-        
+
         .shape-1 {
           top: -15%;
           left: -10%;
           width: 40%;
           height: 40%;
-          background: linear-gradient(90deg, rgba(76, 0, 255, 0.5) 0%, rgba(76, 0, 255, 0.2) 100%);
+          background: linear-gradient(
+            90deg,
+            rgba(76, 0, 255, 0.5) 0%,
+            rgba(76, 0, 255, 0.2) 100%
+          );
           animation-delay: 0s;
         }
-        
+
         .shape-2 {
           bottom: -15%;
           right: -10%;
           width: 35%;
           height: 35%;
-          background: linear-gradient(90deg, rgba(255, 0, 221, 0.5) 0%, rgba(255, 0, 221, 0.2) 100%);
+          background: linear-gradient(
+            90deg,
+            rgba(255, 0, 221, 0.5) 0%,
+            rgba(255, 0, 221, 0.2) 100%
+          );
           animation-delay: -5s;
         }
-        
+
         .shape-3 {
           top: 30%;
           right: 10%;
           width: 30%;
           height: 30%;
-          background: linear-gradient(90deg, rgba(0, 183, 255, 0.5) 0%, rgba(0, 183, 255, 0.2) 100%);
+          background: linear-gradient(
+            90deg,
+            rgba(0, 183, 255, 0.5) 0%,
+            rgba(0, 183, 255, 0.2) 100%
+          );
           animation-delay: -2.5s;
         }
-        
+
         .shape-4 {
           bottom: 20%;
           left: 10%;
           width: 25%;
           height: 25%;
-          background: linear-gradient(90deg, rgba(0, 255, 170, 0.5) 0%, rgba(0, 255, 170, 0.2) 100%);
+          background: linear-gradient(
+            90deg,
+            rgba(0, 255, 170, 0.5) 0%,
+            rgba(0, 255, 170, 0.2) 100%
+          );
           animation-delay: -7.5s;
         }
-        
+
         .shape-5 {
           top: 40%;
           left: 30%;
           width: 20%;
           height: 20%;
-          background: linear-gradient(90deg, rgba(255, 166, 0, 0.5) 0%, rgba(255, 166, 0, 0.2) 100%);
+          background: linear-gradient(
+            90deg,
+            rgba(255, 166, 0, 0.5) 0%,
+            rgba(255, 166, 0, 0.2) 100%
+          );
           animation-delay: -10s;
         }
-        
+
         .particle {
           position: absolute;
           border-radius: 50%;
           animation: float 15s ease-in-out infinite;
         }
-        
+
         @keyframes morph {
           0% {
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -125,7 +145,7 @@ export const GeometricBackground = () => {
             border-radius: 70% 30% 30% 70% / 30% 70% 30% 70%;
           }
         }
-        
+
         @keyframes float {
           0% {
             transform: translateY(0) translateX(0) rotate(0deg);
@@ -145,5 +165,5 @@ export const GeometricBackground = () => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};

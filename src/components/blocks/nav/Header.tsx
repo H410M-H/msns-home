@@ -1,105 +1,118 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import { Button } from '~/components/ui/button'
-import Image from 'next/image'
-import Link from 'next/link'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '~/components/ui/dropdown-menu'
-import { User, Menu, X } from 'lucide-react'
-import { cn } from "~/lib/utils"
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { Button } from "~/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { User, Menu, X } from "lucide-react";
+import { cn } from "~/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
-  forceWhiteBg?: boolean
+  forceWhiteBg?: boolean;
 }
 
 export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
-  const [scrolled, setScrolled] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const [isAuthenticated] = useState(false)
-  const pathname = usePathname()
+  const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Academics', path: '/academics' },
-    { name: 'Admissions', path: '/admission' },
-    { name: 'Downloads', path: '/downloads' },
-    { name: 'Campus Life', path: '/campus' },
-    { name: 'Achievements', path: '/achievements' },
-    { name: 'Contact', path: '/contact' },
-  ]
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Academics", path: "/academics" },
+    { name: "Admissions", path: "/admission" },
+    { name: "Downloads", path: "/downloads" },
+    { name: "Campus Life", path: "/campus" },
+    { name: "Achievements", path: "/achievements" },
+    { name: "Contact", path: "/contact" },
+  ];
 
-  const normalizedPath = (pathname ? pathname.replace(/\/+$/, '') : '') || '/'
+  const normalizedPath = (pathname ? pathname.replace(/\/+$/, "") : "") || "/";
 
   // Routes that have a full dark hero banner at the very top
-  const darkHeroRoutes = ['/', '/contact', '/admission', '/admission/apply']
-  const hasDarkHero = darkHeroRoutes.includes(normalizedPath)
+  const darkHeroRoutes = ["/", "/contact", "/admission", "/admission/apply"];
+  const hasDarkHero = darkHeroRoutes.includes(normalizedPath);
 
   // Header has a white background when scrolled, on pages without a dark hero banner, or when forced
-  const isWhiteBg = forceWhiteBg ?? ((className?.includes('bg-white') ?? false) || scrolled || !hasDarkHero)
+  const isWhiteBg =
+    forceWhiteBg ??
+    ((className?.includes("bg-white") ?? false) || scrolled || !hasDarkHero);
 
   const isLinkActive = (linkPath: string) => {
-    if (linkPath === '/') {
-      return normalizedPath === '/'
+    if (linkPath === "/") {
+      return normalizedPath === "/";
     }
-    return normalizedPath === linkPath || normalizedPath.startsWith(linkPath + '/')
-  }
+    return (
+      normalizedPath === linkPath || normalizedPath.startsWith(linkPath + "/")
+    );
+  };
 
   return (
     <header
       className={cn(
-        `fixed top-0 left-0 right-0 z-50 transition-all duration-300`,
+        `fixed top-0 right-0 left-0 z-50 transition-all duration-300`,
         isWhiteBg
-          ? 'bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-xs'
-          : 'bg-transparent',
-        className
+          ? "border-b border-gray-100 bg-white/95 shadow-xs backdrop-blur-md"
+          : "bg-transparent",
+        className,
       )}
       {...props}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between h-16">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="relative z-50" aria-label="M.S. Naz High School Home">
+        <Link
+          href="/"
+          className="relative z-50"
+          aria-label="M.S. Naz High School Home"
+        >
           <Image
             src="/api/images/logos/Official_LOGO_grn_ic9ldd.png"
             alt="Logo"
             width={50}
             height={50}
             priority
-            className="hover:scale-105 transition-transform duration-300"
+            className="transition-transform duration-300 hover:scale-105"
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
+        <nav className="hidden items-center gap-1.5 md:flex lg:gap-2">
           {navLinks.map((link) => {
-            const active = isLinkActive(link.path)
+            const active = isLinkActive(link.path);
             return (
               <Link
                 key={link.path}
                 href={link.path}
                 className={cn(
-                  "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  "rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200",
                   isWhiteBg
                     ? active
-                      ? "text-emerald-950 bg-emerald-100/90 font-semibold shadow-xs"
-                      : "text-emerald-900 font-medium hover:text-emerald-950 hover:bg-emerald-50/80"
+                      ? "bg-emerald-100/90 font-semibold text-emerald-950 shadow-xs"
+                      : "font-medium text-emerald-900 hover:bg-emerald-50/80 hover:text-emerald-950"
                     : active
-                      ? "text-emerald-950 bg-emerald-100/90 font-semibold shadow-xs"
-                      : "text-white hover:bg-white/20 hover:text-emerald-100"
+                      ? "bg-emerald-100/90 font-semibold text-emerald-950 shadow-xs"
+                      : "text-white hover:bg-white/20 hover:text-emerald-100",
                 )}
               >
                 {link.name}
               </Link>
-            )
+            );
           })}
         </nav>
 
@@ -107,10 +120,10 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
         <Button
           variant="ghost"
           className={cn(
-            "md:hidden p-2 z-50 transition-colors",
+            "z-50 p-2 transition-colors md:hidden",
             isWhiteBg && !isOpen
               ? "text-emerald-950 hover:bg-emerald-50 hover:text-emerald-900"
-              : "text-white hover:bg-white/20 hover:text-white"
+              : "text-white hover:bg-white/20 hover:text-white",
           )}
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -125,12 +138,12 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="fixed inset-0 z-40 bg-emerald-950/95 backdrop-blur-xl md:hidden pt-20 px-6 flex flex-col justify-between pb-8"
+              className="fixed inset-0 z-40 flex flex-col justify-between bg-emerald-950/95 px-6 pt-20 pb-8 backdrop-blur-xl md:hidden"
             >
               <nav className="py-2">
                 <ul className="flex flex-col space-y-2">
                   {navLinks.map((link) => {
-                    const active = isLinkActive(link.path)
+                    const active = isLinkActive(link.path);
                     return (
                       <motion.li
                         key={link.path}
@@ -141,21 +154,21 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
                           href={link.path}
                           onClick={() => setIsOpen(false)}
                           className={cn(
-                            "block px-4 py-3 rounded-xl font-medium text-base transition-colors",
+                            "block rounded-xl px-4 py-3 text-base font-medium transition-colors",
                             active
-                              ? "bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30"
-                              : "text-white/90 hover:bg-white/10 hover:text-white"
+                              ? "border border-emerald-500/30 bg-emerald-500/20 font-semibold text-emerald-300"
+                              : "text-white/90 hover:bg-white/10 hover:text-white",
                           )}
                         >
                           {link.name}
                         </Link>
                       </motion.li>
-                    )
+                    );
                   })}
                 </ul>
               </nav>
 
-              <div className="pt-4 border-t border-emerald-800/40">
+              <div className="border-t border-emerald-800/40 pt-4">
                 <Link
                   href="https://lms.msns.edu.pk"
                   target="_blank"
@@ -166,7 +179,7 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
                   <Button
                     variant="default"
                     size="lg"
-                    className="w-full rounded-xl bg-linear-to-r from-emerald-600 to-teal-600 text-white font-semibold shadow-md cursor-pointer"
+                    className="w-full cursor-pointer rounded-xl bg-linear-to-r from-emerald-600 to-teal-600 font-semibold text-white shadow-md"
                   >
                     LMS Portal
                   </Button>
@@ -184,10 +197,10 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
                 <Button
                   variant="ghost"
                   className={cn(
-                    "rounded-full w-10 h-10 p-0 transition-colors",
+                    "h-10 w-10 rounded-full p-0 transition-colors",
                     isWhiteBg
                       ? "text-emerald-950 hover:bg-emerald-50"
-                      : "text-white hover:bg-white/20 hover:text-white"
+                      : "text-white hover:bg-white/20 hover:text-white",
                   )}
                   aria-label="User Account"
                 >
@@ -196,19 +209,25 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="rounded-xl shadow-lg border border-gray-100 bg-white"
+                className="rounded-xl border border-gray-100 bg-white shadow-lg"
               >
                 <DropdownMenuItem asChild>
-                  <Link href="https://lms.msns.edu.pk/sign-in" className="cursor-pointer">
+                  <Link
+                    href="https://lms.msns.edu.pk/sign-in"
+                    className="cursor-pointer"
+                  >
                     Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="https://lms.msns.edu.pk/sign-in" className="cursor-pointer">
+                  <Link
+                    href="https://lms.msns.edu.pk/sign-in"
+                    className="cursor-pointer"
+                  >
                     Settings
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-500 focus:bg-red-50 cursor-pointer">
+                <DropdownMenuItem className="cursor-pointer text-red-500 focus:bg-red-50">
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -224,7 +243,7 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
                 <Button
                   variant="default"
                   size="sm"
-                  className="rounded-full bg-linear-to-r from-emerald-600 to-teal-600 px-4 text-xs md:text-sm font-semibold text-white shadow-xs hover:shadow-md hover:from-emerald-700 hover:to-teal-700 cursor-pointer"
+                  className="cursor-pointer rounded-full bg-linear-to-r from-emerald-600 to-teal-600 px-4 text-xs font-semibold text-white shadow-xs hover:from-emerald-700 hover:to-teal-700 hover:shadow-md md:text-sm"
                 >
                   LMS Portal
                 </Button>
@@ -234,5 +253,5 @@ export const Header = ({ className, forceWhiteBg, ...props }: HeaderProps) => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};

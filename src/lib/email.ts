@@ -21,7 +21,35 @@ export interface AdmissionFormData {
   remarks?: string;
 }
 
-export async function sendAdmissionEmails(data: AdmissionFormData) {
+/** Escape a value for safe interpolation into HTML text or attribute content. */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/** Remove line breaks so a value can't spill into another email header line. */
+function singleLine(value: string): string {
+  return value.replace(/[\r\n]+/g, " ").trim();
+}
+
+export function isEmailConfigured(): boolean {
+  return Boolean(
+    process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS,
+  );
+}
+
+export async function sendAdmissionEmails(raw: AdmissionFormData) {
+  // Every applicant-supplied value is escaped before it goes into the HTML body.
+  const data = Object.fromEntries(
+    Object.entries(raw).map(([k, v]) => [
+      k,
+      typeof v === "string" ? escapeHtml(v) : v,
+    ]),
+  ) as AdmissionFormData;
   const recipients = ["admin@msns.edu.pk", "msnazhighschool@gmail.com"];
 
   // Configure transporter using SMTP env vars or fallback logger
@@ -63,24 +91,24 @@ export async function sendAdmissionEmails(data: AdmissionFormData) {
             <table class="info-table">
               <tr><td class="label">Full Name</td><td class="value"><strong>${data.studentName}</strong></td></tr>
               <tr><td class="label">Father's Name</td><td class="value">${data.fatherName}</td></tr>
-              ${data.motherName ? `<tr><td class="label">Mother's Name</td><td class="value">${data.motherName}</td></tr>` : ''}
+              ${data.motherName ? `<tr><td class="label">Mother's Name</td><td class="value">${data.motherName}</td></tr>` : ""}
               <tr><td class="label">Date of Birth</td><td class="value">${data.dob}</td></tr>
               <tr><td class="label">Gender</td><td class="value">${data.gender}</td></tr>
               <tr><td class="label">Grade Applying For</td><td class="value"><strong style="color:#059669;">${data.gradeApplying}</strong></td></tr>
-              ${data.cnicOrBForm ? `<tr><td class="label">B-Form / CNIC</td><td class="value">${data.cnicOrBForm}</td></tr>` : ''}
-              ${data.previousSchool ? `<tr><td class="label">Previous School</td><td class="value">${data.previousSchool}</td></tr>` : ''}
+              ${data.cnicOrBForm ? `<tr><td class="label">B-Form / CNIC</td><td class="value">${data.cnicOrBForm}</td></tr>` : ""}
+              ${data.previousSchool ? `<tr><td class="label">Previous School</td><td class="value">${data.previousSchool}</td></tr>` : ""}
               <tr><td class="label">Academic Session</td><td class="value">${data.academicSession}</td></tr>
             </table>
 
             <div class="section-title">Guardian & Contact Information</div>
             <table class="info-table">
               <tr><td class="label">Guardian Name</td><td class="value">${data.guardianName} (${data.relationToStudent})</td></tr>
-              <tr><td class="label">Mobile / WhatsApp</td><td class="value"><a href="tel:${data.mobileNo}">${data.mobileNo}</a></td></tr>
-              ${data.emergencyContact ? `<tr><td class="label">Emergency Contact</td><td class="value">${data.emergencyContact}</td></tr>` : ''}
-              <tr><td class="label">Email Address</td><td class="value"><a href="mailto:${data.email}">${data.email}</a></td></tr>
+              <tr><td class="label">Mobile / WhatsApp</td><td class="value"><a href="tel:${encodeURIComponent(raw.mobileNo)}">${data.mobileNo}</a></td></tr>
+              ${data.emergencyContact ? `<tr><td class="label">Emergency Contact</td><td class="value">${data.emergencyContact}</td></tr>` : ""}
+              <tr><td class="label">Email Address</td><td class="value"><a href="mailto:${encodeURIComponent(raw.email)}">${data.email}</a></td></tr>
               <tr><td class="label">Residential Address</td><td class="value">${data.address}</td></tr>
               <tr><td class="label">Transport Required</td><td class="value">${data.transportNeeded}</td></tr>
-              ${data.remarks ? `<tr><td class="label">Additional Remarks</td><td class="value">${data.remarks}</td></tr>` : ''}
+              ${data.remarks ? `<tr><td class="label">Additional Remarks</td><td class="value">${data.remarks}</td></tr>` : ""}
             </table>
           </div>
           <div class="footer">
@@ -102,13 +130,16 @@ export async function sendAdmissionEmails(data: AdmissionFormData) {
     await transporter.sendMail({
       from: `"MSNS Admissions" <${user}>`,
       to: recipients.join(", "),
-      subject: `New Online Admission Application: ${data.studentName} (${data.gradeApplying}) - Ref: ${data.registrationId}`,
+      subject: singleLine(
+        `New Online Admission Application: ${raw.studentName} (${raw.gradeApplying}) - Ref: ${raw.registrationId}`,
+      ),
       html: htmlContent,
     });
   } else {
-    console.log("==========================================");
-    console.log(`[SIMULATED EMAIL DISPATCH] To: ${recipients.join(", ")}`);
-    console.log(`Subject: New Online Admission Application: ${data.studentName} (${data.gradeApplying}) - Ref: ${data.registrationId}`);
-    console.log("==========================================");
+    // Development only: the API route refuses to accept applications in
+    // production when SMTP is not configured.
+    console.log(
+      `[SIMULATED EMAIL DISPATCH] application ${raw.registrationId} to ${recipients.join(", ")}`,
+    );
   }
 }

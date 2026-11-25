@@ -1,4 +1,11 @@
-import { S3Client, ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  ListObjectsV2Command,
+  DeleteObjectCommand,
+  PutObjectCommand,
+  GetObjectCommand,
+} from "@aws-sdk/client-s3";
+import { unstable_cache } from "next/cache";
 import { env } from "~/env.js";
 
 // Clean endpoint host (strip bucket path suffix if present)
@@ -31,32 +38,81 @@ export interface GalleryImage {
   size?: number;
 }
 
-export async function listGalleryImages(): Promise<GalleryImage[]> {
-  try {
-    const [galleryResponse, videosResponse] = await Promise.all([
-      s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
-      s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
-    ]);
-    const contents = [
-      ...(galleryResponse.Contents ?? []),
-      ...(videosResponse.Contents ?? [])
-    ];
+export interface ListedObject {
+  key: string;
+  lastModified?: string;
+  size?: number;
+}
 
-    return contents
-      .filter((obj) => obj.Key && !obj.Key.endsWith("/"))
-      .map((obj) => ({
-        key: obj.Key!,
-        url: `/api/images/${obj.Key!}`,
+/** Cache tag for every bucket listing; revalidate it after uploads or deletes. */
+export const S3_LISTING_TAG = "s3-listing";
+
+/**
+ * Lists every object under a prefix, following ContinuationToken so results
+ * past the 1000-key page limit are not silently dropped.
+ */
+async function listAllUncached(prefix: string): Promise<ListedObject[]> {
+  const out: ListedObject[] = [];
+  let token: string | undefined;
+  do {
+    const page = await s3Client.send(
+      new ListObjectsV2Command({
+        Bucket: BUCKET,
+        Prefix: prefix,
+        ContinuationToken: token,
+      }),
+    );
+    for (const obj of page.Contents ?? []) {
+      if (!obj.Key || obj.Key.endsWith("/")) continue;
+      out.push({
+        key: obj.Key,
         lastModified: obj.LastModified?.toISOString(),
         size: obj.Size,
-      }))
-      .sort((a, b) => {
-        // Sort newest first
-        if (a.lastModified && b.lastModified) {
-          return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
-        }
-        return 0;
       });
+    }
+    token = page.IsTruncated ? page.NextContinuationToken : undefined;
+  } while (token);
+  return out;
+}
+
+/**
+ * Cached bucket listing (ListObjectsV2 is a billed Class-A operation). Results are
+ * shared across requests for an hour, or until S3_LISTING_TAG is revalidated.
+ */
+export const listObjects = unstable_cache(
+  listAllUncached,
+  ["s3-list-objects"],
+  {
+    revalidate: 3600,
+    tags: [S3_LISTING_TAG],
+  },
+);
+
+/** Gallery and video objects, newest first. */
+async function listMediaObjects(): Promise<ListedObject[]> {
+  const [gallery, videos] = await Promise.all([
+    listObjects("gallery/"),
+    listObjects("videos/"),
+  ]);
+  return [...gallery, ...videos].sort((a, b) => {
+    if (a.lastModified && b.lastModified) {
+      return (
+        new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
+      );
+    }
+    return 0;
+  });
+}
+
+export async function listGalleryImages(): Promise<GalleryImage[]> {
+  try {
+    const contents = await listMediaObjects();
+    return contents.map((obj) => ({
+      key: obj.key,
+      url: `/api/images/${obj.key}`,
+      lastModified: obj.lastModified,
+      size: obj.size,
+    }));
   } catch (error) {
     console.error("Error fetching gallery images from S3:", error);
     return [];
@@ -64,72 +120,64 @@ export async function listGalleryImages(): Promise<GalleryImage[]> {
 }
 
 /**
+ * Short names used by the site that match by substring rather than by full
+ * filename. Substring matching is limited to these so arbitrary requests can't
+ * resolve to an unrelated image (which would then be cached).
+ */
+const LEGACY_SUBSTRING_ALIASES = new Set([
+  "270675",
+  "270676",
+  "270677",
+  "270678",
+  "ateeqa",
+  "momina",
+  "rehan",
+]);
+
+/**
  * Finds an image by its filename (basename) across all gallery folders and videos folder.
  * Returns the full S3 key if found, or null if not.
  * This allows msns-home components to reference images by filename only,
  * so moving images between folders in the admin gallery won't break references.
  */
-export async function findImageByFilename(filename: string): Promise<string | null> {
-  const [galleryResponse, videosResponse] = await Promise.all([
-    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
-    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
-  ]);
-  const contents = [
-    ...(galleryResponse.Contents ?? []),
-    ...(videosResponse.Contents ?? [])
-  ];
-
-  // Sort newest first by LastModified
-  contents.sort((a, b) => {
-    if (a.LastModified && b.LastModified) {
-      return new Date(b.LastModified).getTime() - new Date(a.LastModified).getTime();
-    }
-    return 0;
-  });
+export async function findImageByFilename(
+  filename: string,
+): Promise<string | null> {
+  const contents = await listMediaObjects();
 
   const searchLower = filename.toLowerCase().trim();
   const searchClean = searchLower.replace(/\.[^/.]+$/, "");
 
   // 1. Exact basename match
   for (const obj of contents) {
-    if (!obj.Key || obj.Key.endsWith("/")) continue;
-    const basename = obj.Key.split("/").pop();
-    if (basename === filename) {
-      return obj.Key;
-    }
+    if (obj.key.split("/").pop() === filename) return obj.key;
   }
 
   // 2. Case-insensitive basename match (with or without extension)
   for (const obj of contents) {
-    if (!obj.Key || obj.Key.endsWith("/")) continue;
-    const basename = obj.Key.split("/").pop() ?? "";
-    const baseLower = basename.toLowerCase();
+    const baseLower = (obj.key.split("/").pop() ?? "").toLowerCase();
     const baseClean = baseLower.replace(/\.[^/.]+$/, "");
-    if (baseLower === searchLower || baseClean === searchClean) {
-      return obj.Key;
-    }
+    if (baseLower === searchLower || baseClean === searchClean) return obj.key;
   }
 
-  // 3. Special handling for notification social posts index (e.g. social_posts_1, social_posts_2)
-  if (searchClean.startsWith("social_posts_") || searchClean.startsWith("notification_")) {
+  // 3. Social post index (e.g. social_posts_1, social_posts_2)
+  if (
+    searchClean.startsWith("social_posts_") ||
+    searchClean.startsWith("notification_")
+  ) {
     const indexMatch = /\d+$/.exec(searchClean);
     const index = indexMatch ? parseInt(indexMatch[0], 10) - 1 : 0;
-    const matchingObjs = contents.filter((obj) => {
-      if (!obj.Key || obj.Key.endsWith("/")) return false;
-      const lower = obj.Key.toLowerCase();
-      return lower.includes("social_posts") || lower.includes("notifications") || lower.includes("notification");
+    const matching = contents.filter((obj) => {
+      const lower = obj.key.toLowerCase();
+      return lower.includes("social_posts") || lower.includes("notification");
     });
-    if (matchingObjs[index]?.Key) {
-      return matchingObjs[index].Key;
-    }
+    if (matching[index]) return matching[index].key;
   }
 
-  // 4. Keyword / Substring match (e.g. "rehan", "ateeqa", "momina", "notification")
-  for (const obj of contents) {
-    if (!obj.Key || obj.Key.endsWith("/")) continue;
-    const keyLower = obj.Key.toLowerCase();
-    if (keyLower.includes(searchClean)) {
-      return obj.Key;
+  // 4. Substring match, only for the known short names the site uses
+  if (LEGACY_SUBSTRING_ALIASES.has(searchClean)) {
+    for (const obj of contents) {
+      if (obj.key.toLowerCase().includes(searchClean)) return obj.key;
     }
   }
 
@@ -137,42 +185,29 @@ export async function findImageByFilename(filename: string): Promise<string | nu
 }
 
 /**
- * Resolves multiple filenames to their full S3 keys in a single listing call.
+ * Resolves multiple filenames to their full S3 keys using the cached listing.
  * Returns a map of filename -> full key (or null if not found).
  */
-export async function resolveImageFilenames(filenames: string[]): Promise<Record<string, string | null>> {
-  const [galleryResponse, videosResponse] = await Promise.all([
-    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "gallery/" })),
-    s3Client.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: "videos/" }))
-  ]);
-  const contents = [
-    ...(galleryResponse.Contents ?? []),
-    ...(videosResponse.Contents ?? [])
-  ];
-
-  // Build a lookup map: basename -> full key
+export async function resolveImageFilenames(
+  filenames: string[],
+): Promise<Record<string, string | null>> {
+  const contents = await listMediaObjects();
   const basenameMap = new Map<string, string>();
   for (const obj of contents) {
-    if (!obj.Key || obj.Key.endsWith("/")) continue;
-    const basename = obj.Key.split("/").pop();
-    if (basename) {
-      basenameMap.set(basename, obj.Key);
-    }
+    const basename = obj.key.split("/").pop();
+    if (basename) basenameMap.set(basename, obj.key);
   }
-
-  // Resolve each requested filename
   const result: Record<string, string | null> = {};
   for (const filename of filenames) {
     result[filename] = basenameMap.get(filename) ?? null;
   }
-
   return result;
 }
 
 export async function uploadToS3(
   key: string,
   body: Buffer | Uint8Array,
-  contentType: string
+  contentType: string,
 ): Promise<string> {
   const command = new PutObjectCommand({
     Bucket: BUCKET,

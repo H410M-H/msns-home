@@ -3,9 +3,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Award, Users, GraduationCap, BookOpen, Sun, Cpu, ShieldCheck, Mic,
-  Lightbulb, HeartHandshake, Library, FlaskConical, Globe, Leaf,
-  Trophy, Star,
+  Award,
+  Users,
+  GraduationCap,
+  BookOpen,
+  Sun,
+  Cpu,
+  ShieldCheck,
+  Mic,
+  Lightbulb,
+  HeartHandshake,
+  Library,
+  FlaskConical,
+  Globe,
+  Leaf,
+  Trophy,
+  Star,
   type LucideIcon,
 } from "lucide-react";
 
@@ -18,26 +31,111 @@ interface Feature {
 }
 
 const allFeatures: Feature[] = [
-  { icon: Award, title: "Board Affiliated", desc: "Officially Registered & Affiliated with BISE Gujranwala, ensuring recognized certification.", category: "Academic Excellence" },
-  { icon: Users, title: "1:16 Student-Teacher Ratio", desc: "Small class sizes ensure every student gets personalized attention and guidance.", category: "Academic Excellence" },
-  { icon: GraduationCap, title: "Teacher Mentorship", desc: "Junior teachers undergo structured apprenticeships under educators with 15+ years experience.", category: "Academic Excellence" },
-  { icon: BookOpen, title: "Oxford Collaboration", desc: "Academic collaboration with Oxford University Press since 2021 for world-class curriculum.", category: "Academic Excellence" },
-  { icon: FlaskConical, title: "Science & AI Labs", desc: "Fully equipped labs and a 60% practical, activity-based AI curriculum without traditional textbooks.", category: "Academic Excellence" },
-  { icon: Lightbulb, title: "Top Board Results", desc: "Consistent academic excellence reflecting the top Matric Board results in the area.", category: "Academic Excellence" },
-  { icon: Sun, title: "Solar-Powered Campus", desc: "Eco-friendly environment ensuring uninterrupted learning regardless of power cuts.", category: "Campus & Tech" },
-  { icon: Cpu, title: "Advanced IT Infrastructure", desc: "High-performance quad-core systems with 15 TB secure school cloud storage.", category: "Campus & Tech" },
-  { icon: ShieldCheck, title: "24/7 Secure Campus", desc: "Controlled entry/exit monitored by trained staff for complete student safety.", category: "Campus & Tech" },
-  { icon: Leaf, title: "Healthy Environment", desc: "Filtered water, ventilated classrooms for summer, and insulated spaces for winter.", category: "Campus & Tech" },
-  { icon: Library, title: "Well-Stocked Library", desc: "A rich collection of resources to cultivate reading habits and independent learning.", category: "Campus & Tech" },
-  { icon: HeartHandshake, title: "Holistic Assessment", desc: "Progress measured academically, psychologically, behaviorally, and environmentally.", category: "Student Care" },
-  { icon: Users, title: "Support for Slow Learners", desc: "Individualized care and structured parent-teacher communication for students needing extra help.", category: "Student Care" },
-  { icon: Mic, title: "Public Speaking", desc: "Daily assembly practice to build confidence, communication skills, and leadership.", category: "Student Care" },
-  { icon: Globe, title: "English Environment", desc: "Active promotion of English speaking across campus to prepare global citizens.", category: "Student Care" },
-  { icon: Award, title: "Competitions & Events", desc: "Regular debates, quizzes, and purpose-driven events aligned with the national calendar.", category: "Student Care" },
+  {
+    icon: Award,
+    title: "Board Affiliated",
+    desc: "Officially Registered & Affiliated with BISE Gujranwala, ensuring recognized certification.",
+    category: "Academic Excellence",
+  },
+  {
+    icon: Users,
+    title: "1:16 Student-Teacher Ratio",
+    desc: "Small class sizes ensure every student gets personalized attention and guidance.",
+    category: "Academic Excellence",
+  },
+  {
+    icon: GraduationCap,
+    title: "Teacher Mentorship",
+    desc: "Junior teachers undergo structured apprenticeships under educators with 15+ years experience.",
+    category: "Academic Excellence",
+  },
+  {
+    icon: BookOpen,
+    title: "Oxford Collaboration",
+    desc: "Academic collaboration with Oxford University Press since 2021 for world-class curriculum.",
+    category: "Academic Excellence",
+  },
+  {
+    icon: FlaskConical,
+    title: "Science & AI Labs",
+    desc: "Fully equipped labs and a 60% practical, activity-based AI curriculum without traditional textbooks.",
+    category: "Academic Excellence",
+  },
+  {
+    icon: Lightbulb,
+    title: "Top Board Results",
+    desc: "Consistent academic excellence reflecting the top Matric Board results in the area.",
+    category: "Academic Excellence",
+  },
+  {
+    icon: Sun,
+    title: "Solar-Powered Campus",
+    desc: "Eco-friendly environment ensuring uninterrupted learning regardless of power cuts.",
+    category: "Campus & Tech",
+  },
+  {
+    icon: Cpu,
+    title: "Advanced IT Infrastructure",
+    desc: "High-performance quad-core systems with 15 TB secure school cloud storage.",
+    category: "Campus & Tech",
+  },
+  {
+    icon: ShieldCheck,
+    title: "24/7 Secure Campus",
+    desc: "Controlled entry/exit monitored by trained staff for complete student safety.",
+    category: "Campus & Tech",
+  },
+  {
+    icon: Leaf,
+    title: "Healthy Environment",
+    desc: "Filtered water, ventilated classrooms for summer, and insulated spaces for winter.",
+    category: "Campus & Tech",
+  },
+  {
+    icon: Library,
+    title: "Well-Stocked Library",
+    desc: "A rich collection of resources to cultivate reading habits and independent learning.",
+    category: "Campus & Tech",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Holistic Assessment",
+    desc: "Progress measured academically, psychologically, behaviorally, and environmentally.",
+    category: "Student Care",
+  },
+  {
+    icon: Users,
+    title: "Support for Slow Learners",
+    desc: "Individualized care and structured parent-teacher communication for students needing extra help.",
+    category: "Student Care",
+  },
+  {
+    icon: Mic,
+    title: "Public Speaking",
+    desc: "Daily assembly practice to build confidence, communication skills, and leadership.",
+    category: "Student Care",
+  },
+  {
+    icon: Globe,
+    title: "English Environment",
+    desc: "Active promotion of English speaking across campus to prepare global citizens.",
+    category: "Student Care",
+  },
+  {
+    icon: Award,
+    title: "Competitions & Events",
+    desc: "Regular debates, quizzes, and purpose-driven events aligned with the national calendar.",
+    category: "Student Care",
+  },
 ];
 
 // ───── Distinction holders ─────
-interface Achiever { name: string; year: number; rollNo: string; marks: number; }
+interface Achiever {
+  name: string;
+  year: number;
+  rollNo: string;
+  marks: number;
+}
 
 const allAchievers: Achiever[] = [
   // --- Original Data ---
@@ -79,15 +177,35 @@ const allAchievers: Achiever[] = [
   { name: "Mehak", year: 2024, rollNo: "472410", marks: 992 },
 
   // --- 9th Class Distinctions ---
-  { name: "Mukarram Fayaz Cheema (9th)", year: 2024, rollNo: "104562", marks: 524 },
+  {
+    name: "Mukarram Fayaz Cheema (9th)",
+    year: 2024,
+    rollNo: "104562",
+    marks: 524,
+  },
   { name: "Ayesha Mehmood (9th)", year: 2024, rollNo: "263207", marks: 521 },
   { name: "Zaryab Faisal (9th)", year: 2024, rollNo: "104441", marks: 513 },
-  { name: "Abdul Hadi Warraich (9th)", year: 2024, rollNo: "104472", marks: 506 },
+  {
+    name: "Abdul Hadi Warraich (9th)",
+    year: 2024,
+    rollNo: "104472",
+    marks: 506,
+  },
   { name: "Muhammad Hassam (9th)", year: 2024, rollNo: "104414", marks: 506 },
   { name: "Muhammad Zaid (9th)", year: 2024, rollNo: "104066", marks: 501 },
   { name: "Syeda Hadia Kazmi (9th)", year: 2023, rollNo: "203552", marks: 483 },
-  { name: "Sibgha Farooq Cheema (9th)", year: 2024, rollNo: "201070", marks: 466 },
-  { name: "Abdul Rehman Mansha (9th)", year: 2024, rollNo: "104664", marks: 457 },
+  {
+    name: "Sibgha Farooq Cheema (9th)",
+    year: 2024,
+    rollNo: "201070",
+    marks: 466,
+  },
+  {
+    name: "Abdul Rehman Mansha (9th)",
+    year: 2024,
+    rollNo: "104664",
+    marks: 457,
+  },
   { name: "Abdullah Zubair (9th)", year: 2024, rollNo: "104335", marks: 438 },
   { name: "Aneeba Fatima (9th)", year: 2024, rollNo: "200810", marks: 412 },
   { name: "Um e Kulsoom (9th)", year: 2024, rollNo: "201184", marks: 407 },
@@ -116,55 +234,107 @@ const allAchievers: Achiever[] = [
   { name: "Muhammad Ahmad", year: 2026, rollNo: "403271", marks: 782 },
   { name: "Muhammad Abdullah", year: 2026, rollNo: "403152", marks: 773 },
   { name: "Noor Fatima", year: 2026, rollNo: "489803", marks: 747 },
-  { name: "Muhammad Mahir Yar Cheema", year: 2026, rollNo: "403589", marks: 712 },
+  {
+    name: "Muhammad Mahir Yar Cheema",
+    year: 2026,
+    rollNo: "403589",
+    marks: 712,
+  },
   { name: "Jannat Shahzad", year: 2026, rollNo: "490171", marks: 702 },
   { name: "Mohammad Sobhan Jamil", year: 2026, rollNo: "584550", marks: 657 },
 ];
 
-const topAchievers = allAchievers.filter((a) => a.marks >= 1000).sort((a, b) => b.marks - a.marks);
-const otherAchievers = allAchievers.filter((a) => a.marks < 1000).sort((a, b) => b.marks - a.marks);
+const topAchievers = allAchievers
+  .filter((a) => a.marks >= 1000)
+  .sort((a, b) => b.marks - a.marks);
+const otherAchievers = allAchievers
+  .filter((a) => a.marks < 1000)
+  .sort((a, b) => b.marks - a.marks);
 
 // ───── Color map ─────
-const categoryColors: Record<string, { bg: string; text: string; accent: string; glow: string }> = {
-  "Academic Excellence": { bg: "bg-emerald-500/10", text: "text-emerald-400", accent: "from-emerald-500 to-teal-400", glow: "shadow-emerald-500/20" },
-  "Campus & Tech": { bg: "bg-sky-500/10", text: "text-sky-400", accent: "from-sky-500 to-blue-400", glow: "shadow-sky-500/20" },
-  "Student Care": { bg: "bg-amber-500/10", text: "text-amber-400", accent: "from-amber-500 to-orange-400", glow: "shadow-amber-500/20" },
+const categoryColors: Record<
+  string,
+  { bg: string; text: string; accent: string; glow: string }
+> = {
+  "Academic Excellence": {
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    accent: "from-emerald-500 to-teal-400",
+    glow: "shadow-emerald-500/20",
+  },
+  "Campus & Tech": {
+    bg: "bg-sky-500/10",
+    text: "text-sky-400",
+    accent: "from-sky-500 to-blue-400",
+    glow: "shadow-sky-500/20",
+  },
+  "Student Care": {
+    bg: "bg-amber-500/10",
+    text: "text-amber-400",
+    accent: "from-amber-500 to-orange-400",
+    glow: "shadow-amber-500/20",
+  },
 };
 
 // ───── Feature Card ─────
 function FeatureCard({ feature }: { feature: Feature }) {
-  const colors = categoryColors[feature.category] ?? categoryColors["Academic Excellence"]!;
+  const colors =
+    categoryColors[feature.category] ?? categoryColors["Academic Excellence"]!;
   return (
-    <div className="group relative flex-shrink-0 w-[280px] sm:w-[310px]">
-      <div className={`relative h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-6 transition-all duration-500 hover:bg-white/[0.09] hover:border-white/15 hover:shadow-xl ${colors.glow} hover:-translate-y-1`}>
-        <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${colors.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-        <span className={`inline-block mb-4 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] ${colors.bg} ${colors.text} border border-white/5`}>
+    <div className="group relative w-[280px] flex-shrink-0 sm:w-[310px]">
+      <div
+        className={`relative h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 backdrop-blur-xl transition-all duration-500 hover:border-white/15 hover:bg-white/[0.09] hover:shadow-xl ${colors.glow} hover:-translate-y-1`}
+      >
+        <div
+          className={`absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-r ${colors.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+        />
+        <span
+          className={`mb-4 inline-block rounded-full px-3 py-1 text-[10px] font-semibold tracking-[0.15em] uppercase ${colors.bg} ${colors.text} border border-white/5`}
+        >
           {feature.category}
         </span>
-        <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${colors.accent} shadow-lg ${colors.glow} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2`}>
+        <div
+          className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${colors.accent} shadow-lg ${colors.glow} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2`}
+        >
           <feature.icon className="h-6 w-6 text-white" strokeWidth={1.8} />
         </div>
-        <h3 className="mb-2 text-base font-bold text-white leading-snug">{feature.title}</h3>
-        <p className="text-[13px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-300">{feature.desc}</p>
-        <div className={`absolute -bottom-16 -right-16 h-32 w-32 rounded-full bg-gradient-to-br ${colors.accent} opacity-0 blur-3xl group-hover:opacity-[0.06] transition-opacity duration-700`} />
+        <h3 className="mb-2 text-base leading-snug font-bold text-white">
+          {feature.title}
+        </h3>
+        <p className="text-[13px] leading-relaxed text-white/50 transition-colors duration-300 group-hover:text-white/70">
+          {feature.desc}
+        </p>
+        <div
+          className={`absolute -right-16 -bottom-16 h-32 w-32 rounded-full bg-gradient-to-br ${colors.accent} opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-[0.06]`}
+        />
       </div>
     </div>
   );
 }
 
 // ───── Marquee Row ─────
-function MarqueeRow({ features, direction = "left", speed = 35 }: { features: Feature[]; direction?: "left" | "right"; speed?: number }) {
+function MarqueeRow({
+  features,
+  direction = "left",
+  speed = 35,
+}: {
+  features: Feature[];
+  direction?: "left" | "right";
+  speed?: number;
+}) {
   const duplicated = [...features, ...features];
   return (
     <div
-      className="relative overflow-hidden group/marquee"
+      className="group/marquee relative overflow-hidden"
       style={{
-        maskImage: "linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)",
-        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%)",
       }}
     >
       <div
-        className="flex gap-5 w-max group-hover/marquee:[animation-play-state:paused]"
+        className="flex w-max gap-5 group-hover/marquee:[animation-play-state:paused]"
         style={{ animation: `marquee-${direction} ${speed}s linear infinite` }}
       >
         {duplicated.map((feature, i) => (
@@ -176,7 +346,13 @@ function MarqueeRow({ features, direction = "left", speed = 35 }: { features: Fe
 }
 
 // ───── Top Achiever Hero Card (1000+ marks) ─────
-function TopAchieverCard({ achiever, index }: { achiever: Achiever; index: number }) {
+function TopAchieverCard({
+  achiever,
+  index,
+}: {
+  achiever: Achiever;
+  index: number;
+}) {
   const isFirst = index === 0;
   return (
     <motion.div
@@ -184,46 +360,61 @@ function TopAchieverCard({ achiever, index }: { achiever: Achiever; index: numbe
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
-      className={`group relative overflow-hidden rounded-2xl border backdrop-blur-xl transition-all duration-500 hover:-translate-y-1
-        ${isFirst
-          ? "border-amber-400/25 bg-gradient-to-br from-amber-500/[0.1] via-yellow-500/[0.04] to-transparent hover:shadow-xl shadow-amber-400/10 md:col-span-2 lg:col-span-1"
-          : "border-amber-400/15 bg-white/[0.04] hover:shadow-lg shadow-amber-400/5"
-        }`}
+      className={`group relative overflow-hidden rounded-2xl border backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 ${
+        isFirst
+          ? "border-amber-400/25 bg-gradient-to-br from-amber-500/[0.1] via-yellow-500/[0.04] to-transparent shadow-amber-400/10 hover:shadow-xl md:col-span-2 lg:col-span-1"
+          : "border-amber-400/15 bg-white/[0.04] shadow-amber-400/5 hover:shadow-lg"
+      }`}
     >
       {/* Top accent */}
-      <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 ${isFirst ? "opacity-70" : "opacity-40 group-hover:opacity-70"} transition-opacity duration-500`} />
+      <div
+        className={`absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 ${isFirst ? "opacity-70" : "opacity-40 group-hover:opacity-70"} transition-opacity duration-500`}
+      />
 
       <div className="p-5 md:p-6">
         <div className="flex items-center gap-4">
           {/* Trophy icon */}
-          <div className={`flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 shadow-lg shadow-amber-400/25 transition-transform duration-300 group-hover:scale-110 ${isFirst ? "h-14 w-14" : "h-11 w-11"}`}>
-            <Trophy className={`text-white ${isFirst ? "h-7 w-7" : "h-5 w-5"}`} strokeWidth={1.8} />
+          <div
+            className={`flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 shadow-lg shadow-amber-400/25 transition-transform duration-300 group-hover:scale-110 ${isFirst ? "h-14 w-14" : "h-11 w-11"}`}
+          >
+            <Trophy
+              className={`text-white ${isFirst ? "h-7 w-7" : "h-5 w-5"}`}
+              strokeWidth={1.8}
+            />
           </div>
 
-          <div className="flex-1 min-w-0">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-amber-400/60 font-semibold mb-0.5">
+          <div className="min-w-0 flex-1">
+            <p className="mb-0.5 text-[10px] font-semibold tracking-[0.18em] text-amber-400/60 uppercase">
               {isFirst ? "★ Highest Scorer" : "Top Achiever"} — {achiever.year}
             </p>
-            <h4 className={`font-bold text-white truncate ${isFirst ? "text-lg md:text-xl" : "text-base"}`}>
+            <h4
+              className={`truncate font-bold text-white ${isFirst ? "text-lg md:text-xl" : "text-base"}`}
+            >
               {achiever.name}
             </h4>
             {achiever.rollNo !== "—" && (
-              <p className="text-[17px] text-white/90 font-mono mt-0.5">Roll # {achiever.rollNo}</p>
+              <p className="mt-0.5 font-mono text-[17px] text-white/90">
+                Roll # {achiever.rollNo}
+              </p>
             )}
           </div>
 
           {/* Marks */}
-          <div className="text-right shrink-0">
-            <span className={`font-black tabular-nums bg-gradient-to-r from-amber-300 to-yellow-500 bg-clip-text text-transparent leading-none ${isFirst ? "text-3xl md:text-4xl" : "text-2xl"}`}>
+          <div className="shrink-0 text-right">
+            <span
+              className={`bg-gradient-to-r from-amber-300 to-yellow-500 bg-clip-text leading-none font-black text-transparent tabular-nums ${isFirst ? "text-3xl md:text-4xl" : "text-2xl"}`}
+            >
               {achiever.marks}
             </span>
-            <p className="text-[9px] text-white/30 uppercase tracking-wider mt-0.5">marks</p>
+            <p className="mt-0.5 text-[9px] tracking-wider text-white/30 uppercase">
+              marks
+            </p>
           </div>
         </div>
       </div>
 
       {/* Ambient glow */}
-      <div className="absolute -bottom-16 -right-16 h-32 w-32 rounded-full bg-amber-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+      <div className="pointer-events-none absolute -right-16 -bottom-16 h-32 w-32 rounded-full bg-amber-400/10 opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
     </motion.div>
   );
 }
@@ -231,15 +422,19 @@ function TopAchieverCard({ achiever, index }: { achiever: Achiever; index: numbe
 // ───── Achiever marquee card (compact) ─────
 function AchieverChip({ achiever }: { achiever: Achiever }) {
   return (
-    <div className="group flex-shrink-0 flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-4 py-3 transition-all duration-300 hover:bg-white/[0.09] hover:border-white/15 hover:-translate-y-0.5">
+    <div className="group flex flex-shrink-0 items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/[0.09]">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-400 shadow shadow-emerald-500/20">
         <Star className="h-4 w-4 text-white" strokeWidth={2} />
       </div>
       <div className="min-w-0">
-        <p className="text-xl font-semibold text-white truncate">{achiever.name}</p>
+        <p className="truncate text-xl font-semibold text-white">
+          {achiever.name}
+        </p>
         <p className="text-[15px] text-white/85">{achiever.year}</p>
       </div>
-      <span className="ml-auto text-3xl font-bold tabular-nums text-emerald-400">{achiever.marks}</span>
+      <span className="ml-auto text-3xl font-bold text-emerald-400 tabular-nums">
+        {achiever.marks}
+      </span>
     </div>
   );
 }
@@ -254,36 +449,47 @@ export function FeaturesSection() {
     <section
       className="relative w-full overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #0a1628 0%, #0d2137 35%, #0a2e1f 65%, #0c1a2e 100%)",
+        background:
+          "linear-gradient(135deg, #0a1628 0%, #0d2137 35%, #0a2e1f 65%, #0c1a2e 100%)",
       }}
     >
       {/* Background grid */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
           backgroundSize: "40px 40px",
         }}
       />
 
       {/* Floating orbs */}
-      <div className="absolute top-20 left-[10%] h-[400px] w-[400px] rounded-full bg-emerald-500/[0.05] blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-20 right-[15%] h-[350px] w-[350px] rounded-full bg-sky-500/[0.05] blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-amber-500/[0.03] blur-[150px] pointer-events-none" />
+      <div className="pointer-events-none absolute top-20 left-[10%] h-[400px] w-[400px] rounded-full bg-emerald-500/[0.05] blur-[120px]" />
+      <div className="pointer-events-none absolute right-[15%] bottom-20 h-[350px] w-[350px] rounded-full bg-sky-500/[0.05] blur-[120px]" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-500/[0.03] blur-[150px]" />
 
       <div className="relative py-20 md:py-28">
         {/* ── Header ── */}
-        <div className="container mx-auto px-4 md:px-6 mb-14">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }} className="max-w-2xl">
-            <span className="inline-block mb-4 px-4 py-1.5 rounded-full text-xl font-semibold uppercase tracking-[0.2em] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+        <div className="container mx-auto mb-14 px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="max-w-2xl"
+          >
+            <span className="mb-4 inline-block rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xl font-semibold tracking-[0.2em] text-emerald-400 uppercase">
               Why Choose MSNS
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
+            <h2 className="text-4xl leading-[1.1] font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
               Built for{" "}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 bg-clip-text text-transparent">Excellence</span>
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 bg-clip-text text-transparent">
+                Excellence
+              </span>
             </h2>
-            <p className="mt-4 text-base md:text-lg text-white/45 max-w-xl leading-relaxed">
-              Academic rigor, modern infrastructure, and personalized care — at the lowest fee structure in Gakkhar.
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-white/45 md:text-lg">
+              Academic rigor, modern infrastructure, and personalized care — at
+              the lowest fee structure in Gakkhar.
             </p>
           </motion.div>
         </div>
@@ -295,17 +501,34 @@ export function FeaturesSection() {
         </div>
 
         {/* ── Stats bar ── */}
-        <div className="container mx-auto px-4 md:px-6 mt-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex flex-wrap justify-center gap-8 md:gap-16 py-8 border-t border-white/[0.06]">
+        <div className="container mx-auto mt-20 px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-8 border-t border-white/[0.06] py-8 md:gap-16"
+          >
             {[
               { value: "16+", label: "Years of Excellence" },
               { value: "1:16", label: "Student-Teacher Ratio" },
               { value: "100%", label: "Board Results" },
               { value: "15TB", label: "Cloud Storage" },
             ].map((stat, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1 }} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">{stat.value}</div>
-                <div className="mt-1 text-xs text-white/40 uppercase tracking-wider font-medium">{stat.label}</div>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                className="text-center"
+              >
+                <div className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-2xl font-bold text-transparent md:text-3xl">
+                  {stat.value}
+                </div>
+                <div className="mt-1 text-xs font-medium tracking-wider text-white/40 uppercase">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -314,45 +537,61 @@ export function FeaturesSection() {
         {/* ════════════════════════════════════════════════
             ── ACHIEVEMENTS & DISTINCTIONS ──
             ════════════════════════════════════════════════ */}
-        <div className="container mx-auto px-4 md:px-6 mt-24">
+        <div className="container mx-auto mt-24 px-4 md:px-6">
           {/* Section sub-header */}
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-2xl mb-10">
-            <span className="inline-block mb-4 px-4 py-1.5 rounded-full text-xl font-semibold uppercase tracking-[0.2em] text-amber-400 bg-amber-500/10 border border-amber-500/20">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-10 max-w-2xl"
+          >
+            <span className="mb-4 inline-block rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-xl font-semibold tracking-[0.2em] text-amber-400 uppercase">
               Board Toppers
             </span>
-            <h3 className="text-3xl md:text-4xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight">
+            <h3 className="text-3xl leading-[1.1] font-bold tracking-tight text-white md:text-4xl lg:text-7xl">
               Hall of{" "}
-              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">Distinctions</span>
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
+                Distinctions
+              </span>
             </h3>
-            <p className="mt-3 text-lg md:text-xl text-white/40 max-w-lg leading-relaxed">
-              Celebrating our brightest minds who scored <strong className="text-amber-400/80">1000+ marks</strong> in Matric Board examinations.
+            <p className="mt-3 max-w-lg text-lg leading-relaxed text-white/40 md:text-xl">
+              Celebrating our brightest minds who scored{" "}
+              <strong className="text-amber-400/80">1000+ marks</strong> in
+              Matric Board examinations.
             </p>
           </motion.div>
 
           {/* Top achievers (1000+) — hero cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+          <div className="mb-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {topAchievers.map((achiever, i) => (
-              <TopAchieverCard key={achiever.rollNo} achiever={achiever} index={i} />
+              <TopAchieverCard
+                key={achiever.rollNo}
+                achiever={achiever}
+                index={i}
+              />
             ))}
           </div>
         </div>
 
         {/* All other distinction holders — horizontal marquee */}
         <div className="mt-2">
-          <div className="container mx-auto px-4 md:px-6 mb-4">
-            <p className="text-xl uppercase tracking-[0.2em] text-white/80 font-semibold">
+          <div className="container mx-auto mb-4 px-4 md:px-6">
+            <p className="text-xl font-semibold tracking-[0.2em] text-white/80 uppercase">
               All Distinction Holders · 2010 – 2026
             </p>
           </div>
           <div
-            className="relative overflow-hidden group/achievers"
+            className="group/achievers relative overflow-hidden"
             style={{
-              maskImage: "linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)",
             }}
           >
             <div
-              className="flex gap-3 w-max group-hover/achievers:[animation-play-state:paused]"
+              className="flex w-max gap-3 group-hover/achievers:[animation-play-state:paused]"
               style={{ animation: "marquee-left 50s linear infinite" }}
             >
               {achieversDuplicated.map((a, i) => (
@@ -363,17 +602,34 @@ export function FeaturesSection() {
         </div>
 
         {/* Achievement stats */}
-        <div className="container mx-auto px-4 md:px-6 mt-14">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex flex-wrap justify-center gap-8 md:gap-16 py-8 border-t border-white/[0.06]">
+        <div className="container mx-auto mt-14 px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-8 border-t border-white/[0.06] py-8 md:gap-16"
+          >
             {[
               { value: "60+", label: "Distinction Holders" },
               { value: "1134", label: "Highest Score" },
               { value: `${topAchievers.length}`, label: "Scored 1000+" },
               { value: "2010–2026", label: "Legacy of Excellence" },
             ].map((stat, i) => (
-              <motion.div key={`ach-stat-${i}`} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1 }} className="text-center">
-                <div className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">{stat.value}</div>
-                <div className="mt-1 text-2xl text-white/80 uppercase tracking-wider font-medium">{stat.label}</div>
+              <motion.div
+                key={`ach-stat-${i}`}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                className="text-center"
+              >
+                <div className="bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-4xl font-bold text-transparent md:text-4xl">
+                  {stat.value}
+                </div>
+                <div className="mt-1 text-2xl font-medium tracking-wider text-white/80 uppercase">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </motion.div>

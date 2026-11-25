@@ -1,29 +1,18 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { deleteFromS3 } from "~/lib/s3";
+import { deleteFromS3, S3_LISTING_TAG } from "~/lib/s3";
+
+import { revalidateTag } from "next/cache";
+import { isGalleryRequestAuthorized } from "~/lib/gallery-auth";
 
 export const dynamic = "force-dynamic";
 
-/**
- * Validates the request using the GALLERY_API_SECRET environment variable.
- * If not set, all requests are blocked in production.
- */
-function isAuthorized(request: NextRequest): boolean {
-  const secret = process.env.GALLERY_API_SECRET;
-  if (!secret) {
-    // In development, allow if no secret is set
-    return process.env.NODE_ENV === "development";
-  }
-  const authHeader = request.headers.get("Authorization");
-  return authHeader === `Bearer ${secret}`;
-}
-
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ key: string[] }> }
+  { params }: { params: Promise<{ key: string[] }> },
 ) {
   try {
     // Authentication check
-    if (!isAuthorized(request)) {
+    if (!isGalleryRequestAuthorized(request)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -33,7 +22,7 @@ export async function DELETE(
     if (!key) {
       return NextResponse.json(
         { error: "Image key is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -42,18 +31,19 @@ export async function DELETE(
     if (!ALLOWED_PREFIXES.some((prefix) => key.startsWith(prefix))) {
       return NextResponse.json(
         { error: "Cannot delete items outside of allowed directories" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
     await deleteFromS3(key);
+    revalidateTag(S3_LISTING_TAG);
 
     return NextResponse.json({ success: true, deletedKey: key });
   } catch (error) {
     console.error("Error deleting image:", error);
     return NextResponse.json(
       { error: "Failed to delete image" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

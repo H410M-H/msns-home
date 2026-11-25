@@ -31,15 +31,24 @@ export default function AboutClient() {
   const [expandedValue, setExpandedValue] = useState<number | null>(null);
 
   return (
-    <section className="relative flex flex-col min-h-screen pt-4 bg-gradient-to-b from-[#f3fbf7] via-[#f8fdfa] to-[#ffffff] text-slate-800 font-sans overflow-hidden">
+    <section className="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-b from-[#f3fbf7] via-[#f8fdfa] to-[#ffffff] pt-4 font-sans text-slate-800">
       {/* Premium ambient backdrop glowing orbs with parallax drifting */}
-      <motion.div style={{ y: yGlow1 }} className="absolute top-1/4 left-[10%] w-96 h-96 bg-emerald-200/40 rounded-full blur-[120px] pointer-events-none" />
-      <motion.div style={{ y: yGlow2 }} className="absolute bottom-1/4 right-[10%] w-[500px] h-[500px] bg-teal-200/30 rounded-full blur-[150px] pointer-events-none" />
-      <motion.div style={{ y: yGlow3 }} className="absolute top-2/3 left-1/3 -translate-x-1/2 w-80 h-80 bg-green-200/30 rounded-full blur-[100px] pointer-events-none" />
+      <motion.div
+        style={{ y: yGlow1 }}
+        className="pointer-events-none absolute top-1/4 left-[10%] h-96 w-96 rounded-full bg-emerald-200/40 blur-[120px]"
+      />
+      <motion.div
+        style={{ y: yGlow2 }}
+        className="pointer-events-none absolute right-[10%] bottom-1/4 h-[500px] w-[500px] rounded-full bg-teal-200/30 blur-[150px]"
+      />
+      <motion.div
+        style={{ y: yGlow3 }}
+        className="pointer-events-none absolute top-2/3 left-1/3 h-80 w-80 -translate-x-1/2 rounded-full bg-green-200/30 blur-[100px]"
+      />
 
-      <main className="grow relative z-10">
+      <main className="relative z-10 grow">
         <HeroSection scale={scale} rotateX={rotateX} yText={yHeroText} />
-        
+
         <motion.div style={{ y: yCEO }}>
           <MessageFromCEO />
         </motion.div>
@@ -53,7 +62,10 @@ export default function AboutClient() {
         </motion.div>
 
         <motion.div style={{ y: yValues }}>
-          <SchoolValues expandedValue={expandedValue} setExpandedValue={setExpandedValue} />
+          <SchoolValues
+            expandedValue={expandedValue}
+            setExpandedValue={setExpandedValue}
+          />
         </motion.div>
       </main>
     </section>
