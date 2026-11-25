@@ -5,7 +5,6 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import Script from "next/script";
-import { TRPCReactProvider } from "~/trpc/react";
 import { Footer } from "~/components/blocks/nav/footer/footer";
 import { Header } from "~/components/blocks/nav/Header";
 import { FloatingWhatsApp } from "~/components/blocks/FloatingWhatsApp";
@@ -138,17 +137,13 @@ export default function RootLayout({
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Knowledge Base" />
       </head>
       <body className="flex min-h-screen flex-col">
-        <TRPCReactProvider>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <FloatingWhatsApp />
-          <Toaster />
-          <SpeedInsights />
-          <Analytics />
-        </TRPCReactProvider>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <FloatingWhatsApp />
+        <Toaster />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
